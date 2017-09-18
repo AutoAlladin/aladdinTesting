@@ -4,7 +4,7 @@ import os
 
 def main(args):
     sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-    subdirs= [x[0] for x in os.walk(os.path.dirname(os.path.abspath(__file__))) if not x[0].startswith("_") and not x[0] ]
+    subdirs= [x[0] for x in os.walk(os.path.dirname(os.path.abspath(__file__))) if not x[0].startswith("_") and not x[0].startswith(".")]
     sys.path.extend(subdirs)
     from Prozorro import ProzorroCheck
     ProzorroCheck.check(args)

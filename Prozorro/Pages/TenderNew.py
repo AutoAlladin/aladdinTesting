@@ -18,6 +18,7 @@ class TenderNew:
         try:
             movePurchaseView = self.drv.find_element_by_id("movePurchaseView")
             self.drv.execute_script("window.scroll(0, " + str(movePurchaseView.location["y"]) + "-"+str(self.drv.find_element_by_id("header").size["height"])+")")
+            waitFadeIn(self.drv)
             movePurchaseView.click()
         except WebDriverException as w:
             raise Exception("Не нажимается кнопка movePurchaseView  - \n" + w.msg)
@@ -43,6 +44,7 @@ class TenderNew:
         try:
             next_step = self.drv.find_element_by_id("next_step")
             self.drv.execute_script("window.scroll(0, "+str(next_step.location["y"])+")")
+            waitFadeIn(self.drv)
             next_step.click()
         except WebDriverException as w:
             raise Exception("Не нажимается кнопка next_step  - \n" + w.msg)
@@ -80,7 +82,7 @@ class TenderNew:
             min_step_percentage.send_keys("1.54")
         return self
 
-    def set_description(self):
+    def  set_description(self):
         title = self.drv.find_element_by_id("titleOfTenderForEdit")
         title.send_keys("below tebder")
         description = self.drv.find_element_by_id("description")
