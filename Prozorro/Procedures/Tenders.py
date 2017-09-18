@@ -3,10 +3,12 @@ import json
 import os
 from selenium import webdriver
 from Prozorro.Pages.MainPage import MainPage
+from Prozorro import Utils
+
 
 
 def init_driver():
-    with open(os.path.dirname(os.path.abspath(__file__))+'\\test_params.json', 'r', encoding="UTF-8") as test_params_file:
+    with open(os.path.dirname(os.path.abspath(__file__))+'\\..\\test_params.json', 'r', encoding="UTF-8") as test_params_file:
        tp = json.load(test_params_file)
     chrm = webdriver.Chrome()
     chrm.implicitly_wait(10)
@@ -23,9 +25,26 @@ def create_below(countLots, countFeatures, countDocs=0, countTenders=1, countIte
     return uaid
 
 
+def create_bids(uaids=[],fin=None):
+    chrm, tp,mpg = init_driver()
+    mpg.open_login_form().login(tp["bids"]["login"], tp["bids"]["password"])
+    bid_uaids=[]
 
-def open_tender(id):
+    if(os.path.isfile(fin)):
+        with open(fin, 'r', encoding="UTF-8") as bids_uid_file:
+            uaids = json.load(bids_uid_file)
+
+    for i in uaids:
+        bid_uaids.append(mpg.create_bid(i))
+
+    return bid_uaids
+
+
+
+def open_tender(id,role):
     chrm,tp, mpg=init_driver()
-    mpg.open_login_form().login(tp["bids"]["login"], tp["bids"]["password"]);
+    if str(role) in Utils.roles and role=="provider":
+        mpg.open_login_form().login(tp["bids"]["login"], tp["bids"]["password"])
+
     mpg.open_tender(id)
 

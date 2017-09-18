@@ -30,10 +30,10 @@ class TenderNew:
             publishPurchase.click()
 
             waitFadeIn(self.drv)
-            WebDriverWait(self.drv, 120).until(EC.visibility_of_element_located((By.ID, "purchaseGuid")))
-            purchaseGuid =self.drv.find_element_by_id("purchaseGuid")
+            WebDriverWait(self.drv, 120).until(EC.visibility_of_element_located((By.ID, "purchaseProzorroId")))
+            purchaseProzorroId =self.drv.find_element_by_id("purchaseProzorroId")
 
-            return purchaseGuid.text
+            return purchaseProzorroId.text
         except WebDriverException as w:
             raise Exception("Не нажимается кнопка publishPurchase  - \n" + w.msg)
         return None
@@ -53,9 +53,9 @@ class TenderNew:
         try:
             dt = datetime.now()
             set_datepicker(self.drv, "period_enquiry_start", (dt + timedelta(minutes=1)).strftime("%Y-%m-%d %H:%M:%S"))
-            set_datepicker(self.drv, "period_enquiry_end", (dt + timedelta(minutes=10)).strftime("%Y-%m-%d %H:%M:%S"))
-            set_datepicker(self.drv, "period_tender_start", (dt + timedelta(minutes=10)).strftime("%Y-%m-%d %H:%M:%S"))
-            set_datepicker(self.drv, "period_tender_end", (dt + timedelta(minutes=100)).strftime("%Y-%m-%d %H:%M:%S"))
+            set_datepicker(self.drv, "period_enquiry_end", (dt + timedelta(minutes=2)).strftime("%Y-%m-%d %H:%M:%S"))
+            set_datepicker(self.drv, "period_tender_start", (dt + timedelta(minutes=2)).strftime("%Y-%m-%d %H:%M:%S"))
+            set_datepicker(self.drv, "period_tender_end", (dt + timedelta(minutes=600)).strftime("%Y-%m-%d %H:%M:%S"))
         except Exception as e:
             raise Exception("Чтото не так с датами шапки тендера - \n" + e)
         return self
