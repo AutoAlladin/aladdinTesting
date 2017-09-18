@@ -78,7 +78,7 @@ def check(args):
             if arg == "add_one":
                 create_bids(arg)
             elif arg == "add_many":
-                зкште(create_bids(fin=os.path.dirname(os.path.abspath(__file__))+'\\uaids.json'))
+                print(create_bids(fin=os.path.dirname(os.path.abspath(__file__))+'\\uaids.json'))
             sys.exit()
 
 
