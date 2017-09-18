@@ -34,11 +34,11 @@ def check(args):
             _countDocs = 0
 
             if len(arg) >= 2:
-                _countTenders = arg[1][1:]
+                _countTenders = int(arg[1][1:])
             if len(arg) >= 3:
-                _countLots = arg[2][1:]
+                _countLots = int(arg[2][1:])
             if len(arg) >= 4:
-                _countItems = arg[3][1:]
+                _countItems = int(arg[3][1:])
 
             print("""new tender {0}  countTenders = {1}
                   countLots = {2}
@@ -46,13 +46,17 @@ def check(args):
                   countFeatures = {4}
                   countDocs = {5} """.format(proc,_countTenders, _countLots, _countItems, _countFeatures, _countDocs))
             if proc=='below':
-                print(create_below(countTenders=_countTenders,
+                print(datetime.datetime.now())
+                uaids=create_below(countTenders=_countTenders,
                                    countLots =_countLots,
                                    countItems = _countItems,
                                    countFeatures = _countFeatures,
                                    countDocs = _countDocs
                                  )
-                    )
+
+                with(open(os.path.dirname(os.path.abspath(__file__))+'\\uaids.json', 'w', encoding="UTF-8")) as uaid_file:
+                    json.dump(uaids, uaid_file)
+                print(datetime.datetime.now())
                 sys.exit()
             elif arg=='openua':
                 pass

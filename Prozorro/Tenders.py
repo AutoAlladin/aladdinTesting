@@ -17,7 +17,11 @@ def init_driver():
 def create_below(countLots, countFeatures, countDocs=0, countTenders=1, countItems=1, tender_dict=None):
     chrm, tp,mpg = init_driver()
     mpg.open_login_form().login(tp["below"]["login"], tp["below"]["password"]);
-    return mpg.create_tender(procurementMethodType="belowThreshold", lots=0, items=1, docs=0, features=0)
+    uaid = []
+    for i in range(countTenders):
+        uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=0, items=1, docs=0, features=0))
+    return uaid
+
 
 
 def open_tender(id):
