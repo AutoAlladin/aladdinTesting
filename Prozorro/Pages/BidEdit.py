@@ -33,7 +33,7 @@ class bid:
 
         bidDocInput_biddingDocuments.send_keys(os.path.dirname(os.path.abspath(__file__))+"\\forbid.txt")
 
-        self.drv.execute_script("window.scroll(0, {0}-65)".format(submitBid.location.get("y")))
+        self.drv.execute_script("window.scroll(0, {0}-100)".format(submitBid.location.get("y")))
         Utils.waitFadeIn(self.drv)
 
         submitBid.click()
@@ -41,6 +41,6 @@ class bid:
         bidGUID = WebDriverWait(self.drv, 20).until(
             EC.visibility_of_element_located((By.XPATH,"//div[@ng-if='bid.isPublished']/span[2]")))
 
-        return bidGUID
+        return bidGUID.text
 
 
