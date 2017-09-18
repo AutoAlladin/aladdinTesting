@@ -63,6 +63,11 @@ class MainPage:
             click_finish_edit_button().\
             click_publish_button()
 
-        #AddLot();
-        #AddItemBelow();
+    def create_bid(self, uaid):
+        return self.open_tender(uaid).\
+                open_bids().\
+                new();
+
+
+
 

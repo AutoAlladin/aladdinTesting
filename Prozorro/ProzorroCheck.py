@@ -1,10 +1,9 @@
 import datetime
 import getopt
 import sys
-
 import time
 
-from Prozorro.Tenders import *
+from Prozorro.Procedures.Tenders import *
 
 
 def list_params():
@@ -76,4 +75,45 @@ def check(args):
             sys.exit()
         elif opt == '-b':
             print("add bid " + arg)
+            if arg == "add_one":
+                create_bids(arg)
+            elif arg == "add_many":
+                print(create_bids(fin=os.path.dirname(os.path.abspath(__file__))+'\\uaids.json'))
             sys.exit()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
