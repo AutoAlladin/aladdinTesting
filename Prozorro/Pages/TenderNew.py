@@ -18,6 +18,7 @@ class TenderNew:
         try:
             movePurchaseView = self.drv.find_element_by_id("movePurchaseView")
             self.drv.execute_script("window.scroll(0, " + str(movePurchaseView.location["y"]) + "-"+str(self.drv.find_element_by_id("header").size["height"])+")")
+            waitFadeIn(self.drv)
             movePurchaseView.click()
         except WebDriverException as w:
             raise Exception("Не нажимается кнопка movePurchaseView  - \n" + w.msg)

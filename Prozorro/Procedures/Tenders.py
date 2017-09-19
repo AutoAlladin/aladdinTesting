@@ -1,6 +1,8 @@
 import json
 
 import os
+from datetime import datetime
+
 from selenium import webdriver
 from Prozorro.Pages.MainPage import MainPage
 from Prozorro import Utils
@@ -26,6 +28,7 @@ def create_below(countLots, countFeatures, countDocs=0, countTenders=1, countIte
 
 
 def create_bids(uaids=[],fin=None):
+    print("start bids", datetime().now())
     chrm, tp,mpg = init_driver()
     mpg.open_login_form().login(tp["bids"]["login"], tp["bids"]["password"])
     bid_uaids=[]
@@ -35,8 +38,9 @@ def create_bids(uaids=[],fin=None):
             uaids = json.load(bids_uid_file)
 
     for i in uaids:
+        print(i, end='\t')
         bid_uaids.append(mpg.create_bid(i))
-
+    print("finish bids", datetime().now())
     return bid_uaids
 
 

@@ -24,11 +24,16 @@ class MainPage:
         return LoginPage(self.drv)
 
     def open_tender(self, uaid, waitstatus=None ):
+
+        if self.drv.current_url!="https://test-gov.ald.in.ua/purchases":
+            self.drv.get("https://test-gov.ald.in.ua")
+
         waitNotifyToast(self.drv)
 
         Select(self.drv.find_element_by_id("searchType")).select_by_value("1")
 
         self.searchInput = self.drv.find_element_by_id("findbykeywords")
+        self.searchInput.clear()
         self.searchInput.send_keys(uaid)
 
         self.butSimpleSearch = self.drv.find_element_by_id("butSimpleSearch")
