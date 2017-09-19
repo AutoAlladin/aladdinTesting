@@ -12,35 +12,47 @@ class bid:
         #self.drv = webdriver.Chrome(_drv)
 
     def new(self):
-        bidAmount = self.drv.find_element_by_id("bidAmount")
-        bidAmount.send_keys("100.22");
+        try:
+            try:
+                bidAmount = self.drv.find_element_by_id("bidAmount")
+                bidAmount.send_keys("100.22");
+                Utils.waitFadeIn(self.drv)
+            except Exception as r:
+                raise Exception("bidAmount - "+r)
 
-        Utils.waitFadeIn(self.drv)
+            submitBid = self.drv.find_element_by_id("submitBid")
+            openDocuments_biddingDocuments = self.drv.find_element_by_id("openDocuments_biddingDocuments")
 
-        submitBid = self.drv.find_element_by_id("submitBid")
-        openDocuments_biddingDocuments = self.drv.find_element_by_id("openDocuments_biddingDocuments")
+            self.drv.execute_script("window.scroll(0, {0}-105)".format(openDocuments_biddingDocuments.location.get("y")))
 
-        self.drv.execute_script("window.scroll(0, {0}-65)".format(openDocuments_biddingDocuments.location.get("y")))
+            Utils.waitFadeIn(self.drv)
+            openDocuments_biddingDocuments.click()
 
-        Utils.waitFadeIn(self.drv)
-        openDocuments_biddingDocuments.click()
+            Utils.waitFadeIn(self.drv)
+            bidDocInput_biddingDocuments =self.drv.find_element_by_id("bidDocInput_biddingDocuments")
+            with(open(os.path.dirname(os.path.abspath(__file__))+'\\forbid.txt','w')) as f:
+                f.write("qqqqqqq")
+            bidDocInput_biddingDocuments.send_keys(os.path.dirname(os.path.abspath(__file__))+"\\forbid.txt")
 
-        Utils.waitFadeIn(self.drv)
-        bidDocInput_biddingDocuments =self.drv.find_element_by_id("bidDocInput_biddingDocuments")
+            self.drv.execute_script("window.scroll(0, {0}-105)".format(submitBid.location.get("y")))
+            Utils.waitFadeIn(self.drv)
+            submitBid.click()
+            Utils.waitFadeIn(self.drv)
 
-        with(open(os.path.dirname(os.path.abspath(__file__))+'\\forbid.txt','w')) as f:
-            f.write("qqqqqqq")
+            WebDriverWait(self.drv, 20).until(
+                EC.visibility_of_element_located((By.XPATH,"//div[@ng-if='bid.isPublished']/span[2]")))
 
-        bidDocInput_biddingDocuments.send_keys(os.path.dirname(os.path.abspath(__file__))+"\\forbid.txt")
+            bidGUID =self.drv.find_element_by_xpath("//div[@ng-if='bid.isPublished']/span[2]")
 
-        self.drv.execute_script("window.scroll(0, {0}-100)".format(submitBid.location.get("y")))
-        Utils.waitFadeIn(self.drv)
+            self.drv.execute_script("window.scroll(0, {0}-105)".format(bidGUID.location.get("y")))
 
-        submitBid.click()
+            print(bidGUID.text())
 
-        bidGUID = WebDriverWait(self.drv, 20).until(
-            EC.visibility_of_element_located((By.XPATH,"//div[@ng-if='bid.isPublished']/span[2]")))
+            return bidGUID.text()
 
-        return bidGUID.text
+        except Exception as e:
+            pass
+
+
 
 
