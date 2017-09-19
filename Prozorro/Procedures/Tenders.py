@@ -23,12 +23,15 @@ def create_below(countLots, countFeatures, countDocs=0, countTenders=1, countIte
     mpg.open_login_form().login(tp["below"]["login"], tp["below"]["password"]);
     uaid = []
     for i in range(countTenders):
-        uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=0, items=1, docs=0, features=0))
+        if tender_dict==1:
+            uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=0, items=1, docs=0, features=0, dic=tp))
+        else:
+            uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=0, items=1, docs=0, features=0))
     return uaid
 
 
 def create_bids(uaids=[],fin=None):
-    print("start bids", datetime().now())
+    print("start bids", datetime.now())
     chrm, tp,mpg = init_driver()
     mpg.open_login_form().login(tp["bids"]["login"], tp["bids"]["password"])
     bid_uaids=[]
@@ -40,7 +43,7 @@ def create_bids(uaids=[],fin=None):
     for i in uaids:
         print(i, end='\t')
         bid_uaids.append(mpg.create_bid(i))
-    print("finish bids", datetime().now())
+    print("finish bids", datetime.now())
     return bid_uaids
 
 

@@ -21,3 +21,8 @@ def waitNotifyToast(drv):
     except Exception  as e:
         print(e)
         print("toast-close not found")
+
+def get_dic_val(dic, _key):
+    key = _key.split(".")
+    return dic[key[0]][key[1]]
+

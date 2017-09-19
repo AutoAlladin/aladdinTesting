@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.support.select import Select
-from Prozorro.Utils import set_datepicker,waitFadeIn
+from Prozorro.Utils import set_datepicker,waitFadeIn, get_dic_val
 
 
 class TenderNew:
@@ -82,11 +82,11 @@ class TenderNew:
             min_step_percentage.send_keys("1.54")
         return self
 
-    def  set_description(self):
+    def set_description(self, dic):
         title = self.drv.find_element_by_id("titleOfTenderForEdit")
-        title.send_keys("below tebder")
         description = self.drv.find_element_by_id("description")
-        description.send_keys("tender description")
+        title.send_keys(get_dic_val(dic, "below.title"))
+        description.send_keys(get_dic_val(dic, "below.description"))
         return self
 
     def add_item(self, lot="0", item="0"):

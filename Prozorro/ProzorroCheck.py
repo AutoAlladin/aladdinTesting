@@ -49,7 +49,8 @@ def check(args):
                                    countLots =_countLots,
                                    countItems = _countItems,
                                    countFeatures = _countFeatures,
-                                   countDocs = _countDocs
+                                   countDocs = _countDocs,
+                                   tender_dict=1
                                  )
 
                 with(open(os.path.dirname(os.path.abspath(__file__))+'\\uaids.json', 'w', encoding="UTF-8")) as uaid_file:

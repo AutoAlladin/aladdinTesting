@@ -59,7 +59,7 @@ class MainPage:
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/BelowThreshold']").click()
 
         return TenderNew(self.drv).\
-            set_description().\
+            set_description(dic).\
             set_curr().\
             set_multilot("false").\
             set_dates().\
