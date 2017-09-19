@@ -6,11 +6,22 @@
 		"login":"test+owner@gmail.com",
 		"password":"00000000",
         "title":"dsafasdfasdfasdfasdfsadfasdf",
-        "description":"sdfgsdfgsdfgsdfgsdfgsdfgsdf"
+        "description":"sdfgsdfgsdfgsdfgsdfgsdfgsdf",
+        "budget":"10000.15",
+        "min_step":"150",
+        "min_step_percentage":"1.54",
+        "item_descr":"item description",
+        "quantity":"100",
+        "search_classifier_cpv":"15000000-8",
+        "search_classifier_other":"000",
+        "zip_code_":"3354345345",
+        "locality_":"Чернівці",
+        "street_":"Європейська",
+        "latutide_":"65",
+        "longitude_":"47"
 	},
 	"bids":{
 		"login":"test+provider@gmail.com",
 		"password":"00000000"
-
 	}
 }

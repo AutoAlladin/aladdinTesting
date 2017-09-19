@@ -69,17 +69,17 @@ class TenderNew:
         is_vat.click()
         return self
 
-    def set_multilot(self, is_multi):
+    def set_multilot(self, dic, is_multi):
         is_multilot = self.drv.find_element_by_xpath("//*[ @id='is_multilot']/div[1]/div[2]")
         if (is_multi == "true"):
             is_multilot.click()
         else:
             budget = self.drv.find_element_by_id("budget")
-            budget.send_keys("10000.15")
+            budget.send_keys(get_dic_val(dic, "below.budget"))
             min_step = self.drv.find_element_by_id("min_step")
-            min_step.send_keys("150")
+            min_step.send_keys(get_dic_val(dic, "below.min_step"))
             min_step_percentage = self.drv.find_element_by_id("min_step_percentage")
-            min_step_percentage.send_keys("1.54")
+            min_step_percentage.send_keys(get_dic_val(dic, "below.min_step_percentage"))
         return self
 
     def set_description(self, dic):
@@ -89,7 +89,7 @@ class TenderNew:
         description.send_keys(get_dic_val(dic, "below.description"))
         return self
 
-    def add_item(self, lot="0", item="0"):
+    def add_item(self, dic, lot="0", item="0"):
         add_procurement_subject=self.drv.find_element_by_id("add_procurement_subject"+lot)
         add_procurement_subject.click()
 
@@ -97,9 +97,9 @@ class TenderNew:
         print(self.drv.current_url)
 
         procurementSubject_description = self.drv.find_element_by_id("procurementSubject_description"+lot+item)
-        procurementSubject_description.send_keys("item description")
+        procurementSubject_description.send_keys(get_dic_val(dic, "below.item_descr"))
         procurementSubject_quantity = self.drv.find_element_by_id("procurementSubject_quantity"+lot+item)
-        procurementSubject_quantity.send_keys("100")
+        procurementSubject_quantity.send_keys(get_dic_val(dic, "below.quantity"))
         select_unit = Select(self.drv.find_element_by_id("select_unit"+lot+item))
         select_unit.select_by_value("LTR")
 
@@ -107,7 +107,7 @@ class TenderNew:
         cls_click_.click()
         add_classifier= WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add-classifier")))
         search_classifier_text = self.drv.find_element_by_id("search-classifier-text")
-        search_classifier_text.send_keys("15000000-8")
+        search_classifier_text.send_keys(get_dic_val(dic, "below.search_classifier_cpv"))
         WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.XPATH, "//li[@aria-selected = 'true']")))
         add_classifier.click()
 
@@ -117,7 +117,7 @@ class TenderNew:
         btn_otherClassifier.click()
         add_classifier = WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add-classifier")))
         search_classifier_text = self.drv.find_element_by_id("search-classifier-text")
-        search_classifier_text.send_keys("000")
+        search_classifier_text.send_keys(get_dic_val(dic, "below.search_classifier_other"))
         WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.XPATH, "//li[@aria-selected = 'true']")))
         add_classifier.click()
 
@@ -135,17 +135,17 @@ class TenderNew:
         Select(select_regions).select_by_value("7")
 
         zip_code_ = self.drv.find_element_by_id("zip_code_"+lot+item)
-        zip_code_.send_keys("3354345345")
+        zip_code_.send_keys(get_dic_val(dic, "below.zip_code_"))
 
         locality_  = self.drv.find_element_by_id("locality_"+lot+item)
-        locality_.send_keys("Чернівці")
+        locality_.send_keys(get_dic_val(dic, "below.locality_"))
         street_ = self.drv.find_element_by_id("street_"+lot+item)
-        street_.send_keys("Європейська")
+        street_.send_keys(get_dic_val(dic, "below.street_"))
 
         latutide_ = self.drv.find_element_by_id("latutide_"+lot+item)
-        latutide_.send_keys("65")
+        latutide_.send_keys(get_dic_val(dic, "below.latutide_"))
         longitude_ = self.drv.find_element_by_id("longitude_"+lot+item)
-        longitude_.send_keys("47")
+        longitude_.send_keys(get_dic_val(dic, "below.longitude_"))
 
         add_item_button = WebDriverWait(self.drv, 20).until(
             EC.element_to_be_clickable((By.ID, "update_" + lot + item)))

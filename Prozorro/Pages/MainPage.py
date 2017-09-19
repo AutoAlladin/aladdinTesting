@@ -61,10 +61,10 @@ class MainPage:
         return TenderNew(self.drv).\
             set_description(dic).\
             set_curr().\
-            set_multilot("false").\
+            set_multilot(dic, "false").\
             set_dates().\
             click_next_button().\
-            add_item().\
+            add_item(dic).\
             click_finish_edit_button().\
             click_publish_button()
 
