@@ -44,7 +44,7 @@ def check(args):
                   countFeatures = {4}
                   countDocs = {5} """.format(proc,_countTenders, _countLots, _countItems, _countFeatures, _countDocs))
             if proc=='below':
-                print(datetime.now())
+                print(datetime.datetime.now())
                 uaids=create_below(countTenders=_countTenders,
                                    countLots =_countLots,
                                    countItems = _countItems,
@@ -54,7 +54,7 @@ def check(args):
 
                 with(open(os.path.dirname(os.path.abspath(__file__))+'\\uaids.json', 'w', encoding="UTF-8")) as uaid_file:
                     json.dump(uaids, uaid_file)
-                print(datetime.now())
+                print(datetime.datetime.now())
                 sys.exit()
             elif arg=='openua':
                 pass
