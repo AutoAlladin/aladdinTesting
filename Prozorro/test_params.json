@@ -3,13 +3,15 @@
 		"url":"https://test-gov.ald.in.ua"
 	},
 	"below":{
-		"login":"test+owner@gmail.com",
-		"password":"00000000",
+		"login":"aladdin.for.test+owner@gmail.com",
+		"password":"123456",
+		"enqueriPeriod":1000,
+		"tenderPeriod":10,
         "title":"dsafasdfasdfasdfasdfsadfasdf",
         "description":"sdfgsdfgsdfgsdfgsdfgsdfgsdf"
 	},
 	"bids":{
-		"login":"test+provider@gmail.com",
+		"login":"senya22051989@gmail.com",
 		"password":"00000000"
 
 	}
