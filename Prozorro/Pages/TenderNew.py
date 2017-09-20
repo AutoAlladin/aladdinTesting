@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.support.select import Select
-from Prozorro.Utils import set_datepicker,waitFadeIn, get_dic_val
+from Prozorro.Utils import set_datepicker,waitFadeIn,get_dic_val, paint
 
 
 class TenderNew:
@@ -28,14 +28,16 @@ class TenderNew:
         try:
             waitFadeIn(self.drv)
             publishPurchase = self.drv.find_element_by_id("publishPurchase")
+            waitFadeIn(self.drv)
             publishPurchase.click()
 
             waitFadeIn(self.drv)
             WebDriverWait(self.drv, 120).until(EC.visibility_of_element_located((By.ID, "purchaseProzorroId")))
             purchaseProzorroId =self.drv.find_element_by_id("purchaseProzorroId")
 
-            return purchaseProzorroId.text
+            return purchaseProzorroId.text, self.drv.current_url
         except WebDriverException as w:
+            paint("publishPurchaseERROR.png")
             raise Exception("Не нажимается кнопка publishPurchase  - \n" + w.msg)
         return None
 
@@ -51,13 +53,23 @@ class TenderNew:
         return self
 
 
-    def set_dates(self):
+    def set_dates(self, dic):
         try:
             dt = datetime.now()
+            print(get_dic_val(dic,"below.enqueriPeriod"))
+            print(get_dic_val(dic,"below.tenderPeriod"))
             set_datepicker(self.drv, "period_enquiry_start", (dt + timedelta(minutes=1)).strftime("%Y-%m-%d %H:%M:%S"))
-            set_datepicker(self.drv, "period_enquiry_end", (dt + timedelta(minutes=2)).strftime("%Y-%m-%d %H:%M:%S"))
-            set_datepicker(self.drv, "period_tender_start", (dt + timedelta(minutes=2)).strftime("%Y-%m-%d %H:%M:%S"))
-            set_datepicker(self.drv, "period_tender_end", (dt + timedelta(minutes=600)).strftime("%Y-%m-%d %H:%M:%S"))
+            set_datepicker(self.drv, "period_enquiry_end", (dt + timedelta(minutes=get_dic_val(dic,"below.enqueriPeriod"))).strftime("%Y-%m-%d %H:%M:%S"))
+            set_datepicker(self.drv, "period_tender_start", (dt + timedelta(minutes=get_dic_val(dic,"below.enqueriPeriod"))).strftime("%Y-%m-%d %H:%M:%S"))
+            set_datepicker(self.drv, "period_tender_end", (dt + timedelta(minutes=get_dic_val(dic,"below.tenderPeriod"))).strftime("%Y-%m-%d %H:%M:%S"))
+        except Exception as e:
+            raise Exception("Чтото не так с датами шапки тендера - \n" + e)
+        return self
+
+    def set_open_tender_dates(self, dic):
+        try:
+            dt = datetime.now()
+            set_datepicker(self.drv, "period_tender_end", (dt + timedelta(minutes=get_dic_val(dic, "open.tenderPeriod"))).strftime("%Y-%m-%d %H:%M:%S"))
         except Exception as e:
             raise Exception("Чтото не так с датами шапки тендера - \n" + e)
         return self

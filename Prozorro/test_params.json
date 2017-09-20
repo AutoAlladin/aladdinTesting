@@ -4,9 +4,9 @@
 	},
 	"below":{
 		"login":"aladdin.for.test+owner@gmail.com",
-		"password":"123456",
-		"enqueriPeriod":1000,
-		"tenderPeriod":10,
+		"password":"zxcvbn00",
+		"enqueriPeriod":2,
+		"tenderPeriod":600,
         "title":"dsafasdfasdfasdfasdfsadfasdf",
         "description":"sdfgsdfgsdfgsdfgsdfgsdfgsdf",
         "budget":"10000.15",
@@ -22,8 +22,12 @@
         "latutide_":"65",
         "longitude_":"47"
 	},
+    "open":{
+		"tenderPeriod":100
+	},
 	"bids":{
 		"login":"senya22051989@gmail.com",
-		"password":"00000000"
+		"password":"123456"
+
 	}
 }

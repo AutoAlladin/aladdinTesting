@@ -13,6 +13,7 @@ def init_driver():
     with open(os.path.dirname(os.path.abspath(__file__))+'\\..\\test_params.json', 'r', encoding="UTF-8") as test_params_file:
        tp = json.load(test_params_file)
     chrm = webdriver.Chrome()
+    chrm.maximize_window()
     chrm.implicitly_wait(10)
     chrm.get(tp["main"]["url"])
     return chrm, tp, MainPage(chrm)
@@ -30,7 +31,7 @@ def create_below(countLots, countFeatures, countDocs=0, countTenders=1, countIte
     return uaid
 
 
-def create_bids(uaids=[],fin=None):
+def create_bids(uaids=[],fin=None, prepare=0):
     print("start bids", datetime.datetime.now())
     chrm, tp,mpg = init_driver()
     mpg.open_login_form().login(tp["bids"]["login"], tp["bids"]["password"])
@@ -40,9 +41,14 @@ def create_bids(uaids=[],fin=None):
         with open(fin, 'r', encoding="UTF-8") as bids_uid_file:
             uaids = json.load(bids_uid_file)
 
-    for i in uaids:
-        print(i, end='\t')
-        bid_uaids.append(mpg.create_bid(i))
+
+        for i in uaids:
+            print(i)
+            if prepare == 0:
+                bid_uaids.append(mpg.create_bid(i[0],prepare))
+            else:
+                bid_uaids.append(mpg.create_bid(i[1],prepare))
+
     print("finish bids", datetime.datetime.now())
     return bid_uaids
 
@@ -54,4 +60,17 @@ def open_tender(id,role):
         mpg.open_login_form().login(tp["bids"]["login"], tp["bids"]["password"])
 
     mpg.open_tender(id)
+
+
+def create_concurentUA(countLots, countFeatures, countDocs=0, countTenders=1, countItems=1, tender_dict=None):
+    chrm, tp,mpg = init_driver()
+    mpg.open_login_form().login(tp["below"]["login"], tp["below"]["password"]);
+    uaid = []
+    if tender_dict == 1:
+        for i in range(countTenders):
+            uaid.append(mpg.create_tender(procurementMethodType="concurentUA", lots=0, items=1, docs=0, features=0, dic=tp))
+    else:
+        for i in range(countTenders):
+            uaid.append(mpg.create_tender(procurementMethodType="concurentUA", lots=0, items=1, docs=0, features=0))
+    return uaid
 

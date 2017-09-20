@@ -6,7 +6,7 @@ from Prozorro.Procedures.Tenders import *
 
 
 def list_params():
-    return "-n [below,openua,openeu]  - создать тендер \n" \
+    return "-n [below,openua,openeu, concurenrUA]  - создать тендер \n" \
            "-o [uaid or guid]         - открыть просмотр \n" \
            "-e [uaid or guid]         - открыть на редактирование\n" \
            "-b [uaid or guid]         - подать бид\n"
@@ -57,9 +57,24 @@ def check(args):
                     json.dump(uaids, uaid_file)
                 print(datetime.datetime.now())
                 sys.exit()
-            elif arg=='openua':
+            elif proc == 'concurentUA':
+                print(datetime.datetime.now())
+                uaids = create_concurentUA(countTenders=_countTenders,
+                                           countLots=_countLots,
+                                           countItems=_countItems,
+                                           countFeatures=_countFeatures,
+                                           countDocs=_countDocs,
+                                           tender_dict=1
+                                           )
+
+                with(
+                        open(os.path.dirname(os.path.abspath(__file__)) + '\\ConcurentUA_ids.json', 'w',
+                             encoding="UTF-8")) as uaid_file:
+                    json.dump(uaids, uaid_file)
+                print(datetime.datetime.now())
+                sys.exit()
                 pass
-            elif arg=='openeu':
+            elif proc == 'openeu':
                 pass
             sys.exit()
         elif opt == '-o':
@@ -77,9 +92,11 @@ def check(args):
             print("add bid " + arg)
             if arg == "add_one":
                 create_bids(arg)
+                sys.exit()
             elif arg == "add_many":
-                print(create_bids(fin=os.path.dirname(os.path.abspath(__file__))+'\\uaids.json'))
-            sys.exit()
+                print(create_bids(fin=os.path.dirname(os.path.abspath(__file__))+'\\uaids.json',prepare=1))
+                time.sleep(6000)
+
 
 
 

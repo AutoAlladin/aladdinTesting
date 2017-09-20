@@ -23,7 +23,7 @@ class TenderView:
                 EC.element_to_be_clickable("md-next-button"))
             md_next_button.click()
         except:
-            print("md_next_button not found")
+            pass #print("md_next_button not found")
 
         waitNotifyToast(self.drv)
 

@@ -1,8 +1,12 @@
+import os
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 roles=["owner", "provider", "viewer"]
+
+def paint(drv, name):
+    drv.get_screenshot_as_file(os.path.dirname(os.path.abspath(__file__)+"\\"+name))
 
 def set_datepicker(drv, ID, value):
     drv.execute_script("SetDateTimePickerValue(\'"+ID+"\',\'"+value+"\')")
@@ -19,8 +23,7 @@ def waitNotifyToast(drv):
         waitFadeIn(drv)
         close_toast.click()
     except Exception  as e:
-        print(e)
-        print("toast-close not found")
+        pass #print("toast-close not found")
 
 def get_dic_val(dic, _key):
     key = _key.split(".")
