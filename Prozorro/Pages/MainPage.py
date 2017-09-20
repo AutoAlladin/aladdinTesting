@@ -42,28 +42,32 @@ class MainPage:
         waitFadeIn(self.drv)
 
         tenderLink =WebDriverWait(self.drv, 20).until(
-            EC.visibility_of_element_located((By.XPATH,"//span[text()='"+uaid+"']/../a")))
+            EC.visibility_of_element_located((By.XPATH, "//span[text()='"+uaid+"']/../a")))
         tenderLink.click()
 
         WebDriverWait(self.drv, 20).until(
-            EC.visibility_of_element_located((By.ID,"goToListPurchase")))
+            EC.visibility_of_element_located((By.ID, "goToListPurchase")))
 
         return TenderView(self.drv)
 
 
     def create_tender(self, procurementMethodType, lots=0, items=1, docs=0, features=0, dic=None):
-        self.btn_create_purchase=self.drv.find_element_by_id("btn_create_purchase");
-        self.btn_create_purchase.click();
+        self.btn_create_purchase=self.drv.find_element_by_id("btn_create_purchase")
+        self.btn_create_purchase.click()
 
         if(procurementMethodType=="belowThreshold"):
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/BelowThreshold']").click()
+        is_multilot = "true"
+        if lots == 0:
+            is_multilot="false"
 
         return TenderNew(self.drv).\
             set_description(dic).\
             set_curr().\
-            set_multilot(dic, "false").\
+            set_multilot(dic, is_multilot).\
             set_dates().\
             click_next_button().\
+            add_lot(lots, dic).\
             add_item(dic).\
             click_finish_edit_button().\
             click_publish_button()

@@ -82,6 +82,27 @@ class TenderNew:
             min_step_percentage.send_keys(get_dic_val(dic, "below.min_step_percentage"))
         return self
 
+    def add_lot(self, count, dic):
+        if count == 0:
+            return self
+        for currentLot in range(count):
+            lotid = str(currentLot+1)
+            is_add_lot = self.drv.find_element_by_id("buttonAddNewLot")
+            is_add_lot.click()
+            title_of_lot = self.drv.find_element_by_id("lotTitle_" + lotid)
+            title_of_lot.send_keys(get_dic_val(dic, "below.title_ofLot"))
+            description_of_lot = self.drv.find_element_by_id("lotDescription_" + lotid)
+            description_of_lot.send_keys(get_dic_val(dic, "below.description_of_lot"))
+            budget_of_lot = self.drv.find_element_by_id("lotBudget_" + lotid)
+            budget_of_lot.send_keys(get_dic_val(dic, "below.budget_of_lot"))
+            min_step_of_lot = self.drv.find_element_by_id("lotMinStep_" + lotid)
+            min_step_of_lot.send_keys(get_dic_val(dic, "below.min_step_of_lot"))
+            min_step_of_lot_perc = self.drv.find_element_by_id("lotMinStepPercentage_" + lotid)
+            min_step_of_lot_perc.send_keys(get_dic_val(dic, "below.min_step_of_lot_perc"))
+            save_lot = self.drv.find_element_by_xpath(".//*[@id='divLotControllerEdit']/div/div/div/div[8]/div/button[1]").click()
+            next_step = self.drv.find_element_by_id("next_step").click()
+        return self
+
     def set_description(self, dic):
         title = self.drv.find_element_by_id("titleOfTenderForEdit")
         description = self.drv.find_element_by_id("description")

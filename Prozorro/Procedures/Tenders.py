@@ -19,18 +19,18 @@ def init_driver():
 
 
 def create_below(countLots, countFeatures, countDocs=0, countTenders=1, countItems=1, tender_dict=None):
-    chrm, tp,mpg = init_driver()
+    chrm, tp, mpg = init_driver()
     mpg.open_login_form().login(tp["below"]["login"], tp["below"]["password"])
     uaid = []
     for i in range(countTenders):
         if tender_dict == 1:
-            uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=0, items=1, docs=0, features=0, dic=tp))
+            uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=countLots, items=1, docs=0, features=0, dic=tp))
         else:
-            uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=0, items=1, docs=0, features=0))
+            uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=countLots, items=1, docs=0, features=0))
     return uaid
 
 
-def create_bids(uaids=[],fin=None):
+def create_bids(uaids=[], fin=None):
     print("start bids", datetime.datetime.now())
     chrm, tp,mpg = init_driver()
     mpg.open_login_form().login(tp["bids"]["login"], tp["bids"]["password"])
@@ -50,7 +50,7 @@ def create_bids(uaids=[],fin=None):
 
 def open_tender(id,role):
     chrm,tp, mpg=init_driver()
-    if str(role) in Utils.roles and role=="provider":
+    if str(role) in Utils.roles and role == "provider":
         mpg.open_login_form().login(tp["bids"]["login"], tp["bids"]["password"])
 
     mpg.open_tender(id)

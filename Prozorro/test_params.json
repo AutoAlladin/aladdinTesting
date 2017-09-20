@@ -5,8 +5,8 @@
 	"below":{
 		"login":"test+owner@gmail.com",
 		"password":"00000000",
-        "title":"dsafasdfasdfasdfasdfsadfasdf",
-        "description":"sdfgsdfgsdfgsdfgsdfgsdfgsdf",
+        "title":"Муркотати вистріпати фарфур викот.",
+        "description":"Держиво прогреміти пообскрібати муравчаний драб бродити поновини.",
         "budget":"10000.15",
         "min_step":"150",
         "min_step_percentage":"1.54",
@@ -18,7 +18,12 @@
         "locality_":"Чернівці",
         "street_":"Європейська",
         "latutide_":"65",
-        "longitude_":"47"
+        "longitude_":"47",
+        "title_ofLot":"i-01355d1b: Періодичні видання оригінальні на 2016 рік (газети України, журнали України, журнали Росії)",
+        "description_of_lot":"Кремпілець драгун п'яно бердник кишкатий попівський тіснитися порозгризати.",
+        "budget_of_lot":"5000",
+        "min_step_of_lot":"150",
+        "min_step_of_lot_perc":"1.54"
 	},
 	"bids":{
 		"login":"test+provider@gmail.com",
