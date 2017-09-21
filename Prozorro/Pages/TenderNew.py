@@ -1,3 +1,4 @@
+import os
 from selenium import webdriver
 from datetime import datetime, timedelta
 from selenium.webdriver.common.by import By
@@ -37,7 +38,7 @@ class TenderNew:
 
             return purchaseProzorroId.text, self.drv.current_url
         except WebDriverException as w:
-            paint("publishPurchaseERROR.png")
+            paint(self.drv, "publishPurchaseERROR.png")
             raise Exception("Не нажимается кнопка publishPurchase  - \n" + w.msg)
         return None
 
@@ -129,67 +130,116 @@ class TenderNew:
         description.send_keys(get_dic_val(dic, "below.description"))
         return self
 
-    def add_item(self, dic, lot="0", item="0"):
-        add_procurement_subject=self.drv.find_element_by_id("add_procurement_subject"+lot+item)
-        add_procurement_subject.click()
 
-        add_item_button = WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "update_"+lot+item)))
-        print(self.drv.current_url)
+    def set_delivery_adress(self, dic, item_id):
+        select_countries = self.drv.find_element_by_id("select_countries" + item_id)
+        Select(select_countries).select_by_value("1")
+        select_regions = self.drv.find_element_by_id("select_regions" + item_id)
+        WebDriverWait(self.drv, 20).until(EC.element_to_be_clickable((By.ID, "select_regions" + item_id)))
+        Select(select_regions).select_by_value("7")
+        zip_code_ = self.drv.find_element_by_id("zip_code_" + item_id)
+        zip_code_.send_keys(get_dic_val(dic, "below.zip_code_"))
+        locality_ = self.drv.find_element_by_id("locality_" + item_id)
+        locality_.send_keys(get_dic_val(dic, "below.locality_"))
+        street_ = self.drv.find_element_by_id("street_" + item_id)
+        street_.send_keys(get_dic_val(dic, "below.street_"))
+        latutide_ = self.drv.find_element_by_id("latutide_" + item_id)
+        latutide_.send_keys(get_dic_val(dic, "below.latutide_"))
+        longitude_ = self.drv.find_element_by_id("longitude_" + item_id)
+        longitude_.send_keys(get_dic_val(dic, "below.longitude_"))
 
-        procurementSubject_description = self.drv.find_element_by_id("procurementSubject_description"+lot+item)
-        procurementSubject_description.send_keys(get_dic_val(dic, "below.item_descr"))
-        procurementSubject_quantity = self.drv.find_element_by_id("procurementSubject_quantity"+lot+item)
-        procurementSubject_quantity.send_keys(get_dic_val(dic, "below.quantity"))
-        select_unit = Select(self.drv.find_element_by_id("select_unit"+lot+item))
-        select_unit.select_by_value("LTR")
+    def set_delivery_period(self, item_id):
+        set_datepicker(self.drv, "delivery_start_" + item_id,
+                       (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%S"))
+        set_datepicker(self.drv, "delivery_end_" + item_id,
+                       (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%S"))
 
-        cls_click_ = self.drv.find_element_by_id("cls_click_")
-        cls_click_.click()
-        add_classifier= WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add-classifier")))
-        search_classifier_text = self.drv.find_element_by_id("search-classifier-text")
-        search_classifier_text.send_keys(get_dic_val(dic, "below.search_classifier_cpv"))
-        WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.XPATH, "//li[@aria-selected = 'true']")))
-        add_classifier.click()
-
-        WebDriverWait(self.drv, 20).until(EC.invisibility_of_element_located((By.XPATH, "//div[@id = 'modDialog']")))
-
+    def set_otherDK(self, dic):
         btn_otherClassifier = self.drv.find_element_by_id("btn_otherClassifier")
         btn_otherClassifier.click()
+        self.set_classifier(dic)
+
+    def set_dk2015(self, dic):
+        cls_click_ = self.drv.find_element_by_id("cls_click_")
+        cls_click_.click()
+        self.set_classifier(dic)
+
+    def set_classifier(self, dic):
         add_classifier = WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add-classifier")))
         search_classifier_text = self.drv.find_element_by_id("search-classifier-text")
         search_classifier_text.send_keys(get_dic_val(dic, "below.search_classifier_other"))
         WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.XPATH, "//li[@aria-selected = 'true']")))
         add_classifier.click()
 
-        set_datepicker(self.drv, "delivery_start_"+lot+item,
-                       (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%S"))
-        set_datepicker(self.drv, "delivery_end_" + lot + item,
-                       (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%S"))
+    def set_item_base_info(self, dic, item_id):
+        procurementSubject_description = self.drv.find_element_by_id("procurementSubject_description" + item_id)
+        procurementSubject_description.send_keys(get_dic_val(dic, "below.item_descr"))
+        procurementSubject_quantity = self.drv.find_element_by_id("procurementSubject_quantity" + item_id)
+        procurementSubject_quantity.send_keys(get_dic_val(dic, "below.quantity"))
+        select_unit = Select(self.drv.find_element_by_id("select_unit" + item_id))
+        select_unit.select_by_value("LTR")
 
-        select_countries = self.drv.find_element_by_id("select_countries"+lot+item)
-        Select(select_countries).select_by_value("1")
+    def click_add_item(self, item_id):
+        try:
+            WebDriverWait(self.drv, 20).until(
+                EC.visibility_of_element_located((By.ID, "update_" + item_id)))
+
+            add_item_button = self.drv.find_element_by_id("update_" + item_id)
+            add_item_button.click()
+            print(self.drv.current_url)
+        except Exception as e:
+            raise  Exception(" Не нажимается кнопка add_item_button: update_" + item_id+e)
+            paint(self.drv, "update_" + item_id+"ERROR.png")
 
 
-        select_regions = self.drv.find_element_by_id("select_regions"+lot+item)
-        WebDriverWait(self.drv, 20).until(EC.element_to_be_clickable((By.ID, "select_regions" + lot + item)))
-        Select(select_regions).select_by_value("7")
+    def add_item(self, dic, lot=0, item=0):
+        try:
+            if lot==0:
+                self.set_item(dic, item, "0")
+            else:
+                for j in range(lot):
+                        self.set_item(dic, item, j+1)
 
-        zip_code_ = self.drv.find_element_by_id("zip_code_"+lot+item)
-        zip_code_.send_keys(get_dic_val(dic, "below.zip_code_"))
-
-        locality_  = self.drv.find_element_by_id("locality_"+lot+item)
-        locality_.send_keys(get_dic_val(dic, "below.locality_"))
-        street_ = self.drv.find_element_by_id("street_"+lot+item)
-        street_.send_keys(get_dic_val(dic, "below.street_"))
-
-        latutide_ = self.drv.find_element_by_id("latutide_"+lot+item)
-        latutide_.send_keys(get_dic_val(dic, "below.latutide_"))
-        longitude_ = self.drv.find_element_by_id("longitude_"+lot+item)
-        longitude_.send_keys(get_dic_val(dic, "below.longitude_"))
-
-        add_item_button = WebDriverWait(self.drv, 20).until(
-            EC.element_to_be_clickable((By.ID, "update_" + lot + item)))
-        add_item_button.click()
+        except Exception as e:
+            raise Exception(" Не нажимается кнопка add_item_button "+ e)
+            paint(self.drv, "add_item_" + item_id + "ERROR.png")
 
         return self
 
+    def set_item(self, dic, item, j):
+        for i in range(item):
+            add_procurement_subject = self.drv.find_element_by_id("add_procurement_subject" + str(j))
+            add_procurement_subject.click()
+            item_id = str(j) + "0"
+            self.set_item_base_info(dic, item_id)
+            self.set_dk2015(dic)
+            WebDriverWait(self.drv, 20).until(EC.invisibility_of_element_located((By.XPATH, "//div[@id = 'modDialog']")))
+            self.set_otherDK(dic)
+            self.set_delivery_period(item_id)
+            add_item_button = WebDriverWait(self.drv, 20).until(
+                EC.element_to_be_clickable((By.ID, "update_" + item_id)))
+            self.drv.execute_script("window.scroll(0, {0}-105)".format(add_item_button.location.get("y")))
+            self.set_delivery_adress(dic, item_id)
+            self.click_add_item(item_id)
+
+    def add_doc(self, docs):
+        documents_tab=self.drv.find_element_by_id("documents-tab")
+        documents_tab.click()
+
+        upload_document=self.drv.find_element_by_id("upload_document")
+        upload_document.click()
+
+        WebDriverWait(self.drv, 20).until(
+            EC.element_to_be_selected((By.ID, "categorySelect")))
+
+        Select(self.drv.find_element_by_id("categorySelect")).select_by_value("biddingDocuments")
+        Select(self.drv.find_element_by_id("documentOfSelect")).select_by_value("Tender")
+
+
+        with(open(os.path.dirname(os.path.abspath(__file__)) + '\\fortender.txt', 'w')) as f:
+            f.write("wwwwwww")
+        fileInput=self.drv.find_element_by_id("fileInput")
+        fileInput.send_keys(os.path.dirname(os.path.abspath(__file__)) + "\\fortender.txt")
+
+        save_file==self.drv.find_element_by_id("save_file")
+        save_file

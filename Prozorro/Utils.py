@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 roles=["owner", "provider", "viewer"]
 
 def paint(drv, name):
-    drv.get_screenshot_as_file(os.path.dirname(os.path.abspath(__file__)+"\\"+name))
+    drv.get_screenshot_as_file(os.path.dirname(os.path.abspath(__file__)+"\\output\\"+name))
 
 def set_datepicker(drv, ID, value):
     drv.execute_script("SetDateTimePickerValue(\'"+ID+"\',\'"+value+"\')")

@@ -24,10 +24,10 @@ def create_below(countLots, countFeatures, countDocs=0, countTenders=1, countIte
     mpg.open_login_form().login(tp["below"]["login"], tp["below"]["password"])
     uaid = []
     for i in range(countTenders):
-        if tender_dict == 1:
-            uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=countLots, items=1, docs=0, features=0, dic=tp))
+        if tender_dict:
+            uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=countLots, items=countItems, docs=0, features=0, dic=tp))
         else:
-            uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=countLots, items=1, docs=0, features=0))
+            uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=countLots, items=countItems, docs=0, features=0))
     return uaid
 
 

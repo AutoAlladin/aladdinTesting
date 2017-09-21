@@ -50,7 +50,7 @@ def check(args):
                                    countItems = _countItems,
                                    countFeatures = _countFeatures,
                                    countDocs = _countDocs,
-                                   tender_dict=1
+                                   tender_dict=True
                                  )
 
                 with(open(os.path.dirname(os.path.abspath(__file__))+'\\uaids.json', 'w', encoding="UTF-8")) as uaid_file:

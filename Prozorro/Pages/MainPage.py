@@ -42,11 +42,11 @@ class MainPage:
         waitFadeIn(self.drv)
 
         tenderLink =WebDriverWait(self.drv, 20).until(
-            EC.visibility_of_element_located((By.XPATH, "//span[text()='"+uaid+"']/../a")))
+            EC.visibility_of_element_located((By.XPATH,"//span[text()='"+uaid+"']/../a")))
         tenderLink.click()
 
         WebDriverWait(self.drv, 20).until(
-            EC.visibility_of_element_located((By.ID, "goToListPurchase")))
+            EC.visibility_of_element_located((By.ID,"goToListPurchase")))
 
         return TenderView(self.drv)
 
@@ -63,22 +63,24 @@ class MainPage:
         self.btn_create_purchase=self.drv.find_element_by_id("btn_create_purchase")
         self.btn_create_purchase.click()
 
-        if(procurementMethodType=="belowThreshold"):
-            self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/BelowThreshold']").click()
         is_multilot = "true"
         if lots == 0:
-            is_multilot="false"
+            is_multilot = "false"
 
-        return TenderNew(self.drv).\
-            set_description(dic).\
-            set_curr().\
-            set_multilot(dic, is_multilot).\
-            set_dates().\
-            click_next_button().\
-            add_lot(lots, dic).\
-            add_item(dic).\
-            click_finish_edit_button().\
-            click_publish_button()
+        if(procurementMethodType=="belowThreshold"):
+            self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/BelowThreshold']").click()
+            return TenderNew(self.drv).\
+                set_description(dic).\
+                set_curr().\
+                set_multilot(dic, is_multilot).\
+                set_dates(dic).\
+                click_next_button().\
+                add_lot(lots, dic).\
+                add_item(dic, lots, items). \
+                click_next_button(). \
+                add_doc(docs).\
+                click_finish_edit_button().\
+                click_publish_button()
 
         elif procurementMethodType=="concurentUA":
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/CompetitiveDialogueUA']").click()
@@ -91,8 +93,8 @@ class MainPage:
                 add_item(). \
                 click_finish_edit_button(). \
                 click_publish_button()
-
         return None
+
 
     def create_bid(self, uaid, prepare):
         if prepare==0:
