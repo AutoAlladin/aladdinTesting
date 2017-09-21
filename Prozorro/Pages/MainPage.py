@@ -50,6 +50,14 @@ class MainPage:
 
         return TenderView(self.drv)
 
+    def open_tender_url(self,url):
+        self.drv.execute_script('''window.open("{0}", "_blank");'''.format(url))
+        self.drv.switch_to.window(self.drv.window_handles[-1])
+        WebDriverWait(self.drv, 20).until(
+            EC.visibility_of_element_located((By.ID, "goToListPurchase")))
+        return TenderView(self.drv)
+
+
 
     def create_tender(self, procurementMethodType, lots=0, items=1, docs=0, features=0, dic=None):
         self.btn_create_purchase=self.drv.find_element_by_id("btn_create_purchase")
@@ -72,10 +80,29 @@ class MainPage:
             click_finish_edit_button().\
             click_publish_button()
 
-    def create_bid(self, uaid):
-        return self.open_tender(uaid).\
+        elif procurementMethodType=="concurentUA":
+            self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/CompetitiveDialogueUA']").click()
+            return TenderNew(self.drv). \
+                set_description(dic). \
+                set_curr(). \
+                set_multilot("false"). \
+                set_open_tender_dates(dic). \
+                click_next_button(). \
+                add_item(). \
+                click_finish_edit_button(). \
+                click_publish_button()
+
+        return None
+
+    def create_bid(self, uaid, prepare):
+        if prepare==0:
+            return self.open_tender(uaid).\
                 open_bids().\
-                new();
+                new(uaid);
+        else:
+            return self.open_tender_url(uaid). \
+                open_bids(). \
+                new(prepare,uaid);
 
 
 

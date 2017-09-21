@@ -3,8 +3,10 @@
 		"url":"https://test-gov.ald.in.ua"
 	},
 	"below":{
-		"login":"test+owner@gmail.com",
-		"password":"00000000",
+		"login":"aladdin.for.test+owner@gmail.com",
+		"password":"zxcvbn00",
+		"enqueriPeriod":2,
+		"tenderPeriod":600,
         "title":"Муркотати вистріпати фарфур викот.",
         "description":"Держиво прогреміти пообскрібати муравчаний драб бродити поновини.",
         "budget":"10000.15",
@@ -25,8 +27,12 @@
         "min_step_of_lot":"150",
         "min_step_of_lot_perc":"1.54"
 	},
+    "open":{
+		"tenderPeriod":100
+	},
 	"bids":{
-		"login":"test+provider@gmail.com",
-		"password":"00000000"
+		"login":"senya22051989@gmail.com",
+		"password":"123456"
+
 	}
 }
