@@ -85,22 +85,29 @@ class TenderNew:
     def add_lot(self, count, dic):
         if count == 0:
             return self
-        for currentLot in range(count):
-            lotid = str(currentLot+1)
-            is_add_lot = self.drv.find_element_by_id("buttonAddNewLot")
-            is_add_lot.click()
-            title_of_lot = self.drv.find_element_by_id("lotTitle_" + lotid)
-            title_of_lot.send_keys(get_dic_val(dic, "below.title_ofLot"))
-            description_of_lot = self.drv.find_element_by_id("lotDescription_" + lotid)
-            description_of_lot.send_keys(get_dic_val(dic, "below.description_of_lot"))
-            budget_of_lot = self.drv.find_element_by_id("lotBudget_" + lotid)
-            budget_of_lot.send_keys(get_dic_val(dic, "below.budget_of_lot"))
-            min_step_of_lot = self.drv.find_element_by_id("lotMinStep_" + lotid)
-            min_step_of_lot.send_keys(get_dic_val(dic, "below.min_step_of_lot"))
-            min_step_of_lot_perc = self.drv.find_element_by_id("lotMinStepPercentage_" + lotid)
-            min_step_of_lot_perc.send_keys(get_dic_val(dic, "below.min_step_of_lot_perc"))
-            save_lot = self.drv.find_element_by_xpath(".//*[@id='divLotControllerEdit']/div/div/div/div[8]/div/button[1]").click()
-            next_step = self.drv.find_element_by_id("next_step").click()
+        if count >= 1:
+            for currentLot in range(count):
+                lotid = str(1)
+                #lotid = str(currentLot+1)
+                is_add_lot = self.drv.find_element_by_id("buttonAddNewLot")
+                is_add_lot.click()
+                title_of_lot = self.drv.find_element_by_id("lotTitle_" + lotid)
+                title_of_lot.send_keys(get_dic_val(dic, "below.title_ofLot"))
+                description_of_lot = self.drv.find_element_by_id("lotDescription_" + lotid)
+                description_of_lot.send_keys(get_dic_val(dic, "below.description_of_lot"))
+                budget_of_lot = self.drv.find_element_by_id("lotBudget_" + lotid)
+                budget_of_lot.send_keys(get_dic_val(dic, "below.budget_of_lot"))
+                min_step_of_lot = self.drv.find_element_by_id("lotMinStep_" + lotid)
+                min_step_of_lot.send_keys(get_dic_val(dic, "below.min_step_of_lot"))
+                min_step_of_lot_perc = self.drv.find_element_by_id("lotMinStepPercentage_" + lotid)
+                min_step_of_lot_perc.send_keys(get_dic_val(dic, "below.min_step_of_lot_perc"))
+                save_lot = self.drv.find_element_by_xpath(".//*[@id='divLotControllerEdit']/div/div/div/div[8]/div/button[1]").click()
+
+            next_step = self.drv.find_element_by_id("next_step")
+            self.drv.execute_script("window.scroll(0, " + str(next_step.location["y"]) + ")")
+            waitFadeIn(self.drv)
+            next_step.click()
+
         return self
 
     def set_description(self, dic):
@@ -111,7 +118,7 @@ class TenderNew:
         return self
 
     def add_item(self, dic, lot="0", item="0"):
-        add_procurement_subject=self.drv.find_element_by_id("add_procurement_subject"+lot)
+        add_procurement_subject=self.drv.find_element_by_id("add_procurement_subject"+lot+item)
         add_procurement_subject.click()
 
         add_item_button = WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "update_"+lot+item)))
