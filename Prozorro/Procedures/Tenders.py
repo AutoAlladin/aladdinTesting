@@ -25,9 +25,9 @@ def create_below(countLots, countFeatures, countDocs=0, countTenders=1, countIte
     uaid = []
     for i in range(countTenders):
         if tender_dict:
-            uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=countLots, items=countItems, docs=0, features=0, dic=tp))
+            uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=countLots, items=countItems, docs=countDocs, features=0, dic=tp))
         else:
-            uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=countLots, items=countItems, docs=0, features=0))
+            uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=countLots, items=countItems, docs=countDocs, features=0))
     return uaid
 
 

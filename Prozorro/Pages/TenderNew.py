@@ -33,13 +33,24 @@ class TenderNew:
             publishPurchase.click()
 
             waitFadeIn(self.drv)
+
             WebDriverWait(self.drv, 120).until(EC.visibility_of_element_located((By.ID, "purchaseProzorroId")))
-            purchaseProzorroId =self.drv.find_element_by_id("purchaseProzorroId")
+            purchaseProzorroId = self.drv.find_element_by_id("purchaseProzorroId")
 
             return purchaseProzorroId.text, self.drv.current_url
         except WebDriverException as w:
+            toast_title = ""
+            toast_message = ""
+            try:
+                WebDriverWait(self.drv, 1).until(EC.visibility_of_element_located((By.XPATH, "//div[@class='toast toast-error']")))
+                toast_title =self.drv.find_element_by_xpath("//div[@class='toast toast-error']//div[@class='toast-title']").text()
+                toast_message = self.drv.find_element_by_xpath("//div[@class='toast toast-error']//div[@class='toast-message']").text()
+            except:
+                pass
             paint(self.drv, "publishPurchaseERROR.png")
-            raise Exception("Не нажимается кнопка publishPurchase  - \n" + w.msg)
+            raise Exception("Не нажимается кнопка publishPurchase {0}  - \n\t {1}\t{2}".\
+                            format(self.drv.current_url, toast_title, toast_message) +\
+                            w.msg)
         return None
 
 
@@ -230,7 +241,7 @@ class TenderNew:
         upload_document.click()
 
         WebDriverWait(self.drv, 20).until(
-            EC.element_to_be_selected((By.ID, "categorySelect")))
+            EC.visibility_of_element_located((By.ID,"categorySelect")))
 
         Select(self.drv.find_element_by_id("categorySelect")).select_by_value("biddingDocuments")
         Select(self.drv.find_element_by_id("documentOfSelect")).select_by_value("Tender")
@@ -241,5 +252,7 @@ class TenderNew:
         fileInput=self.drv.find_element_by_id("fileInput")
         fileInput.send_keys(os.path.dirname(os.path.abspath(__file__)) + "\\fortender.txt")
 
-        save_file==self.drv.find_element_by_id("save_file")
-        save_file
+        save_file=self.drv.find_element_by_id("save_file")
+        save_file.click()
+
+        return self

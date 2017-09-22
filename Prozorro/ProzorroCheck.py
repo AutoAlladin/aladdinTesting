@@ -31,12 +31,17 @@ def check(args):
             _countFeatures = 0
             _countDocs = 0
 
-            if len(arg) >= 2:
-                _countTenders = int(arg[1][1:])
-            if len(arg) >= 3:
-                _countLots = int(arg[2][1:])
-            if len(arg) >= 4:
-                _countItems = int(arg[3][1:])
+            for k in arg[1:]:
+                if k[0] == "N":
+                    _countTenders = int(k[1:])
+                elif k[0] == "L":
+                    _countLots = int(k[1:])
+                elif k[0] == "I":
+                    _countItems = int(k[1:])
+                elif k[0] == "F":
+                    _countFeatures = int(k[1:])
+                elif k[0] == "D":
+                    _countDocs = int(k[1:])
 
             print("""new tender {0}  countTenders = {1}
                   countLots = {2}
