@@ -68,8 +68,6 @@ class TenderNew:
     def set_dates(self, dic):
         try:
             dt = datetime.now()
-            print(get_dic_val(dic,"below.enqueriPeriod"))
-            print(get_dic_val(dic,"below.tenderPeriod"))
             set_datepicker(self.drv, "period_enquiry_start", (dt + timedelta(minutes=1)).strftime("%Y-%m-%d %H:%M:%S"))
             set_datepicker(self.drv, "period_enquiry_end", (dt + timedelta(minutes=get_dic_val(dic,"below.enqueriPeriod"))).strftime("%Y-%m-%d %H:%M:%S"))
             set_datepicker(self.drv, "period_tender_start", (dt + timedelta(minutes=get_dic_val(dic,"below.enqueriPeriod"))).strftime("%Y-%m-%d %H:%M:%S"))
@@ -143,11 +141,13 @@ class TenderNew:
 
 
     def set_delivery_adress(self, dic, item_id):
-        select_countries = self.drv.find_element_by_id("select_countries" + item_id)
+        select_countries = self.drv.find_element_by_xpath("//div[@id='procurementSubjectCountryWrap{0}']//select[contains(@id,'countries')]".format(item_id))
         Select(select_countries).select_by_value("1")
-        select_regions = self.drv.find_element_by_id("select_regions" + item_id)
-        WebDriverWait(self.drv, 20).until(EC.element_to_be_clickable((By.ID, "select_regions" + item_id)))
+
+        select_regions =  self.drv.find_element_by_xpath("//div[@id='procurementSubjectCountryWrap{0}']//select[contains(@id,'regions')]".format(item_id))
+        WebDriverWait(self.drv, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@id='procurementSubjectCountryWrap{0}']//select[contains(@id,'regions')]".format(item_id))))
         Select(select_regions).select_by_value("7")
+
         zip_code_ = self.drv.find_element_by_id("zip_code_" + item_id)
         zip_code_.send_keys(get_dic_val(dic, "below.zip_code_"))
         locality_ = self.drv.find_element_by_id("locality_" + item_id)
@@ -187,7 +187,7 @@ class TenderNew:
         procurementSubject_description.send_keys(get_dic_val(dic, "below.item_descr"))
         procurementSubject_quantity = self.drv.find_element_by_id("procurementSubject_quantity" + item_id)
         procurementSubject_quantity.send_keys(get_dic_val(dic, "below.quantity"))
-        select_unit = Select(self.drv.find_element_by_id("select_unit" + item_id))
+        select_unit = Select(self.drv.find_element_by_xpath("//div[@id='procurementSubjectUnitWrap{0}']//select".format(item_id)))
         select_unit.select_by_value("LTR")
 
     def click_add_item(self, item_id):
@@ -234,25 +234,30 @@ class TenderNew:
             self.click_add_item(item_id)
 
     def add_doc(self, docs):
-        documents_tab=self.drv.find_element_by_id("documents-tab")
-        documents_tab.click()
+        try:
+            documents_tab = self.drv.find_element_by_id("documents-tab")
+            documents_tab.click()
 
-        upload_document=self.drv.find_element_by_id("upload_document")
-        upload_document.click()
+            for i in range(docs):
+                waitFadeIn(self.drv)
+                upload_document=self.drv.find_element_by_id("upload_document")
+                upload_document.click()
 
-        WebDriverWait(self.drv, 20).until(
-            EC.visibility_of_element_located((By.ID,"categorySelect")))
+                WebDriverWait(self.drv, 20).until(
+                    EC.visibility_of_element_located((By.ID,"categorySelect")))
 
-        Select(self.drv.find_element_by_id("categorySelect")).select_by_value("biddingDocuments")
-        Select(self.drv.find_element_by_id("documentOfSelect")).select_by_value("Tender")
+                Select(self.drv.find_element_by_id("categorySelect")).select_by_value("biddingDocuments")
+                Select(self.drv.find_element_by_id("documentOfSelect")).select_by_value("Tender")
 
+                if not os.path.isfile(os.path.abspath(__file__)+ '\\fortender{0}.txt'.format(i)):
+                    with(open(os.path.dirname(os.path.abspath(__file__)) + '\\fortender{0}.txt'.format(i), 'w')) as f:
+                        f.write("wwwwwww")
+                fileInput=self.drv.find_element_by_id("fileInput")
+                fileInput.send_keys(os.path.dirname(os.path.abspath(__file__)) + "\\fortender{0}.txt".format(i))
 
-        with(open(os.path.dirname(os.path.abspath(__file__)) + '\\fortender.txt', 'w')) as f:
-            f.write("wwwwwww")
-        fileInput=self.drv.find_element_by_id("fileInput")
-        fileInput.send_keys(os.path.dirname(os.path.abspath(__file__)) + "\\fortender.txt")
-
-        save_file=self.drv.find_element_by_id("save_file")
-        save_file.click()
-
+                save_file=self.drv.find_element_by_id("save_file")
+                save_file.click()
+        except Exception as e:
+            paint(self.drv, "addDocERROR.png")
+            raise Exception("Error add_doc {0}\n".format(self.drv.current_url)+str(e))
         return self
