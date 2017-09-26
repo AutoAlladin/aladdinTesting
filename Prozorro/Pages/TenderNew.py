@@ -219,7 +219,9 @@ class TenderNew:
 
     def set_item(self, dic, item, j):
         for i in range(item):
+            waitFadeIn(self.drv)
             add_procurement_subject = self.drv.find_element_by_id("add_procurement_subject" + str(j))
+            waitFadeIn(self.drv)
             add_procurement_subject.click()
             item_id = str(j) + "0"
             self.set_item_base_info(dic, item_id)
