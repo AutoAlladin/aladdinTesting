@@ -34,7 +34,7 @@ class bid:
                 f.write("qqqqqqq")
             bidDocInput_biddingDocuments.send_keys(os.path.dirname(os.path.abspath(__file__))+"\\forbid.txt")
 
-            self.drv.execute_script("window.scroll(0, {0}-105)".format(submitBid.location.get("y")))
+            Utils.scroll_to_element(self.drv,submitBid)
             Utils.waitFadeIn(self.drv)
             if prepare == 0:
                 submitBid.click()

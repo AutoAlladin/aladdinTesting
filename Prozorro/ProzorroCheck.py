@@ -62,6 +62,19 @@ def check(args):
                     json.dump(uaids, uaid_file)
                 print(datetime.datetime.now())
                 sys.exit()
+            elif proc == 'openUA':
+                print(datetime.datetime.now())
+                uaids = create_openUA(countTenders=_countTenders,
+                                           countLots=_countLots,
+                                           countItems=_countItems,
+                                           countFeatures=_countFeatures,
+                                           countDocs=_countDocs,
+                                           tender_dict=1
+                                           )
+                with(open(os.path.dirname(os.path.abspath(__file__)) + '\\uaids.json', 'w', encoding="UTF-8")) as uaid_file:
+                    json.dump(uaids, uaid_file)
+                print(datetime.datetime.now())
+                sys.exit()
             elif proc == 'concurentUA':
                 print(datetime.datetime.now())
                 uaids = create_concurentUA(countTenders=_countTenders,
@@ -100,7 +113,8 @@ def check(args):
                 sys.exit()
             elif arg == "add_many":
                 print(create_bids(fin=os.path.dirname(os.path.abspath(__file__))+'\\uaids.json',prepare=1))
-                time.sleep(6000)
+            elif arg == "on_time":
+                print(send_bids(fin=os.path.dirname(os.path.abspath(__file__))+'\\uaids.json',prepare=0))
 
 
 

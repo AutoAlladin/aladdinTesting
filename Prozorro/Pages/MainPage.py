@@ -1,3 +1,4 @@
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.support.select import Select
 from selenium import webdriver
 from Prozorro.Pages.LoginPage import LoginPage
@@ -53,24 +54,35 @@ class MainPage:
     def open_tender_url(self,url):
         self.drv.execute_script('''window.open("{0}", "_blank");'''.format(url))
         self.drv.switch_to.window(self.drv.window_handles[-1])
-        WebDriverWait(self.drv, 20).until(
+        WebDriverWait(self.drv, 2).until(
             EC.visibility_of_element_located((By.ID, "goToListPurchase")))
         return TenderView(self.drv)
 
 
 
-    def create_tender(self, procurementMethodType, lots=0, items=1, docs=0, features=0, dic=None):
+    def create_tender(self, procurementMethodType, lots=0, items=1, docs=0, features=0, dic=None, nom=""):
         self.btn_create_purchase=self.drv.find_element_by_id("btn_create_purchase")
-        self.btn_create_purchase.click()
+        waitFadeIn(self.drv)
+        WebDriverWait(self.drv, 3).until(
+            EC.element_to_be_clickable((By.ID,"btn_create_purchase" )) )
+        try:
+            self.btn_create_purchase.click()
+        except  StaleElementReferenceException as se:
+            time.sleep(5)
+            self.btn_create_purchase = self.drv.find_element_by_id("btn_create_purchase")
+            waitFadeIn(self.drv)
+            self.btn_create_purchase.click()
 
         is_multilot = "true"
         if lots == 0:
             is_multilot = "false"
 
+
+
         if(procurementMethodType=="belowThreshold"):
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/BelowThreshold']").click()
             return TenderNew(self.drv).\
-                set_description(dic).\
+                set_description(dic, nom).\
                 set_curr().\
                 set_multilot(dic, is_multilot).\
                 set_dates(dic).\
@@ -79,6 +91,22 @@ class MainPage:
                 add_item(dic, lots, items). \
                 click_next_button(). \
                 add_doc(docs).\
+                click_finish_edit_button().\
+                click_publish_button()
+           # return  self.drv.current_url
+
+        elif procurementMethodType=="aboveThresholdUA":
+            self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/AboveThresholdUA']").click()
+            return TenderNew(self.drv). \
+                set_description(dic, nom). \
+                set_curr(). \
+                set_multilot(dic, is_multilot). \
+                set_open_tender_dates(dic) . \
+                click_next_button(). \
+                add_lot(lots, dic). \
+                add_item(dic, lots, items). \
+                click_next_button(). \
+                add_doc(docs). \
                 click_finish_edit_button().\
                 click_publish_button()
 
@@ -101,6 +129,10 @@ class MainPage:
             return self.open_tender(uaid).\
                 open_bids().\
                 new(uaid);
+        elif prepare==2:
+            return self.open_tender_url(uaid).\
+                open_bids().\
+                new(1,uaid);
         else:
             return self.open_tender_url(uaid). \
                 open_bids(). \

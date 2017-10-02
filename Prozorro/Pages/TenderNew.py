@@ -1,4 +1,6 @@
 import os
+import random
+
 from selenium import webdriver
 from datetime import datetime, timedelta
 from selenium.webdriver.common.by import By
@@ -7,7 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.support.select import Select
-from Prozorro.Utils import set_datepicker,waitFadeIn,get_dic_val, paint
+from Prozorro.Utils import set_datepicker,waitFadeIn,get_dic_val, paint,scroll_to_element
 
 
 class TenderNew:
@@ -96,12 +98,14 @@ class TenderNew:
         if (is_multi == "true"):
             is_multilot.click()
         else:
+            bu = random.randrange(1000, 99990000)
             budget = self.drv.find_element_by_id("budget")
-            budget.send_keys(get_dic_val(dic, "below.budget"))
-            min_step = self.drv.find_element_by_id("min_step")
-            min_step.send_keys(get_dic_val(dic, "below.min_step"))
+            budget.send_keys(bu)
+            #budget.send_keys(get_dic_val(dic, "below.budget"))
+
+            min_step_p = random.randrange(1, 3)
             min_step_percentage = self.drv.find_element_by_id("min_step_percentage")
-            min_step_percentage.send_keys(get_dic_val(dic, "below.min_step_percentage"))
+            min_step_percentage.send_keys(min_step_p)
         return self
 
     def add_lot(self, count, dic):
@@ -111,10 +115,13 @@ class TenderNew:
             for currentLot in range(count):
                 lotid = str(1)
                 #lotid = str(currentLot+1)
+                WebDriverWait(self.drv, 2).until(
+                    EC.element_to_be_clickable((By.ID, "buttonAddNewLot")))
                 is_add_lot = self.drv.find_element_by_id("buttonAddNewLot")
                 is_add_lot.click()
+
                 title_of_lot = self.drv.find_element_by_id("lotTitle_" + lotid)
-                title_of_lot.send_keys(get_dic_val(dic, "below.title_ofLot"))
+                title_of_lot.send_keys(str(currentLot)+" - "+get_dic_val(dic, "below.title_ofLot"))
                 description_of_lot = self.drv.find_element_by_id("lotDescription_" + lotid)
                 description_of_lot.send_keys(get_dic_val(dic, "below.description_of_lot"))
                 budget_of_lot = self.drv.find_element_by_id("lotBudget_" + lotid)
@@ -123,7 +130,7 @@ class TenderNew:
                 min_step_of_lot.send_keys(get_dic_val(dic, "below.min_step_of_lot"))
                 min_step_of_lot_perc = self.drv.find_element_by_id("lotMinStepPercentage_" + lotid)
                 min_step_of_lot_perc.send_keys(get_dic_val(dic, "below.min_step_of_lot_perc"))
-                save_lot = self.drv.find_element_by_xpath(".//*[@id='divLotControllerEdit']/div/div/div/div[8]/div/button[1]").click()
+                save_lot = self.drv.find_element_by_xpath("//div[contains(@id,'updateOrCreateLot')]//button[@class='btn btn-success']").click()
 
             next_step = self.drv.find_element_by_id("next_step")
             self.drv.execute_script("window.scroll(0, " + str(next_step.location["y"]) + ")")
@@ -132,10 +139,10 @@ class TenderNew:
 
         return self
 
-    def set_description(self, dic):
+    def set_description(self, dic,nom):
         title = self.drv.find_element_by_id("titleOfTenderForEdit")
         description = self.drv.find_element_by_id("description")
-        title.send_keys(get_dic_val(dic, "below.title"))
+        title.send_keys(nom+" - "+get_dic_val(dic, "below.title"))
         description.send_keys(get_dic_val(dic, "below.description"))
         return self
 
@@ -182,13 +189,21 @@ class TenderNew:
         WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.XPATH, "//li[@aria-selected = 'true']")))
         add_classifier.click()
 
-    def set_item_base_info(self, dic, item_id):
+    def set_item_base_info(self, dic, item_id,item_vomber):
         procurementSubject_description = self.drv.find_element_by_id("procurementSubject_description" + item_id)
-        procurementSubject_description.send_keys(get_dic_val(dic, "below.item_descr"))
+        procurementSubject_description.send_keys(str(item_vomber)+str(item_id)+" - "+get_dic_val(dic, "below.item_descr"))
+
+        q=random.randrange(1,700)
+
         procurementSubject_quantity = self.drv.find_element_by_id("procurementSubject_quantity" + item_id)
-        procurementSubject_quantity.send_keys(get_dic_val(dic, "below.quantity"))
+        procurementSubject_quantity.send_keys(q)
+        #procurementSubject_quantity.send_keys(get_dic_val(dic, "below.quantity"))
+
+        unit= random.choice(["KVR", "BX", "D44", "RM", "SET", "GRM", "HUR","LTR"])
+
         select_unit = Select(self.drv.find_element_by_xpath("//div[@id='procurementSubjectUnitWrap{0}']//select".format(item_id)))
-        select_unit.select_by_value("LTR")
+        select_unit.select_by_value(unit)
+        #select_unit.select_by_value("LTR")
 
     def click_add_item(self, item_id):
         try:
@@ -212,7 +227,7 @@ class TenderNew:
                         self.set_item(dic, item, j+1)
 
         except Exception as e:
-            raise Exception(" Не нажимается кнопка add_item_button "+ e)
+            raise Exception(" Не нажимается кнопка add_item_button "+ str(e))
             paint(self.drv, "add_item_" + item_id + "ERROR.png")
 
         return self
@@ -222,23 +237,27 @@ class TenderNew:
             waitFadeIn(self.drv)
             add_procurement_subject = self.drv.find_element_by_id("add_procurement_subject" + str(j))
             waitFadeIn(self.drv)
+            scroll_to_element(self.drv,add_procurement_subject)
             add_procurement_subject.click()
+
             item_id = str(j) + "0"
-            self.set_item_base_info(dic, item_id)
+            self.set_item_base_info(dic, item_id, i)
             self.set_dk2015(dic)
             WebDriverWait(self.drv, 20).until(EC.invisibility_of_element_located((By.XPATH, "//div[@id = 'modDialog']")))
             self.set_otherDK(dic)
             self.set_delivery_period(item_id)
             add_item_button = WebDriverWait(self.drv, 20).until(
                 EC.element_to_be_clickable((By.ID, "update_" + item_id)))
-            self.drv.execute_script("window.scroll(0, {0}-105)".format(add_item_button.location.get("y")))
+            scroll_to_element(self.drv, add_item_button)
+
             self.set_delivery_adress(dic, item_id)
             self.click_add_item(item_id)
 
     def add_doc(self, docs):
         try:
-            documents_tab = self.drv.find_element_by_id("documents-tab")
-            documents_tab.click()
+            if docs > 0:
+                documents_tab = self.drv.find_element_by_id("documents-tab")
+                documents_tab.click()
 
             for i in range(docs):
                 waitFadeIn(self.drv)

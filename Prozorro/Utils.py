@@ -2,35 +2,45 @@ import os
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import uuid
 import prozorro
 
-roles=["owner", "provider", "viewer"]
+run_guid = str(uuid.uuid1())
+roles={"owner", "provider", "viewer"}
 
+def get_root():
+    return os.path.dirname(os.path.abspath( prozorro.__file__ ));
 
 def paint(drv, name):
-    dir = os.path.dirname(os.path.abspath( prozorro.__file__ ))
+    dir = get_root()
     dir = dir+"\\Prozorro\\output\\"+name
     drv.get_screenshot_as_file(dir)
 
+def scroll_to_element(drv, element,delta="105"):
+    drv.execute_script("window.scroll(0, {0}-{1})".format(element.location.get("y"),delta))
 
 def set_datepicker(drv, ID, value):
     drv.execute_script("SetDateTimePickerValue(\'"+ID+"\',\'"+value+"\')")
 
 
 def waitFadeIn(drv):
-    WebDriverWait(drv, 20).until( EC.invisibility_of_element_located ((By.XPATH, "//div[@class='page-loader animated fadeIn']")))
+    WebDriverWait(drv, 10).until( EC.invisibility_of_element_located ((By.XPATH, "//div[@class='page-loader animated fadeIn']")))
 
 
 def waitNotifyToast(drv):
     try:
-        close_toast = WebDriverWait(drv, 2).until(
-            EC.element_to_be_clickable((By.XPATH, "//button[@class='toast-close-button']")))
-        waitFadeIn(drv)
-        close_toast.click()
+        if not WebDriverWait(drv, 2).until( EC.invisibility_of_element_located ((By.XPATH, "//div[@class='page-loader animated fadeIn']"))):
+            close_toast =drv.find_element_by_xpath("//button[@class='toast-close-button']")
+            waitFadeIn(drv)
+            close_toast.click()
     except Exception  as e:
         pass #print("toast-close not found")
 
 def get_dic_val(dic, _key):
     key = _key.split(".")
-    return dic[key[0]][key[1]]
+
+    if _key=="below.description" or _key=="below.title":
+        return dic[key[0]][key[1]]+" - "+run_guid
+    else:
+        return dic[key[0]][key[1]]
 
