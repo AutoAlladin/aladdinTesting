@@ -35,5 +35,12 @@
 		"password":"123456",
         "startTime":"2017-09-30 18:43"
 
-	}
+	},
+    "feature":{
+        "enum_count":3,
+        "title":"шо",
+        "titleEnum_zero":"не чіпай мене",
+        "description":"дерево",
+        "descriptionEnum_zero":"низько зрізане дерево, а не пеньок"
+    }
 }

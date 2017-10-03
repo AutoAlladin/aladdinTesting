@@ -71,7 +71,7 @@ def check(args):
                                            countDocs=_countDocs,
                                            tender_dict=1
                                            )
-                with(open(os.path.dirname(os.path.abspath(__file__)) + '\\uaids.json', 'w', encoding="UTF-8")) as uaid_file:
+                with(open(Utils.get_root() + '\\uaids.json', 'w', encoding="UTF-8")) as uaid_file:
                     json.dump(uaids, uaid_file)
                 print(datetime.datetime.now())
                 sys.exit()
@@ -86,8 +86,7 @@ def check(args):
                                            )
 
                 with(
-                        open(os.path.dirname(os.path.abspath(__file__)) + '\\ConcurentUA_ids.json', 'w',
-                             encoding="UTF-8")) as uaid_file:
+                        open(Utils.get_root()+ '\\ConcurentUA_ids.json', 'w', encoding="UTF-8")) as uaid_file:
                     json.dump(uaids, uaid_file)
                 print(datetime.datetime.now())
                 sys.exit()

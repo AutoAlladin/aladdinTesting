@@ -24,26 +24,40 @@ def init_driver():
     return chrm, tp, MainPage(chrm)
 
 
-def create_below(countLots, countFeatures, countDocs=0, countTenders=1, countItems=1, tender_dict=None):
+def create_below(countLots, countFeatures=0, countDocs=0, countTenders=1, countItems=1, tender_dict=None):
     chrm, tp, mpg = init_driver()
     mpg.open_login_form().login(tp["below"]["login"], tp["below"]["password"])
     uaid = []
+
+    args=dict(procurementMethodType='belowThreshold',
+              lots=countLots,
+              items=countItems,
+              docs=countDocs,
+              features=countFeatures,
+              dic=tp
+              )
+
     for i in range(countTenders):
-        if tender_dict:
-            uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=countLots, items=countItems, docs=countDocs, features=0, dic=tp, nom=str(i)))
-        else:
-            uaid.append(mpg.create_tender(procurementMethodType="belowThreshold", lots=countLots, items=countItems, docs=countDocs, features=0, nom=str(i)))
+            uaid.append(mpg.create_tender(**args,nom=str(i)))
+
     return uaid
+
 
 def create_openUA(countLots, countFeatures, countDocs=0, countTenders=1, countItems=1, tender_dict=None):
     chrm, tp, mpg = init_driver()
     mpg.open_login_form().login(tp["below"]["login"], tp["below"]["password"])
     uaid = []
+
+    args=dict(procurementMethodType='aboveThresholdUA',
+              lots=countLots,
+              items=countItems,
+              docs=countDocs,
+              features=countFeatures,
+              dic=tp
+              )
     for i in range(countTenders):
-        if tender_dict:
-            uaid.append(mpg.create_tender(procurementMethodType="aboveThresholdUA", lots=countLots, items=countItems, docs=countDocs, features=0, dic=tp, nom=str(i)))
-        else:
-            uaid.append(mpg.create_tender(procurementMethodType="aboveThresholdUA", lots=countLots, items=countItems, docs=countDocs, features=0, nom=str(i)))
+        uaid.append(mpg.create_tender(**args, nom=str(i)))
+
     return uaid
 
 def create_bids(uaids=[],fin=None, prepare=0):
@@ -70,8 +84,6 @@ def create_bids(uaids=[],fin=None, prepare=0):
     print("finish bids", datetime.datetime.now())
     return bid_uaids
 
-
-
 def open_tender(id,role):
     chrm,tp, mpg=init_driver()
     if str(role) in Utils.roles and role == "provider":
@@ -79,17 +91,22 @@ def open_tender(id,role):
 
     mpg.open_tender(id)
 
-
 def create_concurentUA(countLots, countFeatures, countDocs=0, countTenders=1, countItems=1, tender_dict=None):
     chrm, tp,mpg = init_driver()
     mpg.open_login_form().login(tp["below"]["login"], tp["below"]["password"]);
     uaid = []
-    if tender_dict == 1:
-        for i in range(countTenders):
-            uaid.append(mpg.create_tender(procurementMethodType="concurentUA", lots=0, items=1, docs=0, features=0, dic=tp))
-    else:
-        for i in range(countTenders):
-            uaid.append(mpg.create_tender(procurementMethodType="concurentUA", lots=0, items=1, docs=0, features=0))
+
+    args = dict(procurementMethodType='concurentUA',
+                lots=countLots,
+                items=countItems,
+                docs=countDocs,
+                features=countFeatures,
+                dic=tp
+                )
+
+    for i in range(countTenders):
+        uaid.append(mpg.create_tender(*args, dic=tp))
+
     return uaid
 
 def send_bids(uaids=[],fin=None, prepare=0):

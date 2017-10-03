@@ -77,8 +77,6 @@ class MainPage:
         if lots == 0:
             is_multilot = "false"
 
-
-
         if(procurementMethodType=="belowThreshold"):
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/BelowThreshold']").click()
             return TenderNew(self.drv).\
@@ -90,10 +88,10 @@ class MainPage:
                 add_lot(lots, dic).\
                 add_item(dic, lots, items). \
                 click_next_button(). \
+                add_features(dic,lots,items,features).\
                 add_doc(docs).\
                 click_finish_edit_button().\
                 click_publish_button()
-           # return  self.drv.current_url
 
         elif procurementMethodType=="aboveThresholdUA":
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/AboveThresholdUA']").click()
@@ -106,6 +104,8 @@ class MainPage:
                 add_lot(lots, dic). \
                 add_item(dic, lots, items). \
                 click_next_button(). \
+                add_features(dic, lots, items, features). \
+                click_next_button().\
                 add_doc(docs). \
                 click_finish_edit_button().\
                 click_publish_button()
@@ -136,7 +136,7 @@ class MainPage:
         else:
             return self.open_tender_url(uaid). \
                 open_bids(). \
-                new(prepare,uaid);
+                new(prepare,uaid)
 
 
 

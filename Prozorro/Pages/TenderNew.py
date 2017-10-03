@@ -1,8 +1,9 @@
 import os
 import random
+from xml.sax.handler import feature_external_ges
 
 from selenium import webdriver
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -38,7 +39,7 @@ class TenderNew:
 
             WebDriverWait(self.drv, 120).until(EC.visibility_of_element_located((By.ID, "purchaseProzorroId")))
             purchaseProzorroId = self.drv.find_element_by_id("purchaseProzorroId")
-
+            print(self.drv.current_url)
             return purchaseProzorroId.text, self.drv.current_url
         except WebDriverException as w:
             toast_title = ""
@@ -65,7 +66,6 @@ class TenderNew:
         except WebDriverException as w:
             raise Exception("Не нажимается кнопка next_step  - \n" + w.msg)
         return self
-
 
     def set_dates(self, dic):
         try:
@@ -146,7 +146,6 @@ class TenderNew:
         description.send_keys(get_dic_val(dic, "below.description"))
         return self
 
-
     def set_delivery_adress(self, dic, item_id):
         select_countries = self.drv.find_element_by_xpath("//div[@id='procurementSubjectCountryWrap{0}']//select[contains(@id,'countries')]".format(item_id))
         Select(select_countries).select_by_value("1")
@@ -212,11 +211,9 @@ class TenderNew:
 
             add_item_button = self.drv.find_element_by_id("update_" + item_id)
             add_item_button.click()
-            print(self.drv.current_url)
         except Exception as e:
             raise  Exception(" Не нажимается кнопка add_item_button: update_" + item_id+e)
             paint(self.drv, "update_" + item_id+"ERROR.png")
-
 
     def add_item(self, dic, lot=0, item=0):
         try:
@@ -282,3 +279,64 @@ class TenderNew:
             paint(self.drv, "addDocERROR.png")
             raise Exception("Error add_doc {0}\n".format(self.drv.current_url)+str(e))
         return self
+
+    def set_feature_decription(self, dic, end):
+        WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "featureTitle_"+end)))
+        featureTitle=self.drv.find_element_by_id("featureTitle_"+end)
+        featureTitle.send_keys(get_dic_val(dic,"feature.title"))
+
+        featureDescription=self.drv.find_element_by_id("featureDescription_"+end)
+        featureDescription.send_keys(get_dic_val(dic, "feature.description"))
+
+    def set_feature_enum(dic):
+        pass
+
+    def set_feature_zero_enum(self, dic):
+        WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "featureEnumTitle_0_0_0")))
+        featureEnumTitle = self.drv.find_element_by_id("featureEnumTitle_0_0_0")
+        featureEnumTitle.clear()
+        featureEnumTitle.send_keys(get_dic_val(dic, "feature.titleEnum_zero"))
+
+        featureEnumDescription = self.drv.find_element_by_id("featureEnumDescription_0_0_0")
+        featureEnumDescription.clear()
+        featureEnumDescription.send_keys(get_dic_val(dic, "feature.descriptionEnum_zero"))
+
+        pass
+
+    def add_feature_to_tender(self, features, items, dic):
+        WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add_features0")))
+        add_features = self.drv.find_element_by_id("add_features0")
+        for findex in range(features):
+            waitFadeIn(self.drv)
+            add_features.click()
+            self.set_feature_decription(dic,"0_0")
+            self.set_feature_zero_enum(dic)
+            for enum_index in range(get_dic_val(dic,"feature.enum_count",2)):
+                self.add_feature_enum(dic)
+            updateFeature=WebDriverWait(self.drv, 20).until(EC.element_to_be_clickable((By.ID, "updateFeature_0_0")))
+            time.sleep(2000)
+            updateFeature.click()
+        pass
+
+    def add_feature_to_lot(self, features, lots, items,dic):
+        pass
+
+    def add_features(self, dic, lots, items, features=0):
+        try:
+            if features > 0:
+                WebDriverWait(self.drv, 20).until(
+                    EC.visibility_of_element_located((By.ID, "features-tab")))
+                features_tab = self.drv.find_element_by_id("features-tab")
+                waitFadeIn(self.drv)
+                features_tab.click()
+
+                self.add_feature_to_tender(features, items, dic)
+                if lots > 0:
+                    self.add_feature_to_lot(features, lots, items, dic)
+
+        except WebDriverException as e:
+            paint(self.drv, "addFeatureERROR.png")
+            raise Exception("Error add_feature {0}\n".format(self.drv.current_url) + e.msg)
+
+        return self
+

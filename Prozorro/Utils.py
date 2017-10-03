@@ -36,10 +36,14 @@ def waitNotifyToast(drv):
     except Exception  as e:
         pass #print("toast-close not found")
 
-def get_dic_val(dic, _key):
+def get_dic_val(dic, _key, default = None):
+
+    if  default!=None:
+        return default
+
     key = _key.split(".")
 
-    if _key=="below.description" or _key=="below.title":
+    if _key=="below.description" or _key == "below.title":
         return dic[key[0]][key[1]]+" - "+run_guid
     else:
         return dic[key[0]][key[1]]
