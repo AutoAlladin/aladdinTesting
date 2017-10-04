@@ -8,13 +8,24 @@ from selenium.webdriver.support import expected_conditions as EC
 from Aladdin.AladdinUtils import *
 
 
+def test_input(cls, id_field, input_val):
+    try:
+        cls.assertEqual(
+            input_val,
+            cls.wts.input_text_field(id_field, input_val),
+            "Не совпадают исходные даные и то что оказалось в поле браузера")
+    except Exception as e:
+        cls.wts.drv.get_screenshot_as_file("company_name_ERROR.png")
+        cls.assertTrue(False, "Ошибка при вводе названия компании\n" + e.__str__())
+
 class OpenMainPage(unittest.TestCase):
     wts=None
-    def setUp(self):
-        self.wts = WebTestSession()
-
-    def tearDown(self):
-        self.wts.close()
+    @classmethod
+    def setUpClass(cls):
+        cls.wts = WebTestSession()
+    @classmethod
+    def tearDownClass(cls):
+        cls.wts.close()
 
     @unittest.skip("test_open_page - Не представляет интереса на даный момент")
     def test_open_page(self):
@@ -37,12 +48,11 @@ class OpenRegistrationPage(OpenMainPage):
 
 class FullFillPage(OpenRegistrationPage):
     def test_company_name(self):
-        try:
-            input_val_company_name = "Тестовое название компании"
-            self.assertEqual(
-                input_val_company_name,
-                self.wts.input_text_field("nameUA",input_val_company_name) ,
-                "Не совпадают исходные даные и то что оказалось в поле браузера")
-        except Exception as e:
-            self.wts.drv.get_screenshot_as_file("company_name_ERROR.png")
-            self.assertTrue(False, "Ошибка при вводе названия компании\n"+e.__str__())
+        test_input(self, "nameUA","Тестовое название компании")
+
+    def test_company_name_en(self):
+        test_input(self, "nameEN", "Test company name")
+
+    def test_check_ownership(self):
+        select_ownership = self.
+

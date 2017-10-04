@@ -26,7 +26,7 @@ class WebTestSession():
 
         text_field = self.drv.find_element_by_id(_id)
         text_field.send_keys(val)
-        self.drv.get_screenshot_as_file("company_name.png")
+        self.drv.get_screenshot_as_file(_id + ".png")
         return text_field.get_attribute('value')
 
     def close(self):
