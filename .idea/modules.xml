@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/AladdinTesting.iml" filepath="$PROJECT_DIR$/.idea/AladdinTesting.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../MonoPars/.idea/MonoPars.iml" filepath="$PROJECT_DIR$/../MonoPars/.idea/MonoPars.iml" />
     </modules>
   </component>
 </project>
