@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -23,7 +24,16 @@ class MdbUtils():
         else:
             return doc["inputs"][_id]
 
-
+    def get_select_val(self,_id, query):
+        doc = self.test_params.find_one(query)
+        if doc is None:
+            return "test {0} is None".format(_id)
+        elif doc["select"] is None:
+            return "element {0} is None".format(_id)
+        elif doc["select"][_id]  is None:
+            return "value {0} is None".format(_id)
+        else:
+            return doc["select"][_id]
 
 class WebTestSession():
     def __init__(self):
@@ -50,6 +60,17 @@ class WebTestSession():
         text_field.send_keys(val)
         self.drv.get_screenshot_as_file("output\\"+_id + ".png")
         return text_field.get_attribute('value')
+
+    def select_value(self, _id, val):
+        try:
+            WebDriverWait(self.drv, 1).until(EC.visibility_of_element_located((By.ID, _id)))
+        except:
+            self.click_reg_btn()
+
+        field = self.drv.find_element_by_id(_id)
+        Select(field).select_by_value(val)
+        self.drv.get_screenshot_as_file("output\\" + _id + ".png")
+        return field.get_attribute('value')
 
     def close(self):
         self.drv.close()

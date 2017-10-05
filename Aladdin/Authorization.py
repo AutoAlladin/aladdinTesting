@@ -9,6 +9,20 @@ from selenium.webdriver.support.ui import Select
 from Aladdin.AladdinUtils import *
 
 
+def test_select(cls, id_field, input_val=None, q=None):
+    try:
+        if input_val is None:
+            input_val = cls.wts.__mongo__.get_select_val(id_field, q)
+
+        cls.assertEqual(
+            input_val,
+            cls.wts.select_value(id_field, input_val),
+            "Не совпадают исходные даные и то что оказалось в поле браузера")
+    except Exception as e:
+        cls.wts.drv.get_screenshot_as_file("output\\"+id_field+"_ERROR.png")
+        cls.assertTrue(False, "Ошибка при выборе значения\n" + e.__str__())
+
+
 def test_input(cls, id_field, input_val=None, q=None):
     try:
         if input_val is None:
@@ -19,8 +33,8 @@ def test_input(cls, id_field, input_val=None, q=None):
             cls.wts.input_text_field(id_field, input_val),
             "Не совпадают исходные даные и то что оказалось в поле браузера")
     except Exception as e:
-        cls.wts.drv.get_screenshot_as_file("output\\company_name_ERROR.png")
-        cls.assertTrue(False, "Ошибка при вводе названия компании\n" + e.__str__())
+        cls.wts.drv.get_screenshot_as_file("output\\"+id_field+"_ERROR.png")
+        cls.assertTrue(False, "Ошибка при вводе текста\n" + e.__str__())
 
 class OpenMainPage(unittest.TestCase):
     wts=None
@@ -51,7 +65,7 @@ class OpenRegistrationPage(OpenMainPage):
             self.assertTrue(False, 'Ошибка открытия формы регистрации\n'+e.__str__())
 
 class FullFillPage(OpenRegistrationPage):
-    query = {"name": "RegistartionForm", "version": "0.0.0.1"}
+    query = {"name": "RegistartionForm", "version": "0.0.0.2"}
 
     def test_1_company_name(self):
         test_input(self, "nameUA",q=self.query)
@@ -60,12 +74,7 @@ class FullFillPage(OpenRegistrationPage):
         test_input(self, "nameEN", q=self.query)
 
     def test_3_check_ownership(self):
-        try:
-            select_ownership = self.wts.drv.find_element_by_id("ownership_type")
-            Select(select_ownership).select_by_visible_text("string:ООО")
-            self.assertTrue(True)
-        except Exception as e:
-            self.assertTrue(False)
+        test_select(self, "ownership_type",  q=self.query )
 
     def test_4_code_edrpou(self):
         test_input(self, "company_code_USREOU", "12121212")
