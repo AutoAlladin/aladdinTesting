@@ -67,27 +67,54 @@ class OpenRegistrationPage(OpenMainPage):
 class FullFillPage(OpenRegistrationPage):
     query = {"name": "RegistartionForm", "version": "0.0.0.2"}
 
-    def test_1_company_name(self):
+    def test_01_company_name(self):
         test_input(self, "nameUA",q=self.query)
 
-    def test_2_company_name_en(self):
+    def test_02_company_name_en(self):
         test_input(self, "nameEN", q=self.query)
 
-    def test_3_check_ownership(self):
+    def test_03_check_ownership(self):
         test_select(self, "ownership_type",  q=self.query )
 
-    def test_4_code_edrpou(self):
-        test_input(self, "company_code_USREOU", "12121212")
+    def test_04_code_edrpou(self):
+        test_input(self, "company_code_USREOU", q=self.query)
 
-    def test_5_name(self):
-        test_input(self, "admin_name_ua", "Тестовое имя")
+    def test_05_name(self):
+        test_input(self, "admin_name_ua", q=self.query)
 
-    def test_6_name_en(self):
-        test_input(self, "admin_name_en", "Admin`s test name")
+    def test_06_name_en(self):
+        test_input(self, "admin_name_en", q=self.query)
 
-    def test_7_last_name(self):
-        test_input(self, "admin_last_name_ua", "Тестовая фамилия")
+    def test_07_last_name(self):
+        test_input(self, "admin_last_name_ua", q=self.query)
 
-    def test_8_last_name_en(self):
-        test_input(self, "admin_last_name_en", "Admin`s test last name")
+    def test_08_last_name_en(self):
+        test_input(self, "admin_last_name_en", q=self.query)
+
+    def test_09_position(self):
+        test_input(self, "position", q=self.query)
+
+    def test_10_phone(self):
+        test_input(self, "phone", q=self.query)
+
+    def test_11_email(self):
+        test_input(self, "email", q=self.query)
+
+    def test_12_password(self):
+        test_input(self, "password", q=self.query)
+
+    def test_13_confirm_password(self):
+        test_input(self, "confirm_password", q=self.query)
+
+    def test_14_click_next_step_btn(self):
+        try:
+            next_step_btn = self.wts.drv.find_element_by_id("btn_next_step")
+            next_step_btn.click()
+            WebDriverWait(self.wts.drv, 10).until(
+                EC.text_to_be_present_in_element((By.ID, "btn_save_changes"), "Зберегти"))
+            self.assertTrue(True)
+        except Exception as e:
+            self.assertTrue(False, 'Не отображается кнопка Зберегти\n' + e.__str__())
+
+
 
