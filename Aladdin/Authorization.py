@@ -9,14 +9,17 @@ from selenium.webdriver.support.ui import Select
 from Aladdin.AladdinUtils import *
 
 
-def test_input(cls, id_field, input_val):
+def test_input(cls, id_field, input_val=None, q=None):
     try:
+        if input_val is None:
+            input_val = cls.wts.__mongo__.get_input_val(id_field, q)
+
         cls.assertEqual(
             input_val,
             cls.wts.input_text_field(id_field, input_val),
             "Не совпадают исходные даные и то что оказалось в поле браузера")
     except Exception as e:
-        cls.wts.drv.get_screenshot_as_file("company_name_ERROR.png")
+        cls.wts.drv.get_screenshot_as_file("output\\company_name_ERROR.png")
         cls.assertTrue(False, "Ошибка при вводе названия компании\n" + e.__str__())
 
 class OpenMainPage(unittest.TestCase):
@@ -48,34 +51,34 @@ class OpenRegistrationPage(OpenMainPage):
             self.assertTrue(False, 'Ошибка открытия формы регистрации\n'+e.__str__())
 
 class FullFillPage(OpenRegistrationPage):
-    def test_company_name(self):
-        test_input(self, "nameUA","Тестовое название компании")
+    query = {"name": "RegistartionForm", "version": "0.0.0.1"}
 
-    def test_company_name_en(self):
-        test_input(self, "nameEN", "Test company name")
+    def test_1_company_name(self):
+        test_input(self, "nameUA",q=self.query)
 
-    def test_check_ownership(self):
+    def test_2_company_name_en(self):
+        test_input(self, "nameEN", q=self.query)
+
+    def test_3_check_ownership(self):
         try:
             select_ownership = self.wts.drv.find_element_by_id("ownership_type")
             Select(select_ownership).select_by_visible_text("string:ООО")
-            sel_own = self.wts.drv.find_element_by_xpath("")
-            sel_own.click()
             self.assertTrue(True)
         except Exception as e:
             self.assertTrue(False)
 
-    def test_code_edrpou(self):
+    def test_4_code_edrpou(self):
         test_input(self, "company_code_USREOU", "12121212")
 
-    def test_name(self):
+    def test_5_name(self):
         test_input(self, "admin_name_ua", "Тестовое имя")
 
-    def test_name_en(self):
+    def test_6_name_en(self):
         test_input(self, "admin_name_en", "Admin`s test name")
 
-    def test_last_name(self):
+    def test_7_last_name(self):
         test_input(self, "admin_last_name_ua", "Тестовая фамилия")
 
-    def test_last_name_en(self):
+    def test_8_last_name_en(self):
         test_input(self, "admin_last_name_en", "Admin`s test last name")
 
