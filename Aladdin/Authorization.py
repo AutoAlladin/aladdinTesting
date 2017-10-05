@@ -4,6 +4,7 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select
 
 from Aladdin.AladdinUtils import *
 
@@ -54,5 +55,27 @@ class FullFillPage(OpenRegistrationPage):
         test_input(self, "nameEN", "Test company name")
 
     def test_check_ownership(self):
-        select_ownership = self.
+        try:
+            select_ownership = self.wts.drv.find_element_by_id("ownership_type")
+            Select(select_ownership).select_by_visible_text("string:ООО")
+            sel_own = self.wts.drv.find_element_by_xpath("")
+            sel_own.click()
+            self.assertTrue(True)
+        except Exception as e:
+            self.assertTrue(False)
+
+    def test_code_edrpou(self):
+        test_input(self, "company_code_USREOU", "12121212")
+
+    def test_name(self):
+        test_input(self, "admin_name_ua", "Тестовое имя")
+
+    def test_name_en(self):
+        test_input(self, "admin_name_en", "Admin`s test name")
+
+    def test_last_name(self):
+        test_input(self, "admin_last_name_ua", "Тестовая фамилия")
+
+    def test_last_name_en(self):
+        test_input(self, "admin_last_name_en", "Admin`s test last name")
 
