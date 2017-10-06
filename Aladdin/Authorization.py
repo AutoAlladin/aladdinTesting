@@ -1,6 +1,8 @@
 import unittest
 
 import time
+
+from dns.e164 import query
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -67,7 +69,7 @@ class OpenRegistrationPage(OpenMainPage):
 class FullFillPage(OpenRegistrationPage):
     query = {"name": "RegistartionForm", "version": "0.0.0.2"}
 
-    def test_01_company_name(self):
+    def test_101_company_name(self):
         test_input(self, "nameUA",q=self.query)
 
     def test_02_company_name_en(self):
@@ -97,8 +99,12 @@ class FullFillPage(OpenRegistrationPage):
     def test_10_phone(self):
         test_input(self, "phone", q=self.query)
 
-    def test_11_email(self):
-        test_input(self, "email", q=self.query)
+    def test_011_email(self):
+        #test_input(self, "email", q=self.query)
+        eml=self.wts.__mongo__.test_params.find_one(self.query)
+        next=str(int(eml["inputs"]["email_next"])+1)
+        self.wts.__mongo__.test_params.update_one({"_id":eml["_id"]},{"$set":{"inputs.email":"forTestRegEmail_"+next.rjust(5,'0')+"@cucumber.com"}})
+        self.wts.__mongo__.test_params.update_one({"_id":eml["_id"]}, {"$set":{"inputs.email_next": next}})
 
     def test_12_password(self):
         test_input(self, "password", q=self.query)
