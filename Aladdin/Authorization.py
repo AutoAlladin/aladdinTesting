@@ -43,70 +43,71 @@ class OpenMainPage(unittest.TestCase):
     def setUpClass(cls):
         cls.wts = publicWST
 
-    @unittest.skip("test_open_page - Не представляет интереса на даный момент")
-    def test_open_page(self):
-        try:
-            self.wst.drv.get('https://alltenders.ald.in.ua/uk')
-            WebDriverWait(self.wst.drv, 5).until(
-                EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "РЕЄСТРАЦІЯ"))
-            self.assertTrue(True)
-        except Exception as e:
-            self.assertTrue(False, 'внятное слово '+e.__str__())
+    # @unittest.skip("test_open_page - Не представляет интереса на даный момент")
+    # def test_open_page(self):
+    #     try:
+    #         self.wst.drv.get('https://alltenders.ald.in.ua/uk')
+    #         WebDriverWait(self.wst.drv, 5).until(
+    #             EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "РЕЄСТРАЦІЯ"))
+    #         self.assertTrue(True)
+    #     except Exception as e:
+    #         self.assertTrue(False, 'внятное слово '+e.__str__())
 
 class OpenRegistrationPage(OpenMainPage):
-    @unittest.skip("test_open_registration_page - Не представляет интереса на даный момент")
-    def test_open_registration_page(self):
-        try:
-            self.wts.click_reg_btn()
-            self.assertTrue(True)
-        except Exception as e:
-            self.assertTrue(False, 'Ошибка открытия формы регистрации\n'+e.__str__())
+    pass
+    # @unittest.skip("test_open_registration_page - Не представляет интереса на даный момент")
+    # def test_open_registration_page(self):
+    #     try:
+    #         self.wts.click_reg_btn()
+    #         self.assertTrue(True)
+    #     except Exception as e:
+    #         self.assertTrue(False, 'Ошибка открытия формы регистрации\n'+e.__str__())
 
 class UserRegistration(OpenRegistrationPage):
-    query = {"name": "UserRegistrationForm", "version": "0.0.0.2"}
+    query = {"input_val": None, "q": {"name": "UserRegistrationForm", "version": "0.0.0.2"}}
 
     def test_01_company_name(self):
-        test_input(self, "nameUA", q=self.query)
+        test_input(self, "nameUA", **self.query)
 
     def test_02_company_name_en(self):
-        test_input(self, "nameEN", q=self.query)
+        test_input(self, "nameEN", **self.query)
 
     def test_03_check_ownership(self):
-        test_select(self, "ownership_type",  q=self.query)
+        test_select(self, "ownership_type",  **self.query)
 
     def test_04_code_edrpou(self):
-        test_input(self, "company_code_USREOU", q=self.query)
+        test_input(self, "company_code_USREOU", **self.query)
 
     def test_05_name(self):
-        test_input(self, "admin_name_ua", q=self.query)
+        test_input(self, "admin_name_ua", **self.query)
 
     def test_06_name_en(self):
-        test_input(self, "admin_name_en", q=self.query)
+        test_input(self, "admin_name_en", **self.query)
 
     def test_07_last_name(self):
-        test_input(self, "admin_last_name_ua", q=self.query)
+        test_input(self, "admin_last_name_ua", **self.query)
 
     def test_08_last_name_en(self):
-        test_input(self, "admin_last_name_en", q=self.query)
+        test_input(self, "admin_last_name_en", **self.query)
 
     def test_09_position(self):
-        test_input(self, "position", q=self.query)
+        test_input(self, "position", **self.query)
 
     def test_10_phone(self):
-        test_input(self, "phone", q=self.query)
+        test_input(self, "phone",**self.query)
 
     def test_11_email(self):
-        test_input(self, "email", q=self.query)
-        eml=self.wts.__mongo__.test_params.find_one(self.query)
+        test_input(self, "email", **self.query)
+        eml=self.wts.__mongo__.test_params.find_one(self.query["q"])
         next=str(int(eml["inputs"]["email_next"])+1)
         self.wts.__mongo__.test_params.update_one({"_id":eml["_id"]},{"$set":{"inputs.email":"forTestRegEmail_"+next.rjust(5,'0')+"@cucumber.com"}})
         self.wts.__mongo__.test_params.update_one({"_id":eml["_id"]}, {"$set":{"inputs.email_next": next}})
 
     def test_12_password(self):
-        test_input(self, "password", q=self.query)
+        test_input(self, "password",**self.query)
 
     def test_13_confirm_password(self):
-        test_input(self, "confirm_password", q=self.query)
+        test_input(self, "confirm_password",**self.query)
 
     def test_14_click_next_step_btn(self):
         try:

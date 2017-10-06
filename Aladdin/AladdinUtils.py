@@ -9,8 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 class MdbUtils():
     def __init__(self):
-        self.client = MongoClient()
-        #self.client = MongoClient('192.168.95.156',27017)
+        self.client = MongoClient('192.168.80.121', 27017)
         self.db = self.client['aladdin_tests']
         self.test_params = self.db["test_params"]
 
