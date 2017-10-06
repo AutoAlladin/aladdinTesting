@@ -74,7 +74,7 @@ class FullFillPage(OpenRegistrationPage):
         test_input(self, "nameEN", q=self.query)
 
     def test_03_check_ownership(self):
-        test_select(self, "ownership_type",  q=self.query )
+        test_select(self, "ownership_type",  q=self.query)
 
     def test_04_code_edrpou(self):
         test_input(self, "company_code_USREOU", q=self.query)
@@ -111,10 +111,60 @@ class FullFillPage(OpenRegistrationPage):
             next_step_btn = self.wts.drv.find_element_by_id("btn_next_step")
             next_step_btn.click()
             WebDriverWait(self.wts.drv, 10).until(
-                EC.text_to_be_present_in_element((By.ID, "btn_save_changes"), "Зберегти"))
+                EC.text_to_be_present_in_element((By.ID, "btn_edit"), "Редагувати"))
             self.assertTrue(True)
         except Exception as e:
             self.assertTrue(False, 'Не отображается кнопка Зберегти\n' + e.__str__())
 
+    def test_15_click_edit_btn(self):
+        try:
+            edit_btn = self.wts.drv.find_element_by_id("btn_edit")
+            edit_btn.click()
+            self.assertTrue(True)
+        except Exception as e:
+            self.assertTrue(False, 'Не кликается кнопка Редагувати\n' + e.__str__())
+
+    def test_16_tax_system(self):
+        test_select(self, "company_taxSystem", "5")
+
+    def test_17_phone_company(self):
+        test_input(self, "phone", "45645645")
+
+    def test_18_email_company(self):
+        test_input(self, "email", "sdb@xss.er")
+
+    def test_19_legal_address(self):
+        test_input(self, "legal_address_street", "прпрпро")
+
+    def test_20_legal_index(self):
+        test_input(self, "legal_address_index", "56789")
+
+    def test_21_real_address(self):
+        test_input(self, "real_address_street", "роророро")
+
+    def test_22_real_index(self):
+        test_input(self, "real_address_index", "12345")
+
+    def test_23_bank_name(self):
+        test_input(self, "company_bank_account_name", "dfdfdfdf")
+
+    def test_24_bank_mfo(self):
+        test_input(self, "company_bank_account_mfo", "123456")
+
+    def test_25_bank_account(self):
+        test_input(self, "company_bank_account_account", "12345678454578")
+
+    def test_26_lead_phone(self):
+        test_input(self, "lead_phone", "12345678")
+
+    def test_27_confidant_email(self):
+        test_input(self, "confidant_email", "fdfdfd@fdd.re")
+
+    def test_28_confidant_phone(self):
+        test_input(self, "confidant_phone", "1235454")
+
+    def test_29_contract_offer(self):
+        contract_offer_check = self.wts.drv.find_element_by_id("contract_offer")
+        contract_offer_check.click()
 
 
