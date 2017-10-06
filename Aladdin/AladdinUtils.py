@@ -75,4 +75,5 @@ class WebTestSession():
 
     def close(self):
         self.drv.close()
+        self.__mongo__.client.close()
         pass
