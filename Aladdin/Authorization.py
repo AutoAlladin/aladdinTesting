@@ -75,8 +75,9 @@ class UserRegistration(OpenRegistrationPage):
     def test_03_check_ownership(self):
         test_select(self, "ownership_type",  **self.query)
 
+
     def test_04_code_edrpou(self):
-        test_input(self, "company_code_USREOU", **self.query)
+        test_input(self, "company_code_USREOU", "12345678")
 
     def test_05_name(self):
         test_input(self, "admin_name_ua", **self.query)
@@ -123,8 +124,16 @@ class UserRegistration(OpenRegistrationPage):
 class UserRegistration_Company(OpenRegistrationPage):
     query = {"name": "UserCompanyRegistrationForm", "version": "0.0.0.3"}
 
+    #def test_scroll(self):
+     #   self.wts.drv.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+      #  time.sleep(3)
+
+
     def test_01_click_edit_btn(self):
+        #Key
         try:
+            self.wts.drv.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(15)
             edit_btn = self.wts.drv.find_element_by_id("btn_edit")
             edit_btn.click()
             self.assertTrue(True)
@@ -135,41 +144,68 @@ class UserRegistration_Company(OpenRegistrationPage):
         test_select(self, "company_taxSystem", "5")
 
     def test_03_phone_company(self):
-        test_input(self, "phone", "45645645")
+        test_input(self, "phone", q=self.query)
 
     def test_04_email_company(self):
-        test_input(self, "email", "sdb@xss.er")
+        test_input(self, "email", q=self.query)
 
-    def test_05_legal_address(self):
-        test_input(self, "legal_address_street", "прпрпро")
+    def test_05_country_legal(self):
+        test_select(self, "legal_address_country", q=self.query)
 
-    def test_06_legal_index(self):
-        test_input(self, "legal_address_index", "56789")
+    def test_06_region_legal(self):
+        test_select(self, "legal_address_region", q=self.query)
 
-    def test_07_real_address(self):
-        test_input(self, "real_address_street", "роророро")
+    def test_07_city_legal(self):
+        test_select(self, "legal_address_city", q=self.query)
 
-    def test_08_real_index(self):
-        test_input(self, "real_address_index", "12345")
+    def test_08_legal_address(self):
+        test_input(self, "legal_address_street", q=self.query)
 
-    def test_09_bank_name(self):
-        test_input(self, "company_bank_account_name", "dfdfdfdf")
+    def test_09_legal_index(self):
+        test_input(self, "legal_address_index", q=self.query)
 
-    def test_10_bank_mfo(self):
-        test_input(self, "company_bank_account_mfo", "123456")
+    def test_10_real_country(self):
+        test_select(self, "real_address_country", q=self.query)
 
-    def test_11_bank_account(self):
-        test_input(self, "company_bank_account_account", "12345678454578")
+    def test_11_real_regoin(self):
+        test_select(self, "real_address_region", q=self.query)
 
-    def test_12_lead_phone(self):
-        test_input(self, "lead_phone", "12345678")
+    def test_12_real_city(self):
+        test_select(self, "real_address_city", q=self.query)
 
-    def test_13_confidant_email(self):
-        test_input(self, "confidant_email", "fdfdfd@fdd.re")
+    def test_13_real_address(self):
+        test_input(self, "real_address_street", q=self.query)
 
-    def test_14_confidant_phone(self):
-        test_input(self, "confidant_phone", "1235454")
+    def test_14_real_index(self):
+        test_input(self, "real_address_index", q=self.query)
 
-    def test_15_contract_offer(self):
-        contract_offer_check = self.wts.drv.find_element_by_id("contract_offer")
+    def test_15_bank_name(self):
+        test_input(self, "company_bank_account_name", q=self.query)
+
+    def test_16_bank_mfo(self):
+        test_input(self, "company_bank_account_mfo", q=self.query)
+
+    def test_17_bank_account(self):
+        test_input(self, "company_bank_account_account", q=self.query)
+
+    def test_18_lead_phone(self):
+        test_input(self, "lead_phone", q=self.query)
+
+    def test_19_confidant_email(self):
+        test_input(self, "confidant_email", q=self.query)
+
+    def test_20_confidant_phone(self):
+        test_input(self, "confidant_phone", q=self.query)
+
+    def test_21_contract_offer(self):
+        contract_offer_check = self.wts.drv.find_element_by_xpath(".//*[@id='contract_offer_container']/label")
         contract_offer_check.click()
+        time.sleep(10)
+
+    def test_22_save(self):
+        btn_save = self.wts.drv.find_element_by_id("btn_save_changes")
+        btn_save.click()
+        time.sleep(5)
+#class UserRegistration_Company_FOP(OpenRegistrationPage):
+ #   pass
+
