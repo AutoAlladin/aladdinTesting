@@ -100,12 +100,13 @@ class UserRegistration(OpenRegistrationPage):
         test_input(self, "resident_phone", "+38 (040) 000-00-00")
 
     def test_11_email(self):
-        test_input(self, "email", "rtzt2@com.ua")
-        # eml = self.wts.__mongo__.test_params.find_one(self.query["q"])
-        # next = str(int(eml["inputs"]["email_next"]) + 1)
-        # self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {
-        #     "$set": {"inputs.email": "forTestRegEmail_" + next.rjust(5, '0') + "@cucumber.com"}})
-        # self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {"$set": {"inputs.email_next": next}})
+        #test_input(self, "email", "rtzt2@com.ua")
+        test_input(self, "email", **self.query)
+        eml = self.wts.__mongo__.test_params.find_one(self.query["q"])
+        next = str(int(eml["inputs"]["email_next"]) + 1)
+        self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {
+            "$set": {"inputs.email": "forTestRegEmail_" + next.rjust(5, '0') + "@cucumber.com"}})
+        self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {"$set": {"inputs.email_next": next}})
 
     def test_12_password(self):
         test_input(self, "password", **self.query)
