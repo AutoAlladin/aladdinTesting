@@ -48,6 +48,7 @@ def get_tendering_id(guid):
 
 
 
+
     # if tender["status"] == "active.tendering" and "features" in tender and len(tender["features"])>1:
     #     endDate = dateutil.parser.parse(tender["tenderPeriod"]["endDate"])
     #     diff = endDate - datetime.datetime.now(tz=pytz.utc)
