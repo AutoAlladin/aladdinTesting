@@ -3,8 +3,8 @@
 		"url":"https://test-gov.ald.in.ua"
 	},
 	"below":{
-		"login":"aladdin.for.test+owner@gmail.com",
-		"password":"zxcvbn00",
+		"login":"testertestaladdin+owner@gmail.com",
+		"password":"aladdin54321",
 		"enqueriPeriod":2,
 		"tenderPeriod":600,
         "title":"Для тестування.",
