@@ -18,7 +18,7 @@ def field_input(_id, val):
     field_input.send_keys("val")
     return field_input.get_attribute('value')
 
-def text_input(id_field, _id, val, input_val=None):
+def text_input(_id, val, input_val=None):
     try:
         if input_val is None:
             input_val = field_input(_id, val)
@@ -51,9 +51,9 @@ class openChrome(unittest.TestCase):
 
 class Login(unittest.TestCase):
     def test_01_email(self):
-        #text_input("exampleInputEmail1", "envarra@gmail.com")
-        email = browser.drv.find_element_by_id("exampleInputEmail1")
-        email.send_keys("envarra@gmail.com")
+        text_input("exampleInputEmail1", "envarra@gmail.com")
+        #email = browser.drv.find_element_by_id("exampleInputEmail1")
+        #email.send_keys("envarra@gmail.com")
 
         #test_input(self, "exampleInputEmail1", "envarra@gmail.com")
 

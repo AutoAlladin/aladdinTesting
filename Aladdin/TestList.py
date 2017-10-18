@@ -47,6 +47,39 @@ def s_user_registration_FOP():
     return suite
 
 
+def s_company_reg():
+    suite = unittest.TestSuite()
+
+    suite.addTest(Authorization.UserRegistration_Company("test_02_tax_system"))
+    suite.addTest(Authorization.UserRegistration_Company("test_03_phone_company"))
+    suite.addTest(Authorization.UserRegistration_Company("test_04_email_company"))
+    suite.addTest(Authorization.UserRegistration_Company("test_05_country_legal"))
+    suite.addTest(Authorization.UserRegistration_Company("test_06_region_legal"))
+    suite.addTest(Authorization.UserRegistration_Company("test_07_city_legal"))
+    suite.addTest(Authorization.UserRegistration_Company("test_08_legal_address"))
+    suite.addTest(Authorization.UserRegistration_Company("test_09_legal_index"))
+    suite.addTest(Authorization.UserRegistration_Company("test_10_real_country"))
+    suite.addTest(Authorization.UserRegistration_Company("test_11_real_region"))
+    suite.addTest(Authorization.UserRegistration_Company("test_12_real_city"))
+    suite.addTest(Authorization.UserRegistration_Company("test_13_real_address"))
+    suite.addTest(Authorization.UserRegistration_Company("test_14_real_index"))
+    suite.addTest(Authorization.UserRegistration_Company("test_15_bank_name"))
+    suite.addTest(Authorization.UserRegistration_Company("test_16_bank_mfo"))
+    suite.addTest(Authorization.UserRegistration_Company("test_17_bank_account"))
+    suite.addTest(Authorization.UserRegistration_Company("test_18_lead_first_name"))
+    suite.addTest(Authorization.UserRegistration_Company("test_19_lead_last_name"))
+    suite.addTest(Authorization.UserRegistration_Company("test_20_lead_email"))
+    suite.addTest(Authorization.UserRegistration_Company("test_21_lead_phone"))
+    suite.addTest(Authorization.UserRegistration_Company("test_22_confidant_first_name"))
+    suite.addTest(Authorization.UserRegistration_Company("test_23_confidant_last_name"))
+    suite.addTest(Authorization.UserRegistration_Company("test_24_confidant_position"))
+    suite.addTest(Authorization.UserRegistration_Company("test_25_confidant_email"))
+    suite.addTest(Authorization.UserRegistration_Company("test_26_confidant_phone"))
+    suite.addTest(Authorization.UserRegistration_Company("test_27_contract_offer"))
+    suite.addTest(Authorization.UserRegistration_Company("test_28_save"))
+
+    return suite
+
 def s_login():
     suite = unittest.TestSuite()
 
@@ -69,3 +102,6 @@ if __name__ == '__main__':
 
     if args[0] == 'Login':
         runner.run(s_login())
+
+    if args[0] == 'UserRegistration_Company':
+        runner.run(s_company_reg())

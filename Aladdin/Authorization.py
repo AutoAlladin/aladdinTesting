@@ -80,11 +80,13 @@ class UserRegistration(OpenRegistrationPage):
     def test_03_check_ownership(self):
         test_select(self, "ownership_type", **self.query)
 
-    def test_03_ownership_type_fop(self):
-        test_select(self, "ownership_type", "11")
 
-    def test_04_code_company(self):
-        test_input(self, "company_code_USREOUFop", "1234567890")
+    #def test_03_ownership_type_fop(self):
+     #   test_select(self, "ownership_type", "11")
+
+
+    #def test_04_code_company(self):
+     #   test_input(self, "company_code_USREOUFop", "1234567890")
 
     def test_04_code_edrpou(self):
         test_input(self, "company_code_USREOU", "12345678")
@@ -236,8 +238,43 @@ class UserRegistration_Company(OpenMainPage):
         btn_save.click()
         time.sleep(5)
 
+    def test_29_tab_empl(self):
+        self.wts.drv.execute_script("window.scrollTo(0, -250);")
+        btn_tab_empl = self.wts.drv.find_element_by_id("profile_tab_employees")
+        btn_tab_empl.click()
+
+    def test_30_add_user(self):
+        btn_add_user = self.wts.drv.find_element_by_id("butAddNewUser")
+        btn_add_user.click()
+
+    def test_31_name(self):
+        test_input(self, "firstName_0", "Ввававіав")
+
+    def test_32_name_eu(self):
+        test_input(self,"firstNameEn_0", "Gfgfgdfdfdf")
+
+    def test_33_last_name(self):
+        test_input(self, "lastName_0", "Смсмсмсм")
+
+    def test_34_last_name_eu(self):
+        test_input(self, "lastNameEn_0", "Ffdfdfx")
+
+    def test_35_position(self):
+        test_input(self, "position_0", "папапсмсм пмсм")
+
+    def test_36_email(self):
+        test_input(self, "email_0", "fdfdf@fdf.ru")
+
+    def test_37_phone(self):
+        test_input(self, "phone_0", "44545454")
+
+    def test_38_save(self):
+        btn_save = self.wts.drv.find_element_by_id("save_changes")
+        btn_save.click()
+
 #class AddDocs(OpenMainPage):
         #query = {"name": "AddDocs", "version": "0.0.0.4"}
+    @classmethod
     def test_29_click_doc_tab(self):
         time.sleep(5)
         self.wts.drv.execute_script("window.scrollTo(0, -250);")
@@ -249,12 +286,12 @@ class UserRegistration_Company(OpenMainPage):
         #   self.assertTrue(True)
         # except Exception as e:
         #     self.assertTrue(False, 'Не кликается кнопка Документы\n' + e.__str__())
-
+    @classmethod
     def test_30_click_button_attach(self):
         time.sleep(5)
         btn_attach = self.wts.drv.find_element_by_xpath(".//*[contains(@id,'button_attach_document_36_0')]")
         btn_attach.click()
-
+    @classmethod
     def test_31_docs(self):
         root = Tk()
         p = urlparse('file://C:/Users/Admin/Documents/Lightshot/Screenshot_1.png')
@@ -272,10 +309,45 @@ class UserRegistration_Company(OpenMainPage):
 #class UserRegistration_Company_FOP(OpenRegistrationPage):
  #   pass
 
-
+@classmethod
 class UserRegistration_FOP(OpenMainPage):
     def test_01_ownership_type_fop(self):
         test_select("ownership_type", "11")
 
     def test_02_code_company(self):
         test_input("company_code_USREOUFop", "1234567897897")
+
+@classmethod
+class Employees(OpenMainPage):
+    def test_01_tab_empl(self):
+        btn_tab_empl = self.wts.drv.find_element_by_id("profile_tab_employees")
+        btn_tab_empl.click()
+
+    def test_02_add_user(self):
+        btn_add_user = self.wts.drv.find_element_by_id("butAddNewUser")
+        btn_add_user.click()
+
+    def test_03_name(self):
+        test_input(self, "firstName_0", "Ввававіав")
+
+    def test_04_name_eu(self):
+        test_input(self,"firstNameEn_0", "Gfgfgdfdfdf")
+
+    def test_05_last_name(self):
+        test_input(self, "lastName_0", "Смсмсмсм")
+
+    def test_06_last_name_eu(self):
+        test_input(self, "lastNameEn_0", "Ffdfdfx")
+
+    def test_07_position(self):
+        test_input(self, "position_0", "папапсмсм пмсм")
+
+    def test_08_email(self):
+        test_input(self, "email_0", "fdfdf@fdf.ru")
+
+    def test_09_phone(self):
+        test_input(self, "phone_0", "44545454")
+
+    def test_10_save(self):
+        btn_save = self.wts.drv.find_element_by_id("save_changes")
+        btn_save.click()
