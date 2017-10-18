@@ -80,6 +80,12 @@ class UserRegistration(OpenRegistrationPage):
     def test_03_check_ownership(self):
         test_select(self, "ownership_type", **self.query)
 
+    def test_03_ownership_type_fop(self):
+        test_select(self, "ownership_type", "11")
+
+    def test_04_code_company(self):
+        test_input(self, "company_code_USREOUFop", "1234567890")
+
     def test_04_code_edrpou(self):
         test_input(self, "company_code_USREOU", "12345678")
 
@@ -99,7 +105,7 @@ class UserRegistration(OpenRegistrationPage):
         test_input(self, "position", **self.query)
 
     def test_10_phone(self):
-        test_input(self, "resident_phone", "+38 (040) 000-00-00")
+        test_input(self, "resident_phone", **self.query)
 
     def test_11_email(self):
         #test_input(self, "email", "rtzt2@com.ua")
@@ -266,3 +272,10 @@ class UserRegistration_Company(OpenMainPage):
 #class UserRegistration_Company_FOP(OpenRegistrationPage):
  #   pass
 
+
+class UserRegistration_FOP(OpenMainPage):
+    def test_01_ownership_type_fop(self):
+        test_select("ownership_type", "11")
+
+    def test_02_code_company(self):
+        test_input("company_code_USREOUFop", "1234567897897")

@@ -39,7 +39,8 @@ class openChrome(unittest.TestCase):
             self.drv = webdriver.Chrome()
             self.drv.maximize_window()
             self.drv.implicitly_wait(10)
-            self.drv.get('https://192.168.80.169:44310/Account/Login')
+            #self.drv.get('https://192.168.80.169:44310/Account/Login')
+            self.drv.get('https://identity.ald.in.ua/Account/Login')
             self.assertTrue(True)
         except Exception as e:
             self.assertTrue(False, 'Не открывается форма логина\n' + e.__str__())
@@ -50,16 +51,16 @@ class openChrome(unittest.TestCase):
 
 class Login(unittest.TestCase):
     def test_01_email(self):
-        text_input("exampleInputEmail1", "envarra@gmail.com")
-        #email = browser.drv.find_element_by_id("exampleInputEmail1")
-        #email.send_keys("envarra@gmail.com")
+        #text_input("exampleInputEmail1", "envarra@gmail.com")
+        email = browser.drv.find_element_by_id("exampleInputEmail1")
+        email.send_keys("envarra@gmail.com")
 
         #test_input(self, "exampleInputEmail1", "envarra@gmail.com")
 
 
     def test_02_pswd(self):
         pswd = browser.drv.find_element_by_id("pswd")
-        browser.drv.pswd.send_keys("qwerty1234")
+        pswd.send_keys("qwerty1234")
         time.sleep(10)
         #test_input(self, "pswd", "qwerty1234")
 
