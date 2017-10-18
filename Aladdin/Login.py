@@ -12,6 +12,27 @@ def setUpModule():
 def tearDownModule():
     browser.drv.close()
 
+
+def field_input(_id, val):
+    field_input=browser.drv.find_element_by_id("_id")
+    field_input.send_keys("val")
+    return field_input.get_attribute('value')
+
+def text_input(id_field, _id, val, input_val=None):
+    try:
+        if input_val is None:
+            input_val = field_input(_id, val)
+        browser.drv.assertEqual(
+            input_val,
+            browser.drv.field_input
+        )
+    except Exception as e:
+        browser.assertTrue(False, "Ошибка при вводе текста\n" + e.__str__())
+
+
+
+
+
 class openChrome(unittest.TestCase):
     def __init__(self):
         try:
@@ -25,17 +46,20 @@ class openChrome(unittest.TestCase):
 
 
 
+
+
 class Login(unittest.TestCase):
     def test_01_email(self):
+        text_input("exampleInputEmail1", "envarra@gmail.com")
+        #email = browser.drv.find_element_by_id("exampleInputEmail1")
+        #email.send_keys("envarra@gmail.com")
 
-        email = browser.drv.find_element_by_id("exampleInputEmail1")
-        email.send_keys("envarra@gmail.com")
         #test_input(self, "exampleInputEmail1", "envarra@gmail.com")
 
 
     def test_02_pswd(self):
         pswd = browser.drv.find_element_by_id("pswd")
-        pswd.send_keys("qwerty1234")
+        browser.drv.pswd.send_keys("qwerty1234")
         time.sleep(10)
         #test_input(self, "pswd", "qwerty1234")
 
@@ -44,15 +68,3 @@ class Login(unittest.TestCase):
         btn.click()
         #WebDriverWait(browser.drv, 10).until(EC._find_element(By.XPATH), "html/body")
         time.sleep(10)
-
-
-
-
-
-# class MyTestCase(unittest.TestCase):
-#     def test_something(self):
-#         self.assertEqual(True, False)
-
-
-# if __name__ == '__main__':
-#     unittest.main()
