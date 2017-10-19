@@ -91,10 +91,19 @@ def s_login():
 
 
 
-def edit_information():
+def s_edit_information():
     suite = unittest.TestSuite()
 
-    suite.addTest(Authorization.UserRegistration("test_01_company_name"))
+    suite.addTest(Login.Login("test_01_email"))
+    suite.addTest(Login.Login("test_02_pswd"))
+    suite.addTest(Login.Login("test_03_btn"))
+    suite.addTest(Login.EditInfo("test_01_go_to_user_profile"))
+    suite.addTest(Login.EditInfo("test_02_click_tab_company"))
+    suite.addTest(Login.EditInfo("test_03_click_btn_edit"))
+    suite.addTest(Login.EditInfo("test_04_update_comp_name"))
+    suite.addTest(Login.EditInfo("test_05_click_btn_save_changes"))
+
+    return suite
 
 if __name__ == '__main__':
     args=sys.argv[1:]
@@ -111,3 +120,6 @@ if __name__ == '__main__':
 
     if args[0] == 'UserRegistration_Company':
         runner.run(s_company_reg())
+
+    if args[0] == 'edit_information':
+        runner.run(s_edit_information())
