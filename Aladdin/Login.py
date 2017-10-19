@@ -12,24 +12,49 @@ def setUpModule():
 def tearDownModule():
     browser.drv.close()
 
+
+def field_input(_id, val):
+    field_input=browser.drv.find_element_by_id("_id")
+    field_input.send_keys("val")
+    return field_input.get_attribute('value')
+
+def text_input(_id, val, input_val=None):
+    try:
+        if input_val is None:
+            input_val = field_input(_id, val)
+        browser.drv.assertEqual(
+            input_val,
+            browser.drv.field_input
+        )
+    except Exception as e:
+        browser.assertTrue(False, "Ошибка при вводе текста\n" + e.__str__())
+
+
+
+
+
 class openChrome(unittest.TestCase):
     def __init__(self):
         try:
             self.drv = webdriver.Chrome()
             self.drv.maximize_window()
             self.drv.implicitly_wait(10)
-            self.drv.get('https://192.168.80.169:44310/Account/Login')
+            #self.drv.get('https://192.168.80.169:44310/Account/Login')
+            self.drv.get('https://identity.ald.in.ua/Account/Login')
             self.assertTrue(True)
         except Exception as e:
             self.assertTrue(False, 'Не открывается форма логина\n' + e.__str__())
 
 
 
+
+
 class Login(unittest.TestCase):
     def test_01_email(self):
+        text_input("exampleInputEmail1", "envarra@gmail.com")
+        #email = browser.drv.find_element_by_id("exampleInputEmail1")
+        #email.send_keys("envarra@gmail.com")
 
-        email = browser.drv.find_element_by_id("exampleInputEmail1")
-        email.send_keys("envarra@gmail.com")
         #test_input(self, "exampleInputEmail1", "envarra@gmail.com")
 
 
@@ -44,15 +69,3 @@ class Login(unittest.TestCase):
         btn.click()
         #WebDriverWait(browser.drv, 10).until(EC._find_element(By.XPATH), "html/body")
         time.sleep(10)
-
-
-
-
-
-# class MyTestCase(unittest.TestCase):
-#     def test_something(self):
-#         self.assertEqual(True, False)
-
-
-# if __name__ == '__main__':
-#     unittest.main()
