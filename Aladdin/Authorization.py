@@ -7,6 +7,7 @@ import os
 from urllib.parse import urlparse
 from Prozorro.Utils import scroll_to_element
 from selenium.webdriver.support import expected_conditions as EC
+from Prozorro.Utils import *
 
 publicWST = None;
 def setUpModule():
@@ -69,7 +70,8 @@ class OpenRegistrationPage(OpenMainPage):
     #         self.assertTrue(False, 'Ошибка открытия формы регистрации\n'+e.__str__())
 
 class UserRegistration(OpenRegistrationPage):
-    query = {"input_val": None, "q": {"name": "UserRegistrationForm", "version": "0.0.0.2"}}
+    query = {"input_val": None, "q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}}
+
 
     def test_01_company_name(self):
         test_input(self, "nameUA", **self.query)
@@ -89,7 +91,7 @@ class UserRegistration(OpenRegistrationPage):
      #   test_input(self, "company_code_USREOUFop", "1234567890")
 
     def test_04_code_edrpou(self):
-        test_input(self, "company_code_USREOU", "12345678")
+        test_input(self, "company_code_USREOU", **self.query)
 
     def test_05_name(self):
         test_input(self, "admin_name_ua", **self.query)
@@ -110,12 +112,11 @@ class UserRegistration(OpenRegistrationPage):
         test_input(self, "resident_phone", **self.query)
 
     def test_11_email(self):
-        #test_input(self, "email", "rtzt2@com.ua")
         test_input(self, "email", **self.query)
         eml = self.wts.__mongo__.test_params.find_one(self.query["q"])
         next = str(int(eml["inputs"]["email_next"]) + 1)
         self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {
-            "$set": {"inputs.email": "forTestRegEmail_" + next.rjust(5, '0') + "@cucumber.com"}})
+        "$set": {"inputs.email": "forTestRegEmail_" + next.rjust(5, '0') + "@cucumber.com"}})
         self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {"$set": {"inputs.email_next": next}})
 
     def test_12_password(self):
@@ -231,12 +232,12 @@ class UserRegistration_Company(OpenMainPage):
     def test_27_contract_offer(self):
         contract_offer_check = self.wts.drv.find_element_by_xpath(".//*[@id='contract_offer_container']/label")
         contract_offer_check.click()
-        time.sleep(10)
+       # WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.XPATH, "")))
 
     def test_28_save(self):
         btn_save = self.wts.drv.find_element_by_id("btn_save_changes")
         btn_save.click()
-        time.sleep(5)
+        #WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_save_changes")))
 
     def test_29_tab_empl(self):
         self.wts.drv.execute_script("window.scrollTo(0, -250);")
@@ -275,13 +276,12 @@ class UserRegistration_Company(OpenMainPage):
 
 #class AddDocs(OpenMainPage):
         #query = {"name": "AddDocs", "version": "0.0.0.4"}
-
-    # def test_29_click_doc_tab(self):
-    #     time.sleep(5)
-    #     self.wts.drv.execute_script("window.scrollTo(0, -250);")
-    #     btn_tab_documents = self.wts.drv.find_element_by_id("profile_tab_documents")
-    #     btn_tab_documents.click()
-
+    def test_29_click_doc_tab(self):
+        time.sleep(5)
+        self.wts.drv.execute_script("window.scrollTo(0, -250);")
+        #self.wts.drv.execute_script("window.scroll(0, {0}-{1})".format("profile_tab_documents"("y")))
+        btn_tab_documents = self.wts.drv.find_element_by_id("profile_tab_documents")
+        btn_tab_documents.click()
         #  try:
         #     time.sleep(15)
 
@@ -353,3 +353,7 @@ class Employees(OpenMainPage):
     def test_10_save(self):
         btn_save = self.wts.drv.find_element_by_id("save_changes")
         btn_save.click()
+
+
+
+

@@ -51,9 +51,9 @@ class openChrome(unittest.TestCase):
 
 class Login(unittest.TestCase):
     def test_01_email(self):
-        text_input("exampleInputEmail1", "envarra@gmail.com")
-        #email = browser.drv.find_element_by_id("exampleInputEmail1")
-        #email.send_keys("envarra@gmail.com")
+        #text_input("exampleInputEmail1", "envarra@gmail.com")
+        email = browser.drv.find_element_by_id("exampleInputEmail1")
+        email.send_keys("envarra@gmail.com")
 
         #test_input(self, "exampleInputEmail1", "envarra@gmail.com")
 
@@ -69,3 +69,32 @@ class Login(unittest.TestCase):
         btn.click()
         #WebDriverWait(browser.drv, 10).until(EC._find_element(By.XPATH), "html/body")
         time.sleep(10)
+
+class EditInfo(OpenMainPage):
+    def test_01_go_to_user_profile(self):
+        user_prof = browser.drv.find_element_by_id("link_about")
+        time.sleep(5)
+        user_prof.click()
+
+    def test_02_click_tab_company(self):
+        btn_tab_company = browser.drv.find_element_by_id("profile_tab_company")
+        time.sleep(10)
+        btn_tab_company.click()
+        browser.drv.execute_script("window.scrollTo(0, 2500);")
+
+    def test_03_click_btn_edit(self):
+        btn_edit = browser.drv.find_element_by_id("btn_edit")
+        time.sleep(10)
+        btn_edit.click()
+
+    def test_04_update_comp_name(self):
+        time.sleep(5)
+        comp_name = browser.drv.find_element_by_id("nameUA")
+        comp_name.send_keys("SunnyBunny")
+        time.sleep(10)
+
+    def test_05_click_btn_save_changes(self):
+        browser.drv.execute_script("window.scrollTo(0, 2500);")
+        btn_s_changes = browser.drv.find_element_by_id("btn_save_changes")
+        time.sleep(5)
+        btn_s_changes.click()
