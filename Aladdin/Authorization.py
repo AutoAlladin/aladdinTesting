@@ -139,34 +139,34 @@ class UserRegistration(OpenRegistrationPage):
 class UserRegistration_Company(OpenMainPage):
     query = {"name": "UserCompanyRegistrationForm", "version": "0.0.0.3"}
 
-    @classmethod
-    def test_01_click_edit_btn(self):
-        # Key
-        try:
 
-            WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable(((By.ID, "btn_edit"))))
-            edit_btn = self.wts.drv.find_element_by_id("btn_edit")
-            scroll_to_element(self.wts.drv,edit_btn,'0')
-
-            edit_btn.click()
-            self.assertTrue(True)
-        except Exception as e:
-            self.assertTrue(False, 'Не кликается кнопка Редагувати\n' + e.__str__())
+    # def test_01_click_edit_btn(self):
+    #     # Key
+    #     try:
+    #
+    #         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable(((By.ID, "btn_edit"))))
+    #         edit_btn = self.wts.drv.find_element_by_id("btn_edit")
+    #         scroll_to_element(self.wts.drv,edit_btn,'0')
+    #
+    #         edit_btn.click()
+    #         self.assertTrue(True)
+    #     except Exception as e:
+    #         self.assertTrue(False, 'Не кликается кнопка Редагувати\n' + e.__str__())
 
     def test_02_tax_system(self):
         test_select(self, "company_taxSystem", "5")
 
     def test_03_phone_company(self):
-        test_input(self, "phone", **self.query)
+        test_input(self, "phone", q=self.query)
 
     def test_04_email_company(self):
-        test_input(self, "email", **self.query)
+        test_input(self, "email", q=self.query)
 
     def test_05_country_legal(self):
-        test_select(self, "legal_address_country", **self.query)
+        test_select(self, "legal_address_country", q=self.query)
 
     def test_06_region_legal(self):
-        test_select(self, "legal_address_region", **self.query)
+        test_select(self, "legal_address_region", q=self.query)
 
     def test_07_city_legal(self):
         test_select(self, "legal_address_city", q=self.query)
@@ -243,6 +243,7 @@ class UserRegistration_Company(OpenMainPage):
         btn_tab_empl = self.wts.drv.find_element_by_id("profile_tab_employees")
         btn_tab_empl.click()
 
+    @classmethod
     def test_30_add_user(self):
         btn_add_user = self.wts.drv.find_element_by_id("butAddNewUser")
         btn_add_user.click()
@@ -274,31 +275,32 @@ class UserRegistration_Company(OpenMainPage):
 
 #class AddDocs(OpenMainPage):
         #query = {"name": "AddDocs", "version": "0.0.0.4"}
-    @classmethod
-    def test_29_click_doc_tab(self):
-        time.sleep(5)
-        self.wts.drv.execute_script("window.scrollTo(0, -250);")
-        btn_tab_documents = self.wts.drv.find_element_by_id("profile_tab_documents")
-        btn_tab_documents.click()
+
+    # def test_29_click_doc_tab(self):
+    #     time.sleep(5)
+    #     self.wts.drv.execute_script("window.scrollTo(0, -250);")
+    #     btn_tab_documents = self.wts.drv.find_element_by_id("profile_tab_documents")
+    #     btn_tab_documents.click()
+
         #  try:
         #     time.sleep(15)
 
         #   self.assertTrue(True)
         # except Exception as e:
         #     self.assertTrue(False, 'Не кликается кнопка Документы\n' + e.__str__())
-    @classmethod
-    def test_30_click_button_attach(self):
-        time.sleep(5)
-        btn_attach = self.wts.drv.find_element_by_xpath(".//*[contains(@id,'button_attach_document_36_0')]")
-        btn_attach.click()
-    @classmethod
-    def test_31_docs(self):
-        root = Tk()
-        p = urlparse('file://C:/Users/Admin/Documents/Lightshot/Screenshot_1.png')
-        ParseResult = os.path.abspath(os.path.join(p.path))
-        root.Screenshot_1 = filedialog.askopenfile(initialdir= "ParseResult")
-        time.sleep(5)
-        print(root.Screenshot_1)
+    # @classmethod
+    # def test_30_click_button_attach(self):
+    #     time.sleep(5)
+    #     btn_attach = self.wts.drv.find_element_by_xpath(".//*[contains(@id,'button_attach_document_36_0')]")
+    #     btn_attach.click()
+    # @classmethod
+    # def test_31_docs(self):
+    #     root = Tk()
+    #     p = urlparse('file://C:/Users/Admin/Documents/Lightshot/Screenshot_1.png')
+    #     ParseResult = os.path.abspath(os.path.join(p.path))
+    #     root.Screenshot_1 = filedialog.askopenfile(initialdir= "ParseResult")
+    #     time.sleep(5)
+    #     print(root.Screenshot_1)
 
 
         # root.Screenshot_1 = filedialog.askopenfile(initialdir = "C:\Users\Admin\Documents\Lightshot", title = "Screenshot_1", filetypes = ("*.png"))
