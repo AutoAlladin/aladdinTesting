@@ -148,16 +148,16 @@ class UserRegistration_Company(OpenMainPage):
         test_select(self, "company_taxSystem", "5")
 
     def test_03_phone_company(self):
-        test_input(self, "phone", **self.query)
+        test_input(self, "phone", q=self.query)
 
     def test_04_email_company(self):
-        test_input(self, "email", **self.query)
+        test_input(self, "email", q=self.query)
 
     def test_05_country_legal(self):
-        test_select(self, "legal_address_country", **self.query)
+        test_select(self, "legal_address_country", q=self.query)
 
     def test_06_region_legal(self):
-        test_select(self, "legal_address_region", **self.query)
+        test_select(self, "legal_address_region", q=self.query)
 
     def test_07_city_legal(self):
         test_select(self, "legal_address_city", q=self.query)

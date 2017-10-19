@@ -24,9 +24,16 @@ def s_user_registration():
 
     return suite
 
+
+def edit_information():
+    suite = unittest.TestSuite()
+
+    suite.addTest(Authorization.UserRegistration("test_01_company_name"))
+
 if __name__ == '__main__':
     args=sys.argv[1:]
     runner = unittest.TextTestRunner()
 
     if args[0] == 'UserRegistration':
         runner.run(s_user_registration())
+

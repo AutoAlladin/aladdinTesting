@@ -45,7 +45,8 @@ class WebTestSession():
         self.__mongo__=MdbUtils()
 
     def click_reg_btn(self):
-        self.drv.get('https://192.168.80.169:44310/i_uk/registration/user')
+        #self.drv.get('https://192.168.80.169:44310/i_uk/registration/user')
+        self.drv.get('https://identity.ald.in.ua/i_uk/registration/user')
         # btn_registration = self.drv.find_element_by_xpath(".//*[@id='navbarCollapse']/div[2]/div[1]/a[2]")
         # btn_registration.click()
         # WebDriverWait(self.drv, 15).until(
