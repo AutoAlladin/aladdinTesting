@@ -13,8 +13,8 @@ def tearDownModule():
     browser.drv.close()
 
 
-def field_input(_id, val):
-    field_input=browser.drv.find_element_by_id("_id")
+def field_input(id, val):
+    field_input=browser.drv.find_element_by_id("id")
     field_input.send_keys("val")
     return field_input.get_attribute('value')
 
