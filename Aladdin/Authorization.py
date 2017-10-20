@@ -274,40 +274,43 @@ class UserRegistration_Company(OpenMainPage):
         btn_save = self.wts.drv.find_element_by_id("save_changes")
         btn_save.click()
 
-#class AddDocs(OpenMainPage):
-        #query = {"name": "AddDocs", "version": "0.0.0.4"}
+class AddDocs(OpenMainPage):
+    query = {"name": "RegistartionDocs", "version": "0.0.0.1"}
+
     def test_29_click_doc_tab(self):
         time.sleep(5)
         self.wts.drv.execute_script("window.scrollTo(0, -250);")
         #self.wts.drv.execute_script("window.scroll(0, {0}-{1})".format("profile_tab_documents"("y")))
         btn_tab_documents = self.wts.drv.find_element_by_id("profile_tab_documents")
         btn_tab_documents.click()
-        #  try:
-        #     time.sleep(15)
 
-        #   self.assertTrue(True)
-        # except Exception as e:
-        #     self.assertTrue(False, 'Не кликается кнопка Документы\n' + e.__str__())
-    # @classmethod
-    # def test_30_click_button_attach(self):
-    #     time.sleep(5)
-    #     btn_attach = self.wts.drv.find_element_by_xpath(".//*[contains(@id,'button_attach_document_36_0')]")
-    #     btn_attach.click()
-    # @classmethod
-    # def test_31_docs(self):
-    #     root = Tk()
-    #     p = urlparse('file://C:/Users/Admin/Documents/Lightshot/Screenshot_1.png')
-    #     ParseResult = os.path.abspath(os.path.join(p.path))
-    #     root.Screenshot_1 = filedialog.askopenfile(initialdir= "ParseResult")
-    #     time.sleep(5)
-    #     print(root.Screenshot_1)
+        try:
+            time.sleep(15)
+            self.assertTrue(True)
+        except Exception as e:
+            self.assertTrue(False, 'Не кликается кнопка Документы\n' + e.__str__())
 
 
-        # root.Screenshot_1 = filedialog.askopenfile(initialdir = "C:\Users\Admin\Documents\Lightshot", title = "Screenshot_1", filetypes = ("*.png"))
-        # f = open("Screenshot_1.png", "r", encoding="UTF-8")
-        # f.close()
+    def test_30_click_button_attach(self):
+        time.sleep(5)
+        btn_attach = self.wts.drv.find_element_by_xpath(".//*[contains(@id,'button_attach_document_36_0')]")
+        btn_attach.click()
 
-    #p.netloc,
+
+    def test_31_docs(self):
+        root = Tk()
+        p = urlparse('file:///C:/Users/%D0%90%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80.SHURHAL/PycharmProjects/aladdinTesting/Aladdin/Screenshot_1.png')
+        ParseResult = os.path.abspath(os.path.join(p.path))
+        root.Screenshot_1 = filedialog.askopenfile(initialdir= "ParseResult")
+        time.sleep(5)
+        print(root.Screenshot_1)
+
+
+        root.Screenshot_1 = filedialog.askopenfile(initialdir = "C:\Users\Администратор.SHURHAL\PycharmProjects\ aladdinTesting\Aladdin", title = "Screenshot_1", filetypes = ("*.png"))
+        f = open("Screenshot_1.png", "r", encoding="UTF-8")
+        f.close()
+
+    p.netloc,
 #class UserRegistration_Company_FOP(OpenRegistrationPage):
  #   pass
 

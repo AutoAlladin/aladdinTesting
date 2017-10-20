@@ -99,11 +99,26 @@ def s_edit_information():
     suite.addTest(Login.Login("test_03_btn"))
     suite.addTest(Login.EditInfo("test_01_go_to_user_profile"))
     suite.addTest(Login.EditInfo("test_02_click_tab_company"))
-    suite.addTest(Login.EditInfo("test_03_click_btn_edit"))
-    suite.addTest(Login.EditInfo("test_04_update_comp_name"))
-    suite.addTest(Login.EditInfo("test_05_click_btn_save_changes"))
+    suite.addTest(Login.EditInfo("test_03_ownership_tax"))
+    suite.addTest(Login.EditInfo("test_04_click_btn_edit"))
+    suite.addTest(Login.EditInfo("test_05_update_comp_name"))
+    suite.addTest(Login.EditInfo("test_06_contract_offer"))
+    suite.addTest(Login.EditInfo("test_07_click_btn_save_changes"))
 
     return suite
+
+
+
+
+def s_set_suites():
+    suite = unittest.TestSuite()
+
+    suite.addTest(TestList("s_user_registration"))
+    suite.addTest(TestList("s_company_reg"))
+
+    return suite
+
+
 
 if __name__ == '__main__':
     args=sys.argv[1:]
@@ -123,3 +138,6 @@ if __name__ == '__main__':
 
     if args[0] == 'edit_information':
         runner.run(s_edit_information())
+
+    if args[0] == 'set_suites':
+        runner.run(s_set_suites())

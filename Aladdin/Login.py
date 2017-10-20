@@ -82,18 +82,51 @@ class EditInfo(OpenMainPage):
         btn_tab_company.click()
         browser.drv.execute_script("window.scrollTo(0, 2500);")
 
-    def test_03_click_btn_edit(self):
+
+
+    def test_03_ownership_tax(self, r, id_field, input_val=None, q=None):
+        select_ownership = browser.drv.find_element_by_id("ownership_type")
+        select_ownership.send_keys("0")
+        time.sleep(10)
+        code = browser.drv.find_element_by_id("company_code_USREOU")
+        return code.get_attribute("id")
+        self.assertTrue("id" == code)
+
+
+        # try:
+        #     if input_val is None:
+        #         input_val = r.wts.__mongo__.get_input_val(id_field, q)
+        #
+        #     select_ownership = browser.drv.find_element_by_id("ownership_type")
+        #     select_ownership.send_keys("0")
+        #     time.sleep(10)
+        #     code = browser.drv.find_element_by_id("company_code_USREOU")
+        #     return code.get_attribute("id")
+        #
+        #     r.assertTrue("id" == code)
+        #
+        # except Expection as e:
+        #     r.assertTrue(False, "При редактировании формы собственности - код не изменился\n" + e.__str__())
+
+
+
+
+    def test_04_click_btn_edit(self):
         btn_edit = browser.drv.find_element_by_id("btn_edit")
         time.sleep(10)
         btn_edit.click()
 
-    def test_04_update_comp_name(self):
+    def test_05_update_comp_name(self):
         time.sleep(5)
         comp_name = browser.drv.find_element_by_id("nameUA")
         comp_name.send_keys("SunnyBunny")
         time.sleep(10)
 
-    def test_05_click_btn_save_changes(self):
+    def test_06_contract_offer(self):
+        contract_offer_check = browser.drv.find_element_by_xpath(".//*[@id='contract_offer_container']/label")
+        contract_offer_check.click()
+
+    def test_07_click_btn_save_changes(self):
         browser.drv.execute_script("window.scrollTo(0, 2500);")
         btn_s_changes = browser.drv.find_element_by_id("btn_save_changes")
         time.sleep(5)
