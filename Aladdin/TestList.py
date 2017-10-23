@@ -2,9 +2,11 @@ import unittest
 import sys
 from unittest import TestLoader
 
+from Aladdin.Docs import Docs
 from Aladdin.Registration.UserRegistrationEDRPOU  import UserRegistration
 from Aladdin.Registration.UserRegistrationCode  import UserRegistration_FOP
 from Aladdin.Authorization.Login import Login
+
 import os
 
 
@@ -14,9 +16,7 @@ def s_user_registration():
 
 
 def s_user_registration_FOP():
-    suite = unittest.TestSuite()
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(UserRegistration_FOP)
-
     return suite
 
 
@@ -80,6 +80,13 @@ def s_edit_information():
 
     return suite
 
+def s_docs():
+    #suite = unittest.defaultTestLoader.loadTestsFromTestCase(Docs)
+    suite = unittest.TestSuite()
+    suite.addTest(Docs('test_1_Login'))
+    suite.addTest(Docs('test_2_User_profile'))
+    return suite
+
 if __name__ == '__main__':
     args=sys.argv[1:]
     runner = unittest.TextTestRunner(verbosity=2)
@@ -94,3 +101,5 @@ if __name__ == '__main__':
         runner.run(s_company_reg())
     elif args[0] == 'edit_information':
         runner.run(s_edit_information())
+    elif args[0] == 'docs':
+        runner.run(s_docs())
