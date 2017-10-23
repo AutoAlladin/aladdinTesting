@@ -1,9 +1,8 @@
-import os
-import sys
 import unittest
-
-from Aladdin import Authorization
-from Aladdin.Authorization import Login
+import sys
+from Aladdin  import Authorization
+from Aladdin import Login
+import os
 
 
 def s_user_registration():
@@ -108,19 +107,6 @@ def s_edit_information():
 
     return suite
 
-
-
-
-def s_set_suites():
-    suite = unittest.TestSuite()
-
-    suite.addTest(TestList("s_user_registration"))
-    suite.addTest(TestList("s_company_reg"))
-
-    return suite
-
-
-
 if __name__ == '__main__':
     args=sys.argv[1:]
     runner = unittest.TextTestRunner()
@@ -139,6 +125,3 @@ if __name__ == '__main__':
 
     if args[0] == 'edit_information':
         runner.run(s_edit_information())
-
-    if args[0] == 'set_suites':
-        runner.run(s_set_suites())
