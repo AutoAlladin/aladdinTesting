@@ -1,8 +1,9 @@
-import unittest
-import sys
-from Aladdin  import Authorization
-from Aladdin import Login
 import os
+import sys
+import unittest
+
+from Aladdin import Authorization
+from Aladdin.Authorization import Login
 
 
 def s_user_registration():

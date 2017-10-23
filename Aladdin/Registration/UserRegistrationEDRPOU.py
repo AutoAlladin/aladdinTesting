@@ -8,6 +8,7 @@ from urllib.parse import urlparse
 from Prozorro.Utils import scroll_to_element
 from selenium.webdriver.support import expected_conditions as EC
 from Prozorro.Utils import *
+from Aladdin.Registration.OpenMainPage import *
 
 publicWST = None;
 def setUpModule():
@@ -19,34 +20,7 @@ def tearDownModule():
 
 
 
-class OpenMainPage(unittest.TestCase):
-    wts=None
-    @classmethod
-    def setUpClass(cls):
-        cls.wts = publicWST
-        cls.wts.url= 'https://identity.ald.in.ua/i_uk/registration/user'
-
-    # @unittest.skip("test_open_page - Не представляет интереса на даный момент")
-    # def test_open_page(self):
-    #     try:
-    #         self.wst.drv.get('https://alltenders.ald.in.ua/uk')
-    #         WebDriverWait(self.wst.drv, 5).until(
-    #             EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "РЕЄСТРАЦІЯ"))
-    #         self.assertTrue(True)
-    #     except Exception as e:
-    #         self.assertTrue(False, 'внятное слово '+e.__str__())
-
-class OpenRegistrationPage(OpenMainPage):
-    pass
-    # @unittest.skip("test_open_registration_page - Не представляет интереса на даный момент")
-    # def test_open_registration_page(self):
-    #     try:
-    #         self.wts.set_main_page()
-    #         self.assertTrue(True)
-    #     except Exception as e:
-    #         self.assertTrue(False, 'Ошибка открытия формы регистрации\n'+e.__str__())
-
-class UserRegistration(OpenRegistrationPage):
+class UserRegistration(OpenMainPage):
     query = {"input_val": None, "q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}}
 
     @classmethod
@@ -250,91 +224,3 @@ class UserRegistration_Company(OpenMainPage):
     def test_38_save(self):
         btn_save = self.wts.drv.find_element_by_id("save_changes")
         btn_save.click()
-
-@classmethod
-class AddDocs(OpenMainPage):
-    query = {"name": "RegistartionDocs", "version": "0.0.0.1"}
-
-    def test_29_click_doc_tab(self):
-        time.sleep(5)
-        self.wts.drv.execute_script("window.scrollTo(0, -250);")
-        #self.wts.drv.execute_script("window.scroll(0, {0}-{1})".format("profile_tab_documents"("y")))
-        btn_tab_documents = self.wts.drv.find_element_by_id("profile_tab_documents")
-        btn_tab_documents.click()
-
-        try:
-            time.sleep(15)
-            self.assertTrue(True)
-        except Exception as e:
-            self.assertTrue(False, 'Не кликается кнопка Документы\n' + e.__str__())
-
-
-    def test_30_click_button_attach(self):
-        time.sleep(5)
-        btn_attach = self.wts.drv.find_element_by_id("button_attach_document_CertificateOfInclusionintheUSREOU")
-        btn_attach.click()
-
-
-    def test_31_docs(self):
-        root = Tk()
-        p = urlparse('file:///C:/Users/%D0%90%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80.SHURHAL/PycharmProjects/aladdinTesting/Aladdin/Screenshot_1.png')
-        ParseResult = os.path.abspath(os.path.join(p.path))
-        root.Screenshot_1 = filedialog.askopenfile(initialdir= "ParseResult")
-        time.sleep(5)
-        print(root.Screenshot_1)
-
-
-        root.Screenshot_1 = filedialog.askopenfile(initialdir = "ParseResult", title = "Screenshot_1", filetypes = ("*.png"))
-        f = open("Screenshot_1.png", "r", encoding="UTF-8")
-        f.close()
-
-    #p.netloc,
-#class UserRegistration_Company_FOP(OpenRegistrationPage):
- #   pass
-
-@classmethod
-class UserRegistration_FOP(OpenMainPage):
-    def test_01_ownership_type_fop(self):
-        test_select("ownership_type", "11")
-
-    def test_02_code_company(self):
-        test_input("company_code_USREOUFop", "1234567897897")
-
-@classmethod
-class Employees(OpenMainPage):
-    def test_01_tab_empl(self):
-        btn_tab_empl = self.wts.drv.find_element_by_id("profile_tab_employees")
-        btn_tab_empl.click()
-
-    def test_02_add_user(self):
-        btn_add_user = self.wts.drv.find_element_by_id("butAddNewUser")
-        btn_add_user.click()
-
-    def test_03_name(self):
-        test_input(self, "firstName_0", "Ввававіав")
-
-    def test_04_name_eu(self):
-        test_input(self,"firstNameEn_0", "Gfgfgdfdfdf")
-
-    def test_05_last_name(self):
-        test_input(self, "lastName_0", "Смсмсмсм")
-
-    def test_06_last_name_eu(self):
-        test_input(self, "lastNameEn_0", "Ffdfdfx")
-
-    def test_07_position(self):
-        test_input(self, "position_0", "папапсмсм пмсм")
-
-    def test_08_email(self):
-        test_input(self, "email_0", "fdfdf@fdf.ru")
-
-    def test_09_phone(self):
-        test_input(self, "phone_0", "44545454")
-
-    def test_10_save(self):
-        btn_save = self.wts.drv.find_element_by_id("save_changes")
-        btn_save.click()
-
-
-
-
