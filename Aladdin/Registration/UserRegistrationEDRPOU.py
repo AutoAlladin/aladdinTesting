@@ -1,29 +1,13 @@
 import unittest
 
 from Aladdin.AladdinUtils import *
-from tkinter import filedialog
-from tkinter import *
-import os
-from urllib.parse import urlparse
-from Prozorro.Utils import scroll_to_element
-from selenium.webdriver.support import expected_conditions as EC
 from Prozorro.Utils import *
 from Aladdin.Registration.OpenMainPage import *
-
-publicWST = None;
-def setUpModule():
-    global publicWST
-    publicWST = WebTestSession()
-
-def tearDownModule():
-    publicWST.close()
-
 
 
 class UserRegistrationEDRPOU(OpenMainPage):
     query = {"input_val": None, "q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}}
 
-    @classmethod
     def test_01_company_name(self):
         test_input(self, "nameUA", **self.query)
 
