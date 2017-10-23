@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from bson.objectid import ObjectId
 import time
 
 
@@ -55,23 +56,14 @@ class MdbUtils():
 
     def get_file(self, doc_name, query=None):
         query = {"name": "RegistartionDocs", "version": "0.0.0.1"}
-        docs = self.test_params.find_one(query)
+        docs = self.test_params.find_one(query)["docs"]
         name = docs[doc_name]["name"]
         file_id =  docs[doc_name]["file_id"]
-        f_data = self.fs.get(file_id)
+        f_data = self.fs.get( ObjectId(file_id))
 
         with(open(os.path.dirname(os.path.abspath(__file__)) + '\\dir\\' + name, 'wb')) as f:
             f.write(f_data.read())
-        return name
-
-    def get_file(self, dic):
-        name = dic["name"]
-        file_id =dic["file_id"]
-        f_data = self.fs.get(file_id)
-
-        with(open(os.path.dirname(os.path.abspath(__file__)) + '\\dir\\'+f_data.name, 'wb')) as f:
-            f.write(f_data.read())
-        return name, f.name
+        return os.path.dirname(os.path.abspath(__file__)) + '\\dir\\'+name
 
     def get_select_val(self,_id, query):
         doc = self.test_params.find_one(query)
