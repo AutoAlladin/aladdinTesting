@@ -101,8 +101,8 @@ def s_edit_information():
     suite.addTest(Login.EditInfo("test_02_click_tab_company"))
     suite.addTest(Login.EditInfo("test_03_click_btn_edit"))
     suite.addTest(Login.EditInfo("test_04_update_comp_name"))
-    suite.addTest(Login.EditInfo("test_05_click_btn_save_changes"))
-
+    suite.addTest(Login.EditInfo("test_05_change_ownership"))
+    suite.addTest(Login.EditInfo("test_06_click_btn_save_changes"))
     return suite
 
 if __name__ == '__main__':
