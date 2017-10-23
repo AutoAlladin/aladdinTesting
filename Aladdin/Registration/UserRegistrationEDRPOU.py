@@ -1,29 +1,13 @@
 import unittest
 
 from Aladdin.AladdinUtils import *
-from tkinter import filedialog
-from tkinter import *
-import os
-from urllib.parse import urlparse
-from Prozorro.Utils import scroll_to_element
-from selenium.webdriver.support import expected_conditions as EC
 from Prozorro.Utils import *
 from Aladdin.Registration.OpenMainPage import *
-
-publicWST = None;
-def setUpModule():
-    global publicWST
-    publicWST = WebTestSession()
-
-def tearDownModule():
-    publicWST.close()
-
 
 
 class UserRegistration(OpenMainPage):
     query = {"input_val": None, "q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}}
 
-    @classmethod
     def test_01_company_name(self):
         test_input(self, "nameUA", **self.query)
 
@@ -32,14 +16,6 @@ class UserRegistration(OpenMainPage):
 
     def test_03_check_ownership(self):
         test_select(self, "ownership_type", **self.query)
-
-
-    #def test_03_ownership_type_fop(self):
-     #   test_select(self, "ownership_type", "11")
-
-
-    #def test_04_code_company(self):
-     #   test_input(self, "company_code_USREOUFop", "1234567890")
 
     def test_04_code_edrpou(self):
         test_input(self, "company_code_USREOU", **self.query)

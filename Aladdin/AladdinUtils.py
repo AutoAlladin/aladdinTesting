@@ -53,6 +53,17 @@ class MdbUtils():
         else:
             return doc["inputs"][_id]
 
+    def get_file(self, doc_name, query=None):
+        query = {"name": "RegistartionDocs", "version": "0.0.0.1"}
+        docs = self.test_params.find_one(query)
+        name = docs[doc_name]["name"]
+        file_id =  docs[doc_name]["file_id"]
+        f_data = self.fs.get(file_id)
+
+        with(open(os.path.dirname(os.path.abspath(__file__)) + '\\dir\\' + name, 'wb')) as f:
+            f.write(f_data.read())
+        return name
+
     def get_file(self, dic):
         name = dic["name"]
         file_id =dic["file_id"]

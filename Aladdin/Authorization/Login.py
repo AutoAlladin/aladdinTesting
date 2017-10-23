@@ -8,6 +8,7 @@ from Aladdin import Authorization
 # def setUpModule():
 #     global browser
 #     browser = openChrome()
+from Aladdin.Registration.OpenMainPage import OpenMainPage
 
 publicWST = None;
 def setUpModule():
