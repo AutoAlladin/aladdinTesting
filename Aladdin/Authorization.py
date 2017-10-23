@@ -251,6 +251,7 @@ class UserRegistration_Company(OpenMainPage):
         btn_save = self.wts.drv.find_element_by_id("save_changes")
         btn_save.click()
 
+@classmethod
 class AddDocs(OpenMainPage):
     query = {"name": "RegistartionDocs", "version": "0.0.0.1"}
 
@@ -270,7 +271,7 @@ class AddDocs(OpenMainPage):
 
     def test_30_click_button_attach(self):
         time.sleep(5)
-        btn_attach = self.wts.drv.find_element_by_xpath(".//*[contains(@id,'button_attach_document_36_0')]")
+        btn_attach = self.wts.drv.find_element_by_id("button_attach_document_CertificateOfInclusionintheUSREOU")
         btn_attach.click()
 
 
@@ -283,11 +284,11 @@ class AddDocs(OpenMainPage):
         print(root.Screenshot_1)
 
 
-        root.Screenshot_1 = filedialog.askopenfile(initialdir = "C:\Users\Администратор.SHURHAL\PycharmProjects\ aladdinTesting\Aladdin", title = "Screenshot_1", filetypes = ("*.png"))
+        root.Screenshot_1 = filedialog.askopenfile(initialdir = "ParseResult", title = "Screenshot_1", filetypes = ("*.png"))
         f = open("Screenshot_1.png", "r", encoding="UTF-8")
         f.close()
 
-    p.netloc,
+    #p.netloc,
 #class UserRegistration_Company_FOP(OpenRegistrationPage):
  #   pass
 
