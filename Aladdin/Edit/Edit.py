@@ -35,10 +35,10 @@ class EditInfo(OpenMainPage):
 
 
     def test_03_ownership_tax(self, r, id_field, input_val=None, q=None):
-        select_ownership = browser.drv.find_element_by_id("ownership_type")
+        select_ownership = self.wts.drv.find_element_by_id("ownership_type")
         select_ownership.send_keys("0")
         time.sleep(10)
-        code = browser.drv.find_element_by_id("company_code_USREOU")
+        code = self.wts.drv.find_element_by_id("company_code_USREOU")
         return code.get_attribute("id")
         self.assertTrue("id" == code)
 
@@ -73,13 +73,22 @@ class EditInfo(OpenMainPage):
         time.sleep(10)
 
     def test_06_contract_offer(self):
-        contract_offer_check = browser.drv.find_element_by_xpath(".//*[@id='contract_offer_container']/label")
+        contract_offer_check = self.wts.drv.find_element_by_xpath(".//*[@id='contract_offer_container']/label")
         contract_offer_check.click()
-
-
 
     def test_07_click_btn_save_changes(self):
         self.wts.drv.execute_script("window.scrollTo(0, 2500);")
         btn_s_changes = self.wts.drv.find_element_by_id("btn_save_changes")
         time.sleep(5)
         btn_s_changes.click()
+
+    def test_08_select_real_address_city(self):
+        test_select(self, "real_address_city", **self.query)
+
+    def test_09_real_address_street(self):
+        test_input(self, "real_address_street", **self.query)
+
+    def test_10_confidant_position(self):
+        test_input(self, "confidant_position", **self.query)
+
+

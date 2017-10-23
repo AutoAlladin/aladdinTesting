@@ -74,10 +74,10 @@ class Login(unittest.TestCase):
 
     @classmethod
     def test_02_pswd(self):
-        # pswd = browser.drv.find_element_by_id("pswd")
+        #pswd = self.wts.drv.find_element_by_id("pswd")
         # pswd.send_keys("qwerty1234")
         # time.sleep(10)
-        test_input(self, q=self.query)
+        test_input(self, "pswd", q=self.query)
 
     @classmethod
     def test_03_btn(self):
@@ -86,33 +86,4 @@ class Login(unittest.TestCase):
         #WebDriverWait(browser.drv, 10).until(EC._find_element(By.XPATH), "html/body")
         time.sleep(10)
 
-class EditInfo(OpenMainPage):
-    def test_01_go_to_user_profile(self):
-        user_prof = self.wts.drv.find_element_by_id("link_about")
-        time.sleep(5)
-        user_prof.click()
 
-    def test_02_click_tab_company(self):
-
-        btn_tab_company = self.wts.drv.find_element_by_id("profile_tab_company")
-        time.sleep(10)
-        btn_tab_company.click()
-        self.wts.drv.execute_script("window.scrollTo(0, 2500);")
-
-    def test_03_click_btn_edit(self):
-        btn_edit = self.wts.drv.find_element_by_id("btn_edit")
-        time.sleep(10)
-        btn_edit.click()
-
-    def test_04_update_comp_name(self):
-        test_input()
-        time.sleep(5)
-        comp_name = self.wts.drv.find_element_by_id("nameUA")
-        comp_name.send_keys("SunnyBunny")
-        time.sleep(10)
-
-    def test_05_click_btn_save_changes(self):
-        self.wts.drv.execute_script("window.scrollTo(0, 2500);")
-        btn_s_changes = self.wts.drv.find_element_by_id("btn_save_changes")
-        time.sleep(5)
-        btn_s_changes.click()
