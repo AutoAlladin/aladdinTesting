@@ -17,37 +17,14 @@ def setUpModule():
 def tearDownModule():
     publicWST.close()
 
-def test_select(cls, id_field, input_val=None, q=None):
-    try:
-        if input_val is None:
-            input_val = cls.wts.__mongo__.get_select_val(id_field, q)
 
-        cls.assertEqual(
-            input_val,
-            cls.wts.select_value(id_field, input_val),
-            "Не совпадают исходные даные и то что оказалось в поле браузера")
-    except Exception as e:
-        cls.wts.drv.get_screenshot_as_file("output\\"+id_field+"_ERROR.png")
-        cls.assertTrue(False, "Ошибка при выборе значения\n" + e.__str__())
-
-def test_input(cls, id_field, input_val=None, q=None):
-    try:
-        if input_val is None:
-            input_val = cls.wts.__mongo__.get_input_val(id_field, q)
-
-        cls.assertEqual(
-            input_val,
-            cls.wts.input_text_field(id_field, input_val),
-            "Не совпадают исходные даные и то что оказалось в поле браузера")
-    except Exception as e:
-        cls.wts.drv.get_screenshot_as_file("output\\"+id_field+"_ERROR.png")
-        cls.assertTrue(False, "Ошибка при вводе текста\n" + e.__str__())
 
 class OpenMainPage(unittest.TestCase):
     wts=None
     @classmethod
     def setUpClass(cls):
         cls.wts = publicWST
+        cls.wts.url= 'https://identity.ald.in.ua/i_uk/registration/user'
 
     # @unittest.skip("test_open_page - Не представляет интереса на даный момент")
     # def test_open_page(self):
@@ -64,7 +41,7 @@ class OpenRegistrationPage(OpenMainPage):
     # @unittest.skip("test_open_registration_page - Не представляет интереса на даный момент")
     # def test_open_registration_page(self):
     #     try:
-    #         self.wts.click_reg_btn()
+    #         self.wts.set_main_page()
     #         self.assertTrue(True)
     #     except Exception as e:
     #         self.assertTrue(False, 'Ошибка открытия формы регистрации\n'+e.__str__())
@@ -72,7 +49,7 @@ class OpenRegistrationPage(OpenMainPage):
 class UserRegistration(OpenRegistrationPage):
     query = {"input_val": None, "q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}}
 
-
+    @classmethod
     def test_01_company_name(self):
         test_input(self, "nameUA", **self.query)
 
