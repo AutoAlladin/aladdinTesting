@@ -20,7 +20,7 @@ def tearDownModule():
 
 
 
-class UserRegistration(OpenMainPage):
+class UserRegistrationEDRPOU(OpenMainPage):
     query = {"input_val": None, "q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}}
 
     @classmethod
@@ -32,14 +32,6 @@ class UserRegistration(OpenMainPage):
 
     def test_03_check_ownership(self):
         test_select(self, "ownership_type", **self.query)
-
-
-    #def test_03_ownership_type_fop(self):
-     #   test_select(self, "ownership_type", "11")
-
-
-    #def test_04_code_company(self):
-     #   test_input(self, "company_code_USREOUFop", "1234567890")
 
     def test_04_code_edrpou(self):
         test_input(self, "company_code_USREOU", **self.query)

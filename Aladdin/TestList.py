@@ -1,6 +1,6 @@
 import unittest
 import sys
-from Aladdin  import Authorization
+from Aladdin import Authorization
 from Aladdin import Login
 import os
 
