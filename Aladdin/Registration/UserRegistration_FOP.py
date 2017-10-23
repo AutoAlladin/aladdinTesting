@@ -1,7 +1,8 @@
 import unittest
 
 from Aladdin.AladdinUtils import *
-from Aladdin.Registration.UserRegistrationEDRPOU import UserRegistration
+from Aladdin.Registration.UserRegistrationEDRPOU import UserRegistrationEDRPOU
+from Aladdin.Registration.OpenMainPage import *
 
 publicWST = None;
 def setUpModule():
@@ -12,7 +13,7 @@ def tearDownModule():
     publicWST.close()
 
 
-class UserRegistration_FOP(UserRegistration):
+class UserRegistration_FOP(UserRegistrationEDRPOU):
     wts=None
     @classmethod
     def setUpClass(cls):
@@ -22,5 +23,5 @@ class UserRegistration_FOP(UserRegistration):
         test_select(self, "ownership_type", "11")
 
     def test_04_code_edrpou(self):
-        test_input(self,"company_code_USREOUFop", "1234567897897")
+        test_input(self,"company_code_USREOUFop", "1234567897")
 

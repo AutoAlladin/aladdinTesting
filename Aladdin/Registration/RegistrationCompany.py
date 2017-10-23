@@ -1,71 +1,14 @@
 import unittest
 
 from Aladdin.AladdinUtils import *
-from Prozorro.Utils import *
+from Aladdin.Registration.UserRegistrationEDRPOU import UserRegistrationEDRPOU
 from Aladdin.Registration.OpenMainPage import *
 
 
-class UserRegistrationEDRPOU(OpenMainPage):
-    query = {"input_val": None, "q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}}
 
-    def test_01_company_name(self):
-        test_input(self, "nameUA", **self.query)
-
-    def test_02_company_name_en(self):
-        test_input(self, "nameEN", **self.query)
-
-    def test_03_check_ownership(self):
-        test_select(self, "ownership_type", **self.query)
-
-    def test_04_code_edrpou(self):
-        test_input(self, "company_code_USREOU", **self.query)
-
-    def test_05_name(self):
-        test_input(self, "admin_name_ua", **self.query)
-
-    def test_06_name_en(self):
-        test_input(self, "admin_name_en", **self.query)
-
-    def test_07_last_name(self):
-        test_input(self, "admin_last_name_ua", **self.query)
-
-    def test_08_last_name_en(self):
-        test_input(self, "admin_last_name_en", **self.query)
-
-    def test_09_position(self):
-        test_input(self, "position", **self.query)
-
-    def test_10_phone(self):
-        test_input(self, "resident_phone", **self.query)
-
-    def test_11_email(self):
-        test_input(self, "email", **self.query)
-        eml = self.wts.__mongo__.test_params.find_one(self.query["q"])
-        next = str(int(eml["inputs"]["email_next"]) + 1)
-        self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {
-        "$set": {"inputs.email": "forTestRegEmail_" + next.rjust(5, '0') + "@cucumber.com"}})
-        self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {"$set": {"inputs.email_next": next}})
-
-    def test_12_password(self):
-        test_input(self, "password", **self.query)
-
-    def test_13_confirm_password(self):
-        test_input(self, "confirm_password", **self.query)
-
-    def test_14_click_next_step_btn(self):
-        try:
-            next_step_btn = self.wts.drv.find_element_by_id("btn_next_step")
-            next_step_btn.click()
-            WebDriverWait(self.wts.drv, 20).until(
-                EC.element_to_be_clickable((By.ID, "btn_edit")))
-            btn_edit = self.wts.drv.find_element_by_id("btn_edit")
-            self.assertIsNotNone(btn_edit)
-        except Exception as e:
-            self.assertTrue(False, 'Не отображается кнопка Зберегти\n' + e.__str__())
-
-
-class UserRegistration_Company(OpenMainPage):
+class RegistrationCompany(OpenMainPage):
     query = {"name": "UserCompanyRegistrationForm", "version": "0.0.0.3"}
+    query = {"input_val": None, "q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}}
 
 
     # def test_01_click_edit_btn(self):
@@ -80,6 +23,23 @@ class UserRegistration_Company(OpenMainPage):
     #         self.assertTrue(True)
     #     except Exception as e:
     #         self.assertTrue(False, 'Не кликается кнопка Редагувати\n' + e.__str__())
+
+
+    def test_01_registration_user(self):
+        UserRegistrationEDRPOU.test_01_company_name(self)
+        UserRegistrationEDRPOU.test_02_company_name_en(self)
+        UserRegistrationEDRPOU.test_03_check_ownership(self)
+        UserRegistrationEDRPOU.test_04_code_edrpou(self)
+        UserRegistrationEDRPOU.test_05_name(self)
+        UserRegistrationEDRPOU.test_06_name_en(self)
+        UserRegistrationEDRPOU.test_07_last_name(self)
+        UserRegistrationEDRPOU.test_08_last_name_en(self)
+        UserRegistrationEDRPOU.test_09_position(self)
+        UserRegistrationEDRPOU.test_10_phone(self)
+        UserRegistrationEDRPOU.test_11_email(self)
+        UserRegistrationEDRPOU.test_12_password(self)
+        UserRegistrationEDRPOU.test_13_confirm_password(self)
+        UserRegistrationEDRPOU.test_14_click_next_step_btn(self)
 
     def test_02_tax_system(self):
         test_select(self, "company_taxSystem", "5")
@@ -165,3 +125,4 @@ class UserRegistration_Company(OpenMainPage):
         btn_save = self.wts.drv.find_element_by_id("btn_save_changes")
         btn_save.click()
         #WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_save_changes")))
+

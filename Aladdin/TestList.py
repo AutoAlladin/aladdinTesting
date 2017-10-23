@@ -2,14 +2,15 @@ import unittest
 import sys
 from unittest import TestLoader
 
-from Aladdin.Registration.UserRegistrationEDRPOU  import UserRegistration
-from Aladdin.Registration.UserRegistrationCode  import UserRegistration_FOP
+from Aladdin.Registration.UserRegistrationEDRPOU  import UserRegistrationEDRPOU
+from Aladdin.Registration.UserRegistration_FOP  import UserRegistration_FOP
+from Aladdin.Registration.RegistrationCompany import RegistrationCompany
 from Aladdin.Authorization.Login import Login
 import os
 
 
 def s_user_registration():
-    suite = unittest.defaultTestLoader.loadTestsFromTestCase(UserRegistration)
+    suite = unittest.defaultTestLoader.loadTestsFromTestCase(UserRegistrationEDRPOU)
     return suite
 
 
@@ -23,33 +24,33 @@ def s_user_registration_FOP():
 def s_company_reg():
     suite = unittest.TestSuite()
 
-    suite.addTest(UserRegistration_FOP("test_02_tax_system"))
-    suite.addTest(UserRegistration_FOP("test_03_phone_company"))
-    suite.addTest(UserRegistration_FOP("test_04_email_company"))
-    suite.addTest(UserRegistration_FOP("test_05_country_legal"))
-    suite.addTest(UserRegistration_FOP("test_06_region_legal"))
-    suite.addTest(UserRegistration_FOP("test_07_city_legal"))
-    suite.addTest(UserRegistration_FOP("test_08_legal_address"))
-    suite.addTest(UserRegistration_FOP("test_09_legal_index"))
-    suite.addTest(UserRegistration_FOP("test_10_real_country"))
-    suite.addTest(UserRegistration_FOP("test_11_real_region"))
-    suite.addTest(UserRegistration_FOP("test_12_real_city"))
-    suite.addTest(UserRegistration_FOP("test_13_real_address"))
-    suite.addTest(UserRegistration_FOP("test_14_real_index"))
-    suite.addTest(UserRegistration_FOP("test_15_bank_name"))
-    suite.addTest(UserRegistration_FOP("test_16_bank_mfo"))
-    suite.addTest(UserRegistration_FOP("test_17_bank_account"))
-    suite.addTest(UserRegistration_FOP("test_18_lead_first_name"))
-    suite.addTest(UserRegistration_FOP("test_19_lead_last_name"))
-    suite.addTest(UserRegistration_FOP("test_20_lead_email"))
-    suite.addTest(UserRegistration_FOP("test_21_lead_phone"))
-    suite.addTest(UserRegistration_FOP("test_22_confidant_first_name"))
-    suite.addTest(UserRegistration_FOP("test_23_confidant_last_name"))
-    suite.addTest(UserRegistration_FOP("test_24_confidant_position"))
-    suite.addTest(UserRegistration_FOP("test_25_confidant_email"))
-    suite.addTest(UserRegistration_FOP("test_26_confidant_phone"))
-    suite.addTest(UserRegistration_FOP("test_27_contract_offer"))
-    suite.addTest(UserRegistration_FOP("test_28_save"))
+    suite.addTest(RegistrationCompany("test_02_tax_system"))
+    suite.addTest(RegistrationCompany("test_03_phone_company"))
+    suite.addTest(RegistrationCompany("test_04_email_company"))
+    suite.addTest(RegistrationCompany("test_05_country_legal"))
+    suite.addTest(RegistrationCompany("test_06_region_legal"))
+    suite.addTest(RegistrationCompany("test_07_city_legal"))
+    suite.addTest(RegistrationCompany("test_08_legal_address"))
+    suite.addTest(RegistrationCompany("test_09_legal_index"))
+    suite.addTest(RegistrationCompany("test_10_real_country"))
+    suite.addTest(RegistrationCompany("test_11_real_region"))
+    suite.addTest(RegistrationCompany("test_12_real_city"))
+    suite.addTest(RegistrationCompany("test_13_real_address"))
+    suite.addTest(RegistrationCompany("test_14_real_index"))
+    suite.addTest(RegistrationCompany("test_15_bank_name"))
+    suite.addTest(RegistrationCompany("test_16_bank_mfo"))
+    suite.addTest(RegistrationCompany("test_17_bank_account"))
+    suite.addTest(RegistrationCompany("test_18_lead_first_name"))
+    suite.addTest(RegistrationCompany("test_19_lead_last_name"))
+    suite.addTest(RegistrationCompany("test_20_lead_email"))
+    suite.addTest(RegistrationCompany("test_21_lead_phone"))
+    suite.addTest(RegistrationCompany("test_22_confidant_first_name"))
+    suite.addTest(RegistrationCompany("test_23_confidant_last_name"))
+    suite.addTest(RegistrationCompany("test_24_confidant_position"))
+    suite.addTest(RegistrationCompany("test_25_confidant_email"))
+    suite.addTest(RegistrationCompany("test_26_confidant_phone"))
+    suite.addTest(RegistrationCompany("test_27_contract_offer"))
+    suite.addTest(RegistrationCompany("test_28_save"))
 
     return suite
 
