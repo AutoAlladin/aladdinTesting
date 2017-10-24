@@ -73,14 +73,19 @@ def s_edit_information():
     suite.addTest(Edit("test_03_click_btn_edit"))
     suite.addTest(Edit("test_04_clear_field_comp_name"))
     suite.addTest(Edit("test_05_update_comp_name"))
-    suite.addTest(Edit("test_06_contract_offer"))
-    suite.addTest(Edit("test_07_legal_address_country"))
+    suite.addTest(Edit("test_06_clear_email"))
+    suite.addTest(Edit("test_07_update_email"))
     #suite.addTest(Edit("test_08_select_real_address_city"))
-    suite.addTest(Edit("test_08_clear_field_real_add_str"))
-    suite.addTest(Edit("test_09_real_address_street"))
-    suite.addTest(Edit("test_10_clear_confidant_position"))
-    suite.addTest(Edit("test_11_confidant_position"))
-    suite.addTest(Edit("test_12_click_btn_save_changes"))
+    suite.addTest(Edit("test_08_legal_address_country"))
+    suite.addTest(Edit("test_09_clear_field_real_add_str"))
+    suite.addTest(Edit("test_10_real_address_street"))
+    suite.addTest(Edit("test_11_clear_add_index"))
+    suite.addTest(Edit("test_12_real_address_index"))
+    suite.addTest(Edit("test_13_clear_confidant_position"))
+    suite.addTest(Edit("test_14_confidant_position"))
+    suite.addTest(Edit("test_15_contract_offer"))
+    suite.addTest(Edit("test_16_click_btn_save_changes"))
+
     return suite
 
 def s_docs():

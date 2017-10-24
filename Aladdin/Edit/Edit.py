@@ -83,11 +83,16 @@ class Edit(OpenMainPage):
         test_input(self, "nameUA", **self.query)
         time.sleep(5)
 
-    def test_06_contract_offer(self):
-        contract_offer_check = self.wts.drv.find_element_by_xpath(".//*[@id='contract_offer_container']/label")
-        contract_offer_check.click()
+    def test_06_clear_email(self):
+        upd_email = self.wts.drv.find_element_by_id("email")
+        time.sleep(5)
+        upd_email.clear()
 
-    def test_07_legal_address_country(self):
+    def test_07_update_email(self):
+        time.sleep(5)
+        test_input(self, "email", **self.query)
+
+    def test_08_legal_address_country(self):
         #WebDriverWait(self.wts.drv, 20).until(EC._element_if_visible((By.ID, "legal_address_country")))
         time.sleep(5)
         test_select(self, "legal_address_country", **self.query)
@@ -96,28 +101,41 @@ class Edit(OpenMainPage):
         #WebDriverWait(self.wts.drv, 20).until(EC._element_if_visible((By.ID, "real_address_city")))
         #test_select(self, "real_address_city", **self.query)
 
-    def test_08_clear_field_real_add_str(self):
+    def test_09_clear_field_real_add_str(self):
         #WebDriverWait(self.wts.drv, 20).until(EC._element_if_visible((By.ID, "real_address_street")))
         time.sleep(5)
         f_real_add = self.wts.drv.find_element_by_id("real_address_street")
         f_real_add.clear()
 
-    def test_09_real_address_street(self):
+    def test_10_real_address_street(self):
         time.sleep(5)
         test_input(self, "real_address_street", **self.query)
 
-    def test_10_clear_confidant_position(self):
+    def test_11_clear_add_index(self):
+        time.sleep(5)
+        add_index = self.wts.drv.find_element_by_id("real_address_index")
+        add_index.clear()
+
+    def test_12_real_address_index(self):
+        time.sleep(5)
+        test_input(self, "real_address_index", **self.query)
+
+    def test_13_clear_confidant_position(self):
         #WebDriverWait(self.wts.drv, 20).until(EC._element_if_visible((By.ID, "confidant_position")))
         time.sleep(5)
         f_conf_position = self.wts.drv.find_element_by_id("confidant_position")
         f_conf_position.clear()
 
-    def test_11_confidant_position(self):
+    def test_14_confidant_position(self):
         #WebDriverWait(self.wts.drv, 20).until(EC._element_if_visible((By.ID, "confidant_position")))
         time.sleep(5)
         test_input(self, "confidant_position", **self.query)
 
-    def test_12_click_btn_save_changes(self):
+    def test_15_contract_offer(self):
+        contract_offer_check = self.wts.drv.find_element_by_xpath(".//*[@id='contract_offer_container']/label")
+        contract_offer_check.click()
+
+    def test_16_click_btn_save_changes(self):
     #self.wts.drv.execute_script("window.scrollTo(0, 2500);")
     #WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_save_changes")))
         time.sleep(5)
