@@ -6,7 +6,7 @@ from Aladdin.Docs import Docs
 from Aladdin.Registration.UserRegistrationEDRPOU  import UserRegistration
 from Aladdin.Registration.UserRegistrationCode  import UserRegistration_FOP
 from Aladdin.Authorization.Login import Login
-
+from Aladdin.Edit.Edit import Edit
 import os
 
 
@@ -67,17 +67,18 @@ def s_login():
 def s_edit_information():
     suite = unittest.TestSuite()
 
-    suite.addTest(Login.Login("test_01_email"))
-    suite.addTest(Login.Login("test_02_pswd"))
-    suite.addTest(Login.Login("test_03_btn"))
-    suite.addTest(Login.EditInfo("test_01_go_to_user_profile"))
-    suite.addTest(Login.EditInfo("test_02_click_tab_company"))
-    suite.addTest(Login.EditInfo("test_03_ownership_tax"))
-    suite.addTest(Login.EditInfo("test_04_click_btn_edit"))
-    suite.addTest(Login.EditInfo("test_05_update_comp_name"))
-    suite.addTest(Login.EditInfo("test_06_contract_offer"))
-    suite.addTest(Login.EditInfo("test_07_click_btn_save_changes"))
-
+    suite.addTest(Edit("test_01_go_to_user_profile"))
+    suite.addTest(Edit("test_02_click_tab_company"))
+    #suite.addTest(Edit("test_03_ownership_tax"))
+    suite.addTest(Edit("test_03_click_btn_edit"))
+    suite.addTest(Edit("test_04_clear_field_comp_name"))
+    suite.addTest(Edit("test_05_update_comp_name"))
+    suite.addTest(Edit("test_06_contract_offer"))
+    suite.addTest(Edit("test_07_legal_address_country"))
+    suite.addTest(Edit("test_08_select_real_address_city"))
+    suite.addTest(Edit("test_09_real_address_street"))
+    suite.addTest(Edit("test_10_confidant_position"))
+    suite.addTest(Edit("test_11_click_btn_save_changes"))
     return suite
 
 def s_docs():
