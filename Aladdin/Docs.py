@@ -1,7 +1,8 @@
 import unittest
 
 from Aladdin.AladdinUtils import *
-from Aladdin.Authorization.Login import Login, EditInfo
+from Aladdin.Authorization.Login import Login
+from Aladdin.Edit.Edit import Edit
 
 publicWST = None;
 def setUpModule():
@@ -28,7 +29,7 @@ class Docs(unittest.TestCase):
         l.test_03_btn()
 
     def test_2_User_profile(self):
-        ed = EditInfo()
+        ed = Edit()
         ed.wts = self.wts
         ed.test_01_go_to_user_profile()
 

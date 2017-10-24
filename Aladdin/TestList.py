@@ -4,9 +4,14 @@ from unittest import TestLoader
 
 from Aladdin.Docs import Docs
 from Aladdin.Registration.UserRegistrationEDRPOU  import UserRegistrationEDRPOU
-from Aladdin.Registration.UserRegistration_FOP  import UserRegistration_FOP
-from Aladdin.Registration.RegistrationCompany import RegistrationCompany
+from Aladdin.Registration.UserRegistration_FOP  import  UserRegistration_FOP 
+from Aladdin.Registration.RegistrationCompanyEDRPOU import RegistrationCompany
+from Aladdin.Registration.RegistrationCompanyFOP import RegistrationCompanyFop
 from Aladdin.Authorization.Login import Login
+from Aladdin.Edit.Edit import Edit
+from Aladdin.Registration.Employees import Employees
+from Aladdin.Authorization.LoginAfterRegistration import LoginAfterRegistrationCompany
+
 
 import os
 
@@ -20,10 +25,43 @@ def s_user_registration_FOP():
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(UserRegistration_FOP)
     return suite
 
+def s_company_fop():
+    suite = unittest.TestSuite()
+
+    suite.addTest(RegistrationCompanyFop("test_01_registration_userFOP"))
+    suite.addTest(RegistrationCompanyFop("test_02_tax_system"))
+    suite.addTest(RegistrationCompanyFop("test_03_phone_company"))
+    suite.addTest(RegistrationCompanyFop("test_04_email_company"))
+    suite.addTest(RegistrationCompanyFop("test_05_country_legal"))
+    suite.addTest(RegistrationCompanyFop("test_06_region_legal"))
+    suite.addTest(RegistrationCompanyFop("test_07_city_legal"))
+    suite.addTest(RegistrationCompanyFop("test_08_legal_address"))
+    suite.addTest(RegistrationCompanyFop("test_09_legal_index"))
+    suite.addTest(RegistrationCompanyFop("test_10_real_country"))
+    suite.addTest(RegistrationCompanyFop("test_11_real_region"))
+    suite.addTest(RegistrationCompanyFop("test_12_real_city"))
+    suite.addTest(RegistrationCompanyFop("test_13_real_address"))
+    suite.addTest(RegistrationCompanyFop("test_14_real_index"))
+    suite.addTest(RegistrationCompanyFop("test_15_bank_name"))
+    suite.addTest(RegistrationCompanyFop("test_16_bank_mfo"))
+    suite.addTest(RegistrationCompanyFop("test_17_bank_account"))
+    suite.addTest(RegistrationCompanyFop("test_18_lead_first_name"))
+    suite.addTest(RegistrationCompanyFop("test_19_lead_last_name"))
+    suite.addTest(RegistrationCompanyFop("test_20_lead_email"))
+    suite.addTest(RegistrationCompanyFop("test_21_lead_phone"))
+    suite.addTest(RegistrationCompanyFop("test_22_confidant_first_name"))
+    suite.addTest(RegistrationCompanyFop("test_23_confidant_last_name"))
+    suite.addTest(RegistrationCompanyFop("test_24_confidant_position"))
+    suite.addTest(RegistrationCompanyFop("test_25_confidant_email"))
+    suite.addTest(RegistrationCompanyFop("test_26_confidant_phone"))
+    suite.addTest(RegistrationCompanyFop("test_27_contract_offer"))
+    suite.addTest(RegistrationCompanyFop("test_28_save"))
+    return suite
 
 def s_company_reg():
     suite = unittest.TestSuite()
 
+    suite.addTest(RegistrationCompany("test_01_registration_user"))
     suite.addTest(RegistrationCompany("test_02_tax_system"))
     suite.addTest(RegistrationCompany("test_03_phone_company"))
     suite.addTest(RegistrationCompany("test_04_email_company"))
@@ -57,9 +95,9 @@ def s_company_reg():
 def s_login():
     suite = unittest.TestSuite()
 
-    suite.addTest(Login.Login("test_01_email"))
-    suite.addTest(Login.Login("test_02_pswd"))
-    suite.addTest(Login.Login("test_03_btn"))
+    suite.addTest(Login("test_01_email"))
+    suite.addTest(Login("test_02_pswd"))
+    suite.addTest(Login("test_03_btn"))
 
     return suite
 
@@ -68,16 +106,13 @@ def s_login():
 def s_edit_information():
     suite = unittest.TestSuite()
 
-    suite.addTest(Login.Login("test_01_email"))
-    suite.addTest(Login.Login("test_02_pswd"))
-    suite.addTest(Login.Login("test_03_btn"))
-    suite.addTest(Login.EditInfo("test_01_go_to_user_profile"))
-    suite.addTest(Login.EditInfo("test_02_click_tab_company"))
-    suite.addTest(Login.EditInfo("test_03_ownership_tax"))
-    suite.addTest(Login.EditInfo("test_04_click_btn_edit"))
-    suite.addTest(Login.EditInfo("test_05_update_comp_name"))
-    suite.addTest(Login.EditInfo("test_06_contract_offer"))
-    suite.addTest(Login.EditInfo("test_07_click_btn_save_changes"))
+    suite.addTest(Edit("test_01_go_to_user_profile"))
+    suite.addTest(Edit("test_02_click_tab_company"))
+    suite.addTest(Edit("test_03_click_btn_edit"))
+    suite.addTest(Edit("test_04_update_comp_name"))
+    #suite.addTest(Edit("test_05_ownership_tax"))
+    suite.addTest(Edit("test_05_contract_offer"))
+    suite.addTest(Edit("test_06_click_btn_save_changes"))
 
     return suite
 
@@ -87,6 +122,31 @@ def s_docs():
     suite.addTest(Docs('test_1_Login'))
     suite.addTest(Docs('test_2_User_profile'))
     return suite
+
+def s_Employees():
+    suite = unittest.TestSuite()
+
+    suite.addTest(Employees("test_01_go_to_user_profile"))
+    suite.addTest(Employees("test_02_tab_empl"))
+    suite.addTest(Employees("test_03_add_user"))
+    suite.addTest(Employees("test_04_name"))
+    suite.addTest(Employees("test_05_name_eu"))
+    suite.addTest(Employees("test_06_last_name"))
+    suite.addTest(Employees("test_07_last_name_eu"))
+    suite.addTest(Employees("test_08_position"))
+    suite.addTest(Employees("test_09_email"))
+    suite.addTest(Employees("test_10_phone"))
+    suite.addTest(Employees("test_11_save"))
+    return suite
+
+
+def s_login_after_full_registration():
+    suite = unittest.TestSuite()
+
+    suite.addTest(LoginAfterRegistrationCompany("test_01"))
+
+    return suite
+
 
 if __name__ == '__main__':
     args=sys.argv[1:]
@@ -104,3 +164,9 @@ if __name__ == '__main__':
         runner.run(s_edit_information())
     elif args[0] == 'docs':
         runner.run(s_docs())
+    elif args[0] == 'Employees':
+        runner.run(s_Employees())
+    elif args[0] == 'UserRegistration_Company_Fop':
+        runner.run(s_company_fop())
+    elif args[0] == 'Login_after_full_registration':
+        runner.run(s_login_after_full_registration())
