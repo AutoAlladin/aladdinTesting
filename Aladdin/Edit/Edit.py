@@ -121,31 +121,49 @@ class Edit(OpenMainPage):
         time.sleep(5)
         test_input(self, "real_address_index", **self.query)
 
-    def test_15_clear_confidant_first_name(self):
+    def test_15_clear_comp_bank_acc_mfo(self):
+        time.sleep(5)
+        comp_bank_acc_mfo = self.wts.drv.find_element_by_id("company_bank_account_mfo")
+        comp_bank_acc_mfo.clear()
+
+    def test_16_comp_bank_acc_mfo(self):
+        time.sleep(5)
+        test_input(self, "company_bank_account_mfo", **self.query)
+
+    def test_17_clear_lead_phone(self):
+        time.sleep(5)
+        lead_phone = self.wts.drv.find_element_by_id("lead_phone")
+        lead_phone.clear()
+
+    def test_18_lead_phone(self):
+        time.sleep(5)
+        test_input(self, "lead_phone", **self.query)
+
+    def test_19_clear_confidant_first_name(self):
         time.sleep(5)
         conf_fst_name = self.wts.drv.find_element_by_id("confidant_first_name")
         conf_fst_name.clear()
 
-    def test_16_confidant_first_name(self):
+    def test_20_confidant_first_name(self):
         time.sleep(5)
         test_input(self, "confidant_first_name", **self.query)
 
-    def test_17_clear_confidant_position(self):
+    def test_21_clear_confidant_position(self):
         #WebDriverWait(self.wts.drv, 20).until(EC._element_if_visible((By.ID, "confidant_position")))
         time.sleep(5)
         f_conf_position = self.wts.drv.find_element_by_id("confidant_position")
         f_conf_position.clear()
 
-    def test_18_confidant_position(self):
+    def test_22_confidant_position(self):
         #WebDriverWait(self.wts.drv, 20).until(EC._element_if_visible((By.ID, "confidant_position")))
         time.sleep(5)
         test_input(self, "confidant_position", **self.query)
 
-    def test_19_contract_offer(self):
+    def test_23_contract_offer(self):
         contract_offer_check = self.wts.drv.find_element_by_xpath(".//*[@id='contract_offer_container']/label")
         contract_offer_check.click()
 
-    def test_20_click_btn_save_changes(self):
+    def test_24_click_btn_save_changes(self):
     #self.wts.drv.execute_script("window.scrollTo(0, 2500);")
     #WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_save_changes")))
         time.sleep(5)

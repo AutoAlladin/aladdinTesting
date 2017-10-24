@@ -82,12 +82,16 @@ def s_edit_information():
     suite.addTest(Edit("test_12_real_address_street"))
     suite.addTest(Edit("test_13_clear_add_index"))
     suite.addTest(Edit("test_14_real_address_index"))
-    suite.addTest(Edit("test_15_clear_confidant_first_name"))
-    suite.addTest(Edit("test_16_confidant_first_name"))
-    suite.addTest(Edit("test_17_clear_confidant_position"))
-    suite.addTest(Edit("test_18_confidant_position"))
-    suite.addTest(Edit("test_19_contract_offer"))
-    suite.addTest(Edit("test_20_click_btn_save_changes"))
+    suite.addTest(Edit("test_15_clear_comp_bank_acc_mfo"))
+    suite.addTest(Edit("test_16_comp_bank_acc_mfo"))
+    suite.addTest(Edit("test_17_clear_lead_phone"))
+    suite.addTest(Edit("test_18_lead_phone"))
+    suite.addTest(Edit("test_19_clear_confidant_first_name"))
+    suite.addTest(Edit("test_20_confidant_first_name"))
+    suite.addTest(Edit("test_21_clear_confidant_position"))
+    suite.addTest(Edit("test_22_confidant_position"))
+    suite.addTest(Edit("test_23_contract_offer"))
+    suite.addTest(Edit("test_24_click_btn_save_changes"))
 
     return suite
 
