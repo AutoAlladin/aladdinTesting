@@ -75,10 +75,12 @@ def s_edit_information():
     suite.addTest(Edit("test_05_update_comp_name"))
     suite.addTest(Edit("test_06_contract_offer"))
     suite.addTest(Edit("test_07_legal_address_country"))
-    suite.addTest(Edit("test_08_select_real_address_city"))
+    #suite.addTest(Edit("test_08_select_real_address_city"))
+    suite.addTest(Edit("test_08_clear_field_real_add_str"))
     suite.addTest(Edit("test_09_real_address_street"))
-    suite.addTest(Edit("test_10_confidant_position"))
-    suite.addTest(Edit("test_11_click_btn_save_changes"))
+    suite.addTest(Edit("test_10_clear_confidant_position"))
+    suite.addTest(Edit("test_11_confidant_position"))
+    suite.addTest(Edit("test_12_click_btn_save_changes"))
     return suite
 
 def s_docs():
