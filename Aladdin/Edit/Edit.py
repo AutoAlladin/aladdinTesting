@@ -160,11 +160,7 @@ class Edit(OpenMainPage):
         time.sleep(5)
         test_input(self, "confidant_position", **self.query)
 
-    def test_23_contract_offer(self):
-        contract_offer_check = self.wts.drv.find_element_by_xpath(".//*[@id='contract_offer_container']/label")
-        contract_offer_check.click()
-
-    def test_24_click_btn_save_changes(self):
+    def test_23_click_btn_save_changes(self):
     #self.wts.drv.execute_script("window.scrollTo(0, 2500);")
     #WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_save_changes")))
         time.sleep(5)

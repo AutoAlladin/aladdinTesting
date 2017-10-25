@@ -1,15 +1,15 @@
 import unittest
-
+import webbrowser
 from Aladdin.AladdinUtils import *
 from Aladdin.Registration.OpenMainPage import OpenMainPage
 from Aladdin.Registration.RegistrationCompanyEDRPOU import RegistrationCompany
 from Aladdin.AladdinUtils import *
-
+from Aladdin.Edit.Edit import Edit
 
 publicWST = None;
 def setUpModule():
     global publicWST
-    publicWST = WebTestSession('https://192.168.80.169:44310/Account/Login')
+    publicWST = WebTestSession('https://192.168.80.169:44310/i_uk/registration/user')
     #publicWST = WebTestSession('https://identity.ald.in.ua/Account/Login')
 
 
@@ -26,8 +26,11 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         cls.wts = publicWST
     def test_01(self):
         self.full_reg.wts = self.wts
-        self.full_reg.test_01_registration_user()
-        self.full_reg.test_02_tax_system()
+        with self.subTest(msg="registration_user"):
+            self.full_reg.test_01_registration_user()
+        with self.subTest(msg="tax_system"):
+            self.full_reg.test_02_tax_system()
+
         self.full_reg.test_03_phone_company()
         self.full_reg.test_04_email_company()
         self.full_reg.test_05_country_legal()
@@ -55,12 +58,71 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         self.full_reg.test_27_contract_offer()
         self.full_reg.test_28_save()
 
-    def test_1111_exit(self):
-        pass
+    def test_02_exit(self):
+        drop_menu = self.wts.drv.find_element_by_xpath("html/body/app/spa/div/nav/div/div[3]/ul/li[2]/a/b")
+        drop_menu.click()
+        exit_menu = self.wts.drv.find_element_by_xpath("html/body/app/spa/div/nav/div/div[3]/ul/li[2]/ul/li[6]/a")
+        exit_menu.click()
+        time.sleep(10)
 
-    def test_1112_login(self):
+
+    def test_03_login(self):
+        self.wts.drv.get('https://192.168.80.169:44310/Account/Login')
         test_input(self, "exampleInputEmail1", self.full_reg.reg.test_params["email"])
         test_input(self, "pswd", self.full_reg.reg.test_params["password"])
         btn_sub = self.wts.drv.find_element_by_id("submitLogin")
         btn_sub.click()
+        time.sleep(10)
+
+    def test_04_edit(self):
+        # user_prof = self.wts.drv.find_element_by_id("link_about")
+        # user_prof.click()
+        # time.sleep(10)
+        # #WebDriverWait(self.wts.drv, 5).until(EC.element_to_be_clickable(By.ID, "profile_tab_company"))
+        # btn_tab_company = self.wts.drv.find_element_by_id("profile_tab_company")
+        # btn_tab_company.click()
+        # self.wts.drv.execute_script("window.scrollTo(0, 2500);")
+        user_prof = self.wts.drv.find_element_by_id("link_about")
+        user_prof.click()
+        ed = Edit()
+        ed.wts = self.wts
+        ed.test_02_click_tab_company()
+        ed.test_03_click_btn_edit()
+        ed.test_04_clear_field_comp_name()
+        ed.test_05_update_comp_name()
+        ed.test_06_ownership_type()
+        ed.test_07_company_taxSystem()
+        ed.test_08_clear_email()
+        ed.test_09_update_email()
+        ed.test_10_legal_address_country()
+        ed.test_11_clear_field_real_add_str()
+        ed.test_12_real_address_street()
+        ed.test_13_clear_add_index()
+        ed.test_14_real_address_index()
+        ed.test_15_clear_comp_bank_acc_mfo()
+        ed.test_16_comp_bank_acc_mfo()
+        ed.test_17_clear_lead_phone()
+        ed.test_18_lead_phone()
+        ed.test_19_clear_confidant_first_name()
+        ed.test_20_confidant_first_name()
+        ed.test_21_clear_confidant_position()
+        ed.test_22_confidant_position()
+        ed.test_23_click_btn_save_changes()
+        time.sleep(10)
+
+    def test_05_add_doc(self):
+        self.wts.drv.execute_script("window.scrollTo(0, 0);")
+        btn_tab_documents = self.wts.drv.find_element_by_id("profile_tab_documents")
+        btn_tab_documents.click()
+        WebDriverWait(self.wts.drv, 20).until(
+            EC.element_to_be_clickable((By.CLASS_NAME, "ui-datatable")))
+
+        taxpayerCertificateINN = self.wts.drv.find_element_by_id("load_TaxpayerCertificateINN")
+        file_name = self.wts.__mongo__.get_file(doc_name="TaxpayerCertificateINN")
+        taxpayerCertificateINN.send_keys(file_name)
+
+        self.wts.drv.refresh()
+
+
+
 

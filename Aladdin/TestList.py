@@ -129,8 +129,7 @@ def s_edit_information():
     suite.addTest(Edit("test_20_confidant_first_name"))
     suite.addTest(Edit("test_21_clear_confidant_position"))
     suite.addTest(Edit("test_22_confidant_position"))
-    suite.addTest(Edit("test_23_contract_offer"))
-    suite.addTest(Edit("test_24_click_btn_save_changes"))
+    suite.addTest(Edit("test_23_click_btn_save_changes"))
 
     return suite
 
@@ -162,6 +161,9 @@ def s_login_after_full_registration():
     suite = unittest.TestSuite()
 
     suite.addTest(LoginAfterRegistrationCompany("test_01"))
+    suite.addTest(LoginAfterRegistrationCompany("test_02_exit"))
+    suite.addTest(LoginAfterRegistrationCompany("test_03_login"))
+    suite.addTest(LoginAfterRegistrationCompany("test_04_edit"))
 
     return suite
 
