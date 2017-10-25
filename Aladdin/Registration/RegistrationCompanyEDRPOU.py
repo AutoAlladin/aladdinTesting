@@ -3,7 +3,7 @@ import unittest
 from Aladdin.AladdinUtils import *
 from Aladdin.Registration.UserRegistrationEDRPOU import UserRegistrationEDRPOU
 from Aladdin.Registration.OpenMainPage import *
-
+from selenium.common.exceptions import WebDriverException
 
 
 class RegistrationCompany(OpenMainPage):
@@ -100,7 +100,7 @@ class RegistrationCompany(OpenMainPage):
         test_input(self, "lead_email", **self.query)
 
     def test_21_lead_phone(self):
-        test_input(self, "lead_phone", **self.query)
+        test_input(self, "lead_phone_resident", **self.query)
 
     def test_22_confidant_first_name(self):
         test_input(self, "confidant_first_name", **self.query)
@@ -115,15 +115,15 @@ class RegistrationCompany(OpenMainPage):
         test_input(self, "confidant_email", **self.query)
 
     def test_26_confidant_phone(self):
-        test_input(self, "confidant_phone", **self.query)
+        test_input(self, "confidant_phone_resident", **self.query)
 
     def test_27_contract_offer(self):
         contract_offer_check = self.wts.drv.find_element_by_xpath(".//*[@id='contract_offer_container']/label")
         contract_offer_check.click()
        # WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.XPATH, "")))
+        time.sleep(15)
 
     def test_28_save(self):
         btn_save = self.wts.drv.find_element_by_id("btn_save_changes")
-        btn_save.click()
-        #WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_save_changes")))
-
+        #btn_save.click()
+        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_edit")))

@@ -3,7 +3,7 @@ import unittest
 from Aladdin.AladdinUtils import *
 from Aladdin.Registration.UserRegistration_FOP import UserRegistration_FOP
 from Aladdin.Registration.OpenMainPage import *
-
+from selenium.common.exceptions import WebDriverException
 
 
 class RegistrationCompanyFop(OpenMainPage):
@@ -110,6 +110,10 @@ class RegistrationCompanyFop(OpenMainPage):
        # WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.XPATH, "")))
 
     def test_28_save(self):
-        btn_save = self.wts.drv.find_element_by_id("btn_save_changes")
-        btn_save.click()
+        try:
+            btn_save = self.wts.drv.find_element_by_id("btn_save_changes")
+            btn_save.click()
+        except WebDriverException as w:
+            raise Exception("Не кликается кнопка Сохранить")
+        return self
         #WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_save_changes")))
