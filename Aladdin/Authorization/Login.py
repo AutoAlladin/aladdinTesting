@@ -13,7 +13,8 @@ from Aladdin.Registration.OpenMainPage import OpenMainPage
 publicWST = None;
 def setUpModule():
     global publicWST
-    publicWST = WebTestSession('https://identity.ald.in.ua/Account/Login')
+    #publicWST = WebTestSession('https://identity.ald.in.ua/Account/Login')
+    publicWST = WebTestSession('https://192.168.80.169:44310/Account/Login')
 
 
 def tearDownModule():
@@ -27,7 +28,8 @@ class Login(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.wts = publicWST
-        cls.wts.url = 'https://identity.ald.in.ua/Account/Login'
+        #cls.wts.url = 'https://identity.ald.in.ua/Account/Login'
+        cls.wts.url = 'https://192.168.80.169:44310/Account/Login'
 
 
     def test_01_email(self):

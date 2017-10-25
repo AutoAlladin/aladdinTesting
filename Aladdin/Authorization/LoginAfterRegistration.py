@@ -9,7 +9,8 @@ from Aladdin.AladdinUtils import *
 publicWST = None;
 def setUpModule():
     global publicWST
-    publicWST = WebTestSession('https://identity.ald.in.ua/Account/Login')
+    publicWST = WebTestSession('https://192.168.80.169:44310/Account/Login')
+    #publicWST = WebTestSession('https://identity.ald.in.ua/Account/Login')
 
 
 def tearDownModule():
