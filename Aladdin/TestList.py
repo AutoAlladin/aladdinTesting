@@ -129,8 +129,7 @@ def s_edit_information():
     suite.addTest(Edit("test_20_confidant_first_name"))
     suite.addTest(Edit("test_21_clear_confidant_position"))
     suite.addTest(Edit("test_22_confidant_position"))
-    suite.addTest(Edit("test_23_contract_offer"))
-    suite.addTest(Edit("test_24_click_btn_save_changes"))
+    suite.addTest(Edit("test_23_click_btn_save_changes"))
 
     return suite
 
