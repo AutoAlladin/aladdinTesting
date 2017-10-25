@@ -76,7 +76,6 @@ def s_edit_information():
     suite.addTest(Edit("test_07_company_taxSystem"))
     suite.addTest(Edit("test_08_clear_email"))
     suite.addTest(Edit("test_09_update_email"))
-    #suite.addTest(Edit("test_08_select_real_address_city"))
     suite.addTest(Edit("test_10_legal_address_country"))
     suite.addTest(Edit("test_11_clear_field_real_add_str"))
     suite.addTest(Edit("test_12_real_address_street"))
