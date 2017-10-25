@@ -130,6 +130,14 @@ def s_edit_information():
     suite.addTest(Edit("test_21_clear_confidant_position"))
     suite.addTest(Edit("test_22_confidant_position"))
     suite.addTest(Edit("test_23_click_btn_save_changes"))
+    suite.addTest(Edit("test_24_click_tab_profile_tab_about"))
+    suite.addTest(Edit("test_25_name_clear"))
+    suite.addTest(Edit("test_26_name_change"))
+    suite.addTest(Edit("test_27_eng_surname_clear"))
+    suite.addTest(Edit("test_28_eng_surname_change"))
+    suite.addTest(Edit("test_29_clear_phone"))
+    suite.addTest(Edit("test_30_change_u_phone"))
+    suite.addTest(Edit("test_31_click_btnSaveUser"))
 
     return suite
 
