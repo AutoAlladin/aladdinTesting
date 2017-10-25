@@ -55,25 +55,25 @@ class Edit(OpenMainPage):
         #     r.assertTrue(False, "При редактировании формы собственности - код не изменился\n" + e.__str__())
 
     def test_03_click_btn_edit(self):
-        #WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
+        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
         btn_edit = self.wts.drv.find_element_by_id("btn_edit")
         btn_edit.click()
 
     def test_04_clear_field_comp_name(self):
-        #WebDriverWait(self.wts.drv, 20).until(EC._element_if_visible((By.ID, "nameUA")))
+        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "nameUA")))
         f_comp_name = self.wts.drv.find_element_by_id("nameUA")
-        time.sleep(5)
+        #time.sleep(5)
         f_comp_name.clear()
-        time.sleep(5)
+        #time.sleep(5)
 
     def test_05_update_comp_name(self):
-        #WebDriverWait(self.wts.drv, 20).until(EC._element_if_visible((By.ID, "nameUA")))
-        time.sleep(5)
+        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "nameUA")))
+        #time.sleep(5)
         test_input(self, "nameUA", **self.query)
-        time.sleep(5)
+        #time.sleep(5)
 
     def test_06_ownership_type(self):
-        time.sleep(5)
+        #time.sleep(5)
         test_select(self, "ownership_type", **self.query)
     #      select_ownership.send_keys("0")
     #    code = self.wts.drv.find_element_by_id("company_code_USREOU")
@@ -81,21 +81,21 @@ class Edit(OpenMainPage):
     #     self.assertTrue("id" == code)
 
     def test_07_company_taxSystem(self):
-        time.sleep(5)
+        #time.sleep(5)
         test_select(self, "company_taxSystem", **self.query)
 
     def test_08_clear_email(self):
         upd_email = self.wts.drv.find_element_by_id("email")
-        time.sleep(5)
+        #time.sleep(5)
         upd_email.clear()
 
     def test_09_update_email(self):
-        time.sleep(5)
+        #time.sleep(5)
         test_input(self, "email", **self.query)
 
     def test_10_legal_address_country(self):
-        #WebDriverWait(self.wts.drv, 20).until(EC._element_if_visible((By.ID, "legal_address_country")))
-        time.sleep(5)
+        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "legal_address_country")))
+        #time.sleep(5)
         test_select(self, "legal_address_country", **self.query)
 
     #def test_08_select_real_address_city(self):
