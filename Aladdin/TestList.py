@@ -4,7 +4,7 @@ from unittest import TestLoader
 
 from Aladdin.Docs import Docs
 from Aladdin.Registration.UserRegistrationEDRPOU  import UserRegistrationEDRPOU
-from Aladdin.Registration.UserRegistration_FOP  import  UserRegistration_FOP 
+from Aladdin.Registration.UserRegistration_FOP  import  UserRegistration_FOP
 from Aladdin.Registration.RegistrationCompanyEDRPOU import RegistrationCompany
 from Aladdin.Registration.RegistrationCompanyFOP import RegistrationCompanyFop
 from Aladdin.Authorization.Login import Login
@@ -109,10 +109,28 @@ def s_edit_information():
     suite.addTest(Edit("test_01_go_to_user_profile"))
     suite.addTest(Edit("test_02_click_tab_company"))
     suite.addTest(Edit("test_03_click_btn_edit"))
-    suite.addTest(Edit("test_04_update_comp_name"))
-    #suite.addTest(Edit("test_05_ownership_tax"))
-    suite.addTest(Edit("test_05_contract_offer"))
-    suite.addTest(Edit("test_06_click_btn_save_changes"))
+    suite.addTest(Edit("test_04_clear_field_comp_name"))
+    suite.addTest(Edit("test_05_update_comp_name"))
+    suite.addTest(Edit("test_06_ownership_type"))
+    suite.addTest(Edit("test_07_company_taxSystem"))
+    suite.addTest(Edit("test_08_clear_email"))
+    suite.addTest(Edit("test_09_update_email"))
+    #suite.addTest(Edit("test_08_select_real_address_city"))
+    suite.addTest(Edit("test_10_legal_address_country"))
+    suite.addTest(Edit("test_11_clear_field_real_add_str"))
+    suite.addTest(Edit("test_12_real_address_street"))
+    suite.addTest(Edit("test_13_clear_add_index"))
+    suite.addTest(Edit("test_14_real_address_index"))
+    suite.addTest(Edit("test_15_clear_comp_bank_acc_mfo"))
+    suite.addTest(Edit("test_16_comp_bank_acc_mfo"))
+    suite.addTest(Edit("test_17_clear_lead_phone"))
+    suite.addTest(Edit("test_18_lead_phone"))
+    suite.addTest(Edit("test_19_clear_confidant_first_name"))
+    suite.addTest(Edit("test_20_confidant_first_name"))
+    suite.addTest(Edit("test_21_clear_confidant_position"))
+    suite.addTest(Edit("test_22_confidant_position"))
+    suite.addTest(Edit("test_23_contract_offer"))
+    suite.addTest(Edit("test_24_click_btn_save_changes"))
 
     return suite
 
