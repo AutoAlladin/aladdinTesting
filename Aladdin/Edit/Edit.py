@@ -9,6 +9,7 @@ from Aladdin.Authorization.Login import Login
 publicWST = None;
 def setUpModule():
     global publicWST
+    #publicWST = WebTestSession('https://identity.ald.in.ua/Account/Login')
     publicWST = WebTestSession('https://192.168.80.169:44310/Account/Login')
 
 def tearDownModule():
@@ -74,6 +75,10 @@ class Edit(OpenMainPage):
     def test_06_ownership_type(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "ownership_type")))
         test_select(self, "ownership_type", **self.query)
+    #      select_ownership.send_keys("0")
+    #    code = self.wts.drv.find_element_by_id("company_code_USREOU")
+    #     return code.get_attribute("id")
+    #     self.assertTrue("id" == code)
 
     def test_07_company_taxSystem(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "company_taxSystem")))
