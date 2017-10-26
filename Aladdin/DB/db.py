@@ -14,7 +14,7 @@ password = '18E2B855EB29411D9548FD8CA4E49DA7'
 #password = '80FE7E09-8B85-4E2A-82B3-D0532B2A8E80'
 driver= '{ODBC Driver 13 for SQL Server}'
 
-cnxn = pyodbc.connect('DRIVER='+driver+';SERVER='+server+';PORT=1443;DATABASE='+database+';UID='+username+';PWD='+ password)
+cnxn = pyodbc.connect('DRIVER='+driver+';SERVER='+server+';PORT=1443;DATABASE='+database+';UID='+username+';PWD=' + password)
 cursor = cnxn.cursor()
 
 

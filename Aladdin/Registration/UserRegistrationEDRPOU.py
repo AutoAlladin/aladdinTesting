@@ -20,6 +20,11 @@ class UserRegistrationEDRPOU(OpenMainPage):
 
     def test_04_code_edrpou(self):
         test_input(self, "company_code_USREOU", **self.query)
+        code_USREOU = self.wts.__mongo__.test_params.find_one(self.query["q"])
+        self.test_params.update({})
+        print("code_USREOU", self.test_params["code_USREOU"])
+        next = str(int(code_USREOU["inputs"]["code_USREOU_next"]) + 1)
+
 
     def test_05_name(self):
         test_input(self, "admin_name_ua", **self.query)
