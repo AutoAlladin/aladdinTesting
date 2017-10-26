@@ -168,6 +168,8 @@ class Edit(OpenMainPage):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_save_changes")))
         btn_s_changes = self.wts.drv.find_element_by_id("btn_save_changes")
         btn_s_changes.click()
+        WebDriverWait(self.wts.drv, 5).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
+
         #WebDriverWait(self.wts.drv, 5).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
 
     def test_24_click_tab_profile_tab_about(self):
