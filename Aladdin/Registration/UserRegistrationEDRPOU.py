@@ -21,9 +21,18 @@ class UserRegistrationEDRPOU(OpenMainPage):
     def test_04_code_edrpou(self):
         test_input(self, "company_code_USREOU", **self.query)
         code_USREOU = self.wts.__mongo__.test_params.find_one(self.query["q"])
-        self.test_params.update({})
-        print("code_USREOU", self.test_params["code_USREOU"])
-        next = str(int(code_USREOU["inputs"]["code_USREOU_next"]) + 1)
+
+        val=code_USREOU["inputs"]["code_USREOU_val"]+1
+        code = str(val).ljust(8, "0")
+
+        print(val)
+        print(code)
+
+        self.wts.__mongo__.test_params.update_one({"_id": code_USREOU["_id"]},
+                                                  {"$set": {"inputs.code_USREOU_val": val}})
+        self.wts.__mongo__.test_params.update_one({"_id": code_USREOU["_id"]},
+                                                  {"$set": {"inputs.code_USREOU": code}})
+
 
 
     def test_05_name(self):
