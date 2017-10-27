@@ -172,6 +172,8 @@ def s_login_after_full_registration():
     suite.addTest(LoginAfterRegistrationCompany("test_02_exit"))
     suite.addTest(LoginAfterRegistrationCompany("test_03_login"))
     suite.addTest(LoginAfterRegistrationCompany("test_04_edit"))
+    suite.addTest(LoginAfterRegistrationCompany("test_05_add_doc"))
+    suite.addTest(LoginAfterRegistrationCompany("test_06_add_employees"))
 
     return suite
 

@@ -67,9 +67,15 @@ class Employees(OpenMainPage):
         test_input(self, "email_0", "fdfdf@fdf.ru")
 
     def test_10_phone(self):
-        test_input(self, "phone_0", "44545454")
+        test_input(self, "phone_0", "+380 (90) 906-06-06")
 
-    def test_11_save(self):
+    def test_11_role(self):
+        test_select(self, "role", "3")
+
+    def test_12_save(self):
         btn_save = self.wts.drv.find_element_by_id("save_changes_0")
         btn_save.click()
+        time.sleep(20)
+        WebDriverWait(self.wts.drv, 5).until(EC.element_to_be_clickable(By.ID, "butAddNewUser"))
+
 
