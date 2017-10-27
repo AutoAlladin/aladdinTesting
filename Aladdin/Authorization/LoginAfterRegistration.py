@@ -82,8 +82,8 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         # btn_tab_company = self.wts.drv.find_element_by_id("profile_tab_company")
         # btn_tab_company.click()
         # self.wts.drv.execute_script("window.scrollTo(0, 2500);")
-        user_prof = self.wts.drv.find_element_by_id("link_about")
-        user_prof.click()
+        #user_prof = self.wts.drv.find_element_by_id("link_about")
+        #user_prof.click()
         ed = Edit()
         ed.wts = self.wts
         ed.test_02_click_tab_company()
@@ -93,8 +93,8 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         ed.test_03_click_btn_edit()
         ed.test_04_clear_field_comp_name()
         ed.test_05_update_comp_name()
-        ed.test_06_ownership_type()
-        ed.test_07_company_taxSystem()
+        #ed.test_06_ownership_type()
+        #ed.test_07_company_taxSystem()
         ed.test_08_clear_email()
         ed.test_09_update_email()
         ed.test_10_legal_address_country()
@@ -118,7 +118,9 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         ed.test_28_eng_surname_change()
         ed.test_29_clear_phone()
         ed.test_30_change_u_phone()
-        ed.test_31_click_btnSaveUser()
+        ed.test_31_clear_u_position()
+        ed.test_32_change_u_position()
+        ed.test_33_click_btnSaveUser()
         time.sleep(10)
 
     def test_05_add_doc(self):
