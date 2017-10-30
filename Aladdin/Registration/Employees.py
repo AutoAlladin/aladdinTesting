@@ -71,12 +71,14 @@ class Employees(OpenMainPage):
 
     def test_11_role(self):
         test_select(self, "role", "3")
+        time.sleep(10)
 
     def test_12_save(self):
         btn_save = self.wts.drv.find_element_by_id("save_changes_0")
         btn_save.click()
         time.sleep(20)
-        WebDriverWait(self.wts.drv, 5).until(EC.element_to_be_clickable((By.ID, "butAddNewUser")))
+        locator = (By.ID, "butAddNewUser")
+        WebDriverWait(self.wts.drv, 5).until(EC.element_to_be_clickable(locator))
 
 
 
