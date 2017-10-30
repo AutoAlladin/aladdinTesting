@@ -111,8 +111,8 @@ def s_edit_information():
     suite.addTest(Edit("test_03_click_btn_edit"))
     suite.addTest(Edit("test_04_clear_field_comp_name"))
     suite.addTest(Edit("test_05_update_comp_name"))
-    suite.addTest(Edit("test_06_ownership_type"))
-    suite.addTest(Edit("test_07_company_taxSystem"))
+    #suite.addTest(Edit("test_06_ownership_type"))
+    #suite.addTest(Edit("test_06_company_taxSystem"))
     suite.addTest(Edit("test_08_clear_email"))
     suite.addTest(Edit("test_09_update_email"))
     #suite.addTest(Edit("test_08_select_real_address_city"))
@@ -137,7 +137,9 @@ def s_edit_information():
     suite.addTest(Edit("test_28_eng_surname_change"))
     suite.addTest(Edit("test_29_clear_phone"))
     suite.addTest(Edit("test_30_change_u_phone"))
-    suite.addTest(Edit("test_31_click_btnSaveUser"))
+    suite.addTest(Edit("test_31_clear_u_position"))
+    suite.addTest(Edit("test_32_change_u_position"))
+    suite.addTest(Edit("test_33_click_btnSaveUser"))
 
     return suite
 

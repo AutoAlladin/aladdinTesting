@@ -72,17 +72,17 @@ class Edit(OpenMainPage):
         test_input(self, "nameUA", **self.query)
 
 
-    def test_06_ownership_type(self):
-        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "ownership_type")))
-        test_select(self, "ownership_type", **self.query)
+    # def test_06_ownership_type(self):
+    #     WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "ownership_type")))
+    #     test_select(self, "ownership_type", **self.query)
     #      select_ownership.send_keys("0")
     #    code = self.wts.drv.find_element_by_id("company_code_USREOU")
     #     return code.get_attribute("id")
     #     self.assertTrue("id" == code)
 
-    def test_07_company_taxSystem(self):
-        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "company_taxSystem")))
-        test_select(self, "company_taxSystem", **self.query)
+    # def test_06_company_taxSystem(self):
+    #     WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "company_taxSystem")))
+    #     test_select(self, "company_taxSystem", **self.query)
 
     def test_08_clear_email(self):
         upd_email = self.wts.drv.find_element_by_id("email")
@@ -170,8 +170,6 @@ class Edit(OpenMainPage):
         btn_s_changes.click()
         WebDriverWait(self.wts.drv, 5).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
 
-        #WebDriverWait(self.wts.drv, 5).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
-
     def test_24_click_tab_profile_tab_about(self):
         self.wts.drv.execute_script("window.scrollTo(0, 0);")
         #WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "profile_tab_about")))
@@ -210,7 +208,16 @@ class Edit(OpenMainPage):
         test_input(self, "userPhone", **self.query)
         self.wts.drv.execute_script("window.scrollTo(250, 0);")
 
-    def test_31_click_btnSaveUser(self):
+    def test_31_clear_u_position(self):
+        u_pos_clear = self.wts.drv.find_element_by_id("userPosition")
+        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "userPosition")))
+        u_pos_clear.clear()
+
+    def test_32_change_u_position(self):
+        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "userPosition")))
+        test_input(self, "userPosition", **self.query)
+
+    def test_33_click_btnSaveUser(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btnSaveUser")))
         btnSaveUser = self.wts.drv.find_element_by_id("btnSaveUser")
         btnSaveUser.click()

@@ -27,6 +27,8 @@ class OpenMainPage(unittest.TestCase):
         cls.wts = publicWST
 
 class Employees(OpenMainPage):
+    query = {"input_val": None, "q": {"name": "EmployeeesInfo", "version": "0.0.0.1"}}
+    test_params = {}
 
     def test_01_go_to_user_profile(self):
         log = Login()
@@ -49,43 +51,44 @@ class Employees(OpenMainPage):
         btn_add_user.click()
 
     def test_04_name(self):
-        test_input(self, "firstName_0", "Валерка")
+        test_input(self, "firstName_0", **self.query)
 
     def test_05_name_eu(self):
-        test_input(self,"firstNameEn_0", "Valerka")
+        test_input(self, "firstNameEn_0", **self.query)
 
     def test_06_last_name(self):
-        test_input(self, "lastName_0", "Пупкин")
+        test_input(self, "lastName_0", **self.query)
 
     def test_07_last_name_eu(self):
-        test_input(self, "lastNameEn_0", "Pupkin")
+        test_input(self, "lastNameEn_0", **self.query)
 
     def test_08_position(self):
-        test_input(self, "position_0", "Супер пупер админ")
+        test_input(self, "position_0", **self.query)
 
     def test_09_email(self):
-        test_input(self, "email_0", "test@ff.ru")
+        test_input(self, "email_0", **self.query)
         eml = self.wts.__mongo__.test_params.find_one(self.query["q"])
-        self.test_params.update({"email": eml["inputs"]["email"]})
-        print("email", self.test_params["email"])
+        time.sleep(10)
+        self.test_params.update({"email_0": eml["inputs"]["email_0"]})
+        print("email", self.test_params["email_0"])
         next = str(int(eml["inputs"]["email_next"]) + 1)
         self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {
-            "$set": {"inputs.email": "forAddEmloyeesEmail_" + next.rjust(5, '0') + "@cucumber.com"}})
+            "$set": {"inputs.email_0": "employeesmail_" + next.rjust(5, '0') + "@ff.ru"}})
         self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {"$set": {"inputs.email_next": next}})
 
     def test_10_phone(self):
-        test_input(self, "phone_0", "+380 (90) 000-00-00")
+        test_input(self, "phone_0", **self.query)
 
     def test_11_role(self):
-        test_select(self, "role", "3")
+        test_select(self, "role", **self.query)
         time.sleep(10)
 
     def test_12_save(self):
         btn_save = self.wts.drv.find_element_by_id("save_changes_0")
         btn_save.click()
         time.sleep(20)
-        locator = (By.ID, "butAddNewUser")
-        WebDriverWait(self.wts.drv, 5).until(EC.element_to_be_clickable(locator))
+        #locator = (By.ID, "butAddNewUser")
+        #WebDriverWait(self.wts.drv, 5).until(EC.element_to_be_clickable(locator))
 
 
 

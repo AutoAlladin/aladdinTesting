@@ -119,7 +119,9 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         ed.test_28_eng_surname_change()
         ed.test_29_clear_phone()
         ed.test_30_change_u_phone()
-        ed.test_31_click_btnSaveUser()
+        ed.test_31_clear_u_position()
+        ed.test_32_change_u_position()
+        ed.test_33_click_btnSaveUser()
         time.sleep(10)
 
     def test_05_add_doc(self):
