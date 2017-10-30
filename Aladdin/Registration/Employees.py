@@ -49,25 +49,25 @@ class Employees(OpenMainPage):
         btn_add_user.click()
 
     def test_04_name(self):
-        test_input(self, "firstName_0", "Ввававіав")
+        test_input(self, "firstName_0", "Валерка")
 
     def test_05_name_eu(self):
-        test_input(self,"firstNameEn_0", "Gfgfgdfdfdf")
+        test_input(self,"firstNameEn_0", "Valerka")
 
     def test_06_last_name(self):
-        test_input(self, "lastName_0", "Смсмсмсм")
+        test_input(self, "lastName_0", "Пупкин")
 
     def test_07_last_name_eu(self):
-        test_input(self, "lastNameEn_0", "Ffdfdfx")
+        test_input(self, "lastNameEn_0", "Pupkin")
 
     def test_08_position(self):
-        test_input(self, "position_0", "папапсмсм пмсм")
+        test_input(self, "position_0", "Супер пупер админ")
 
     def test_09_email(self):
-        test_input(self, "email_0", "fdfdf@fdf.ru")
+        test_input(self, "email_0", "test@ff.ru")
 
     def test_10_phone(self):
-        test_input(self, "phone_0", "+380 (90) 906-06-06")
+        test_input(self, "phone_0", "+380 (90) 000-00-00")
 
     def test_11_role(self):
         test_select(self, "role", "3")
