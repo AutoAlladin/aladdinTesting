@@ -87,6 +87,7 @@ class Employees(OpenMainPage):
         btn_save = self.wts.drv.find_element_by_id("save_changes_0")
         btn_save.click()
         time.sleep(20)
+        WebDriverWait(self.wts.drv, 5).until(EC._element_if_visible((By.XPATH, ".//*[contains(@id, 'email_employeesmail_')]")))
         #locator = (By.ID, "butAddNewUser")
         #WebDriverWait(self.wts.drv, 5).until(EC.element_to_be_clickable(locator))
 
