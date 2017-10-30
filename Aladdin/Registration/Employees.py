@@ -80,7 +80,7 @@ class Employees(OpenMainPage):
         test_input(self, "phone_0", **self.query)
 
     def test_11_role(self):
-        test_select(self, "role", **self.query)
+        test_select(self, "role_0", **self.query)
         time.sleep(10)
 
     def test_12_save(self):
