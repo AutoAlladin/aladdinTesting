@@ -22,11 +22,11 @@ class UserRegistrationEDRPOU(OpenMainPage):
         test_input(self, "company_code_USREOU", **self.query)
         company_code_USREOU = self.wts.__mongo__.test_params.find_one(self.query["q"])
 
-        val = company_code_USREOU["inputs"]["company_code_USREOU_val"]+1
+        val = (company_code_USREOU["inputs"]["company_code_USREOU_val"]+1)
         code = str(val).rjust(8, "0")
 
-        # print(val)
-        # print(code)
+        #print(val)
+        #print(code)
 
         self.wts.__mongo__.test_params.update_one({"_id": company_code_USREOU["_id"]},
                                                   {"$set": {"inputs.company_code_USREOU_val": val}})

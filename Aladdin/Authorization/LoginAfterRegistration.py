@@ -5,6 +5,7 @@ from Aladdin.Registration.OpenMainPage import OpenMainPage
 from Aladdin.Registration.RegistrationCompanyEDRPOU import RegistrationCompany
 from Aladdin.AladdinUtils import *
 from Aladdin.Edit.Edit import Edit
+from Aladdin.Registration.Employees import Employees
 
 publicWST = None;
 def setUpModule():
@@ -137,5 +138,20 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         self.wts.drv.refresh()
 
 
+    def test_06_add_employees(self):
+        empl = Employees()
+        empl.wts = self.wts
+        btn_tab_empl = self.wts.drv.find_element_by_id("profile_tab_employees")
+        btn_tab_empl.click()
+        empl.test_03_add_user()
+        empl.test_04_name()
+        empl.test_05_name_eu()
+        empl.test_06_last_name()
+        empl.test_07_last_name_eu()
+        empl.test_08_position()
+        empl.test_09_email()
+        empl.test_10_phone()
+        empl.test_11_role()
+        empl.test_12_save()
 
 

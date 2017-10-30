@@ -26,3 +26,4 @@ class UserRegistration_FOP(UserRegistrationEDRPOU):
     def test_04_code_edrpou(self):
         test_input(self,"company_code_USREOUFop", "0000000000")
 
+
