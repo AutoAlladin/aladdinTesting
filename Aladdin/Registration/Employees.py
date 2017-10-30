@@ -65,6 +65,13 @@ class Employees(OpenMainPage):
 
     def test_09_email(self):
         test_input(self, "email_0", "test@ff.ru")
+        eml = self.wts.__mongo__.test_params.find_one(self.query["q"])
+        self.test_params.update({"email": eml["inputs"]["email"]})
+        print("email", self.test_params["email"])
+        next = str(int(eml["inputs"]["email_next"]) + 1)
+        self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {
+            "$set": {"inputs.email": "forAddEmloyeesEmail_" + next.rjust(5, '0') + "@cucumber.com"}})
+        self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {"$set": {"inputs.email_next": next}})
 
     def test_10_phone(self):
         test_input(self, "phone_0", "+380 (90) 000-00-00")
