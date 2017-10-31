@@ -167,7 +167,14 @@ class LoginAfterRegistrationCompany(OpenMainPage):
 
 
     def test_07_edit_employees(self):
-        pass
+        empl = Employees()
+        empl.wts = self.wts
+        empl.test_13_click_tab_employees()
+        empl.test_14_update_name()
+        empl.test_15_update_last_name_eu()
+        empl.test_16_update_position()
+        empl.test_17_update_role()
+        empl.test_18_save()
 
 
 
