@@ -105,34 +105,5 @@ class Employees(OpenMainPage):
             print("Сотрудник не добавлен")
 
 
-    def test_13_click_tab_employees(self):
-        btn_tab_empl = self.wts.drv.find_element_by_id("profile_tab_employees")
-        btn_tab_empl.click()
 
-    def test_14_update_name(self):
-        test_input(self, "firstName_0", "Редактирование-имени")
-
-    def test_15_update_last_name_eu(self):
-        test_input(self, "lastNameEn_0", "Edit-name")
-
-    def test_16_update_position(self):
-        test_input(self, "position_0", "Редактирование должности")
-
-    def test_17_update_role(self):
-        test_select(self, "role_0", "7")
-
-    def test_18_save(self):
-        btn_save = self.wts.drv.find_element_by_id("save_changes_0")
-        btn_save.click()
-        wanted_email=None
-        email_list = self.wts.drv.find_elements_by_xpath(".//*[contains(@id, 'email_')]")
-        inp_email = self.test_params['email_0']
-        for email in email_list:
-            if email.text == inp_email:
-                wanted_email = inp_email
-                print("Все ОК, email отображается")
-                break
-
-        if wanted_email==None:
-            print("Сотрудник не добавлен")
 

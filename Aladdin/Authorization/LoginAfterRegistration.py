@@ -7,6 +7,7 @@ from Aladdin.AladdinUtils import *
 from Aladdin.Edit.Edit import Edit
 from Aladdin.Registration.Employees import Employees
 from Aladdin.Docs.Docs import Docs
+from Aladdin.Edit.Edit_employees import Edit_employees
 
 publicWST = None;
 def setUpModule():
@@ -167,14 +168,14 @@ class LoginAfterRegistrationCompany(OpenMainPage):
 
 
     def test_07_edit_employees(self):
-        empl = Employees()
+        empl = Edit_employees()
         empl.wts = self.wts
-        empl.test_13_click_tab_employees()
-        empl.test_14_update_name()
-        empl.test_15_update_last_name_eu()
-        empl.test_16_update_position()
-        empl.test_17_update_role()
-        empl.test_18_save()
+        empl.test_01_click_tab_employees()
+        empl.test_02_update_name()
+        empl.test_03_update_last_name_eu()
+        empl.test_04_update_position()
+        empl.test_05_update_role()
+        empl.test_06_save()
 
 
 
