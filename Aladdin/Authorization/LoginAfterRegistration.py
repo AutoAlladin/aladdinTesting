@@ -6,6 +6,7 @@ from Aladdin.Registration.RegistrationCompanyEDRPOU import RegistrationCompany
 from Aladdin.AladdinUtils import *
 from Aladdin.Edit.Edit import Edit
 from Aladdin.Registration.Employees import Employees
+from Aladdin.Docs.Docs import Docs
 
 publicWST = None;
 def setUpModule():
@@ -125,18 +126,27 @@ class LoginAfterRegistrationCompany(OpenMainPage):
 
         time.sleep(10)
 
-    def test_05_add_doc(self):
-        self.wts.drv.execute_script("window.scrollTo(0, 0);")
-        btn_tab_documents = self.wts.drv.find_element_by_id("profile_tab_documents")
-        btn_tab_documents.click()
-        WebDriverWait(self.wts.drv, 20).until(
-            EC.element_to_be_clickable((By.CLASS_NAME, "ui-datatable")))
+    def test_05_add_view_delete_docs(self):
+        ds = Docs()
+        ds.wts = self.wts
+        ds.test_3_add_doc()
+        ds.test_4_doc_view()
+        ds.test_5_doc_delete()
+        ds.test_6_doc2_add()
+        time.sleep(10)
 
-        taxpayerCertificateINN = self.wts.drv.find_element_by_id("load_TaxpayerCertificateINN")
-        file_name = self.wts.__mongo__.get_file(doc_name="TaxpayerCertificateINN")
-        taxpayerCertificateINN.send_keys(file_name)
 
-        self.wts.drv.refresh()
+        # self.wts.drv.execute_script("window.scrollTo(0, 0);")
+        # btn_tab_documents = self.wts.drv.find_element_by_id("profile_tab_documents")
+        # btn_tab_documents.click()
+        # WebDriverWait(self.wts.drv, 20).until(
+        #     EC.element_to_be_clickable((By.CLASS_NAME, "ui-datatable")))
+        #
+        # taxpayerCertificateINN = self.wts.drv.find_element_by_id("load_TaxpayerCertificateINN")
+        # file_name = self.wts.__mongo__.get_file(doc_name="TaxpayerCertificateINN")
+        # taxpayerCertificateINN.send_keys(file_name)
+        #
+        # self.wts.drv.refresh()
 
 
     def test_06_add_employees(self):
