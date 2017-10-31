@@ -122,6 +122,7 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         ed.test_31_clear_u_position()
         ed.test_32_change_u_position()
         ed.test_33_click_btnSaveUser()
+
         time.sleep(10)
 
     def test_05_add_doc(self):
@@ -153,5 +154,13 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         empl.test_10_phone()
         empl.test_11_role()
         empl.test_12_save()
+
+
+    def test_07_edit_employees(self):
+        pass
+
+
+
+
 
 

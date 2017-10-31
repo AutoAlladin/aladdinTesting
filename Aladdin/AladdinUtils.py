@@ -80,7 +80,8 @@ class WebTestSession():
     def __init__(self, url):
         self.url = url
         self.drv = webdriver.Chrome()
-        #chrm = webdriver.Chrome(chrm)
+        #self.drv.find_elements_by_xpath()
+        #  = webdriver.Chrome(chrm)
         self.drv.maximize_window()
         self.drv.implicitly_wait(5)
         self.__mongo__=MdbUtils()
