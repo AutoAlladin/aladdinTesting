@@ -30,20 +30,7 @@ class Docs(unittest.TestCase):
         l.test_02_pswd()
         l.test_03_btn()
 
-    # def test_2_User_profile(self):
-    #     ed = Edit()
-    #     ed.wts = self.wts
-    #     ed.test_01_go_to_user_profile()
-
     def test_3_add_doc(self):
-        # btn_tab_documents = self.wts.drv.find_element_by_id("profile_tab_documents")
-        # btn_tab_documents.click()
-        # WebDriverWait(self.wts.drv, 20).until(
-        #     EC.element_to_be_clickable((By.CLASS_NAME, "ui-datatable")))
-
-        # taxpayerCertificateINN = self.wts.drv.find_element_by_id("load_TaxpayerCertificateINN")
-        # file_name = self.wts.__mongo__.get_file(doc_name="TaxpayerCertificateINN")
-        # taxpayerCertificateINN.send_keys(file_name)
 
         self.wts.drv.execute_script("window.scrollTo(0, 0);")
         btn_tab_documents = self.wts.drv.find_element_by_id("profile_tab_documents")

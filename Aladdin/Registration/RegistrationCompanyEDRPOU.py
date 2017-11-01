@@ -10,20 +10,6 @@ class RegistrationCompany(OpenMainPage):
     query = {"input_val": None, "q": {"name": "UserCompanyRegistrationForm", "version": "0.0.0.3"}}
     reg = UserRegistrationEDRPOU()
 
-    # def test_01_click_edit_btn(self):
-    #     # Key
-    #     try:
-    #
-    #         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable(((By.ID, "btn_edit"))))
-    #         edit_btn = self.wts.drv.find_element_by_id("btn_edit")
-    #         scroll_to_element(self.wts.drv,edit_btn,'0')
-    #
-    #         edit_btn.click()
-    #         self.assertTrue(True)
-    #     except Exception as e:
-    #         self.assertTrue(False, 'Не кликается кнопка Редагувати\n' + e.__str__())
-
-
     def test_01_registration_user(self):
         self.reg.wts = self.wts
         self.reg.wts.set_main_page()

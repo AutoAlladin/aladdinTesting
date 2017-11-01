@@ -29,7 +29,7 @@ def below(tender):
      #   return tender_id
 
 def get_tendering_id(guid):
-    turl = 'https://lb.api-sandbox.openprocurement.org/api/2.3/tenders/{0}'
+    turl = 'https://lb.api-sandbox.openprocurement.org/api/2.4/tenders/{0}'
     rq = requests.get(
         turl.format(guid)
     )
@@ -40,11 +40,8 @@ def get_tendering_id(guid):
        #     award = awards[0]
         #    if award["status"]=="active":
          #       return tender_data["tenderID"]
-    if "owner" in tender_data:
-        own=tender_data["owner"]
-        ald='ald.in.ua'
-        if own==ald:
-            return tender_data["tenderID"]
+    if tender_data["procurementMethodType"]=="esco":
+          return tender_data["tenderID"]
 
 
 
@@ -62,10 +59,10 @@ def get_tendering_id(guid):
 if __name__ == '__main__':
 
     list_id = []
-    next_page = 'https://lb.api-sandbox.openprocurement.org/api/2.3/tenders?descending=1'
+    next_page = 'https://lb.api-sandbox.openprocurement.org/api/2.4/tenders?descending=1'
 
 
-    for count in range(5):
+    for count in range(50):
         http_t_list = requests.get(next_page)
         t_list = http_t_list.json()
         print(t_list["next_page"]["uri"])
@@ -75,7 +72,7 @@ if __name__ == '__main__':
             list_id.append(tender["id"])
 
     guid_list = []
-    ex = ProcessPoolExecutor(max_workers=20)
+    ex = ProcessPoolExecutor(max_workers=15)
     results = ex.map(get_tendering_id, list_id)
 
     for g in results:

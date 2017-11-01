@@ -1,4 +1,6 @@
 import os
+from unittest import TestCase
+
 from pymongo import MongoClient
 import gridfs
 from selenium import webdriver
@@ -21,12 +23,12 @@ def test_select(cls, id_field, input_val=None, q=None):
             "Не совпадают исходные даные и то что оказалось в поле браузера")
     except Exception as e:
         cls.wts.drv.get_screenshot_as_file("output\\"+id_field+"_ERROR.png")
-        cls.assertTrue(False, "Ошибка при выборе значения\n" + e.__str__())
 
 def test_input(cls, id_field, input_val=None, q=None):
     try:
         if input_val is None:
             input_val = cls.wts.__mongo__.get_input_val(id_field, q)
+
 
         cls.assertEqual(
             input_val,
@@ -34,14 +36,31 @@ def test_input(cls, id_field, input_val=None, q=None):
             "Не совпадают исходные даные и то что оказалось в поле браузера")
     except Exception as e:
         cls.wts.drv.get_screenshot_as_file("output\\"+id_field+"_ERROR.png")
-        cls.assertTrue(False, "Ошибка при вводе текста\n" + e.__str__())
+        raise Exception("test_input "+e.__str__())
+
 
 class MdbUtils():
+
     def __init__(self):
         self.client = MongoClient('192.168.80.121', 27017)
         self.db = self.client['aladdin_tests']
         self.test_params = self.db["test_params"]
+        self.test_result = self.db["test_results"]
         self.fs = gridfs.GridFS(self.db)
+
+    def create_result(self):
+        self.test_res= {
+            "test_name": "",
+            "test_timestamp": "",
+            "test_result": "",
+            "run_info": {
+                "user": "",
+                "ip": ""
+            },
+            "results": []
+        }
+        return self.test_result.insert_one(self.test_res).inserted_id
+
 
     def get_input_val(self,_id, query):
         doc = self.test_params.find_one(query)
@@ -77,22 +96,23 @@ class MdbUtils():
             return doc["select"][_id]
 
 class WebTestSession():
-    def __init__(self, url):
+    def __init__(self, url = None):
         self.url = url
+        self.result_id = None
+        self.test_name = None
+        self.__mongo__ = MdbUtils()
+
         self.drv = webdriver.Chrome()
-        #self.drv.find_elements_by_xpath()
-        #  = webdriver.Chrome(chrm)
         self.drv.maximize_window()
         self.drv.implicitly_wait(5)
-        self.__mongo__=MdbUtils()
 
-    def set_main_page(self):
-        #self.drv.get('https://192.168.80.169:44310/i_uk/registration/user')
+
+    def set_main_page(self,q):
+        if q is not None:
+            r= self.__mongo__.test_params.find_one(q["q"])
+            self.url = r["start_url"]
+
         self.drv.get(self.url)
-        # btn_registration = self.drv.find_element_by_xpath(".//*[@id='navbarCollapse']/div[2]/div[1]/a[2]")
-        # btn_registration.click()
-        # WebDriverWait(self.drv, 15).until(
-        #     EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "РЕЄСТРАЦІЯ ПІДПРИЄМСТВА"))
 
     def input_text_field(self,_id,val):
         try:
@@ -102,7 +122,7 @@ class WebTestSession():
 
         text_field = self.drv.find_element_by_id(_id)
         text_field.send_keys(val)
-        self.drv.get_screenshot_as_file("output\\"+_id + ".png")
+        #self.drv.get_screenshot_as_file("output\\"+_id + ".png")
         return text_field.get_attribute('value')
 
     def select_value(self, _id, val):
@@ -113,7 +133,7 @@ class WebTestSession():
 
         field = self.drv.find_element_by_id(_id)
         Select(field).select_by_value(val)
-        self.drv.get_screenshot_as_file("output\\" + _id + ".png")
+        #self.drv.get_screenshot_as_file("output\\" + _id + ".png")
         return field.get_attribute('value')
 
     def close(self):
