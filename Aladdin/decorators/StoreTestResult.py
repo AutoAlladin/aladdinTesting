@@ -34,7 +34,7 @@ def create_result_DB(test_method):
         print("init res, ID=", wts.result_id)
     return wraper
 
-def add_res_to_DB(test_method,screenshotOK=False,screenshotERROR=True):
+def add_res_to_DB(test_method,screenshotOK=True,screenshotERROR=True):
     def wraper(self):
         test_method_result={
             "name" : "",

@@ -29,7 +29,7 @@ def test_input(cls, id_field, input_val=None, q=None):
         if input_val is None:
             input_val = cls.wts.__mongo__.get_input_val(id_field, q)
         cls.assertEqual(
-            input_val+"987987",
+            input_val,
             cls.wts.input_text_field(id_field, input_val),
             "Не совпадают исходные даные и то что оказалось в поле браузера")
     except Exception as e:
