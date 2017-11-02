@@ -12,7 +12,7 @@ class RegistrationCompany(OpenMainPage):
 
     def test_01_registration_user(self):
         self.reg.wts = self.wts
-        self.reg.wts.set_main_page()
+        self.reg.wts.set_main_page(self.query)
         self.reg.test_01_company_name()
         self.reg.test_02_company_name_en()
         self.reg.test_03_check_ownership()

@@ -17,7 +17,7 @@ def tearDownModule():
 
 
 class Login(unittest.TestCase):
-    1
+
 
     query = {"input_val": None, "q": {"name": "Login", "version": "0.0.0.1"}}
 
