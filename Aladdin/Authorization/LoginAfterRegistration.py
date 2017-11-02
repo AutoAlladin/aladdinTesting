@@ -36,7 +36,7 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         cls.wts.test_name = "Login after registration"
         return cls.wts
 
-    @add_res_to_DB(screenshotOK=True)
+    @add_res_to_DB
     def test_01(self):
         self.full_reg.wts = self.wts
         with self.subTest(msg="registration_user"):
