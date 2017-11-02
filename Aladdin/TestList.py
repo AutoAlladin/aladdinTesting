@@ -189,7 +189,7 @@ if __name__ == '__main__':
         runner.run(s_user_registration())
     elif args[0] == 'UserRegistration_FOP':
         runner.run(s_user_registration_FOP())
-    elif args[0] == 'Login':
+    elif args[0] == 'login':
         runner.run(s_login())
     elif args[0] == 'UserRegistration_Company':
         runner.run(s_company_reg())

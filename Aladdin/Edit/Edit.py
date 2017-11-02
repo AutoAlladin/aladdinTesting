@@ -39,22 +39,6 @@ class Edit(OpenMainPage):
         btn_tab_company.click()
         self.wts.drv.execute_script("window.scrollTo(0, 0);")
 
-
-        # try:
-        #     if input_val is None:
-        #         input_val = r.wts.__mongo__.get_input_val(id_field, q)
-        #
-        #     select_ownership = browser.drv.find_element_by_id("ownership_type")
-        #     select_ownership.send_keys("0")
-        #     time.sleep(10)
-        #     code = browser.drv.find_element_by_id("company_code_USREOU")
-        #     return code.get_attribute("id")
-        #
-        #     r.assertTrue("id" == code)
-        #
-        # except Expection as e:
-        #     r.assertTrue(False, "При редактировании формы собственности - код не изменился\n" + e.__str__())
-
     def test_03_click_btn_edit(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
         btn_edit = self.wts.drv.find_element_by_id("btn_edit")

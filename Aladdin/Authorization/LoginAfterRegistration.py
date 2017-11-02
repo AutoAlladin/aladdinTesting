@@ -78,15 +78,6 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         time.sleep(10)
 
     def test_04_edit(self):
-        # user_prof = self.wts.drv.find_element_by_id("link_about")
-        # user_prof.click()
-        # time.sleep(10)
-        # #WebDriverWait(self.wts.drv, 5).until(EC.element_to_be_clickable(By.ID, "profile_tab_company"))
-        # btn_tab_company = self.wts.drv.find_element_by_id("profile_tab_company")
-        # btn_tab_company.click()
-        # self.wts.drv.execute_script("window.scrollTo(0, 2500);")
-        #user_prof = self.wts.drv.find_element_by_id("link_about")
-        #user_prof.click()
         ed = Edit()
         ed.wts = self.wts
         ed.test_02_click_tab_company()
@@ -135,20 +126,6 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         ds.test_5_doc_delete()
         ds.test_6_doc2_add()
         time.sleep(10)
-
-
-        # self.wts.drv.execute_script("window.scrollTo(0, 0);")
-        # btn_tab_documents = self.wts.drv.find_element_by_id("profile_tab_documents")
-        # btn_tab_documents.click()
-        # WebDriverWait(self.wts.drv, 20).until(
-        #     EC.element_to_be_clickable((By.CLASS_NAME, "ui-datatable")))
-        #
-        # taxpayerCertificateINN = self.wts.drv.find_element_by_id("load_TaxpayerCertificateINN")
-        # file_name = self.wts.__mongo__.get_file(doc_name="TaxpayerCertificateINN")
-        # taxpayerCertificateINN.send_keys(file_name)
-        #
-        # self.wts.drv.refresh()
-
 
     def test_06_add_employees(self):
         empl = Employees()

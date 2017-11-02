@@ -25,9 +25,6 @@ class UserRegistrationEDRPOU(OpenMainPage):
         val = (company_code_USREOU["inputs"]["company_code_USREOU_val"]+1)
         code = str(val).rjust(8, "0")
 
-        #print(val)
-        #print(code)
-
         self.wts.__mongo__.test_params.update_one({"_id": company_code_USREOU["_id"]},
                                                   {"$set": {"inputs.company_code_USREOU_val": val}})
         self.wts.__mongo__.test_params.update_one({"_id": company_code_USREOU["_id"]},
