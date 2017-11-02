@@ -28,15 +28,13 @@ def test_input(cls, id_field, input_val=None, q=None):
     try:
         if input_val is None:
             input_val = cls.wts.__mongo__.get_input_val(id_field, q)
-
-
         cls.assertEqual(
-            input_val,
+            input_val+"987987",
             cls.wts.input_text_field(id_field, input_val),
             "Не совпадают исходные даные и то что оказалось в поле браузера")
     except Exception as e:
         cls.wts.drv.get_screenshot_as_file("output\\"+id_field+"_ERROR.png")
-        raise Exception("test_input "+e.__str__())
+        raise e
 
 
 class MdbUtils():

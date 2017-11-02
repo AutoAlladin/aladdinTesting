@@ -53,14 +53,14 @@ def add_res_to_DB(test_method,screenshotOK=False,screenshotERROR=True):
             test_method_result["status"]="OK"
             if screenshotOK:
                 pngOK=self.wts.drv.get_screenshot_as_png()
-                test_method_result["screen_id"]=self.wts.__mongo__.fs.put(pngOK)
+                test_method_result["screen_id"]=self.wts.__mongo__.fs.put(pngOK, file_name=test_method.__name__+"OK.png")
 
         except Exception as e:
             test_method_result["status"] = "ERROR"
             test_method_result["exception_msg"] =e.__str__()
             if screenshotERROR:
                 pngERROR = self.wts.drv.get_screenshot_as_png()
-                test_method_result["screen_id"] = self.wts.__mongo__.fs.put(pngERROR)
+                test_method_result["screen_id"] = self.wts.__mongo__.fs.put(pngERROR, file_name=test_method.__name__+"ERROR.png")
             raise e
         finally:
             final_test_method = datetime.datetime.now()

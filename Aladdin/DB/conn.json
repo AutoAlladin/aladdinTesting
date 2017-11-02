@@ -1,0 +1,9 @@
+{
+  "ip":"192.168.80.121",
+  "port":27017,
+  "db":"aladdin_tests",
+  "user":{
+    "login":"",
+    "pass":""
+  }
+}
