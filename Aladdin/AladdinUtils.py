@@ -98,6 +98,7 @@ class WebTestSession():
         self.url = url
         self.result_id = None
         self.test_name = None
+        self.group = None
         self.__mongo__ = MdbUtils()
 
         self.drv = webdriver.Chrome()

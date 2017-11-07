@@ -1,7 +1,8 @@
 import unittest
 import sys
-from unittest import TestLoader
+from optparse import make_option, OptionParser
 
+from Aladdin.AladdinUtils import WebTestSession
 from Aladdin.Docs import Docs
 from Aladdin.Registration.UserRegistrationEDRPOU  import UserRegistrationEDRPOU
 from Aladdin.Registration.UserRegistration_FOP  import  UserRegistration_FOP
@@ -11,9 +12,10 @@ from Aladdin.Authorization.Login import Login
 from Aladdin.Edit.Edit import Edit
 from Aladdin.Registration.Employees import Employees
 from Aladdin.Authorization.LoginAfterRegistration import LoginAfterRegistrationCompany
-from Aladdin.Edit.Edit_employees import Edit_employees
 
 import os
+
+from Aladdin.decorators.StoreTestResult import create_result_DB
 
 
 def s_user_registration():
@@ -92,16 +94,26 @@ def s_company_reg():
 
     return suite
 
-def s_login():
-    suite = unittest.TestSuite()
 
-    suite.addTest(Login("test_01_email"))
-    suite.addTest(Login("test_02_pswd"))
-    suite.addTest(Login("test_03_btn"))
+def s_login(g):
+    suite = unittest.TestSuite()
+    @create_result_DB
+    def s_login_init():
+        qa={ "query": {"input_val": None,
+                       "q": {"name": "Login", "version": "0.0.0.2", 'group': g}
+                       },
+             'test_name':'LOLOLO',
+             'wts': WebTestSession()
+           }
+        qa['wts'].set_main_page(qa['query'])
+        return qa
+
+    qqq = s_login_init
+    suite.addTest(Login("test_01_email", _params=qqq))
+    suite.addTest(Login("test_02_pswd",  _params=qqq))
+    suite.addTest(Login("test_03_btn",   _params=qqq))
 
     return suite
-
-
 
 def s_edit_information():
     suite = unittest.TestSuite()
@@ -182,24 +194,32 @@ def s_login_after_full_registration():
 
 
 if __name__ == '__main__':
-    args=sys.argv[1:]
-    runner = unittest.TextTestRunner(verbosity=2)
 
-    if args[0] == 'UserRegistration':
+    parser =OptionParser()
+    parser.add_option("-s", action="store", type="string")
+    parser.add_option("-g", action="store", type="string")
+
+    (options, args) = parser.parse_args()
+
+    print(options)
+    runner = unittest.TextTestRunner(verbosity=2)
+    opt= options.s
+
+    if opt == 'UserRegistration':
         runner.run(s_user_registration())
-    elif args[0] == 'UserRegistration_FOP':
+    elif opt == 'UserRegistration_FOP':
         runner.run(s_user_registration_FOP())
-    elif args[0] == 'login':
-        runner.run(s_login())
-    elif args[0] == 'UserRegistration_Company':
+    elif opt == 'login':
+        runner.run(s_login(options.g))
+    elif opt == 'UserRegistration_Company':
         runner.run(s_company_reg())
-    elif args[0] == 'edit_information':
+    elif opt == 'edit_information':
         runner.run(s_edit_information())
-    elif args[0] == 'docs':
+    elif opt == 'docs':
         runner.run(s_docs())
-    elif args[0] == 'Employees':
+    elif opt == 'Employees':
         runner.run(s_Employees())
-    elif args[0] == 'UserRegistration_Company_Fop':
+    elif opt == 'UserRegistration_Company_Fop':
         runner.run(s_company_fop())
-    elif args[0] == 'Login_after_full_registration':
+    elif opt == 'Login_after_full_registration':
         runner.run(s_login_after_full_registration())

@@ -1,38 +1,20 @@
 import unittest
-from Aladdin.decorators.StoreTestResult import *
-from Aladdin.AladdinUtils import WebTestSession, test_input
+
+from Aladdin.decorators.ParamsTestCase import  ParamsTestCase
+from Aladdin.AladdinUtils import test_input
+from Aladdin.decorators.StoreTestResult import add_res_to_DB
 
 
-publicWST = None;
-def setUpModule():
-    global publicWST
-    publicWST = WebTestSession()
-
-
-def tearDownModule():
-    publicWST.drv.close()
-
-class Login(unittest.TestCase):
-
-
-    query = {"input_val": None, "q": {"name": "Login", "version": "0.0.0.1"}}
-
-    @classmethod
-    @create_result_DB
-    def setUpClass(cls):
-        cls.tlog = [{}]
-        cls.wts = publicWST
-        cls.wts.set_main_page(cls.query)
-        cls.wts.test_name="Авторизация уже зарегистрированого пользователя"
-        return cls.wts
+class Login(ParamsTestCase):
 
     @add_res_to_DB
     def test_01_email(self):
-        test_input(self, "exampleInputEmail1", **self.query)
+        test_input(self, "exampleInputEmail1", **self.params['query'])
 
     @add_res_to_DB
     def test_02_pswd(self):
-        test_input(self,"pswd", **self.query)
+        self.tlog.append({"msg":"vavavava"})
+        test_input(self,"pswd",  **self.params['query'])
 
     @add_res_to_DB
     def test_03_btn(self):
