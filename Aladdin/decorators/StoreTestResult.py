@@ -8,31 +8,31 @@ from datetime import  timedelta
 import prozorro
 
 
+
 def get_ip_address():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))
     return s.getsockname()[0]
 
-def create_result_DB(test_method):
-    def wraper(self):
-        #wts = Aladdin.AladdinUtils.WebTestSession( test_method(self))
-        wts = test_method(self)
-        """Создане в БД пустого документа с результатом теста """
-        if wts.test_name is None:
-            raise Exception("Не указано имя теста для сохранеия результата в БД")
 
-        wts.result_id = wts.__mongo__.create_result()
-        res=wts.__mongo__.test_result.find_one({"_id": wts.result_id})
+def create_result_DB(init_params_test):
+    pts = init_params_test()
+    """Создане в БД пустого документа с результатом теста """
+    if 'test_name' not in pts:
+        raise Exception("Не указано имя теста для сохранеия результата в БД")
 
-        res["test_name"]= wts.test_name
-        res["test_timestamp"]=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f%z")
-        res["run_info"]["user"] =os.path.split(os.path.expanduser('~'))[-1]
-        res["run_info"]["ip"]=get_ip_address()
+    pts['wts'].result_id = pts["wts"].__mongo__.create_result()
+    res=pts['wts'].__mongo__.test_result.find_one({"_id": pts["wts"].result_id})
 
-        wts.__mongo__.test_result.save(res)
+    res["test_name"]= pts['test_name']
+    res["test_timestamp"]=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f%z")
+    res["run_info"]["user"] =os.path.split(os.path.expanduser('~'))[-1]
+    res["run_info"]["ip"]=get_ip_address()
 
-        print("init res, ID=", wts.result_id)
-    return wraper
+    pts['wts'].__mongo__.test_result.save(res)
+
+    print("init res, ID=", pts['wts'].result_id)
+    return pts
 
 def add_res_to_DB(test_method,screenshotOK=True,screenshotERROR=True):
     def wraper(self):
@@ -41,8 +41,7 @@ def add_res_to_DB(test_method,screenshotOK=True,screenshotERROR=True):
             "status" : "",
             "screen_id":"",
             "duration" : 0,
-            "exception_msg" : "",
-            "logs" : {}
+            "exception_msg" : ""
         }
 
         test_method_result["name"]=test_method.__name__
@@ -65,7 +64,8 @@ def add_res_to_DB(test_method,screenshotOK=True,screenshotERROR=True):
         finally:
             final_test_method = datetime.datetime.now()
             test_method_result["duration"]= (final_test_method-start_test_method).total_seconds()
-            test_method_result["logs"] = self.tlog
+            if len(self.tlog)>0 :
+                test_method_result.update({"logs":self.tlog});
 
             if test_method_result["screen_id"] != "":
                 dir=os.path.dirname(os.path.abspath( prozorro.__file__ ))

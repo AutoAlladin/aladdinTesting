@@ -28,7 +28,7 @@ class LoginAfterRegistrationCompany(OpenMainPage):
     tlog = [{}]
 
     @classmethod
-    @create_result_DB
+    #@create_result_DB
     def setUpClass(cls):
         cls.tlog = [{}]
         cls.wts = publicWST
@@ -36,7 +36,7 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         cls.wts.test_name = "Login after registration"
         return cls.wts
 
-    @add_res_to_DB
+    # @add_res_to_DB
     def test_01(self):
         self.full_reg.wts = self.wts
         with self.subTest(msg="registration_user"):
@@ -73,7 +73,7 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         self.full_reg.test_27_contract_offer()
         self.full_reg.test_28_save()
 
-    @add_res_to_DB
+    # @add_res_to_DB
     def test_02_exit(self):
         drop_menu = self.wts.drv.find_element_by_xpath("html/body/app/spa/div/nav/div/div[3]/ul/li[2]/a/b")
         drop_menu.click()
@@ -81,17 +81,17 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         exit_menu.click()
         time.sleep(10)
 
-    @add_res_to_DB
+    # @add_res_to_DB
     def test_03_login(self):
-        #self.wts.drv.get('https://192.168.80.169:44310/Account/Login')
-        self.wts.drv.get('https://identity.ald.in.ua/Account/Login')
+        self.wts.drv.get('https://192.168.80.169:44310/Account/Login')
+        #self.wts.drv.get('https://identity.ald.in.ua/Account/Login')
         test_input(self, "exampleInputEmail1", self.full_reg.reg.test_params["email"])
         test_input(self, "pswd", self.full_reg.reg.test_params["password"])
         btn_sub = self.wts.drv.find_element_by_id("submitLogin")
         btn_sub.click()
         time.sleep(10)
 
-    @add_res_to_DB
+    # @add_res_to_DB
     def test_04_edit(self):
         ed = Edit()
         ed.wts = self.wts
@@ -133,7 +133,7 @@ class LoginAfterRegistrationCompany(OpenMainPage):
 
         time.sleep(10)
 
-    @add_res_to_DB
+    # @add_res_to_DB
     def test_05_add_view_delete_docs(self):
         ds = Docs()
         ds.wts = self.wts
@@ -143,7 +143,7 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         ds.test_6_doc2_add()
         time.sleep(10)
 
-    @add_res_to_DB
+    # @add_res_to_DB
     def test_06_add_employees(self):
         empl = Employees()
         empl.wts = self.wts
