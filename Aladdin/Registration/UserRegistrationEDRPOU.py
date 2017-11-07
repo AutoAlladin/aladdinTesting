@@ -30,7 +30,7 @@ class UserRegistrationEDRPOU(OpenMainPage):
         self.wts.__mongo__.test_params.update_one({"_id": company_code_USREOU["_id"]},
                                                   {"$set": {"inputs.company_code_USREOU": code}})
 
-
+        print(company_code_USREOU)
 
     def test_05_name(self):
         test_input(self, "admin_name_ua", **self.query)

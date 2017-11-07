@@ -83,7 +83,8 @@ class LoginAfterRegistrationCompany(OpenMainPage):
 
     @add_res_to_DB
     def test_03_login(self):
-        self.wts.drv.get('https://192.168.80.169:44310/Account/Login')
+        #self.wts.drv.get('https://192.168.80.169:44310/Account/Login')
+        self.wts.drv.get('https://identity.ald.in.ua/Account/Login')
         test_input(self, "exampleInputEmail1", self.full_reg.reg.test_params["email"])
         test_input(self, "pswd", self.full_reg.reg.test_params["password"])
         btn_sub = self.wts.drv.find_element_by_id("submitLogin")
@@ -137,7 +138,7 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         ds = Docs()
         ds.wts = self.wts
         ds.test_3_add_doc()
-        ds.test_4_doc_view()
+        #ds.test_4_doc_view()
         ds.test_5_doc_delete()
         ds.test_6_doc2_add()
         time.sleep(10)
@@ -158,17 +159,17 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         empl.test_10_phone()
         empl.test_11_role()
         empl.test_12_save()
-
-    @add_res_to_DB
-    def test_07_edit_employees(self):
-        empl = Edit_employees()
-        empl.wts = self.wts
-        empl.test_01_click_tab_employees()
-        empl.test_02_update_name()
-        empl.test_03_update_last_name_eu()
-        empl.test_04_update_position()
-        empl.test_05_update_role()
-        empl.test_06_save()
+    #
+    # @add_res_to_DB
+    # def test_07_edit_employees(self):
+    #     empl = Edit_employees()
+    #     empl.wts = self.wts
+    #     empl.test_01_click_tab_employees()
+    #     empl.test_02_update_name()
+    #     empl.test_03_update_last_name_eu()
+    #     empl.test_04_update_position()
+    #     empl.test_05_update_role()
+    #     empl.test_06_save()
 
 
 

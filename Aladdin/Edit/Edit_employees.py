@@ -16,7 +16,8 @@ from Aladdin.Registration.Employees import Employees
 publicWST = None;
 def setUpModule():
     global publicWST
-    publicWST = WebTestSession('https://identity.ald.in.ua/Account/Login')
+    publicWST = WebTestSession('https://192.168.80.169:44310/Account/Login')
+    #publicWST = WebTestSession('https://identity.ald.in.ua/Account/Login')
 
 def tearDownModule():
     publicWST.close()
@@ -34,11 +35,18 @@ class Edit_employees(OpenMainPage):
     def test_01_click_tab_employees(self):
         btn_tab_empl = self.wts.drv.find_element_by_id("profile_tab_employees")
         btn_tab_empl.click()
+        time.sleep(10)
+        click_edit = self.wts.drv.find_element_by_xpath(".//*[contains(@id,'edit_empoyee_')]")
+        click_edit.click()
+        time.sleep(10)
 
     def test__clear_name(self):
+        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "firstName_0")))
         cl_name = self.wts.drv.find_element_by_id("firstName_0")
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "firstName_0")))
+        time.sleep(5)
         cl_name.clear()
+        time.sleep(15)
 
     def test_02_update_name(self):
         test_input(self, "firstName_0", "Редактирование-имени")

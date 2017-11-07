@@ -7,8 +7,8 @@ from Aladdin.Edit.Edit import Edit
 publicWST = None;
 def setUpModule():
     global publicWST
-    #publicWST = WebTestSession('https://identity.ald.in.ua/Account/Login')
-    publicWST = WebTestSession('https://192.168.80.169:44310/Account/Login')
+    publicWST = WebTestSession('https://identity.ald.in.ua/Account/Login')
+    #publicWST = WebTestSession('https://192.168.80.169:44310/Account/Login')
 
 
 def tearDownModule():
@@ -44,15 +44,15 @@ class Docs(unittest.TestCase):
         time.sleep(30)
 
 
-    def test_4_doc_view(self):
-        btn_eye = self.wts.drv.find_element_by_id("show_TaxpayerCertificateINN")
-        btn_eye.click()
-        time.sleep(10)
-        #self.wts.drv.execute_script("window.scrollTo(0, 0);")
-        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "modal_close")))
-        btn_close = self.wts.drv.find_element_by_id("modal_close")
-        btn_close.click()
-        time.sleep(20)
+    #def test_4_doc_view(self):
+        # btn_eye = self.wts.drv.find_element_by_id("show_TaxpayerCertificateINN")
+        # btn_eye.click()
+        # time.sleep(10)
+        # #self.wts.drv.execute_script("window.scrollTo(0, 0);")
+        # WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "modal_close")))
+        # btn_close = self.wts.drv.find_element_by_id("modal_close")
+        # btn_close.click()
+        # time.sleep(20)
 
     def test_5_doc_delete(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "delete_TaxpayerCertificateINN")))
