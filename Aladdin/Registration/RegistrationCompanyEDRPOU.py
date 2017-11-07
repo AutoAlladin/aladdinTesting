@@ -2,12 +2,11 @@ import unittest
 
 from Aladdin.AladdinUtils import *
 from Aladdin.Registration.UserRegistrationEDRPOU import UserRegistrationEDRPOU
-from Aladdin.Registration.OpenMainPage import *
-from selenium.common.exceptions import WebDriverException
+from Aladdin.decorators.ParamsTestCase import ParamsTestCase
 
 
-class RegistrationCompany(OpenMainPage):
-    query = {"input_val": None, "q": {"name": "UserCompanyRegistrationForm", "version": "0.0.0.3"}}
+class RegistrationCompany(ParamsTestCase):
+
     reg = UserRegistrationEDRPOU()
 
     def test_01_registration_user(self):

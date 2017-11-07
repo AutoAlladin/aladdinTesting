@@ -1,50 +1,37 @@
-import unittest
-import webbrowser
-from Aladdin.AladdinUtils import *
+
 from Aladdin.Registration.OpenMainPage import OpenMainPage
 from Aladdin.Registration.RegistrationCompanyEDRPOU import RegistrationCompany
 from Aladdin.AladdinUtils import *
 from Aladdin.Edit.Edit import Edit
 from Aladdin.Registration.Employees import Employees
 from Aladdin.Docs.Docs import Docs
-from Aladdin.Edit.Edit_employees import Edit_employees
-from Aladdin.decorators.StoreTestResult import create_result_DB, add_res_to_DB
-
-publicWST = None;
-def setUpModule():
-    global publicWST
-    publicWST = WebTestSession()
-    #publicWST = WebTestSession('https://identity.ald.in.ua/Account/Login')
+from Aladdin.decorators.ParamsTestCase import ParamsTestCase
+from Aladdin.decorators.StoreTestResult import add_res_to_DB
 
 
-def tearDownModule():
-    publicWST.drv.close()
+class LoginAfterRegistrationCompany(ParamsTestCase):
+
+    query = {"input_val": None, "q": {"name": "", "version": "0.0.0.3"}}
 
 
 
-class LoginAfterRegistrationCompany(OpenMainPage):
-    full_reg = RegistrationCompany()
-    wts=None
-    tlog = [{}]
 
-    @classmethod
-    #@create_result_DB
-    def setUpClass(cls):
-        cls.tlog = [{}]
-        cls.wts = publicWST
-        cls.wts.set_main_page(cls.full_reg.query)
-        cls.wts.test_name = "Login after registration"
-        return cls.wts
 
-    # @add_res_to_DB
+    @add_res_to_DB
     def test_01(self):
+        w={"query": {"input_val": None,
+                     "q": {"name": "UserCompanyRegistrationForm", "version": "0.0.0.3", 'group': self.params['q']['group']}
+                   },
+           'wts': None
+         }
+
+        full_reg = RegistrationCompany(_params=w)
+
         self.full_reg.wts = self.wts
         with self.subTest(msg="registration_user"):
             self.full_reg.test_01_registration_user()
         with self.subTest(msg="tax_system"):
             self.full_reg.test_02_tax_system()
-
-        self.tlog.append({"info":"jhkjhkjhkjhkjhkjjh"})
 
         self.full_reg.test_03_phone_company()
         self.full_reg.test_04_email_company()
@@ -72,8 +59,10 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         self.full_reg.test_26_confidant_phone()
         self.full_reg.test_27_contract_offer()
         self.full_reg.test_28_save()
+        self.params["email"] = full_reg.reg.test_params["email"]
+        self.params["password"] = full_reg.reg.test_params["password"]
 
-    # @add_res_to_DB
+    @add_res_to_DB
     def test_02_exit(self):
         drop_menu = self.wts.drv.find_element_by_xpath("html/body/app/spa/div/nav/div/div[3]/ul/li[2]/a/b")
         drop_menu.click()
@@ -81,17 +70,16 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         exit_menu.click()
         time.sleep(10)
 
-    # @add_res_to_DB
+    @add_res_to_DB
     def test_03_login(self):
-        self.wts.drv.get('https://192.168.80.169:44310/Account/Login')
-        #self.wts.drv.get('https://identity.ald.in.ua/Account/Login')
-        test_input(self, "exampleInputEmail1", self.full_reg.reg.test_params["email"])
-        test_input(self, "pswd", self.full_reg.reg.test_params["password"])
+        self.wts.drv.get(self.params['login_url'])
+        test_input(self, "exampleInputEmail1", self.params["email"])
+        test_input(self, "pswd", self.params["password"])
         btn_sub = self.wts.drv.find_element_by_id("submitLogin")
         btn_sub.click()
         time.sleep(10)
 
-    # @add_res_to_DB
+    @add_res_to_DB
     def test_04_edit(self):
         ed = Edit()
         ed.wts = self.wts
@@ -133,7 +121,7 @@ class LoginAfterRegistrationCompany(OpenMainPage):
 
         time.sleep(10)
 
-    # @add_res_to_DB
+    @add_res_to_DB
     def test_05_add_view_delete_docs(self):
         ds = Docs()
         ds.wts = self.wts
@@ -143,7 +131,7 @@ class LoginAfterRegistrationCompany(OpenMainPage):
         ds.test_6_doc2_add()
         time.sleep(10)
 
-    # @add_res_to_DB
+    @add_res_to_DB
     def test_06_add_employees(self):
         empl = Employees()
         empl.wts = self.wts

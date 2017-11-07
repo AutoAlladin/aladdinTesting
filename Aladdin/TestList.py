@@ -179,15 +179,28 @@ def s_Employees():
     return suite
 
 
-def s_login_after_full_registration():
+def s_login_after_full_registration(g):
     suite = unittest.TestSuite()
 
-    suite.addTest(LoginAfterRegistrationCompany("test_01"))
-    suite.addTest(LoginAfterRegistrationCompany("test_02_exit"))
-    suite.addTest(LoginAfterRegistrationCompany("test_03_login"))
-    suite.addTest(LoginAfterRegistrationCompany("test_04_edit"))
-    suite.addTest(LoginAfterRegistrationCompany("test_05_add_view_delete_docs"))
-    suite.addTest(LoginAfterRegistrationCompany("test_06_add_employees"))
+    @create_result_DB
+    def  s_login_after_full_registration_init():
+        qa = {"query": {"input_val": None,
+                        "q": {"name": "UserRegistrationFormTest", "version": "0.0.0.3", 'group': g}
+                        },
+              'test_name': 'UserRegistrationFormTest',
+              'login_url': 'https://192.168.80.169:44310/Account/Login',
+              'wts': WebTestSession()
+              }
+        qa['wts'].set_main_page(qa['query'])
+        return qa
+
+    qqq = s_login_after_full_registration_init
+    suite.addTest(LoginAfterRegistrationCompany("test_01", _params=qqq))
+    suite.addTest(LoginAfterRegistrationCompany("test_02_exit", _params=qqq))
+    suite.addTest(LoginAfterRegistrationCompany("test_03_login", _params=qqq))
+    suite.addTest(LoginAfterRegistrationCompany("test_04_edit", _params=qqq))
+    suite.addTest(LoginAfterRegistrationCompany("test_05_add_view_delete_docs", _params=qqq))
+    suite.addTest(LoginAfterRegistrationCompany("test_06_add_employees", _params=qqq))
     #suite.addTest(LoginAfterRegistrationCompany("test_07_edit_employees"))
 
     return suite
@@ -222,4 +235,4 @@ if __name__ == '__main__':
     elif opt == 'UserRegistration_Company_Fop':
         runner.run(s_company_fop())
     elif opt == 'Login_after_full_registration':
-        runner.run(s_login_after_full_registration())
+        runner.run(s_login_after_full_registration(options.g))
