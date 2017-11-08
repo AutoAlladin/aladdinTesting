@@ -5,28 +5,36 @@ from Aladdin.Registration.UserRegistration_FOP import UserRegistration_FOP
 from Aladdin.Registration.OpenMainPage import *
 from selenium.common.exceptions import WebDriverException
 
+from Aladdin.decorators.ParamsTestCase import ParamsTestCase
 
-class RegistrationCompanyFop(OpenMainPage):
-    query = {"input_val": None, "q": {"name": "UserCompanyRegistrationForm", "version": "0.0.0.3"}}
-    reg = UserRegistration_FOP()
+
+class RegistrationCompanyFop(ParamsTestCase):
 
     def test_01_registration_userFOP(self):
-        self.reg.wts = self.wts
-        self.reg.wts.set_main_page()
-        self.reg.test_01_company_name()
-        self.reg.test_02_company_name_en()
-        self.reg.test_03_check_ownership()
-        self.reg.test_04_code_edrpou()
-        self.reg.test_05_name()
-        self.reg.test_06_name_en()
-        self.reg.test_07_last_name()
-        self.reg.test_08_last_name_en()
-        self.reg.test_09_position()
-        self.reg.test_10_phone()
-        self.reg.test_11_email()
-        self.reg.test_12_password()
-        self.reg.test_13_confirm_password()
-        self.reg.test_14_click_next_step_btn()
+        query = {"input_val": None, "q": {"name": "UserCompanyRegistrationForm", "version": "0.0.0.3",
+                                          "group": self.params['query']['q']['group']}}
+
+        w = {"query": query,
+             'wts': self.wts
+             }
+
+        reg = UserRegistration_FOP(_params=w)
+        reg.wts = self.wts
+        reg.wts.set_main_page()
+        reg.test_01_company_name()
+        reg.test_02_company_name_en()
+        reg.test_03_check_ownership()
+        reg.test_04_code_edrpou()
+        reg.test_05_name()
+        reg.test_06_name_en()
+        reg.test_07_last_name()
+        reg.test_08_last_name_en()
+        reg.test_09_position()
+        reg.test_10_phone()
+        reg.test_11_email()
+        reg.test_12_password()
+        reg.test_13_confirm_password()
+        reg.test_14_click_next_step_btn()
 
     def test_02_tax_system(self):
         test_select(self, "company_taxSystem", "4")

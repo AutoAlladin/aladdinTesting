@@ -11,56 +11,46 @@ from Aladdin.decorators.StoreTestResult import add_res_to_DB
 
 class LoginAfterRegistrationCompany(ParamsTestCase):
 
-    query = {"input_val": None, "q": {"name": "", "version": "0.0.0.3"}}
-
-
-
-
-
     @add_res_to_DB
     def test_01(self):
-        w={"query": {"input_val": None,
-                     "q": {"name": "UserCompanyRegistrationForm", "version": "0.0.0.3", 'group': self.params['q']['group']}
+        w={"query": {"q": {"name": "UserCompanyRegistrationForm", "version": "0.0.0.3",
+                           'group': self.params['query']['q']['group']}
                    },
-           'wts': None
+           'wts': self.wts
          }
 
         full_reg = RegistrationCompany(_params=w)
 
-        self.full_reg.wts = self.wts
-        with self.subTest(msg="registration_user"):
-            self.full_reg.test_01_registration_user()
-        with self.subTest(msg="tax_system"):
-            self.full_reg.test_02_tax_system()
-
-        self.full_reg.test_03_phone_company()
-        self.full_reg.test_04_email_company()
-        self.full_reg.test_05_country_legal()
-        self.full_reg.test_06_region_legal()
-        self.full_reg.test_07_city_legal()
-        self.full_reg.test_08_legal_address()
-        self.full_reg.test_09_legal_index()
-        self.full_reg.test_10_real_country()
-        self.full_reg.test_11_real_region()
-        self.full_reg.test_12_real_city()
-        self.full_reg.test_13_real_address()
-        self.full_reg.test_14_real_index()
-        self.full_reg.test_15_bank_name()
-        self.full_reg.test_16_bank_mfo()
-        self.full_reg.test_17_bank_account()
-        self.full_reg.test_18_lead_first_name()
-        self.full_reg.test_19_lead_last_name()
-        self.full_reg.test_20_lead_email()
-        self.full_reg.test_21_lead_phone()
-        self.full_reg.test_22_confidant_first_name()
-        self.full_reg.test_23_confidant_last_name()
-        self.full_reg.test_24_confidant_position()
-        self.full_reg.test_25_confidant_email()
-        self.full_reg.test_26_confidant_phone()
-        self.full_reg.test_27_contract_offer()
-        self.full_reg.test_28_save()
-        self.params["email"] = full_reg.reg.test_params["email"]
-        self.params["password"] = full_reg.reg.test_params["password"]
+        full_reg.test_01_registration_user()
+        full_reg.test_02_tax_system()
+        full_reg.test_03_phone_company()
+        full_reg.test_04_email_company()
+        full_reg.test_05_country_legal()
+        full_reg.test_06_region_legal()
+        full_reg.test_07_city_legal()
+        full_reg.test_08_legal_address()
+        full_reg.test_09_legal_index()
+        full_reg.test_10_real_country()
+        full_reg.test_11_real_region()
+        full_reg.test_12_real_city()
+        full_reg.test_13_real_address()
+        full_reg.test_14_real_index()
+        full_reg.test_15_bank_name()
+        full_reg.test_16_bank_mfo()
+        full_reg.test_17_bank_account()
+        full_reg.test_18_lead_first_name()
+        full_reg.test_19_lead_last_name()
+        full_reg.test_20_lead_email()
+        full_reg.test_21_lead_phone()
+        full_reg.test_22_confidant_first_name()
+        full_reg.test_23_confidant_last_name()
+        full_reg.test_24_confidant_position()
+        full_reg.test_25_confidant_email()
+        full_reg.test_26_confidant_phone()
+        full_reg.test_27_contract_offer()
+        full_reg.test_28_save()
+        self.params["email"] = full_reg.params["email"]
+        self.params["password"] = full_reg.params["password"]
 
     @add_res_to_DB
     def test_02_exit(self):
@@ -68,7 +58,7 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         drop_menu.click()
         exit_menu = self.wts.drv.find_element_by_xpath("html/body/app/spa/div/nav/div/div[3]/ul/li[2]/ul/li[6]/a")
         exit_menu.click()
-        time.sleep(10)
+        time.sleep(2)
 
     @add_res_to_DB
     def test_03_login(self):
@@ -77,21 +67,19 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         test_input(self, "pswd", self.params["password"])
         btn_sub = self.wts.drv.find_element_by_id("submitLogin")
         btn_sub.click()
-        time.sleep(10)
+        time.sleep(2)
 
     @add_res_to_DB
     def test_04_edit(self):
-        ed = Edit()
-        ed.wts = self.wts
+        query = {"q": {"name": "EditInfo", "version": "0.0.0.2",
+                                           "group": self.params['query']['q']['group']}}
+        w = {"query": query, 'wts': self.wts }
+        ed = Edit(_params=w)
         ed.test_02_click_tab_company()
-        time.sleep(10)
         self.wts.drv.execute_script("window.scrollBy(0, 1500);")
-        time.sleep(10)
         ed.test_03_click_btn_edit()
         ed.test_04_clear_field_comp_name()
         ed.test_05_update_comp_name()
-        #ed.test_06_ownership_type()
-        #ed.test_07_company_taxSystem()
         ed.test_08_clear_email()
         ed.test_09_update_email()
         ed.test_10_legal_address_country()
@@ -119,11 +107,11 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         ed.test_32_change_u_position()
         ed.test_33_click_btnSaveUser()
 
-        time.sleep(10)
+        time.sleep(2)
 
     @add_res_to_DB
     def test_05_add_view_delete_docs(self):
-        ds = Docs()
+        ds = Docs(_params={})
         ds.wts = self.wts
         ds.test_3_add_doc()
         #ds.test_4_doc_view()
@@ -133,8 +121,12 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
 
     @add_res_to_DB
     def test_06_add_employees(self):
-        empl = Employees()
-        empl.wts = self.wts
+        empl = Employees(_params={"query": {"q": {"name": "EmployeeesInfo", "version": "0.0.0.2",
+                                            'group': self.params['query']['q']['group']}
+                                           },
+                                  'wts': self.wts
+                         })
+
         btn_tab_empl = self.wts.drv.find_element_by_id("profile_tab_employees")
         btn_tab_empl.click()
         empl.test_03_add_user()

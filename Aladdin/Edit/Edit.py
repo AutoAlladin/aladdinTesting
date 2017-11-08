@@ -1,31 +1,14 @@
-import unittest
-from selenium import webdriver
 from Aladdin.AladdinUtils import *
-from Aladdin import Authorization
-from Aladdin.Registration.OpenMainPage import OpenMainPage
 from Aladdin.Authorization.Login import Login
+from Aladdin.decorators.ParamsTestCase import ParamsTestCase
 
 
-publicWST = None;
-def setUpModule():
-    global publicWST
-    publicWST = WebTestSession('https://identity.ald.in.ua/Account/Login')
-    #publicWST = WebTestSession('https://192.168.80.169:44310/Account/Login')
-
-def tearDownModule():
-    publicWST.drv.close()
-
-class Edit(OpenMainPage):
-    query = {"input_val": None, "q": {"name": "EditInfo", "version": "0.0.0.1"}}
-    wts=None
-    @classmethod
-    def setUpClass(cls):
-        cls.wts = publicWST
+class Edit(ParamsTestCase):
 
     def test_01_go_to_user_profile(self):
-        l = Login()
-        l.wts = self.wts
-        l.wts.set_main_page()
+        l = Login(_params={"q": {"name": "Login", "version": "0.0.0.2",
+                                 'group': self.params['query']['q']['group']},
+                           'wts': self.wts})
         l.test_01_email()
         l.test_02_pswd()
         l.test_03_btn()
@@ -34,39 +17,28 @@ class Edit(OpenMainPage):
 
 
     def test_02_click_tab_company(self):
-        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "profile_tab_company")))
+        WebDriverWait(self.wts.drv, 10).until(EC.element_to_be_clickable((By.ID, "profile_tab_company")))
         btn_tab_company = self.wts.drv.find_element_by_id("profile_tab_company")
         btn_tab_company.click()
+        WebDriverWait(self.wts.drv, 10).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
         self.wts.drv.execute_script("window.scrollTo(0, 0);")
 
     def test_03_click_btn_edit(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
         btn_edit = self.wts.drv.find_element_by_id("btn_edit")
+        self.wts.drv.execute_script("window.scrollBy(0, 1500);")
         btn_edit.click()
 
     def test_04_clear_field_comp_name(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "nameUA")))
         f_comp_name = self.wts.drv.find_element_by_id("nameUA")
-        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "nameUA")))
         f_comp_name.clear()
 
 
     def test_05_update_comp_name(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "nameUA")))
-        test_input(self, "nameUA", **self.query)
+        test_input(self, "nameUA", **self.params['query'])
 
-
-    # def test_06_ownership_type(self):
-    #     WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "ownership_type")))
-    #     test_select(self, "ownership_type", **self.query)
-    #      select_ownership.send_keys("0")
-    #    code = self.wts.drv.find_element_by_id("company_code_USREOU")
-    #     return code.get_attribute("id")
-    #     self.assertTrue("id" == code)
-
-    # def test_06_company_taxSystem(self):
-    #     WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "company_taxSystem")))
-    #     test_select(self, "company_taxSystem", **self.query)
 
     def test_08_clear_email(self):
         upd_email = self.wts.drv.find_element_by_id("email")
@@ -75,15 +47,11 @@ class Edit(OpenMainPage):
 
     def test_09_update_email(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "email")))
-        test_input(self, "email", **self.query)
+        test_input(self, "email", **self.params['query'])
 
     def test_10_legal_address_country(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "legal_address_country")))
-        test_select(self, "legal_address_country", **self.query)
-
-    #def test_08_select_real_address_city(self):
-        #WebDriverWait(self.wts.drv, 20).until(EC._element_if_visible((By.ID, "real_address_city")))
-        #test_select(self, "real_address_city", **self.query)
+        test_select(self, "legal_address_country", **self.params['query'])
 
     def test_11_clear_field_real_add_str(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "real_address_street")))
@@ -93,7 +61,7 @@ class Edit(OpenMainPage):
 
     def test_12_real_address_street(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "real_address_street")))
-        test_input(self, "real_address_street", **self.query)
+        test_input(self, "real_address_street", **self.params['query'])
 
     def test_13_clear_add_index(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "real_address_index")))
@@ -103,7 +71,7 @@ class Edit(OpenMainPage):
 
     def test_14_real_address_index(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "real_address_index")))
-        test_input(self, "real_address_index", **self.query)
+        test_input(self, "real_address_index", **self.params['query'])
 
     def test_15_clear_comp_bank_acc_mfo(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "company_bank_account_mfo")))
@@ -113,7 +81,7 @@ class Edit(OpenMainPage):
 
     def test_16_comp_bank_acc_mfo(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "company_bank_account_mfo")))
-        test_input(self, "company_bank_account_mfo", **self.query)
+        test_input(self, "company_bank_account_mfo", **self.params['query'])
         self.wts.drv.execute_script("window.scrollBy(0, 300);")
 
     def test_17_clear_lead_phone(self):
@@ -124,7 +92,7 @@ class Edit(OpenMainPage):
 
     def test_18_lead_phone(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "lead_phone_resident")))
-        test_input(self, "lead_phone_resident", **self.query)
+        test_input(self, "lead_phone_resident", **self.params['query'])
         self.wts.drv.execute_script("window.scrollBy(0, 1500);")
 
     def test_19_clear_confidant_first_name(self):
@@ -135,7 +103,7 @@ class Edit(OpenMainPage):
 
     def test_20_confidant_first_name(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "confidant_first_name")))
-        test_input(self, "confidant_first_name", **self.query)
+        test_input(self, "confidant_first_name", **self.params['query'])
 
     def test_21_clear_confidant_position(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "confidant_position")))
@@ -145,14 +113,14 @@ class Edit(OpenMainPage):
 
     def test_22_confidant_position(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "confidant_position")))
-        test_input(self, "confidant_position", **self.query)
+        test_input(self, "confidant_position", **self.params['query'])
 
     def test_23_click_btn_save_changes(self):
     #self.wts.drv.execute_script("window.scrollTo(0, 2500);")
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_save_changes")))
         btn_s_changes = self.wts.drv.find_element_by_id("btn_save_changes")
         btn_s_changes.click()
-        WebDriverWait(self.wts.drv, 5).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
+        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
 
     def test_24_click_tab_profile_tab_about(self):
         self.wts.drv.execute_script("window.scrollTo(0, 0);")
@@ -169,7 +137,7 @@ class Edit(OpenMainPage):
 
     def test_26_name_change(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "userFirstName")))
-        test_input(self, "userFirstName", **self.query)
+        test_input(self, "userFirstName", **self.params['query'])
 
     def test_27_eng_surname_clear(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "userLastNameEn")))
@@ -179,7 +147,7 @@ class Edit(OpenMainPage):
 
     def test_28_eng_surname_change(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "userLastNameEn")))
-        test_input(self, "userLastNameEn", **self.query)
+        test_input(self, "userLastNameEn", **self.params['query'])
 
     def test_29_clear_phone(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "userPhone")))
@@ -189,7 +157,7 @@ class Edit(OpenMainPage):
 
     def test_30_change_u_phone(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "userPhone")))
-        test_input(self, "userPhone", **self.query)
+        test_input(self, "userPhone", **self.params['query'])
         self.wts.drv.execute_script("window.scrollTo(250, 0);")
 
     def test_31_clear_u_position(self):
@@ -199,7 +167,7 @@ class Edit(OpenMainPage):
 
     def test_32_change_u_position(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "userPosition")))
-        test_input(self, "userPosition", **self.query)
+        test_input(self, "userPosition", **self.params['query'])
 
     def test_33_click_btnSaveUser(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btnSaveUser")))

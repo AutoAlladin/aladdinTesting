@@ -3,29 +3,15 @@ import unittest
 from Aladdin.AladdinUtils import *
 from Aladdin.Authorization.Login import Login
 from Aladdin.Edit.Edit import Edit
+from Aladdin.decorators.ParamsTestCase import ParamsTestCase
 
 publicWST = None;
-def setUpModule():
-    global publicWST
-    publicWST = WebTestSession('https://identity.ald.in.ua/Account/Login')
-    #publicWST = WebTestSession('https://192.168.80.169:44310/Account/Login')
 
+class Docs(ParamsTestCase):
 
-def tearDownModule():
-    publicWST.close()
-
-
-class Docs(unittest.TestCase):
-    wts=None
-
-    @classmethod
-    def setUpClass(cls):
-        cls.wts = publicWST
 
     def test_1_Login(self):
         l = Login()
-        l.wts = self.wts
-        l.wts.set_main_page()
         l.test_01_email()
         l.test_02_pswd()
         l.test_03_btn()
@@ -41,7 +27,7 @@ class Docs(unittest.TestCase):
         taxpayerCertificateINN = self.wts.drv.find_element_by_id("load_TaxpayerCertificateINN")
         file_name = self.wts.__mongo__.get_file(doc_name="TaxpayerCertificateINN")
         taxpayerCertificateINN.send_keys(file_name)
-        time.sleep(30)
+        time.sleep(10)
 
 
     #def test_4_doc_view(self):
@@ -63,7 +49,7 @@ class Docs(unittest.TestCase):
         License = self.wts.drv.find_element_by_id("load_License")
         file_name = self.wts.__mongo__.get_file(doc_name="License")
         License.send_keys(file_name)
-        time.sleep(30)
+        time.sleep(10)
         # self.wts.drv.refresh()
 
 

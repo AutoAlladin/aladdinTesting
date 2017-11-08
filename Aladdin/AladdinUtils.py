@@ -15,7 +15,7 @@ import time
 def test_select(cls, id_field, input_val=None, q=None):
     try:
         if input_val is None:
-            input_val = cls.wts.__mongo__.get_select_val(id_field, q)
+            input_val = cls.wts.__mongo__.get_ID("select",id_field, q)
 
         cls.assertEqual(
             input_val,
@@ -27,11 +27,21 @@ def test_select(cls, id_field, input_val=None, q=None):
 def test_input(cls, id_field, input_val=None, q=None):
     try:
         if input_val is None:
-            input_val = cls.wts.__mongo__.get_input_val(id_field, q)
+            input_val = cls.wts.__mongo__.get_ID("inputs",id_field, q)
         cls.assertEqual(
             input_val,
             cls.wts.input_text_field(id_field, input_val),
             "Не совпадают исходные даные и то что оказалось в поле браузера")
+    except Exception as e:
+        cls.wts.drv.get_screenshot_as_file("output\\"+id_field+"_ERROR.png")
+        raise e
+
+def test_click(cls, id_field, input_val=None, q=None):
+    try:
+        if input_val is None:
+            input_val = cls.wts.__mongo__.get_ID("buttons",id_field, q)
+        cls.wts.click_element( input_val),
+        cls.assertTrue(True)
     except Exception as e:
         cls.wts.drv.get_screenshot_as_file("output\\"+id_field+"_ERROR.png")
         raise e
@@ -60,16 +70,16 @@ class MdbUtils():
         return self.test_result.insert_one(self.test_res).inserted_id
 
 
-    def get_input_val(self,_id, query):
+    def get_ID(self, tag, _id, query):
         doc = self.test_params.find_one(query)
         if doc is None:
             return "test {0} is None".format(_id)
-        elif doc["inputs"] is None:
+        elif doc[tag] is None:
             return "element {0} is None".format(_id)
-        elif doc["inputs"][_id]  is None:
+        elif doc[tag][_id]  is None:
             return "value {0} is None".format(_id)
         else:
-            return doc["inputs"][_id]
+            return doc[tag][_id]
 
     def get_file(self, doc_name, query=None):
         query = {"name": "RegistartionDocs", "version": "0.0.0.1"}
@@ -82,16 +92,6 @@ class MdbUtils():
             f.write(f_data.read())
         return os.path.dirname(os.path.abspath(__file__)) + '\\dir\\'+name
 
-    def get_select_val(self,_id, query):
-        doc = self.test_params.find_one(query)
-        if doc is None:
-            return "test {0} is None".format(_id)
-        elif doc["select"] is None:
-            return "element {0} is None".format(_id)
-        elif doc["select"][_id]  is None:
-            return "value {0} is None".format(_id)
-        else:
-            return doc["select"][_id]
 
 class WebTestSession():
     def __init__(self, url = None):
@@ -112,6 +112,11 @@ class WebTestSession():
             self.url = r["start_url"]
 
         self.drv.get(self.url)
+
+    def click_element(self, _id):
+        WebDriverWait(self.drv, 5).until(EC.visibility_of_element_located((By.ID, _id)))
+        field = self.drv.find_element_by_id(_id)
+        field.click()
 
     def input_text_field(self,_id,val):
         try:
@@ -134,6 +139,8 @@ class WebTestSession():
         Select(field).select_by_value(val)
         #self.drv.get_screenshot_as_file("output\\" + _id + ".png")
         return field.get_attribute('value')
+
+
 
     def close(self):
         self.drv.close()

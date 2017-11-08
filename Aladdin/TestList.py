@@ -99,9 +99,7 @@ def s_login(g):
     suite = unittest.TestSuite()
     @create_result_DB
     def s_login_init():
-        qa={ "query": {"input_val": None,
-                       "q": {"name": "Login", "version": "0.0.0.2", 'group': g}
-                       },
+        qa={ "query":{"q": {"name": "Login", "version": "0.0.0.2", 'group': g}},
              'test_name':'LOLOLO',
              'wts': WebTestSession()
            }
@@ -184,13 +182,13 @@ def s_login_after_full_registration(g):
 
     @create_result_DB
     def  s_login_after_full_registration_init():
-        qa = {"query": {"input_val": None,
-                        "q": {"name": "UserRegistrationFormTest", "version": "0.0.0.3", 'group': g}
-                        },
+        qa = {"query": { "q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}},
               'test_name': 'UserRegistrationFormTest',
               'login_url': 'https://192.168.80.169:44310/Account/Login',
               'wts': WebTestSession()
               }
+        if g is not None:
+            qa["query"]["q"].update({'group': g})
         qa['wts'].set_main_page(qa['query'])
         return qa
 
@@ -214,7 +212,6 @@ if __name__ == '__main__':
 
     (options, args) = parser.parse_args()
 
-    print(options)
     runner = unittest.TextTestRunner(verbosity=2)
     opt= options.s
 
@@ -222,7 +219,7 @@ if __name__ == '__main__':
         runner.run(s_user_registration())
     elif opt == 'UserRegistration_FOP':
         runner.run(s_user_registration_FOP())
-    elif opt == 'login':
+    elif opt == 'Login':
         runner.run(s_login(options.g))
     elif opt == 'UserRegistration_Company':
         runner.run(s_company_reg())
