@@ -1,6 +1,12 @@
+from selenium.webdriver.common.keys import Keys
+
 from Aladdin.AladdinUtils import *
 from Aladdin.Authorization.Login import Login
 from Aladdin.decorators.ParamsTestCase import ParamsTestCase
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class Edit(ParamsTestCase):
@@ -31,11 +37,19 @@ class Edit(ParamsTestCase):
 
     def test_04_clear_field_comp_name(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "nameUA")))
-        f_comp_name = self.wts.drv.find_element_by_id("nameUA")
-        f_comp_name.clear()
+        input_ELEMENT_IN_BROWSER_U_KOTOROGO_EST_METODY = self.wts.drv.find_element_by_id("nameUA")
+        test_KOTORYI_IZ_ELEMENTA_NET_METODA_SEND_KEYS = input_ELEMENT_IN_BROWSER_U_KOTOROGO_EST_METODY.get_attribute('value')
+        print("Текст, который находится в веб єлементе" + test_KOTORYI_IZ_ELEMENTA_NET_METODA_SEND_KEYS)
+        time.sleep(15)
+        le = len(test_KOTORYI_IZ_ELEMENTA_NET_METODA_SEND_KEYS)
+        for n in range(le):
+            input_ELEMENT_IN_BROWSER_U_KOTOROGO_EST_METODY.send_keys(Keys.BACK_SPACE)
+
+        #f_comp_name.clear()
 
 
     def test_05_update_comp_name(self):
+        time.sleep(2)
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "nameUA")))
         test_input(self, "nameUA", **self.params['query'])
 
@@ -173,7 +187,6 @@ class Edit(ParamsTestCase):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btnSaveUser")))
         btnSaveUser = self.wts.drv.find_element_by_id("btnSaveUser")
         btnSaveUser.click()
-
 
 
 
