@@ -15,6 +15,7 @@ from Aladdin.Authorization.LoginAfterRegistration import LoginAfterRegistrationC
 
 import os
 
+from Aladdin.decorators.ParamsTestSuite import ParamsTestSuite
 from Aladdin.decorators.StoreTestResult import create_result_DB
 
 
@@ -96,7 +97,6 @@ def s_company_reg():
 
 
 def s_login(g):
-    suite = unittest.TestSuite()
     @create_result_DB
     def s_login_init():
         qa={ "query":{"q": {"name": "Login", "version": "0.0.0.2", 'group': g}},
@@ -107,6 +107,7 @@ def s_login(g):
         return qa
 
     qqq = s_login_init
+    suite = ParamsTestSuite({"result_id":qqq["wts"].result_id , "DB":qqq["wts"].__mongo__})
     suite.addTest(Login("test_01_email", _params=qqq))
     suite.addTest(Login("test_02_pswd",  _params=qqq))
     suite.addTest(Login("test_03_btn",   _params=qqq))
@@ -214,22 +215,36 @@ if __name__ == '__main__':
 
     runner = unittest.TextTestRunner(verbosity=2)
     opt= options.s
+    
+    ttt = None
 
     if opt == 'UserRegistration':
-        runner.run(s_user_registration())
+        ttt=s_user_registration()
     elif opt == 'UserRegistration_FOP':
-        runner.run(s_user_registration_FOP())
+        ttt=s_user_registration_FOP()
     elif opt == 'Login':
-        runner.run(s_login(options.g))
+        ttt=s_login(options.g)
     elif opt == 'UserRegistration_Company':
-        runner.run(s_company_reg())
+        ttt=s_company_reg()
     elif opt == 'edit_information':
-        runner.run(s_edit_information())
+        ttt=s_edit_information()
     elif opt == 'docs':
-        runner.run(s_docs())
+        ttt=s_docs()
     elif opt == 'Employees':
-        runner.run(s_Employees())
+        ttt=s_Employees()
     elif opt == 'UserRegistration_Company_Fop':
-        runner.run(s_company_fop())
+        ttt=s_company_fop()
     elif opt == 'Login_after_full_registration':
-        runner.run(s_login_after_full_registration(options.g))
+        ttt=s_login_after_full_registration(options.g)
+        
+    if ttt is not None:
+        try:
+            runner.run(ttt)
+        except:
+            ttt.params["DB"].test_result.update(
+                {"_id": ttt.params["result_id"]},
+                {"$set": {"test_result": "FAILED"}})
+        finally:
+            ttt.params["DB"].test_result.update(
+                {"_id": ttt.params["result_id"]},
+                {"$set": {"test_result": "PASSED"}})

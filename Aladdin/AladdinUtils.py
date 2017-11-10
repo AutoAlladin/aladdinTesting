@@ -60,12 +60,11 @@ class MdbUtils():
         self.test_res= {
             "test_name": "",
             "test_timestamp": "",
-            "test_result": "",
+            "test_result": "STARTED",
             "run_info": {
                 "user": "",
                 "ip": ""
-            },
-            "results": []
+            }
         }
         return self.test_result.insert_one(self.test_res).inserted_id
 
