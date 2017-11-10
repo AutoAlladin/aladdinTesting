@@ -1,6 +1,12 @@
+from selenium.webdriver.common.keys import Keys
+
 from Aladdin.AladdinUtils import *
 from Aladdin.Authorization.Login import Login
 from Aladdin.decorators.ParamsTestCase import ParamsTestCase
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class Edit(ParamsTestCase):
@@ -31,33 +37,48 @@ class Edit(ParamsTestCase):
 
     def test_04_clear_field_comp_name(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "nameUA")))
-        f_comp_name = self.wts.drv.find_element_by_id("nameUA")
-        f_comp_name.clear()
+        input_ELEMENT_IN_BROWSER_U_KOTOROGO_EST_METODY = self.wts.drv.find_element_by_id("nameUA")
+        test_KOTORYI_IZ_ELEMENTA_NET_METODA_SEND_KEYS = input_ELEMENT_IN_BROWSER_U_KOTOROGO_EST_METODY.get_attribute('value')
+        print("Текст, который находится в веб єлементе" + test_KOTORYI_IZ_ELEMENTA_NET_METODA_SEND_KEYS)
+        time.sleep(15)
+        le = len(test_KOTORYI_IZ_ELEMENTA_NET_METODA_SEND_KEYS)
+        for n in range(le):
+            input_ELEMENT_IN_BROWSER_U_KOTOROGO_EST_METODY.send_keys(Keys.BACK_SPACE)
+
+        #f_comp_name.clear()
 
 
     def test_05_update_comp_name(self):
+        time.sleep(2)
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "nameUA")))
         test_input(self, "nameUA", **self.params['query'])
 
+    def test_06_tax_system(self):
+        #tax_system = self.wts.drv.find_element_by_id("company_taxSystem")
+        test_select(self, "company_taxSystem", **self.params['query'])
 
     def test_08_clear_email(self):
         upd_email = self.wts.drv.find_element_by_id("email")
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "email")))
         upd_email.clear()
 
+
     def test_09_update_email(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "email")))
         test_input(self, "email", **self.params['query'])
 
+
     def test_10_legal_address_country(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "legal_address_country")))
         test_select(self, "legal_address_country", **self.params['query'])
+
 
     def test_11_clear_field_real_add_str(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "real_address_street")))
         f_real_add = self.wts.drv.find_element_by_id("real_address_street")
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "real_address_street")))
         f_real_add.clear()
+
 
     def test_12_real_address_street(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "real_address_street")))
@@ -69,6 +90,7 @@ class Edit(ParamsTestCase):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "real_address_index")))
         add_index.clear()
 
+
     def test_14_real_address_index(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "real_address_index")))
         test_input(self, "real_address_index", **self.params['query'])
@@ -78,6 +100,7 @@ class Edit(ParamsTestCase):
         comp_bank_acc_mfo = self.wts.drv.find_element_by_id("company_bank_account_mfo")
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "company_bank_account_mfo")))
         comp_bank_acc_mfo.clear()
+
 
     def test_16_comp_bank_acc_mfo(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "company_bank_account_mfo")))
@@ -90,6 +113,7 @@ class Edit(ParamsTestCase):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "lead_phone_resident")))
         lead_phone.clear()
 
+
     def test_18_lead_phone(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "lead_phone_resident")))
         test_input(self, "lead_phone_resident", **self.params['query'])
@@ -101,6 +125,7 @@ class Edit(ParamsTestCase):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "confidant_first_name")))
         conf_fst_name.clear()
 
+
     def test_20_confidant_first_name(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "confidant_first_name")))
         test_input(self, "confidant_first_name", **self.params['query'])
@@ -110,6 +135,7 @@ class Edit(ParamsTestCase):
         f_conf_position = self.wts.drv.find_element_by_id("confidant_position")
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "confidant_position")))
         f_conf_position.clear()
+
 
     def test_22_confidant_position(self):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "confidant_position")))
@@ -173,7 +199,6 @@ class Edit(ParamsTestCase):
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btnSaveUser")))
         btnSaveUser = self.wts.drv.find_element_by_id("btnSaveUser")
         btnSaveUser.click()
-
 
 
 

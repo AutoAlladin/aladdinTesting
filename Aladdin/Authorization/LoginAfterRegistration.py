@@ -80,6 +80,7 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         ed.test_03_click_btn_edit()
         ed.test_04_clear_field_comp_name()
         ed.test_05_update_comp_name()
+        ed.test_06_tax_system()
         ed.test_08_clear_email()
         ed.test_09_update_email()
         ed.test_10_legal_address_country()
