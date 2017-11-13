@@ -9,16 +9,6 @@ class Login(ParamsTestCase):
 
     @add_res_to_DB(test_name="email_input")
     def test_01_email(self):
-        @add_res_to_DB(parent="email_input")
-        def sub1(qqq):
-            pass
-
-        @add_res_to_DB(parent="email_input")
-        def sub2(qqq):
-            pass
-
-        sub1(self)
-        sub2(self)
         test_input(self, "exampleInputEmail1", **self.params['query'])
 
     @add_res_to_DB(test_name="pssword_input")

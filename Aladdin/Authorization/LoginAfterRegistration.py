@@ -11,7 +11,7 @@ from Aladdin.decorators.StoreTestResult import add_res_to_DB
 
 class LoginAfterRegistrationCompany(ParamsTestCase):
 
-    @add_res_to_DB
+    @add_res_to_DB()
     def test_01(self):
         w={"query": {"q": {"name": "UserCompanyRegistrationForm", "version": "0.0.0.3",
                            'group': self.params['query']['q']['group']}
@@ -52,7 +52,7 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         self.params["email"] = full_reg.params["email"]
         self.params["password"] = full_reg.params["password"]
 
-    @add_res_to_DB
+    @add_res_to_DB()
     def test_02_exit(self):
         drop_menu = self.wts.drv.find_element_by_xpath("html/body/app/spa/div/nav/div/div[3]/ul/li[2]/a/b")
         drop_menu.click()
@@ -60,7 +60,7 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         exit_menu.click()
         time.sleep(2)
 
-    @add_res_to_DB
+    @add_res_to_DB()
     def test_03_login(self):
         self.wts.drv.get(self.params['login_url'])
         test_input(self, "exampleInputEmail1", self.params["email"])
@@ -69,7 +69,7 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         btn_sub.click()
         time.sleep(2)
 
-    @add_res_to_DB
+    @add_res_to_DB()
     def test_04_edit(self):
         query = {"q": {"name": "EditInfo", "version": "0.0.0.2",
                                            "group": self.params['query']['q']['group']}}
@@ -110,7 +110,7 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
 
         time.sleep(2)
 
-    @add_res_to_DB
+    @add_res_to_DB()
     def test_05_add_view_delete_docs(self):
         ds = Docs(_params={})
         ds.wts = self.wts
@@ -120,7 +120,7 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         ds.test_6_doc2_add()
         time.sleep(10)
 
-    @add_res_to_DB
+    @add_res_to_DB()
     def test_06_add_employees(self):
         empl = Employees(_params={"query": {"q": {"name": "EmployeeesInfo", "version": "0.0.0.2",
                                             'group': self.params['query']['q']['group']}

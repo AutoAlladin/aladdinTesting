@@ -107,7 +107,7 @@ def s_login(g):
         return qa
 
     qqq = s_login_init
-    suite = ParamsTestSuite({"result_id":qqq["wts"].result_id , "DB":qqq["wts"].__mongo__})
+    suite = ParamsTestSuite(_params={"result_id":qqq["wts"].result_id , "DB":qqq["wts"].__mongo__})
     suite.addTest(Login("test_01_email", _params=qqq))
     suite.addTest(Login("test_02_pswd",  _params=qqq))
     suite.addTest(Login("test_03_btn",   _params=qqq))
@@ -179,7 +179,6 @@ def s_Employees():
 
 
 def s_login_after_full_registration(g):
-    suite = unittest.TestSuite()
 
     @create_result_DB
     def  s_login_after_full_registration_init():
@@ -194,6 +193,7 @@ def s_login_after_full_registration(g):
         return qa
 
     qqq = s_login_after_full_registration_init
+    suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id, "DB": qqq["wts"].__mongo__})
     suite.addTest(LoginAfterRegistrationCompany("test_01", _params=qqq))
     suite.addTest(LoginAfterRegistrationCompany("test_02_exit", _params=qqq))
     suite.addTest(LoginAfterRegistrationCompany("test_03_login", _params=qqq))

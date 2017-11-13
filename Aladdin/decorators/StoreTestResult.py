@@ -51,7 +51,7 @@ def add_res_to_DB(test_name=None,
 
             test_method_result = {
                 "name": tt,
-                "status": "NOT STARTED",
+                "status": "STARTED",
                 "timing": {"end": "",
                            "start": "",
                            "duration": 0}
