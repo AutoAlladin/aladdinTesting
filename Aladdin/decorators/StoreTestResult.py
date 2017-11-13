@@ -96,7 +96,7 @@ def add_res_to_DB(test_name=None,
                 if len(self.tlog)>0 :
                     test_method_result.update({"logs":self.tlog});
 
-                if test_method_result["screen_id"] != "":
+                if 'screen_id' in test_method_result:
                     dir=os.path.dirname(os.path.abspath( prozorro.__file__ ))
                     dir+="\\Aladdin\\output\\"
                     self.wts.drv.get_screenshot_as_file(dir + test_method.__name__+"_"+str(test_method_result["screen_id"]) + ".png")

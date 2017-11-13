@@ -11,7 +11,7 @@ from Aladdin.decorators.StoreTestResult import add_res_to_DB
 
 class LoginAfterRegistrationCompany(ParamsTestCase):
 
-    @add_res_to_DB()
+    @add_res_to_DB(test_description="Регистрация пользователя")
     def test_01(self):
         w={"query": {"q": {"name": "UserCompanyRegistrationForm", "version": "0.0.0.3",
                            'group': self.params['query']['q']['group']}
@@ -51,6 +51,8 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         full_reg.test_28_save()
         self.params["email"] = full_reg.params["email"]
         self.params["password"] = full_reg.params["password"]
+        self.tlog.append({"email_login":self.params["email"]})
+        self.tlog.append({"password": self.params["password"]})
 
     @add_res_to_DB()
     def test_02_exit(self):

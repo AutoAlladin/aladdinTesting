@@ -8,7 +8,7 @@ from Aladdin.decorators.StoreTestResult import create_result_DB
 class ParamsTestCase(unittest.TestCase):
     params={}
 
-    tlog = [{}]
+    tlog = [dict()]
     wts = None
 
 
