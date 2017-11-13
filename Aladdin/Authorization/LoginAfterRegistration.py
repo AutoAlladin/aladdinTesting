@@ -51,10 +51,12 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         full_reg.test_28_save()
         self.params["email"] = full_reg.params["email"]
         self.params["password"] = full_reg.params["password"]
-        self.tlog.append({"email_login":self.params["email"]})
+        self.params.update({"code_USREOU": full_reg.params["company_code_USREOU"]})
+        self.tlog.append({"email_login": self.params["email"]})
         self.tlog.append({"password": self.params["password"]})
+        self.tlog.append({"code_USREOU": self.params["code_USREOU"]})
 
-    @add_res_to_DB()
+    @add_res_to_DB(test_description="Выход из системы")
     def test_02_exit(self):
         drop_menu = self.wts.drv.find_element_by_xpath("html/body/app/spa/div/nav/div/div[3]/ul/li[2]/a/b")
         drop_menu.click()
@@ -62,7 +64,7 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         exit_menu.click()
         time.sleep(2)
 
-    @add_res_to_DB()
+    @add_res_to_DB(test_description="Авторизация")
     def test_03_login(self):
         self.wts.drv.get(self.params['login_url'])
         test_input(self, "exampleInputEmail1", self.params["email"])
@@ -71,7 +73,7 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         btn_sub.click()
         time.sleep(2)
 
-    @add_res_to_DB()
+    @add_res_to_DB(test_description="Редактирование")
     def test_04_edit(self):
         query = {"q": {"name": "EditInfo", "version": "0.0.0.2",
                                            "group": self.params['query']['q']['group']}}
@@ -112,7 +114,7 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
 
         time.sleep(2)
 
-    @add_res_to_DB()
+    @add_res_to_DB(test_description="Добавление и удаление документа")
     def test_05_add_view_delete_docs(self):
         ds = Docs(_params={})
         ds.wts = self.wts
@@ -122,7 +124,7 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         ds.test_6_doc2_add()
         time.sleep(10)
 
-    @add_res_to_DB()
+    @add_res_to_DB(test_description="Добавление сотрудника")
     def test_06_add_employees(self):
         empl = Employees(_params={"query": {"q": {"name": "EmployeeesInfo", "version": "0.0.0.2",
                                             'group': self.params['query']['q']['group']}

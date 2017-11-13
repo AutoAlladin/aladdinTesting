@@ -29,6 +29,8 @@ class RegistrationCompany(ParamsTestCase):
         reg.test_14_click_next_step_btn()
         self.params["email"] = reg.params["email"]
         self.params["password"] = reg.params["password"]
+        self.params.update({"company_code_USREOU": reg.params["company_code_USREOU"]})
+
 
     def test_02_tax_system(self):
         test_select(self, "company_taxSystem", "5")
