@@ -70,8 +70,18 @@ class TenderNew:
     def set_dates(self, dic):
         try:
             dt = datetime.now()
-            set_datepicker(self.drv, "period_enquiry_start", (dt + timedelta(minutes=1)).strftime("%Y-%m-%d %H:%M:%S"))
-            set_datepicker(self.drv, "period_enquiry_end", (dt + timedelta(minutes=get_dic_val(dic,"below.enqueriPeriod"))).strftime("%Y-%m-%d %H:%M:%S"))
+            set_datepicker(
+                self.drv,
+                "period_enquiry_start",
+                (dt + timedelta(minutes=1)).strftime("%Y-%m-%d %H:%M:%S")
+            )
+            set_datepicker(
+                self.drv,
+                "period_enquiry_end",
+                (dt + timedelta(
+                    minutes=111
+                )
+                 ).strftime("%Y-%m-%d %H:%M:%S"))
             set_datepicker(self.drv, "period_tender_start", (dt + timedelta(minutes=get_dic_val(dic,"below.enqueriPeriod"))).strftime("%Y-%m-%d %H:%M:%S"))
             set_datepicker(self.drv, "period_tender_end", (dt + timedelta(minutes=get_dic_val(dic,"below.tenderPeriod"))).strftime("%Y-%m-%d %H:%M:%S"))
         except Exception as e:

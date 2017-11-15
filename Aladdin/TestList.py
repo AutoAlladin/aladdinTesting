@@ -1,22 +1,19 @@
 import unittest
-import sys
-from optparse import make_option, OptionParser
+from optparse import OptionParser
 
 from Aladdin.AladdinUtils import WebTestSession
-from Aladdin.Docs import Docs
-from Aladdin.Registration.UserRegistrationEDRPOU  import UserRegistrationEDRPOU
-from Aladdin.Registration.UserRegistration_FOP  import  UserRegistration_FOP
-from Aladdin.Registration.RegistrationCompanyEDRPOU import RegistrationCompany
-from Aladdin.Registration.RegistrationCompanyFOP import RegistrationCompanyFop
 from Aladdin.Authorization.Login import Login
+from Aladdin.Authorization.LoginAfterRegistration import LoginAfterRegistrationCompany
+from Aladdin.Docs import Docs
 from Aladdin.Edit.Edit import Edit
 from Aladdin.Registration.Employees import Employees
-from Aladdin.Authorization.LoginAfterRegistration import LoginAfterRegistrationCompany
-
-import os
-
+from Aladdin.Registration.RegistrationCompanyEDRPOU import RegistrationCompany
+from Aladdin.Registration.UserRegistrationEDRPOU import UserRegistrationEDRPOU
+from Aladdin.Registration.UserRegistration_FOP import UserRegistration_FOP
 from Aladdin.decorators.ParamsTestSuite import ParamsTestSuite
 from Aladdin.decorators.StoreTestResult import create_result_DB
+
+from Aladdin.Accounting.Registration.RegistrationCompanyFOP import RegistrationCompanyFop
 
 
 def s_user_registration():
