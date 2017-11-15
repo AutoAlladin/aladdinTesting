@@ -1,5 +1,5 @@
-from Aladdin.decorators.ParamsTestCase import ParamsTestCase
-from Aladdin.decorators.StoreTestResult import add_res_to_DB
+from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
+from Aladdin.Accounting.decorators.StoreTestResult import add_res_to_DB
 
 from Aladdin.Accounting.AladdinUtils import test_input, test_click
 

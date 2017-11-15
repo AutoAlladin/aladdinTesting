@@ -1,9 +1,9 @@
-from Aladdin.AladdinUtils import *
-from Aladdin.Authorization.Login import Login
-from Aladdin.decorators.ParamsTestCase import ParamsTestCase
+from Aladdin.Accounting.AladdinUtils import *
+from Aladdin.Accounting.Authorization.Login import Login
+from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 
 from Aladdin.Accounting.Edit.Edit import Edit
-
+import time
 
 class Employees(ParamsTestCase):
 

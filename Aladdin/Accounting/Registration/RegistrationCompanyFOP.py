@@ -1,6 +1,6 @@
-from Aladdin.AladdinUtils import *
-from Aladdin.Registration.UserRegistration_FOP import UserRegistration_FOP
-from Aladdin.decorators.ParamsTestCase import ParamsTestCase
+from Aladdin.Accounting.AladdinUtils import *
+from Aladdin.Accounting.Registration.UserRegistration_FOP import UserRegistration_FOP
+from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 from selenium.common.exceptions import WebDriverException
 
 

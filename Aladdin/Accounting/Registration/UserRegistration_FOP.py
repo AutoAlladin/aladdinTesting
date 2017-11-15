@@ -1,5 +1,5 @@
-from Aladdin.AladdinUtils import *
-from Aladdin.Registration.UserRegistrationEDRPOU import UserRegistrationEDRPOU
+from Aladdin.Accounting.AladdinUtils import *
+from Aladdin.Accounting.Registration.UserRegistrationEDRPOU import UserRegistrationEDRPOU
 
 from Aladdin.Accounting.Registration.OpenMainPage import *
 
