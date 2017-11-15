@@ -1,5 +1,4 @@
 import os
-from unittest import TestCase
 
 from pymongo import MongoClient
 import gridfs
@@ -9,8 +8,13 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bson.objectid import ObjectId
-import time
+from enum import Enum
 
+
+
+class AvaliableBrowsers(Enum):
+    Chrome=1,
+    Firefox=2
 
 def test_select(cls, id_field, input_val=None, q=None):
     try:
@@ -93,15 +97,22 @@ class MdbUtils():
         return os.path.dirname(os.path.abspath(__file__)) + '\\dir\\'+name
 
 
-class WebTestSession():
-    def __init__(self, url = None):
+class WebTestSession:
+    def __init__(self, url=None, browser=None):
         self.url = url
         self.result_id = None
         self.test_name = None
         self.group = None
         self.__mongo__ = MdbUtils()
 
-        self.drv = webdriver.Chrome()
+        if browser is None:
+            browser = AvaliableBrowsers.Chrome
+
+        if browser == AvaliableBrowsers.Chrome:
+            self.drv = webdriver.Chrome()
+        else:
+            self.drv = webdriver.Firefox()
+
         self.drv.maximize_window()
         self.drv.implicitly_wait(5)
 
