@@ -1,19 +1,22 @@
 import unittest
-from optparse import OptionParser
+import sys
+from optparse import make_option, OptionParser
 
-from Aladdin.AladdinUtils import WebTestSession
-from Aladdin.Authorization.Login import Login
-from Aladdin.Authorization.LoginAfterRegistration import LoginAfterRegistrationCompany
+from Aladdin.AladdinUtils import WebTestSession, AvaliableBrowsers
 from Aladdin.Docs import Docs
+from Aladdin.Registration.UserRegistrationEDRPOU  import UserRegistrationEDRPOU
+from Aladdin.Registration.UserRegistration_FOP  import  UserRegistration_FOP
+from Aladdin.Registration.RegistrationCompanyEDRPOU import RegistrationCompany
+from Aladdin.Registration.RegistrationCompanyFOP import RegistrationCompanyFop
+from Aladdin.Authorization.Login import Login
 from Aladdin.Edit.Edit import Edit
 from Aladdin.Registration.Employees import Employees
-from Aladdin.Registration.RegistrationCompanyEDRPOU import RegistrationCompany
-from Aladdin.Registration.UserRegistrationEDRPOU import UserRegistrationEDRPOU
-from Aladdin.Registration.UserRegistration_FOP import UserRegistration_FOP
+from Aladdin.Authorization.LoginAfterRegistration import LoginAfterRegistrationCompany
+
+import os
+
 from Aladdin.decorators.ParamsTestSuite import ParamsTestSuite
 from Aladdin.decorators.StoreTestResult import create_result_DB
-
-from Aladdin.Accounting.Registration.RegistrationCompanyFOP import RegistrationCompanyFop
 
 
 def s_user_registration():
@@ -175,21 +178,21 @@ def s_Employees():
     return suite
 
 
-def s_login_after_full_registration(g):
+def s_login_after_full_registration(g,cmd_bro):
 
     @create_result_DB
-    def  s_login_after_full_registration_init():
+    def  s_login_after_full_registration_init(bro):
         qa = {"query": { "q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}},
               'test_name': 'UserRegistrationFormTest',
               'login_url': 'https://192.168.80.169:44310/Account/Login',
-              'wts': WebTestSession()
+              'wts': WebTestSession(browser=bro)
               }
         if g is not None:
             qa["query"]["q"].update({'group': g})
         qa['wts'].set_main_page(qa['query'])
         return qa
 
-    qqq = s_login_after_full_registration_init
+    qqq = s_login_after_full_registration_init(cmd_bro)
     suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id, "DB": qqq["wts"].__mongo__})
     suite.addTest(LoginAfterRegistrationCompany("test_01", _params=qqq))
     suite.addTest(LoginAfterRegistrationCompany("test_02_exit", _params=qqq))
@@ -207,12 +210,20 @@ if __name__ == '__main__':
     parser =OptionParser()
     parser.add_option("-s", action="store", type="string")
     parser.add_option("-g", action="store", type="string")
+    parser.add_option("-b", action="store", type="string")
 
     (options, args) = parser.parse_args()
 
     runner = unittest.TextTestRunner(verbosity=2)
     opt= options.s
-    
+    bro = options.b
+
+    if bro == "ch":
+        bro = AvaliableBrowsers.Chrome
+    elif bro =="f":
+        bro = AvaliableBrowsers.Firefox
+
+
     ttt = None
 
     if opt == 'UserRegistration':
@@ -232,7 +243,7 @@ if __name__ == '__main__':
     elif opt == 'UserRegistration_Company_Fop':
         ttt=s_company_fop()
     elif opt == 'Login_after_full_registration':
-        ttt=s_login_after_full_registration(options.g)
+        ttt=s_login_after_full_registration(options.g, bro)
         
     if ttt is not None:
         try:
