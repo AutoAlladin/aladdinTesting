@@ -36,7 +36,7 @@ def new_account(que, str_json,in_dic):
     finally:
         #  влюбом случае сохраняем попытку
         with(open(os.path.dirname(os.path.abspath(__file__)) + '\\input.json', 'w', encoding="UTF-8")) as out_dic:
-            json.dump(in_dic, out_dic)
+            json.dump(in_dic, out_dic, indent=4, separators=(',', ': '))
 
     return res
 
