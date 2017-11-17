@@ -3,11 +3,11 @@ import sys
 import os
 
 def_args={
-    'server': '192.168.80.90',
-    'database': 'ApsMarketWork',
-    'username': 'web_actini_user',
-    'password': '18E2B855EB29411D9548FD8CA4E49DA7',
-    'driver': '{ODBC Driver 13 for SQL Server}'
+    '_server': '192.168.80.90',
+    '_database': 'ApsMarketWork',
+    '_username': 'web_actini_user',
+    '_password': '18E2B855EB29411D9548FD8CA4E49DA7',
+    '_driver': '{ODBC Driver 13 for SQL Server}'
 }
 
 def get_connection(_server,_database,_username,_password,_driver):
@@ -21,11 +21,14 @@ def get_connection(_server,_database,_username,_password,_driver):
     return pyodbc.connect(costr)
 
 
-# cursor = get_connection(**def_args).cursor()
-#
-#
-# cursor.execute("SELECT ContactEmail FROM [AladdinIdentity].[dbo].[Company]")
-# row = cursor.fetchone()
+#cursor = get_connection(**def_args).cursor()
+#print(get_connection(**def_args))
+
+cursor = get_connection(**def_args).cursor()
+#q = "SELECT ContactEmail FROM [AladdinIdentity].[dbo].[Company]"
+
+#cursor.execute("SELECT ContactEmail FROM [AladdinIdentity].[dbo].[Company]")
+#row = cursor.fetchone()
 # for i in range(30):   # Если Принт стоит под фор, то выводит только одну последнюю строку
 #     row = cursor.fetchone()
 #     print(row.ContactEmail)

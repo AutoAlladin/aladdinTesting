@@ -1,7 +1,8 @@
 from Aladdin.Accounting.AladdinUtils import *
 from Aladdin.Accounting.Registration.UserRegistrationEDRPOU import UserRegistrationEDRPOU
-
+from Aladdin.Accounting import AladdinUtils
 from Aladdin.Accounting.Registration.OpenMainPage import *
+from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 
 publicWST = None;
 def setUpModule():
@@ -13,7 +14,7 @@ def tearDownModule():
     publicWST.close()
 
 
-class UserRegistration_FOP(UserRegistrationEDRPOU):
+class UserRegistration_FOP(ParamsTestCase):
     wts=None
     @classmethod
     def setUpClass(cls):
