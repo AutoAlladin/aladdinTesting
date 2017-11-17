@@ -25,7 +25,7 @@ sql_uid_edr="select AccountNumber, CompanyUuid, CompanyEdrpo, "+ \
 
 mssql_connection = get_connection(**conn_billing_test)
 crs_account = mssql_connection.cursor()
-
+#
 # for row in crs_account.columns(table='Accounts'):
 #     print(row.column_name)
 
