@@ -3,7 +3,7 @@ import pika
 
 def send_simple(que_name, body, _durable=True):
     # параметры подключения к шине
-    parameters = pika.ConnectionParameters(host='192.168.80.169',
+    parameters = pika.ConnectionParameters(host='192.168.95.153',
                                            port=5672,
                                            credentials= pika.PlainCredentials(
                                                     'AutoTest',
