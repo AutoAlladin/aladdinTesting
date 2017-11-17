@@ -22,12 +22,14 @@ def get_connection(_server,_database,_username,_password,_driver):
 
 
 #cursor = get_connection(**def_args).cursor()
-#print(get_connection(**def_args))
+
 
 cursor = get_connection(**def_args).cursor()
 #q = "SELECT ContactEmail FROM [AladdinIdentity].[dbo].[Company]"
-
-#cursor.execute("SELECT ContactEmail FROM [AladdinIdentity].[dbo].[Company]")
+#print(get_connection(**def_args))
+cursor.execute("SELECT Id, MarketPlaceId FROM [ApsMarketWork].[dbo].[Tender]")
+result = cursor.fetchall()
+print(result)
 #row = cursor.fetchone()
 # for i in range(30):   # Если Принт стоит под фор, то выводит только одну последнюю строку
 #     row = cursor.fetchone()
