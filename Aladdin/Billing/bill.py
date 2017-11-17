@@ -36,7 +36,7 @@ def new_account(que, str_json,in_dic):
     finally:
         #  влюбом случае сохраняем попытку
         with(open(os.path.dirname(os.path.abspath(__file__)) + '\\input.json', 'w', encoding="UTF-8")) as out_dic:
-            json.dump(in_dic, out_dic)
+            json.dump(in_dic, out_dic, indent=None)
 
     return res
 
@@ -49,7 +49,7 @@ if __name__ == "__main__":
               encoding="UTF-8") as test_params_file:
         in_dic = json.load(test_params_file)
 
-    # in_dic["new_account"]["uuid"] = str(uuid.uuid4())
+    in_dic["new_account"]["uuid"] = str(uuid.uuid4())
     msg_create_company_account = json.dumps({'companyAccount': in_dic["new_account"] })
     old_id = in_dic["new_account"]["uuid"]
     old_edr = in_dic["new_account"]["edrpou"]

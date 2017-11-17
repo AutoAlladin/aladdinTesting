@@ -29,8 +29,8 @@ crs_account = mssql_connection.cursor()
 # for row in crs_account.columns(table='Accounts'):
 #     print(row.column_name)
 
-#crs_account.execute(sql_uid.format("a4725a84-6ea8-4618-969d-2847228c3182"))
-crs_account.execute(sql_uid_edr.format('30000006','a4725a84-6ea8-4618-969d-2847228c3182'))
+
+crs_account.execute(sql_edr.format('30000007'))
 #  20171510824356
 rows = crs_account.fetchall()
 
