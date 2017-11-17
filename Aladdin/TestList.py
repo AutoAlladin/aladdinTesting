@@ -2,21 +2,18 @@ import unittest
 import sys
 from optparse import make_option, OptionParser
 
-from Aladdin.AladdinUtils import WebTestSession, AvaliableBrowsers
-from Aladdin.Docs import Docs
-from Aladdin.Registration.UserRegistrationEDRPOU  import UserRegistrationEDRPOU
-from Aladdin.Registration.UserRegistration_FOP  import  UserRegistration_FOP
-from Aladdin.Registration.RegistrationCompanyEDRPOU import RegistrationCompany
-from Aladdin.Registration.RegistrationCompanyFOP import RegistrationCompanyFop
-from Aladdin.Authorization.Login import Login
-from Aladdin.Edit.Edit import Edit
-from Aladdin.Registration.Employees import Employees
-from Aladdin.Authorization.LoginAfterRegistration import LoginAfterRegistrationCompany
-
-import os
-
-from Aladdin.decorators.ParamsTestSuite import ParamsTestSuite
-from Aladdin.decorators.StoreTestResult import create_result_DB
+from Aladdin.Accounting.AladdinUtils import WebTestSession, AvaliableBrowsers
+from Aladdin.Accounting.Docs import Docs
+from Aladdin.Accounting.Registration.UserRegistrationEDRPOU import UserRegistrationEDRPOU
+from Aladdin.Accounting.Registration.UserRegistration_FOP import UserRegistration_FOP
+from Aladdin.Accounting.Registration.RegistrationCompanyEDRPOU import RegistrationCompany
+from Aladdin.Accounting.Registration.RegistrationCompanyFOP import RegistrationCompanyFop
+from Aladdin.Accounting.Authorization.Login import Login
+from Aladdin.Accounting.Edit.Edit import Edit
+from Aladdin.Accounting.Registration.Employees import Employees
+from Aladdin.Accounting.Authorization.LoginAfterRegistration import LoginAfterRegistrationCompany
+from Aladdin.Accounting.decorators.ParamsTestSuite import ParamsTestSuite
+from Aladdin.Accounting.decorators.StoreTestResult import create_result_DB
 
 
 def s_user_registration():
@@ -27,6 +24,7 @@ def s_user_registration():
 def s_user_registration_FOP():
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(UserRegistration_FOP)
     return suite
+
 
 def s_company_fop():
     suite = unittest.TestSuite()
@@ -60,6 +58,7 @@ def s_company_fop():
     suite.addTest(RegistrationCompanyFop("test_27_contract_offer"))
     suite.addTest(RegistrationCompanyFop("test_28_save"))
     return suite
+
 
 def s_company_reg():
     suite = unittest.TestSuite()
@@ -99,20 +98,21 @@ def s_company_reg():
 def s_login(g):
     @create_result_DB
     def s_login_init():
-        qa={ "query":{"q": {"name": "Login", "version": "0.0.0.2", 'group': g}},
-             'test_name':'LOLOLO',
-             'wts': WebTestSession()
-           }
+        qa = {"query": {"q": {"name": "Login", "version": "0.0.0.2", 'group': g}},
+              'test_name': 'LOLOLO',
+              'wts': WebTestSession()
+              }
         qa['wts'].set_main_page(qa['query'])
         return qa
 
     qqq = s_login_init
-    suite = ParamsTestSuite(_params={"result_id":qqq["wts"].result_id , "DB":qqq["wts"].__mongo__})
+    suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id, "DB": qqq["wts"].__mongo__})
     suite.addTest(Login("test_01_email", _params=qqq))
-    suite.addTest(Login("test_02_pswd",  _params=qqq))
-    suite.addTest(Login("test_03_btn",   _params=qqq))
+    suite.addTest(Login("test_02_pswd", _params=qqq))
+    suite.addTest(Login("test_03_btn", _params=qqq))
 
     return suite
+
 
 def s_edit_information():
     suite = unittest.TestSuite()
@@ -122,11 +122,11 @@ def s_edit_information():
     suite.addTest(Edit("test_03_click_btn_edit"))
     suite.addTest(Edit("test_04_clear_field_comp_name"))
     suite.addTest(Edit("test_05_update_comp_name"))
-    #suite.addTest(Edit("test_06_ownership_type"))
-    #suite.addTest(Edit("test_06_company_taxSystem"))
+    # suite.addTest(Edit("test_06_ownership_type"))
+    # suite.addTest(Edit("test_06_company_taxSystem"))
     suite.addTest(Edit("test_08_clear_email"))
     suite.addTest(Edit("test_09_update_email"))
-    #suite.addTest(Edit("test_08_select_real_address_city"))
+    # suite.addTest(Edit("test_08_select_real_address_city"))
     suite.addTest(Edit("test_10_legal_address_country"))
     suite.addTest(Edit("test_11_clear_field_real_add_str"))
     suite.addTest(Edit("test_12_real_address_street"))
@@ -154,12 +154,14 @@ def s_edit_information():
 
     return suite
 
+
 def s_docs():
-    #suite = unittest.defaultTestLoader.loadTestsFromTestCase(Docs)
+    # suite = unittest.defaultTestLoader.loadTestsFromTestCase(Docs)
     suite = unittest.TestSuite()
     suite.addTest(Docs('test_1_Login'))
     suite.addTest(Docs('test_2_User_profile'))
     return suite
+
 
 def s_Employees():
     suite = unittest.TestSuite()
@@ -178,11 +180,10 @@ def s_Employees():
     return suite
 
 
-def s_login_after_full_registration(g,cmd_bro):
-
+def s_login_after_full_registration(g, cmd_bro):
     @create_result_DB
-    def  s_login_after_full_registration_init(bro):
-        qa = {"query": { "q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}},
+    def s_login_after_full_registration_init(bro):
+        qa = {"query": {"q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}},
               'test_name': 'UserRegistrationFormTest',
               'login_url': 'https://192.168.80.169:44310/Account/Login',
               'wts': WebTestSession(browser=bro)
@@ -200,14 +201,14 @@ def s_login_after_full_registration(g,cmd_bro):
     suite.addTest(LoginAfterRegistrationCompany("test_04_edit", _params=qqq))
     suite.addTest(LoginAfterRegistrationCompany("test_05_add_view_delete_docs", _params=qqq))
     suite.addTest(LoginAfterRegistrationCompany("test_06_add_employees", _params=qqq))
-    #suite.addTest(LoginAfterRegistrationCompany("test_07_edit_employees"))
+    # suite.addTest(LoginAfterRegistrationCompany("test_07_edit_employees"))
 
     return suite
 
 
 if __name__ == '__main__':
 
-    parser =OptionParser()
+    parser = OptionParser()
     parser.add_option("-s", action="store", type="string")
     parser.add_option("-g", action="store", type="string")
     parser.add_option("-b", action="store", type="string")
@@ -215,36 +216,35 @@ if __name__ == '__main__':
     (options, args) = parser.parse_args()
 
     runner = unittest.TextTestRunner(verbosity=2)
-    opt= options.s
+    opt = options.s
     bro = options.b
 
     if bro == "ch":
         bro = AvaliableBrowsers.Chrome
-    elif bro =="f":
+    elif bro == "f":
         bro = AvaliableBrowsers.Firefox
-
 
     ttt = None
 
     if opt == 'UserRegistration':
-        ttt=s_user_registration()
+        ttt = s_user_registration()
     elif opt == 'UserRegistration_FOP':
-        ttt=s_user_registration_FOP()
+        ttt = s_user_registration_FOP()
     elif opt == 'Login':
-        ttt=s_login(options.g)
+        ttt = s_login(options.g)
     elif opt == 'UserRegistration_Company':
-        ttt=s_company_reg()
+        ttt = s_company_reg()
     elif opt == 'edit_information':
-        ttt=s_edit_information()
+        ttt = s_edit_information()
     elif opt == 'docs':
-        ttt=s_docs()
+        ttt = s_docs()
     elif opt == 'Employees':
-        ttt=s_Employees()
+        ttt = s_Employees()
     elif opt == 'UserRegistration_Company_Fop':
-        ttt=s_company_fop()
+        ttt = s_company_fop()
     elif opt == 'Login_after_full_registration':
-        ttt=s_login_after_full_registration(options.g, bro)
-        
+        ttt = s_login_after_full_registration(options.g, bro)
+
     if ttt is not None:
         try:
             runner.run(ttt)

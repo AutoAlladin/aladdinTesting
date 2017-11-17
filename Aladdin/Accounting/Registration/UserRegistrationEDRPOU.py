@@ -1,4 +1,4 @@
-from Aladdin.decorators.ParamsTestCase import ParamsTestCase
+from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 
 from Aladdin.Accounting.AladdinUtils import *
 from Prozorro.Utils import *

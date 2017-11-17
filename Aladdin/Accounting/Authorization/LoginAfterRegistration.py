@@ -1,10 +1,12 @@
-from Aladdin.AladdinUtils import *
-from Aladdin.Docs.Docs import Docs
-from Aladdin.Edit.Edit import Edit
-from Aladdin.Registration.Employees import Employees
-from Aladdin.Registration.RegistrationCompanyEDRPOU import RegistrationCompany
-from Aladdin.decorators.ParamsTestCase import ParamsTestCase
-from Aladdin.decorators.StoreTestResult import add_res_to_DB
+import time
+
+from Aladdin.Accounting.AladdinUtils import *
+from Aladdin.Accounting.Docs.Docs import Docs
+from Aladdin.Accounting.Edit.Edit import Edit
+from Aladdin.Accounting.Registration.Employees import Employees
+from Aladdin.Accounting.Registration.RegistrationCompanyEDRPOU import RegistrationCompany
+from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
+from Aladdin.Accounting.decorators.StoreTestResult import add_res_to_DB
 
 
 class LoginAfterRegistrationCompany(ParamsTestCase):

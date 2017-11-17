@@ -2,6 +2,6 @@ import unittest
 
 import sys
 
-from Aladdin import Authorization
+from Aladdin.Accounting import Authorization
 
 unittest.TextTestRunner().run(Authorization.suite1())

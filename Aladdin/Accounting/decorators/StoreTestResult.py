@@ -12,23 +12,25 @@ def get_ip_address():
 
 
 def create_result_DB(init_params_test):
-    pts = init_params_test()
-    """Создане в БД пустого документа с результатом теста """
-    if 'test_name' not in pts:
-        raise Exception("Не указано имя теста для сохранеия результата в БД")
+    def wrapper(bro):
+        pts = init_params_test(bro)
+        """Создане в БД пустого документа с результатом теста """
+        if 'test_name' not in pts:
+            raise Exception("Не указано имя теста для сохранеия результата в БД")
 
-    pts['wts'].result_id = pts["wts"].__mongo__.create_result()
-    res=pts['wts'].__mongo__.test_result.find_one({"_id": pts["wts"].result_id})
+        pts['wts'].result_id = pts["wts"].__mongo__.create_result()
+        res=pts['wts'].__mongo__.test_result.find_one({"_id": pts["wts"].result_id})
 
-    res["test_name"]= pts['test_name']
-    res["test_timestamp"]=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f%z")
-    res["run_info"]["user"] =os.path.split(os.path.expanduser('~'))[-1]
-    res["run_info"]["ip"]=get_ip_address()
+        res["test_name"]= pts['test_name']
+        res["test_timestamp"]=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f%z")
+        res["run_info"]["user"] =os.path.split(os.path.expanduser('~'))[-1]
+        res["run_info"]["ip"]=get_ip_address()
 
-    pts['wts'].__mongo__.test_result.save(res)
+        pts['wts'].__mongo__.test_result.save(res)
 
-    print("init res, ID=", pts['wts'].result_id)
-    return pts
+        print("init res, ID=", pts['wts'].result_id)
+        return pts
+    return wrapper
 
 
 def add_res_to_DB(test_name=None,

@@ -1,8 +1,8 @@
-from Aladdin.Authorization.Login import Login
-from Aladdin.decorators.ParamsTestCase import ParamsTestCase
-from selenium.webdriver.common.by import By
+import time
+
+from Aladdin.Accounting.Authorization.Login import Login
+from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
 
 from Aladdin.Accounting.AladdinUtils import *
 

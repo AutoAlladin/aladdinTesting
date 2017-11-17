@@ -1,5 +1,7 @@
-from Aladdin.Authorization.Login import Login
-from Aladdin.decorators.ParamsTestCase import ParamsTestCase
+import time
+
+from Aladdin.Accounting.Authorization.Login import Login
+from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 
 from Aladdin.Accounting.AladdinUtils import *
 
