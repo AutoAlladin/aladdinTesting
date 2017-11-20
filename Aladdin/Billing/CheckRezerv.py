@@ -10,6 +10,7 @@ from Aladdin.DB.billing import get_db_reserve
 service_fix_money     = "http://192.168.95.153:91/api/balance/WriteOffMoney"
 service_add_reserv    = "http://192.168.95.153:91/api/balance/reserve"
 service_cansel_reserv = "http://192.168.95.153:91/api/balance/CancelReserve"
+service_return_money = "http://192.168.95.153:91/api/balance/ReturnMonies"
 
 empty_acc="2F6D3BCD-8898-44EB-9C0D-9969E5776C66"
 full_acc  = "28DAE9EC-6D86-417C-AC22-46F73EC1EB44"
@@ -41,41 +42,75 @@ fix_money = dict(
 )
 
 
-def rezerv_fix(rzv):
-    try:
-        prev_amount_db = get_db_reserve(rzv["CompanyUuid"])
+def rezerv_fix(rzv, runRserv=True, runCanselResrv=True, runReturn=True):
 
-        rq = requests.post(service_add_reserv,
-                           data=json.dumps(rzv),
-                           headers={'Content-type': 'application/json'}
-                           )
-        amount = rzv["TotalMoney"]
-        print(":", prev_amount_db)
-        amount_db = get_db_reserve(rezerv["CompanyUuid"]) - prev_amount_db
-        print("add_reserv ", amount, "prev_amount_db", prev_amount_db, "amount_db", amount_db)
-    except Exception as e:
-        print(e.__str__())
+    if runRserv:
+        try:
+            prev_amount_db = get_db_reserve(rzv["CompanyUuid"])
+
+            rq = requests.post(service_add_reserv,
+                               data=json.dumps(rzv),
+                               headers={'Content-type': 'application/json'}
+                               )
+            amount = rzv["TotalMoney"]
+            print(":", prev_amount_db)
+            amount_db = get_db_reserve(rezerv["CompanyUuid"]) - prev_amount_db
+            print("add_reserv ", amount, "prev_amount_db", prev_amount_db, "amount_db", amount_db)
+        except Exception as e:
+            print(e.__str__())
+
+    if runCanselResrv:
+        try:
+            cabb_reserv= dict(
+                TenderId=rzv["TenderId"],
+                LotId=rzv["LotId"],
+                CompanyUuid=rzv["CompanyUuid"]
+            )
+            rq = requests.post(service_cansel_reserv,
+                               data=json.dumps(cabb_reserv),
+                               headers={'content-type': 'application/json'})
+            print("HTTP: ", rq.text, rq.reason)
+            print("runCanselResrv")
+        except Exception as e:
+            print(e.__str__())
+
+    if runReturn:
+        try:
+            returnMoney = dict(
+                TenderId=rzv["TenderId"]
+                # LotId=rzv["LotId"],
+                # CompanyUuid=rzv["CompanyUuid"]
+            )
+            rq = requests.post(service_return_money,
+                               data=json.dumps(returnMoney),
+                               headers={'content-type': 'application/json'})
+            print("HTTP: ", rq.text, rq.reason)
+            print("service_return_money")
+        except Exception as e:
+            print(e.__str__())
+
+
 
     # service_fix_money
-    try:
-        print()
-        print("service_fix_money")
-
-        fix_mon = dict(
-            TenderId=rzv["TenderId"],
-            SiteType=1  # Prozorro
-        )
-        prev_amount_db = get_db_reserve(rezerv["CompanyUuid"])
-
-        rq = requests.post(service_fix_money,
-                           data=json.dumps(fix_mon),
-                           headers={'Content-type': 'application/json'}
-                           )
-        print("HTTP: ", rq.text, rq.reason)
-        amount_db = get_db_reserve(rezerv["CompanyUuid"])
-        print("fixed ", amount, "prev_amount_db", prev_amount_db, "amount_db", amount_db)
-    except Exception as e:
-        print(e.__str__())
+    # try:
+    #     print()
+    #     print("service_fix_money")
+    #
+    #     fix_mon = dict(
+    #         TenderId=rzv["TenderId"],
+    #         SiteType=1  # Prozorro
+    #     )
+    #     prev_amount_db = get_db_reserve(rezerv["CompanyUuid"])
+    #
+    #     rq = requests.post(service_fix_money,
+    #                        data=json.dumps(fix_mon),
+    #                        headers={'Content-type': 'application/json'}
+    #                        )
+    #     print("HTTP: ", rq.text, rq.reason)
+    #     amount_db = get_db_reserve(rezerv["CompanyUuid"])
+    #     print("fixed ", amount, "prev_amount_db", prev_amount_db, "amount_db", amount_db)
+    # except Exception as e:
+    #     print(e.__str__())
 
 if __name__ == "__main__":
 
@@ -110,14 +145,7 @@ if __name__ == "__main__":
     #     print(e.__str__())
     #
     # #  отменить нормальный резерв - еще раз
-    # try:
-    #     rq = requests.post(service_cansel_reserv,
-    #                        data=json.dumps(cansel_reserv),
-    #                        headers={'content-type': 'application/json'})
-    #     print("HTTP: ", rq.text, rq.reason)
-    #     print("positiv", amount, amount_db, amount == amount_db)
-    # except Exception as e:
-    #     print(e.__str__())
+
 
 
 
@@ -145,10 +173,10 @@ if __name__ == "__main__":
     # rezerv4 = rezerv.copy()
     # rezerv5 = rezerv.copy()
 
-
-    rezerv_fix(rezerv1)
-    rezerv_fix(rezerv2)
-    rezerv_fix(rezerv3)
+    #
+    rezerv_fix(rezerv1,runRserv=True, runCanselResrv=True, runReturn =True)
+    rezerv_fix(rezerv2,runRserv=True, runCanselResrv=False, runReturn =True)
+    rezerv_fix(rezerv3,runRserv=True, runCanselResrv=False, runReturn =True)
 
     # list_zrv = [rezerv1,rezerv2, rezerv3]
     # ex = ProcessPoolExecutor(max_workers=3)
