@@ -10,16 +10,22 @@ conn_billing_test={
 }
 
 # запрос к БД для проверки наличия счета
-sql_get_new_account="select AccountNumber, CompanyUuid, CompanyEdrpo, "+ \
-                     " Balance, ReservedAmount, convert(varchar(250), DateModify) as DateTimeChange "+  \
-                     " from BillingTest.dbo.Accounts  where CompanyUuid ='{company_uuid}' and CompanyEdrpo='{company_edr}' "
+SQL = dict(new_account="select AccountNumber, CompanyUuid, CompanyEdrpo, "+ \
+                     " Balance, ReservedAmount, convert(varchar(250), DateModify) as DateModify "+  \
+                     " from BillingTest.dbo.Accounts  where CompanyUuid ='{company_uuid}' and CompanyEdrpo='{company_edr}' ",
+
+           uid_get_balance="select AccountNumber, CompanyUuid, CompanyEdrpo, "+ \
+                    " Balance, ReservedAmount, convert(varchar(250), DateModify) as DateModify " +  \
+                    " from BillingTest.dbo.Accounts  where  CompanyUuid ='{0}'"
+
+           )
 
 def check_new_account(uuid, edr):
     # подключение к БД
     mssql_connection = get_connection(**conn_billing_test)
     crs_account = mssql_connection.cursor()
 
-    sql = sql_get_new_account.format(company_uuid=uuid, company_edr=edr)
+    sql = SQL["new_account"].format(company_uuid=uuid, company_edr=edr)
     crs_account.execute(sql)
     rows = crs_account.fetchall()
 
@@ -28,3 +34,37 @@ def check_new_account(uuid, edr):
         return "PASS: Account {0}, edr {1} created".format(uuid, edr)
     else:
         return "FAILED: Account {0}, edr {1} NOT created".format(uuid, edr)
+
+def get_db_balance(uuid):
+    mssql_connection = get_connection(**conn_billing_test)
+    crs_account = mssql_connection.cursor()
+
+    sql = SQL["uid_get_balance"].format(uuid)
+    crs_account.execute(sql)
+    row = crs_account.fetchone()
+
+    # если есть
+    if row is None:
+        return  None
+    else:
+        if row.Balance is None:
+            return 0.0
+        else:
+            return float(row.Balance)
+
+def get_db_reserve(uuid):
+    mssql_connection = get_connection(**conn_billing_test)
+    crs_account = mssql_connection.cursor()
+
+    sql = SQL["uid_get_balance"].format(uuid)
+    crs_account.execute(sql)
+    row = crs_account.fetchone()
+
+    # если есть
+    if row is None:
+        return  None
+    else:
+        if row.ReservedAmount is None:
+            return 0.0
+        else:
+            return float(row.ReservedAmount)
