@@ -14,6 +14,8 @@ from Aladdin.Accounting.Registration.Employees import Employees
 from Aladdin.Accounting.Authorization.LoginAfterRegistration import LoginAfterRegistrationCompany
 from Aladdin.Accounting.decorators.ParamsTestSuite import ParamsTestSuite
 from Aladdin.Accounting.decorators.StoreTestResult import create_result_DB
+from Aladdin.Billing.CreateAccount import *
+from Aladdin.Billing.CreateAccount import CreateAccount
 
 
 def s_user_registration():
@@ -158,8 +160,8 @@ def s_edit_information():
 def s_docs():
     # suite = unittest.defaultTestLoader.loadTestsFromTestCase(Docs)
     suite = unittest.TestSuite()
-    suite.addTest(Docs('test_1_Login'))
-    suite.addTest(Docs('test_2_User_profile'))
+    suite.addTest(Docs("test_1_Login"))
+    suite.addTest(Docs("test_2_User_profile"))
     return suite
 
 
@@ -206,6 +208,18 @@ def s_login_after_full_registration(g, cmd_bro):
     return suite
 
 
+def s_createAccount_billing():
+    suite = ParamsTestSuite(_params={})
+
+    suite.addTest(CreateAccount("test_01_new_UUID_new_EDR"))
+    suite.addTest(CreateAccount("test_02_new_UUID_old_EDR"))
+    suite.addTest(CreateAccount("test_03_old_UUID_old_EDR"))
+    suite.addTest(CreateAccount("test_04_fail_UUID_new_EDR"))
+    suite.addTest(CreateAccount("test_05_new_UUID_less_EDR"))
+    suite.addTest(CreateAccount("test_06_new_UUID_more_EDR"))
+
+    return suite
+
 if __name__ == '__main__':
 
     parser = OptionParser()
@@ -244,6 +258,8 @@ if __name__ == '__main__':
         ttt = s_company_fop()
     elif opt == 'Login_after_full_registration':
         ttt = s_login_after_full_registration(options.g, bro)
+    elif opt == 'CreateAccount':
+        ttt = s_createAccount_billing()
 
     if ttt is not None:
         try:
@@ -253,6 +269,7 @@ if __name__ == '__main__':
                 {"_id": ttt.params["result_id"]},
                 {"$set": {"test_result": "FAILED"}})
         finally:
-            ttt.params["DB"].test_result.update(
-                {"_id": ttt.params["result_id"]},
-                {"$set": {"test_result": "PASSED"}})
+            if "DB" in ttt.params:
+                ttt.params["DB"].test_result.update(
+                    {"_id": ttt.params["result_id"]},
+                    {"$set": {"test_result": "PASSED"}})
