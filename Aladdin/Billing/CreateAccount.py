@@ -70,7 +70,7 @@ class CreateAccount(unittest.TestCase):
         self.start_test_method = datetime.datetime.now()
         self.final_test_method = datetime.datetime.now()
         print("duration", (self.final_test_method - self.start_test_method).total_seconds())
-        print(res)
+
 
         self.assertEqual(res[0:4], "PASS")
 
@@ -87,7 +87,7 @@ class CreateAccount(unittest.TestCase):
         self.start_test_method = datetime.datetime.now()
         self.final_test_method = datetime.datetime.now()
         print("duration", (self.final_test_method - self.start_test_method).total_seconds())
-        print(res)
+
 
         self.assertEqual(res[0:4], "PASS")
 
@@ -103,7 +103,7 @@ class CreateAccount(unittest.TestCase):
         self.start_test_method = datetime.datetime.now()
         self.final_test_method = datetime.datetime.now()
         print("duration", (self.final_test_method - self.start_test_method).total_seconds())
-        print(res)
+
 
         self.assertEqual(res[0:4], "PASS")
 
@@ -120,7 +120,7 @@ class CreateAccount(unittest.TestCase):
         self.start_test_method = datetime.datetime.now()
         self.final_test_method = datetime.datetime.now()
         print("duration", (self.final_test_method - self.start_test_method).total_seconds())
-        print(res)
+
 
         self.assertEqual(res[0:4], "PASS")
 
@@ -134,7 +134,7 @@ class CreateAccount(unittest.TestCase):
         self.start_test_method = datetime.datetime.now()
         self.final_test_method = datetime.datetime.now()
         print("duration", (self.final_test_method - self.start_test_method).total_seconds())
-        print(res)
+
 
         TestCase.assertEqual(res[0:4], "PASS")
 
@@ -148,7 +148,7 @@ class CreateAccount(unittest.TestCase):
         self.start_test_method = datetime.datetime.now()
         self.final_test_method = datetime.datetime.now()
         print("duration", (self.final_test_method - self.start_test_method).total_seconds())
-        print(res)
+
 
         self.assertEqual(res[0:4], "PASS")
 

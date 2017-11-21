@@ -27,7 +27,7 @@ sql = dict(
                          " from BillingTest.dbo.Accounts  where  CompanyUuid ='{0}' and Balance {1}",
 
     balance= "select AccountNumber, CompanyUuid, CompanyEdrpo, "+ \
-                         " Balance, ReservedAmount, convert(varchar(250), DateModify) as DateTimeChange" +  \
+                         "  Balance, ReservedAmount, convert(varchar(250), DateModify) as DateTimeChange" +  \
                          " from BillingTest.dbo.Accounts  where  Balance {0}",
     up_bal=" update BillingTest.dbo.Accounts set Balance=1000 where CompanyEdrpo ='{0}'",
 

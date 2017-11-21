@@ -16,6 +16,7 @@ from Aladdin.Accounting.decorators.ParamsTestSuite import ParamsTestSuite
 from Aladdin.Accounting.decorators.StoreTestResult import create_result_DB
 from Aladdin.Billing.CreateAccount import *
 from Aladdin.Billing.CreateAccount import CreateAccount
+from Aladdin.Billing.CheckRezerv import CheckReserv
 
 
 def s_user_registration():
@@ -220,6 +221,16 @@ def s_createAccount_billing():
 
     return suite
 
+
+def s_checkRezerv():
+    suite = ParamsTestSuite(_params={})
+
+    suite.addTest(CheckReserv("test_01_rezerv"))
+    suite.addTest(CheckReserv("test_02_CanselResrv"))
+
+    return suite
+
+
 if __name__ == '__main__':
 
     parser = OptionParser()
@@ -260,6 +271,8 @@ if __name__ == '__main__':
         ttt = s_login_after_full_registration(options.g, bro)
     elif opt == 'CreateAccount':
         ttt = s_createAccount_billing()
+    elif opt == 'CheckReserv':
+        ttt = s_checkRezerv()
 
     if ttt is not None:
         try:
