@@ -16,7 +16,7 @@ from Aladdin.Accounting.decorators.ParamsTestSuite import ParamsTestSuite
 from Aladdin.Accounting.decorators.StoreTestResult import create_result_DB
 from Aladdin.Billing.CreateAccount import *
 from Aladdin.Billing.CreateAccount import CreateAccount
-
+from Aladdin.Billing.CheckBalance import CheckBalance
 
 def s_user_registration():
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(UserRegistrationEDRPOU)
@@ -219,6 +219,12 @@ def s_createAccount_billing():
     suite.addTest(CreateAccount("test_06_new_UUID_more_EDR"))
 
     return suite
+
+def s_checkBalance():
+    suite = ParamsTestSuite(_params={})
+
+    suite.addTest(CheckBalance("test_01_empty_acc"))
+    suite.addTest(CheckBalance("test_02_full_acc"))
 
 if __name__ == '__main__':
 
