@@ -17,7 +17,7 @@ from Aladdin.Accounting.decorators.StoreTestResult import create_result_DB
 from Aladdin.Billing.CreateAccount import *
 from Aladdin.Billing.CreateAccount import CreateAccount
 from Aladdin.Billing.CheckRezerv import CheckReserv
-
+from Aladdin.Billing.CheckBalance import CheckBalance
 
 def s_user_registration():
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(UserRegistrationEDRPOU)
@@ -221,6 +221,14 @@ def s_createAccount_billing():
 
     return suite
 
+def s_checkBalance():
+    suite = ParamsTestSuite(_params={})
+
+    suite.addTest(CheckBalance("test_01_empty_acc"))
+    suite.addTest(CheckBalance("test_02_full_acc"))
+
+    return suite
+
 
 def s_checkRezerv():
     suite = ParamsTestSuite(_params={})
@@ -273,6 +281,8 @@ if __name__ == '__main__':
         ttt = s_createAccount_billing()
     elif opt == 'CheckReserv':
         ttt = s_checkRezerv()
+    elif opt == 'CheckBalance':
+        ttt = s_checkBalance()
 
     if ttt is not None:
         try:
