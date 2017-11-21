@@ -28,7 +28,7 @@ class CheckBalance(unittest.TestCase):
 # if __name__ == "__main__":
 #     amount=0.0
 
-    # for new empty accout
+    # for new empty account
     # try:
     #     rq = requests.get(service.format(empty_acc))
     #     amount = float(rq.text)

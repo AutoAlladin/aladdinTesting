@@ -226,6 +226,8 @@ def s_checkBalance():
     suite.addTest(CheckBalance("test_01_empty_acc"))
     suite.addTest(CheckBalance("test_02_full_acc"))
 
+    return suite
+
 if __name__ == '__main__':
 
     parser = OptionParser()
@@ -266,6 +268,8 @@ if __name__ == '__main__':
         ttt = s_login_after_full_registration(options.g, bro)
     elif opt == 'CreateAccount':
         ttt = s_createAccount_billing()
+    elif opt == 'CheckBalance':
+        ttt = s_checkBalance()
 
     if ttt is not None:
         try:
