@@ -210,6 +210,17 @@ def s_login_after_full_registration(g, cmd_bro):
 
 
 def s_createAccount_billing():
+    """
+        по быстрому тестируем создание счетов от фонаря
+        без параметров:
+        test_01_new_UUID_new_EDR  - новый ид, едр из файла з претензией на не использованность
+        test_02_new_UUID_old_EDR  - новый ид, тот же едр
+        test_03_old_UUID_old_EDR  - попытка еще раз создать такой же счет
+        test_04_fail_UUID_new_EDR - заведомо неправильный ИД, новый едр
+        test_05_new_UUID_less_EDR - новый ИД, заведомо неправильный короткий ЕДР
+        test_06_new_UUID_more_EDR - новый ИД, заведомо неправильный длинный ЕДР
+        :return: ParamsTestSuite
+    """
     suite = ParamsTestSuite(_params={})
 
     suite.addTest(CreateAccount("test_01_new_UUID_new_EDR"))
