@@ -5,6 +5,7 @@ import time
 import uuid
 import unittest
 from unittest import TestCase
+from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 
 from Aladdin.DB.billing import check_new_account
 
@@ -45,8 +46,7 @@ def new_account(que, str_json,in_dic):
     return res
 
 
-
-class CreateAccount(unittest.TestCase):
+class CreateAccount(ParamsTestCase):
 
     @classmethod
     def setUpClass(cls):
