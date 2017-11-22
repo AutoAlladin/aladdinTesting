@@ -221,14 +221,27 @@ def s_createAccount_billing():
         test_06_new_UUID_more_EDR - новый ИД, заведомо неправильный длинный ЕДР
         :return: ParamsTestSuite
     """
-    suite = ParamsTestSuite(_params={})
 
-    suite.addTest(CreateAccount("test_01_new_UUID_new_EDR"))
-    suite.addTest(CreateAccount("test_02_new_UUID_old_EDR"))
-    suite.addTest(CreateAccount("test_03_old_UUID_old_EDR"))
-    suite.addTest(CreateAccount("test_04_fail_UUID_new_EDR"))
-    suite.addTest(CreateAccount("test_05_new_UUID_less_EDR"))
-    suite.addTest(CreateAccount("test_06_new_UUID_more_EDR"))
+    in_dic = dict()
+    with open(os.path.dirname(os.path.abspath(__file__)) + '\\input.json', 'r',
+              encoding="UTF-8") as test_params_file:
+        in_dic = json.load(test_params_file)
+
+    in_dic["new_account"]["uuid"] = str(uuid.uuid4())
+
+    q = dict(in_dic=json.load(test_params_file),
+             msg_create_company_account=json.dumps({'companyAccount': in_dic["new_account"]}),
+             old_id=in_dic["new_account"]["uuid"],
+             old_edr=in_dic["new_account"]["edrpou"]
+            )
+
+    suite = ParamsTestSuite(_params={})
+    suite.addTest(CreateAccount("test_01_new_UUID_new_EDR", _params=q))
+    suite.addTest(CreateAccount("test_02_new_UUID_old_EDR", _params=q))
+    suite.addTest(CreateAccount("test_03_old_UUID_old_EDR", _params=q))
+    suite.addTest(CreateAccount("test_04_fail_UUID_new_EDR", _params=q))
+    suite.addTest(CreateAccount("test_05_new_UUID_less_EDR", _params=q))
+    suite.addTest(CreateAccount("test_06_new_UUID_more_EDR", _params=q))
 
     return suite
 

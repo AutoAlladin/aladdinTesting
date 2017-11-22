@@ -50,90 +50,81 @@ class CreateAccount(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.in_dic = dict()
-        with open(os.path.dirname(os.path.abspath(__file__)) + '\\input.json', 'r',
-                  encoding="UTF-8") as test_params_file:
-            cls.in_dic = json.load(test_params_file)
-
-        cls.in_dic["new_account"]["uuid"] = str(uuid.uuid4())
-        cls.msg_create_company_account = json.dumps({'companyAccount': cls.in_dic["new_account"]})
-        cls.old_id = cls.in_dic["new_account"]["uuid"]
-        cls.old_edr = cls.in_dic["new_account"]["edrpou"]
 
 
-    def test_01_new_UUID_new_EDR(self):
-        self.start_test_method = datetime.datetime.now()
-        res = new_account(que='need_create_company_account',
-                          str_json=self.msg_create_company_account,
-                          in_dic=self.in_dic)
-
-        print("duration", (datetime.datetime.now() - self.start_test_method).total_seconds())
-        self.assertEqual(res[0:4], "PASS")
-
-
-    def test_02_new_UUID_old_EDR(self):
-        self.start_test_method = datetime.datetime.now()
-        self.in_dic["new_account"]["uuid"] = str(uuid.uuid4())
-        self.in_dic["new_account"]["edrpou"] = self.old_edr
-        self.msg_create_company_account = json.dumps({'companyAccount': self.in_dic["new_account"]})
-
-        res = new_account(que='need_create_company_account',
-                    str_json=self.msg_create_company_account,
-                    in_dic=self.in_dic)
-
-        print("duration", (datetime.datetime.now() - self.start_test_method).total_seconds())
-        self.assertEqual(res[0:6], "FAILED")
-
-
-    def test_03_old_UUID_old_EDR(self):
-        self.start_test_method = datetime.datetime.now()
-        self.in_dic["new_account"]["uuid"] = self.old_id
-        self.in_dic["new_account"]["edrpou"]=self.old_edr
-        self.msg_create_company_account = json.dumps({'companyAccount': self.in_dic["new_account"]})
-
-        res = new_account(que='need_create_company_account',
-                    str_json=self.msg_create_company_account,
-                    in_dic=self.in_dic)
-
-        print("duration", (datetime.datetime.now() - self.start_test_method).total_seconds())
-        self.assertEqual(res[0:4], "PASS")
-
-
-    def test_04_fail_UUID_new_EDR(self):
-        self.start_test_method = datetime.datetime.now()
-        self.in_dic["new_account"]["uuid"] = '000000000'
-        self.in_dic["new_account"]["edrpou"]=self.old_edr
-        self.msg_create_company_account = json.dumps({'companyAccount': self.in_dic["new_account"]})
-
-        res = new_account(que='need_create_company_account',
-                    str_json=self.msg_create_company_account,
-                    in_dic=self.in_dic)
-
-        print("duration", (datetime.datetime.now() - self.start_test_method).total_seconds())
-        self.assertEqual(res[0:4], "PASS")
-
-    def test_05_new_UUID_less_EDR(self):
-        start_test_method = datetime.datetime.now()
-        self.in_dic["new_account"]["uuid"] = str(uuid.uuid4())
-        self.msg_create_company_account = json.dumps({'companyAccount': {"uuid": self.old_id, "edrpou": "123456"}})
-
-        res = new_account(que='need_create_company_account',
-                          str_json=self.msg_create_company_account,
-                          in_dic=self.in_dic)
-
-        print("duration", (datetime.datetime.now() - start_test_method).total_seconds())
-        self.assertEqual(res[0:4], "PASS")
-
-    def test_06_new_UUID_more_EDR(self):
-        start_test_method = datetime.datetime.now()
-        self.in_dic["new_account"]["uuid"] = str(uuid.uuid4())
-        self.msg_create_company_account = json.dumps({'companyAccount': {"uuid": self.old_id, "edrpou": "123456789012345678"}})
-
-        res = new_account(que='need_create_company_account',
-                    str_json=self.msg_create_company_account,
-                    in_dic=self.in_dic)
-
-        print("duration", ( datetime.datetime.now() - start_test_method).total_seconds())
-        self.assertEqual(res[0:4], "PASS")
+        def test_01_new_UUID_new_EDR(self):
+            self.start_test_method = datetime.datetime.now()
+            res = new_account(que='need_create_company_account',
+                              str_json=self.msg_create_company_account,
+                              in_dic=self.in_dic)
+    
+            print("duration", (datetime.datetime.now() - self.start_test_method).total_seconds())
+            self.assertEqual(res[0:4], "PASS")
+    
+    
+        def test_02_new_UUID_old_EDR(self):
+            self.start_test_method = datetime.datetime.now()
+            self.in_dic["new_account"]["uuid"] = str(uuid.uuid4())
+            self.in_dic["new_account"]["edrpou"] = self.old_edr
+            self.msg_create_company_account = json.dumps({'companyAccount': self.in_dic["new_account"]})
+    
+            res = new_account(que='need_create_company_account',
+                        str_json=self.msg_create_company_account,
+                        in_dic=self.in_dic)
+    
+            print("duration", (datetime.datetime.now() - self.start_test_method).total_seconds())
+            self.assertEqual(res[0:6], "FAILED")
+    
+    
+        def test_03_old_UUID_old_EDR(self):
+            self.start_test_method = datetime.datetime.now()
+            self.in_dic["new_account"]["uuid"] = self.old_id
+            self.in_dic["new_account"]["edrpou"]=self.old_edr
+            self.msg_create_company_account = json.dumps({'companyAccount': self.in_dic["new_account"]})
+    
+            res = new_account(que='need_create_company_account',
+                        str_json=self.msg_create_company_account,
+                        in_dic=self.in_dic)
+    
+            print("duration", (datetime.datetime.now() - self.start_test_method).total_seconds())
+            self.assertEqual(res[0:4], "PASS")
+    
+    
+        def test_04_fail_UUID_new_EDR(self):
+            self.start_test_method = datetime.datetime.now()
+            self.in_dic["new_account"]["uuid"] = '000000000'
+            self.in_dic["new_account"]["edrpou"]=self.old_edr
+            self.msg_create_company_account = json.dumps({'companyAccount': self.in_dic["new_account"]})
+    
+            res = new_account(que='need_create_company_account',
+                        str_json=self.msg_create_company_account,
+                        in_dic=self.in_dic)
+    
+            print("duration", (datetime.datetime.now() - self.start_test_method).total_seconds())
+            self.assertEqual(res[0:6], "FAILED")
+    
+        def test_05_new_UUID_less_EDR(self):
+            start_test_method = datetime.datetime.now()
+            self.in_dic["new_account"]["uuid"] = str(uuid.uuid4())
+            self.msg_create_company_account = json.dumps({'companyAccount': {"uuid": self.old_id, "edrpou": "123456"}})
+    
+            res = new_account(que='need_create_company_account',
+                              str_json=self.msg_create_company_account,
+                              in_dic=self.in_dic)
+    
+            print("duration", (datetime.datetime.now() - start_test_method).total_seconds())
+            self.assertEqual(res[0:6], "FAILED")
+    
+        def test_06_new_UUID_more_EDR(self):
+            start_test_method = datetime.datetime.now()
+            self.in_dic["new_account"]["uuid"] = str(uuid.uuid4())
+            self.msg_create_company_account = json.dumps({'companyAccount': {"uuid": self.old_id, "edrpou": "123456789012345678"}})
+    
+            res = new_account(que='need_create_company_account',
+                        str_json=self.msg_create_company_account,
+                        in_dic=self.in_dic)
+    
+            print("duration", ( datetime.datetime.now() - start_test_method).total_seconds())
+            self.assertEqual(res[0:6], "FAILED")
 
 

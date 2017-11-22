@@ -1,6 +1,6 @@
 {
     "new_account": {
-        "uuid": "f97358c0-9d1c-46af-8d12-7d24b89b2ee4",
+        "uuid": "14bbe0c4-5799-457d-a218-3f64bf140b08",
         "edrpou": "30000021"
     },
     "used_data": {
@@ -801,6 +801,37 @@
             },
             {
                 "uuid": "f97358c0-9d1c-46af-8d12-7d24b89b2ee4",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "1772b5a9-e388-4218-bfca-9a2af363528f",
+                "edrpou": "30000021",
+                "status": "PASS"
+            },
+            {
+                "uuid": "bb5a77e6-4621-42e3-8226-a54a80a36eb0",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "1772b5a9-e388-4218-bfca-9a2af363528f",
+                "edrpou": "30000021",
+                "status": "PASS"
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000021",
+                "status": "FAIL",
+                "error_msg": "('42000', '[42000] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')"
+            },
+            {
+                "uuid": "aff4fcfc-2a43-4083-b6f0-357aaef769fc",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "14bbe0c4-5799-457d-a218-3f64bf140b08",
                 "edrpou": "30000021",
                 "status": "FAIL"
             }
