@@ -233,10 +233,20 @@ def s_createAccount_billing():
     return suite
 
 def s_checkBalance():
-    suite = ParamsTestSuite(_params={})
+    """
+        test_01_empty_acc - для нового счета пустого, None
+        test_02_full_acc - ля счета с позитивным остатком
+    :return:
+    """
 
-    suite.addTest(CheckBalance("test_01_empty_acc"))
-    suite.addTest(CheckBalance("test_02_full_acc"))
+    q = dict(service= "http://192.168.95.153:91/api/balance?companyUuid={0}",
+             empty_acc="2F6D3BCD-8898-44EB-9C0D-9969E5776C66",
+             full_acc="28DAE9EC-6D86-417C-AC22-46F73EC1EB44"
+             )
+
+    suite = ParamsTestSuite( _params={})
+    suite.addTest(CheckBalance("test_01_empty_acc", _params= q))
+    suite.addTest(CheckBalance("test_02_full_acc", _params= q))
 
     return suite
 
