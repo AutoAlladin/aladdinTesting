@@ -1,7 +1,7 @@
 {
     "new_account": {
-        "uuid": "14bbe0c4-5799-457d-a218-3f64bf140b08",
-        "edrpou": "30000021"
+        "uuid": "39dd4e94-b65d-4c5e-bf79-bfd813756f9e",
+        "edrpou": "30000040"
     },
     "used_data": {
         "accounts": [
@@ -833,6 +833,740 @@
             {
                 "uuid": "14bbe0c4-5799-457d-a218-3f64bf140b08",
                 "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+                "edrpou": "30000021",
+                "status": "PASS"
+            },
+            {
+                "uuid": "de7ccb6d-07d5-4a09-9776-459637b4c1ad",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "053ab736-34ed-409d-bf62-56e0d4484042",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "a36234ee-f790-4024-b42f-8af422adb578",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "514a9901-6eaa-47ca-a88a-628eca7c8ac4",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "53d99780-117b-4dfb-a6f0-577512899805",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "514a9901-6eaa-47ca-a88a-628eca7c8ac4",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "f89e3dd4-1895-4fdb-9fe6-588e69f664bd",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "803376ab-1953-40f1-a6da-7ea8177975e2",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "34b78033-7ddf-4aff-888b-a569bb38a62f",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "457dd16f-0b3d-4c88-8d5d-19d1f4626d23",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "34b78033-7ddf-4aff-888b-a569bb38a62f",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000021",
+                "status": "FAIL",
+                "error_msg": "('42000', '[42000] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')"
+            },
+            {
+                "uuid": "dfd0af0b-bb4d-4e8d-a249-f3bd3217aabb",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "7928ce9e-2086-41be-986e-98b6fdad125b",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "9b25a184-aa01-43d4-98d9-7a794968b5ad",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "4abfd7b5-9ae4-4d8a-9f3e-cf911dfa5fa4",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "9b25a184-aa01-43d4-98d9-7a794968b5ad",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000021",
+                "status": "FAIL",
+                "error_msg": "('42000', '[42000] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')"
+            },
+            {
+                "uuid": "194b448c-5b91-44ba-97f9-9f7f60dfc7e4",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "b4bf28ea-fa91-46a2-b7aa-e2fb9051fe9b",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "1f7d5eb5-72d7-4611-af9b-632776178060",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "d21a6b0d-4ad5-47c8-a81d-ce6829f6e863",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "1f7d5eb5-72d7-4611-af9b-632776178060",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000021",
+                "status": "FAIL",
+                "error_msg": "('42000', '[42000] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')"
+            },
+            {
+                "uuid": "cd647e5c-d0b3-4706-b3a5-f1610a3f4dd1",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "f7504436-bf2e-48cd-a7eb-5482784125da",
+                "edrpou": "30000021",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "539b13d2-dc5e-47ca-8fb0-1be93f44f7d2",
+                "edrpou": "30000025",
+                "status": "PASS"
+            },
+            {
+                "uuid": "ff44e3b1-ce2c-418c-af1e-0be42f0eca8f",
+                "edrpou": "30000025",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "539b13d2-dc5e-47ca-8fb0-1be93f44f7d2",
+                "edrpou": "30000025",
+                "status": "PASS"
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000025",
+                "status": "FAIL",
+                "error_msg": "('42000', '[42000] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')"
+            },
+            {
+                "uuid": "44afeaa0-ce17-48a9-a721-966b9fdf3307",
+                "edrpou": "30000025",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "1e35d80d-6727-4f68-a0cd-b05829d8c811",
+                "edrpou": "30000025",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "c9b72978-e91a-4c84-a8d5-e1b552f9f5a5",
+                "edrpou": "30000025",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "ca250a1d-941b-4557-a7eb-2900287c139a",
+                "edrpou": "30000025",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "1ed812a2-9b89-4e2e-95da-df5377b0e221",
+                "edrpou": "30000026",
+                "status": "PASS"
+            },
+            {
+                "uuid": "da9e84fe-7a26-44cd-977b-e205c0a4f238",
+                "edrpou": "30000026",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "1ed812a2-9b89-4e2e-95da-df5377b0e221",
+                "edrpou": "30000026",
+                "status": "PASS"
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000026",
+                "status": "FAIL",
+                "error_msg": "('42000', '[42000] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')"
+            },
+            {
+                "uuid": "f9d0b235-2fd5-4fe1-8228-bc2c544651bb",
+                "edrpou": "30000026",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "b683049b-eebf-43ad-acf9-326da179bab1",
+                "edrpou": "30000026",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "329c754e-ce71-4124-9983-7911cc9d1267",
+                "edrpou": "30000026",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "68816350-7489-4932-8603-46731e894659",
+                "edrpou": "30000026",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "18f87cfa-227a-4160-a5b3-39fad1f3d5cf",
+                "edrpou": "30000027",
+                "status": "PASS"
+            },
+            {
+                "uuid": "91fbaa3e-fae8-4c71-9a28-be3a0455cf0b",
+                "edrpou": "30000027",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "18f87cfa-227a-4160-a5b3-39fad1f3d5cf",
+                "edrpou": "30000027",
+                "status": "PASS"
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000027",
+                "status": "FAIL",
+                "error_msg": "('42000', '[42000] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')"
+            },
+            {
+                "uuid": "21d4273c-7a34-4005-9b2a-7d96849a8aa5",
+                "edrpou": "30000027",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "9cff2933-8634-42c3-a667-508c2a427fda",
+                "edrpou": "30000027",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "1cd981e6-eb60-42a8-899a-37258dad26b0",
+                "edrpou": "30000027",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "363d02d8-f866-4c6a-8298-03dbd129a9fd",
+                "edrpou": "30000028",
+                "status": "PASS"
+            },
+            {
+                "uuid": "b9cf201b-70e1-4386-a913-d2aefcfaccd1",
+                "edrpou": "30000028",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "363d02d8-f866-4c6a-8298-03dbd129a9fd",
+                "edrpou": "30000028",
+                "status": "PASS"
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000028",
+                "status": "FAIL",
+                "error_msg": "('42000', '[42000] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')"
+            },
+            {
+                "uuid": "11b563cb-c7b2-4300-9928-8b161429a3c5",
+                "edrpou": "30000028",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "83ccb6ff-b484-4311-929c-787a7add5fea",
+                "edrpou": "30000028",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "d999f530-0fe1-4281-a0ef-dad2a738e4e7",
+                "edrpou": "30000028",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "7c863db9-ffe7-49de-a560-6b446d4182fc",
+                "edrpou": "30000028",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "d999f530-0fe1-4281-a0ef-dad2a738e4e7",
+                "edrpou": "30000028",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "a16ad941-0ca6-4a68-8516-d3c0194fe796",
+                "edrpou": "30000029",
+                "status": "PASS"
+            },
+            {
+                "uuid": "69470cce-1a32-447d-9637-c31f8c5201ce",
+                "edrpou": "30000029",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "a16ad941-0ca6-4a68-8516-d3c0194fe796",
+                "edrpou": "30000029",
+                "status": "PASS"
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000029",
+                "status": "FAIL",
+                "error_msg": "('42000', '[42000] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')"
+            },
+            {
+                "uuid": "9b6b8198-8d61-4922-a01d-0d13b8bebb9e",
+                "edrpou": "30000029",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "d0593522-f4c9-4a55-b27b-d3cfce6e485c",
+                "edrpou": "30000029",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "4d45810c-15d7-4030-8aec-6e80db71819a",
+                "edrpou": "30000029",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "fee78c84-b3cb-4c05-8f2b-019f6a1b4eba",
+                "edrpou": "30000029",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "4d45810c-15d7-4030-8aec-6e80db71819a",
+                "edrpou": "30000029",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000029",
+                "status": "FAIL",
+                "error_msg": "('42000', '[42000] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')"
+            },
+            {
+                "uuid": "1f16a831-7f7c-4171-92bd-8c640d85446a",
+                "edrpou": "30000029",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "7f00e9fd-aeea-4097-9ddd-3d911527b049",
+                "edrpou": "30000030",
+                "status": "PASS"
+            },
+            {
+                "uuid": "9c142b3b-2480-407f-843a-0c73ca7d96fb",
+                "edrpou": "30000030",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "7f00e9fd-aeea-4097-9ddd-3d911527b049",
+                "edrpou": "30000030",
+                "status": "PASS"
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000030",
+                "status": "FAIL",
+                "error_msg": "('42000', '[42000] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')"
+            },
+            {
+                "uuid": "d8d2bd0e-84bb-414d-95fb-b0088a5bd9f6",
+                "edrpou": "30000030",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "cb88f47f-7626-4f4e-831f-0d93c4417d8b",
+                "edrpou": "30000030",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "9bd8023d-75ae-4367-8e2f-d1cd94b9f9a6",
+                "edrpou": "30000030",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "e0125e0a-da93-4bde-884c-4502534d28e1",
+                "edrpou": "30000031",
+                "status": "PASS"
+            },
+            {
+                "uuid": "6196a05e-a5c5-4a32-81a5-506976bfd359",
+                "edrpou": "30000031",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "e0125e0a-da93-4bde-884c-4502534d28e1",
+                "edrpou": "30000031",
+                "status": "PASS"
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000031",
+                "status": "FAIL",
+                "error_msg": "('42000', '[42000] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')"
+            },
+            {
+                "uuid": "b7361176-ed70-4d59-9bc1-4bdd5e2685f4",
+                "edrpou": "30000031",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "60fe75fe-7f88-469d-8322-7b9a9e249d5b",
+                "edrpou": "30000031",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "bf9bdee2-8b19-4b4a-91ea-07640beea7be",
+                "edrpou": "30000032",
+                "status": "PASS"
+            },
+            {
+                "uuid": "2bd9c630-629b-4fbc-9d59-bcf427f1c50e",
+                "edrpou": "30000032",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "bf9bdee2-8b19-4b4a-91ea-07640beea7be",
+                "edrpou": "30000032",
+                "status": "PASS"
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000032",
+                "status": "FAIL",
+                "error_msg": "('42000', '[42000] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')"
+            },
+            {
+                "uuid": "81371992-7bf2-402f-aadf-240137f5570e",
+                "edrpou": "30000032",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "4138aaae-f73e-4ec7-ae7a-cdb779a3a344",
+                "edrpou": "30000032",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "db775e34-9c92-4eaa-b316-33455d3a49c7",
+                "edrpou": "30000033",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "9977f54e-1b2c-42f1-ba04-e7df1330bd00",
+                "edrpou": "30000033",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "db775e34-9c92-4eaa-b316-33455d3a49c7",
+                "edrpou": "30000033",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000033",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "c40afbcd-cc10-47d4-a094-21be84030d75",
+                "edrpou": "30000034",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "dc15858b-ef36-4fb9-9db7-2aec4f9e0238",
+                "edrpou": "30000034",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "c40afbcd-cc10-47d4-a094-21be84030d75",
+                "edrpou": "30000034",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000034",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "6bba825e-e860-4088-abde-43ffa8be759a",
+                "edrpou": "30000034",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "0d24dbdd-9364-43cc-97f2-79d78765f31e",
+                "edrpou": "30000034",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "b8de09ee-5d81-49ca-aa38-c2362c14fa48",
+                "edrpou": "30000034",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "5e461a8e-2447-4614-9388-f8ad995c424d",
+                "edrpou": "30000034",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "b8de09ee-5d81-49ca-aa38-c2362c14fa48",
+                "edrpou": "30000034",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000034",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "b773d01a-7d30-4f10-b42f-c07469b3c75c",
+                "edrpou": "30000034",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "dfa1dfe8-baf4-4f48-9852-57ff2f9297f0",
+                "edrpou": "30000034",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "9f10288c-4534-42f0-a32b-56edaa190220",
+                "edrpou": "30000035",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "adb98892-3c5b-435d-b188-0f11cf8fc5d4",
+                "edrpou": "30000035",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "9f10288c-4534-42f0-a32b-56edaa190220",
+                "edrpou": "30000035",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000035",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "b34b1c23-82b2-44fa-8a39-dd5f0635b552",
+                "edrpou": "30000035",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "e455e95a-2894-4661-aa3b-b7582f10e6ac",
+                "edrpou": "30000035",
+                "status": "FAIL",
+                "error_msg": "No results.  Previous SQL was not a query."
+            },
+            {
+                "uuid": "a0e92cdd-af8c-423e-a8b5-77560a5941ed",
+                "edrpou": "30000036",
+                "status": "PASS"
+            },
+            {
+                "uuid": "1b90d59a-ad74-4f24-b757-93b210cc166d",
+                "edrpou": "30000036",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "a0e92cdd-af8c-423e-a8b5-77560a5941ed",
+                "edrpou": "30000036",
+                "status": "PASS"
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000036",
+                "status": "FAIL",
+                "error_msg": "('42000', '[42000] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Conversion failed when converting from a character string to uniqueidentifier. (8169) (SQLExecDirectW)')"
+            },
+            {
+                "uuid": "7aa7bc81-b6a6-4be1-8da5-d8c781dfad8f",
+                "edrpou": "30000036",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "5c88949b-bf89-427d-8130-6d83c4b6510b",
+                "edrpou": "30000036",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "5160a262-31ad-4acb-973b-e3f5c445f078",
+                "edrpou": "30000036",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "2475147f-a022-453a-9336-625ad8283e6f",
+                "edrpou": "30000036",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "5160a262-31ad-4acb-973b-e3f5c445f078",
+                "edrpou": "30000036",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "f37b7879-082c-437c-aae3-5de9fea71ad9",
+                "edrpou": "30000037",
+                "status": "FAIL",
+                "error_msg": "The first argument to execute must be a string or unicode query."
+            },
+            {
+                "uuid": "838479de-0194-48ba-9f7d-1740dda56476",
+                "edrpou": "30000037",
+                "status": "FAIL",
+                "error_msg": "The first argument to execute must be a string or unicode query."
+            },
+            {
+                "uuid": "f37b7879-082c-437c-aae3-5de9fea71ad9",
+                "edrpou": "30000037",
+                "status": "FAIL",
+                "error_msg": "The first argument to execute must be a string or unicode query."
+            },
+            {
+                "uuid": "a332bfd3-8729-4782-8baf-788b28b61aee",
+                "edrpou": "30000038",
+                "status": "FAIL",
+                "error_msg": "The first argument to execute must be a string or unicode query."
+            },
+            {
+                "uuid": "0dd8e321-93d3-4cf9-a12b-33749aac660c",
+                "edrpou": "30000038",
+                "status": "FAIL",
+                "error_msg": "The first argument to execute must be a string or unicode query."
+            },
+            {
+                "uuid": "a332bfd3-8729-4782-8baf-788b28b61aee",
+                "edrpou": "30000038",
+                "status": "FAIL",
+                "error_msg": "The first argument to execute must be a string or unicode query."
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000038",
+                "status": "FAIL",
+                "error_msg": "The first argument to execute must be a string or unicode query."
+            },
+            {
+                "uuid": "18b0884c-d7dd-42b0-bda2-e41eb8f1b68d",
+                "edrpou": "30000038",
+                "status": "FAIL",
+                "error_msg": "The first argument to execute must be a string or unicode query."
+            },
+            {
+                "uuid": "088f7149-b285-4398-b3ad-0e5281e61e82",
+                "edrpou": "30000038",
+                "status": "FAIL",
+                "error_msg": "The first argument to execute must be a string or unicode query."
+            },
+            {
+                "uuid": "b6285f9f-e69c-4ad1-b60b-cb10e8168817",
+                "edrpou": "30000039",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "42e0eea1-4070-4855-a22d-8e52cb228a8c",
+                "edrpou": "30000039",
+                "status": "PASS"
+            },
+            {
+                "uuid": "b6285f9f-e69c-4ad1-b60b-cb10e8168817",
+                "edrpou": "30000039",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "49fe6608-6f3e-4e9e-a1ed-4a6c78bbc3ba",
+                "edrpou": "30000040",
+                "status": "PASS"
+            },
+            {
+                "uuid": "2b18b3bd-5035-496a-9cd8-638be88e299c",
+                "edrpou": "30000040",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "49fe6608-6f3e-4e9e-a1ed-4a6c78bbc3ba",
+                "edrpou": "30000040",
+                "status": "PASS"
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000040",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "ca5bc8bf-91b2-4936-aab5-7e8607f5788b",
+                "edrpou": "30000040",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "39dd4e94-b65d-4c5e-bf79-bfd813756f9e",
+                "edrpou": "30000040",
                 "status": "FAIL"
             }
         ]

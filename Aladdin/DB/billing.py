@@ -1,4 +1,6 @@
 # параметры подключения к БД
+import pyodbc
+
 from Aladdin.DB.db import get_connection
 
 conn_billing_test={
@@ -24,11 +26,19 @@ def check_new_account(uuid, edr):
     # подключение к БД
     mssql_connection = get_connection(**conn_billing_test)
     crs_account = mssql_connection.cursor()
+    sql=None
 
-    sql = SQL["new_account"].format(company_uuid=uuid, company_edr=edr)
-    crs_account.execute(sql)
+
+    try:
+        sql = SQL["new_account"].format(company_uuid=uuid, company_edr=edr)
+        crs_account.execute(sql)
+    except pyodbc.ProgrammingError as kukuber:
+        errtext=str(kukuber)
+        if errtext.find('uniqueidentifier') < 0:
+            raise Exception(kukuber)
+        else:
+            return "FAILED: Account {0}, edr {1} NOT created".format(uuid, edr)
     rows = crs_account.fetchall()
-
     # если есть
     if len(rows) > 0:
         return "PASS: Account {0}, edr {1} created".format(uuid, edr)

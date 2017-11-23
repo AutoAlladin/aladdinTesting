@@ -223,13 +223,13 @@ def s_createAccount_billing():
     """
 
     in_dic = dict()
-    with open(os.path.dirname(os.path.abspath(__file__)) + '\\input.json', 'r',
+    with open(os.path.dirname(os.path.abspath(__file__)) + '\\Billing\\input.json', 'r',
               encoding="UTF-8") as test_params_file:
         in_dic = json.load(test_params_file)
 
     in_dic["new_account"]["uuid"] = str(uuid.uuid4())
 
-    q = dict(in_dic=json.load(test_params_file),
+    q = dict(in_dic=in_dic,
              msg_create_company_account=json.dumps({'companyAccount': in_dic["new_account"]}),
              old_id=in_dic["new_account"]["uuid"],
              old_edr=in_dic["new_account"]["edrpou"]
@@ -252,15 +252,13 @@ def s_checkBalance():
     :return:
     """
 
-    q = dict(service= "http://192.168.95.153:91/api/balance?companyUuid={0}",
+    q = dict(service="http://192.168.95.153:91/api/balance?companyUuid={0}",
              empty_acc="2F6D3BCD-8898-44EB-9C0D-9969E5776C66",
              full_acc="28DAE9EC-6D86-417C-AC22-46F73EC1EB44"
              )
 
-    suite = ParamsTestSuite( _params={})
-    suite.addTest(CheckBalance("test_01_empty_acc", _params= q))
-    suite.addTest(CheckBalance("test_02_full_acc", _params= q))
-
+    suite = ParamsTestSuite(_params={})
+    suite.addTest(CheckBalance("test_01_balance", _params=q))
     return suite
 
 
@@ -269,7 +267,6 @@ def s_checkRezerv():
 
     suite.addTest(CheckReserv("test_01_rezerv"))
     suite.addTest(CheckReserv("test_02_CanselResrv"))
-
     return suite
 
 
