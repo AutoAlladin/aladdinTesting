@@ -253,11 +253,19 @@ def s_checkBalance():
     """
 
     q = dict(service="http://192.168.95.153:91/api/balance?companyUuid={0}",
-             empty_acc="2F6D3BCD-8898-44EB-9C0D-9969E5776C66",
-             full_acc="28DAE9EC-6D86-417C-AC22-46F73EC1EB44"
+             service_refill = "http://192.168.80.198:54685/api/Private24/test",
+             acc="9DA86558-58C3-4089-8C43-216160F444BA",
+             refill={
+                     "CompanyEdrpoSender": "30000041",
+                     "CompanyEdrpoReceiver": "30000041",
+                     "Amount": "100",
+                     "Currency": "UAH"
+                }
              )
 
     suite = ParamsTestSuite(_params={})
+    suite.addTest(CheckBalance("test_01_balance", _params=q))
+    suite.addTest(CheckBalance("test_02_refill", _params=q))
     suite.addTest(CheckBalance("test_01_balance", _params=q))
     return suite
 
