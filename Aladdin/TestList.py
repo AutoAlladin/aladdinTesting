@@ -271,10 +271,43 @@ def s_checkBalance():
 
 
 def s_checkRezerv():
-    suite = ParamsTestSuite(_params={})
 
-    suite.addTest(CheckReserv("test_01_rezerv"))
-    suite.addTest(CheckReserv("test_02_CanselResrv"))
+    q = {
+        "services": {
+            "service_fix_money": "http://192.168.95.153:91/api/balance/WriteOffMoney",
+            "service_add_reserv": "http://192.168.95.153:91/api/balance/reserve",
+            "service_cansel_reserv": "http://192.168.95.153:91/api/balance/CancelReserve",
+            "service_return_money": "http://192.168.95.153:91/api/balance/ReturnMonies"
+        },
+        "rezerv": {
+            "TenderId": 700,
+            "LotId": 3,
+            "Amount": 4000.0,
+            "Currency": "UAH",
+            "Descriptions": "chupakabra",
+            "TotalMoney": 100.0,
+            "CompanyUuid": "9da86558-58c3-4089-8c43-216160f444ba"
+        },
+        "cansel_reserv": {
+            "TenderId": 700,
+            "LotId": 7,
+            "CompanyUuid": "9da86558-58c3-4089-8c43-216160f444ba"
+        },
+        "return_money": {
+            "CompanyUuid": "9da86558-58c3-4089-8c43-216160f444ba"
+        },
+        "fix_money": {
+            "TenderId": 700,
+            "SiteType": 1,
+            "CompanyUuid": "9da86558-58c3-4089-8c43-216160f444ba",
+        }
+    }
+
+    suite = ParamsTestSuite(_params={})
+    #suite.addTest(CheckReserv("test_01_add_rezerv", _params=q))
+    #suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q))
+    #suite.addTest(CheckReserv("test_03_return_money", _params=q))
+    suite.addTest(CheckReserv("test_04_charge_off", _params=q))
     return suite
 
 

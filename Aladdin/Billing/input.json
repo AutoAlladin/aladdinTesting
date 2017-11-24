@@ -1,7 +1,7 @@
 {
     "new_account": {
-        "uuid": "39dd4e94-b65d-4c5e-bf79-bfd813756f9e",
-        "edrpou": "30000040"
+        "uuid": "52f773d8-2475-4a1e-be2b-2b854cd4904e",
+        "edrpou": "30000041"
     },
     "used_data": {
         "accounts": [
@@ -1567,6 +1567,41 @@
             {
                 "uuid": "39dd4e94-b65d-4c5e-bf79-bfd813756f9e",
                 "edrpou": "30000040",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "61c93ccd-95b4-4314-8216-583893edc22d",
+                "edrpou": "30000040",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "9da86558-58c3-4089-8c43-216160f444ba",
+                "edrpou": "30000041",
+                "status": "PASS"
+            },
+            {
+                "uuid": "72b2fc03-239f-4052-aaf8-8eaee31bef05",
+                "edrpou": "30000041",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "9da86558-58c3-4089-8c43-216160f444ba",
+                "edrpou": "30000041",
+                "status": "PASS"
+            },
+            {
+                "uuid": "000000000",
+                "edrpou": "30000041",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "fd738914-7562-4457-8537-6c540a2361d2",
+                "edrpou": "30000041",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "52f773d8-2475-4a1e-be2b-2b854cd4904e",
+                "edrpou": "30000041",
                 "status": "FAIL"
             }
         ]

@@ -17,29 +17,29 @@ from Aladdin.DB.billing import get_db_reserve, get_db_balance
 # full_acc  = "28DAE9EC-6D86-417C-AC22-46F73EC1EB44"
 # full_acc1 = "FBF3CF0B-4226-4367-9A40-B4CB10C882F7"
 #
-
-
+#
+#
 # rezerv=dict(
-#     TenderId = 700,                 # any
-#     LotId =9,                       # any
-#     Amount =789000.0,               # any
-#     Currency = 'UAH',               # UAH only
-#     Descriptions ="chupakabra",     # any
-#     TotalMoney =100.0,              # сумма для снятия
-#     CompanyUuid = full_acc          # company guid
+#     TenderId=700,                 # any
+#     LotId=9,                       # any
+#     Amount=789000.0,               # any
+#     Currency='UAH',               # UAH only
+#     Descriptions="chupakabra",     # any
+#     TotalMoney=100.0,              # сумма для снятия
+#     CompanyUuid=full_acc          # company guid
 #    # ServiceIdentifierUuid = None
 #    )  # now it is Prozorro
 #
 # cansel_reserv = dict(
-#     TenderId = rezerv["TenderId"],
-#     LotId = rezerv["LotId"],
-#     CompanyUuid = rezerv["CompanyUuid"]
+#     TenderId=rezerv["TenderId"],
+#     LotId=rezerv["LotId"],
+#     CompanyUuid=rezerv["CompanyUuid"]
 # )
 #
 # fix_money = dict(
-#     TenderId = 600,
+#     TenderId=600,
 #     #ServiceIdentifierUuid = 1  # Prozorro
-#     SiteType= 1  # Prozorro
+#     SiteType=1  # Prozorro
 # )
 #
 #
@@ -153,13 +153,13 @@ class CheckReserv(ParamsTestCase):
         # до резервирования  1000
         prev_amount_db = get_db_reserve(self.params["rezerv"]["CompanyUuid"])
 
-        rq = requests.post(self.params["service_add_reserv"],
+        rq = requests.post(self.params["services"]["service_add_reserv"],
                            data=json.dumps(self.params["rezerv"]),
                            headers={'Content-type': 'application/json'}
                         )
         self.assertEqual(rq.json()["result"],
                          1,
-                         "POST"+self.params["service_add_reserv"]+" response "+ rq.text)
+                         "POST"+self.params["services"]["service_add_reserv"]+" response "+ rq.text)
         amount = self.params["rezerv"]["TotalMoney"]
 
         if prev_amount_db is not None:
@@ -172,18 +172,18 @@ class CheckReserv(ParamsTestCase):
 
 
     def test_02_cansel_rezerv(self):
-        prev_amount_db = get_db_reserve(self.params["cabb_reserv"]["CompanyUuid"])
+        prev_amount_db = get_db_reserve(self.params["cansel_reserv"]["CompanyUuid"])
 
-        rq = requests.post(self.params["service_cansel_reserv"],
-                           data=json.dumps(self.params["cabb_reserv"]),
+        rq = requests.post(self.params["services"]["service_cansel_reserv"],
+                           data=json.dumps(self.params["cansel_reserv"]),
                            headers={'content-type': 'application/json'})
 
         self.assertEqual(rq.json()["result"],
                          1,
-                         "POST" + self.params["service_add_reserv"] + " response " + rq.text)
+                         "POST" + self.params["services"]["service_cansel_reserv"] + " response " + rq.text)
 
         if prev_amount_db is not None:
-            amount_db = get_db_reserve(self.params["cabb_reserv"]["CompanyUuid"])
+            amount_db = get_db_reserve(self.params["cansel_reserv"]["CompanyUuid"])
 
         self.assertGreater(amount_db, prev_amount_db,
                          "Сумма резерва не изменилась после отмены резервирования")
@@ -226,54 +226,38 @@ class CheckReserv(ParamsTestCase):
     #     if g != None:
     #         print(g)
 
-    def test_02_cansel_rezerv(self):
-        prev_amount_db = get_db_reserve(self.params["cabb_reserv"]["CompanyUuid"])
-
-        rq = requests.post(self.params["service_cansel_reserv"],
-                           data=json.dumps(self.params["cabb_reserv"]),
-                           headers={'content-type': 'application/json'})
-
-        self.assertEqual(rq.json()["result"],
-                         1,
-                         "POST" + self.params["service_add_reserv"] + " response " + rq.text)
-
-        if prev_amount_db is not None:
-            amount_db = get_db_reserve(self.params["cabb_reserv"]["CompanyUuid"])
-
-        self.assertGreater(amount_db, prev_amount_db,
-                         "Сумма резерва не изменилась после отмены резервирования")
 
     def test_03_return_money(self):
-        prev_amount_db = get_db_balance(self.params["returnMoney"]["CompanyUuid"])
+        prev_amount_db = get_db_balance(self.params["return_money"]["CompanyUuid"])
 
-        rq = requests.post(self.params["service_return_money"],
-                           data=json.dumps(self.params["returnMoney"]),
+        rq = requests.post(self.params["services"]["service_return_money"],
+                           data=json.dumps(self.params["return_money"]),
                            headers={'content-type': 'application/json'})
 
         self.assertEqual(rq.json()["result"],
                          1,
-                         "POST" + self.params["service_add_reserv"] + " response " + rq.text)
+                         "POST" + self.params["services"]["service_return_money"] + " response " + rq.text)
 
         if prev_amount_db is not None:
-            amount_db = get_db_balance(self.params["returnMoney"]["CompanyUuid"])
+            amount_db = get_db_balance(self.params["return_money"]["CompanyUuid"])
 
         self.assertGreater(amount_db, prev_amount_db,
                          "Баланс не изменился после возврата денег")
 
     # списание денег
     def test_04_charge_off(self):
-        prev_amount_db = get_db_balance(self.params["returnMoney"]["CompanyUuid"])
+        prev_amount_db = get_db_balance(self.params["fix_money"]["CompanyUuid"])
 
-        rq = requests.post(self.params["service_return_money"],
-                           data=json.dumps(self.params["returnMoney"]),
+        rq = requests.post(self.params["services"]["service_fix_money"],
+                           data=json.dumps(self.params["fix_money"]),
                            headers={'content-type': 'application/json'})
 
         self.assertEqual(rq.json()["result"],
                          1,
-                         "POST" + self.params["service_add_reserv"] + " response " + rq.text)
+                         "POST" + self.params["services"]["service_fix_money"] + " response " + rq.text)
 
         if prev_amount_db is not None:
-            amount_db = get_db_balance(self.params["returnMoney"]["CompanyUuid"])
+            amount_db = get_db_balance(self.params["fix_money"]["CompanyUuid"])
 
         self.assertGreater(amount_db, prev_amount_db,
-                         "Баланс не изменился после возврата денег")
+                         "Баланс не изменился после списания денег")
