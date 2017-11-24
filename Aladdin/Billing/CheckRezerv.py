@@ -170,7 +170,6 @@ class CheckReserv(ParamsTestCase):
                          amount,
                          "Сумма резерва не равна разнице суммы до и после резервирования")
 
-
     def test_02_cansel_rezerv(self):
         prev_amount_db = get_db_reserve(self.params["cansel_reserv"]["CompanyUuid"])
 
