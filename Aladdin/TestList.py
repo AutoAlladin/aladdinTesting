@@ -239,11 +239,11 @@ def s_createAccount_billing():
 
     suite = ParamsTestSuite(_params={})
     suite.addTest(CreateAccount("test_01_new_UUID_new_EDR", _params=q))
-    suite.addTest(CreateAccount("test_02_new_UUID_old_EDR", _params=q))
-    suite.addTest(CreateAccount("test_03_old_UUID_old_EDR", _params=q))
-    suite.addTest(CreateAccount("test_04_fail_UUID_new_EDR", _params=q))
-    suite.addTest(CreateAccount("test_05_new_UUID_less_EDR", _params=q))
-    suite.addTest(CreateAccount("test_06_new_UUID_more_EDR", _params=q))
+    #suite.addTest(CreateAccount("test_02_new_UUID_old_EDR", _params=q))
+    #suite.addTest(CreateAccount("test_03_old_UUID_old_EDR", _params=q))
+    #suite.addTest(CreateAccount("test_04_fail_UUID_new_EDR", _params=q))
+    #suite.addTest(CreateAccount("test_05_new_UUID_less_EDR", _params=q))
+    #suite.addTest(CreateAccount("test_06_new_UUID_more_EDR", _params=q))
 
     return suite
 
@@ -258,15 +258,15 @@ def s_checkBalance():
              service_refill = "http://192.168.80.198:54685/api/Private24/test",
              acc="9DA86558-58C3-4089-8C43-216160F444BA",
              refill=[{"TransactionGuid":"3420E605-ADFA-4FBC-8B7C-588222EA45B2",
-                     "CompanyEdrpoSender": "30000041",
-                     "CompanyEdrpoReceiver": "30000041",
-                     "Amount": "100",
+                     "CompanyEdrpoSender": "30000043",
+                     "CompanyEdrpoReceiver": "30000043",
+                     "Amount": "1000",
                      "Currency": "UAH"
                 }]
              )
 
     suite = ParamsTestSuite(_params={})
-    suite.addTest(CheckBalance("test_01_balance", _params=q))
+    #suite.addTest(CheckBalance("test_01_balance", _params=q))
     suite.addTest(CheckBalance("test_02_refill_full", _params=q))
     #несколько счетов в одном запросе
     q1= deepcopy(q)
@@ -278,7 +278,7 @@ def s_checkBalance():
                      "Currency": "UAH"
                 })
 
-    suite.addTest(CheckBalance("test_02_refill_full", _params=q1))
+    #suite.addTest(CheckBalance("test_02_refill_full", _params=q1))
 
 
     return suite

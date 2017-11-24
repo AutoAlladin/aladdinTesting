@@ -1,7 +1,7 @@
 {
     "new_account": {
-        "uuid": "52f773d8-2475-4a1e-be2b-2b854cd4904e",
-        "edrpou": "30000041"
+        "uuid": "7a03994a-8724-4d81-8ebc-e4ff88f0a506",
+        "edrpou": "30000043"
     },
     "used_data": {
         "accounts": [
@@ -1603,6 +1603,16 @@
                 "uuid": "52f773d8-2475-4a1e-be2b-2b854cd4904e",
                 "edrpou": "30000041",
                 "status": "FAIL"
+            },
+            {
+                "uuid": "a9f5bbb2-c18d-41d7-af43-791747ae01d3",
+                "edrpou": "30000041",
+                "status": "FAIL"
+            },
+            {
+                "uuid": "7a03994a-8724-4d81-8ebc-e4ff88f0a506",
+                "edrpou": "30000043",
+                "status": "PASS"
             }
         ]
     }
