@@ -18,7 +18,11 @@ SQL = dict(new_account="select AccountNumber, CompanyUuid, CompanyEdrpo, "+ \
 
            uid_get_balance="select AccountNumber, CompanyUuid, CompanyEdrpo, "+ \
                     " Balance, ReservedAmount, convert(varchar(250), DateModify) as DateModify " +  \
-                    " from BillingTest.dbo.Accounts  where  CompanyUuid ='{0}'"
+                    " from BillingTest.dbo.Accounts  where  CompanyUuid ='{0}'",
+
+           edr_get_balance="select AccountNumber, CompanyUuid, CompanyEdrpo, "+ \
+                            " Balance, ReservedAmount, convert(varchar(250), DateModify) as DateModify " +  \
+                            " from BillingTest.dbo.Accounts  where  CompanyEdrpo ='{0}'"
 
            )
 
@@ -45,12 +49,15 @@ def check_new_account(uuid, edr):
     else:
         return "FAILED: Account {0}, edr {1} NOT created".format(uuid, edr)
 
-def get_db_balance(uuid):
+def get_db_balance(uuid=None, edr=None ):
     mssql_connection = get_connection(**conn_billing_test)
     crs_account = mssql_connection.cursor()
 
-    sql = SQL["uid_get_balance"].format(uuid)
-    crs_account.execute(sql)
+    if uuid is not None:
+        crs_account.execute( SQL["uid_get_balance"].format(uuid))
+    elif edr is not None:
+        crs_account.execute(SQL["edr_get_balance"].format(edr))
+
     row = crs_account.fetchone()
 
     # если есть

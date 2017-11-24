@@ -2,6 +2,8 @@ import unittest
 import sys
 from optparse import make_option, OptionParser
 
+from copy import deepcopy
+
 from Aladdin.Accounting.AladdinUtils import WebTestSession, AvaliableBrowsers
 from Aladdin.Accounting.Docs import Docs
 from Aladdin.Accounting.Registration.UserRegistrationEDRPOU import UserRegistrationEDRPOU
@@ -255,18 +257,30 @@ def s_checkBalance():
     q = dict(service="http://192.168.95.153:91/api/balance?companyUuid={0}",
              service_refill = "http://192.168.80.198:54685/api/Private24/test",
              acc="9DA86558-58C3-4089-8C43-216160F444BA",
-             refill={
+             refill=[{"TransactionGuid":"3420E605-ADFA-4FBC-8B7C-588222EA45B2",
                      "CompanyEdrpoSender": "30000041",
                      "CompanyEdrpoReceiver": "30000041",
                      "Amount": "100",
                      "Currency": "UAH"
-                }
+                }]
              )
 
     suite = ParamsTestSuite(_params={})
     suite.addTest(CheckBalance("test_01_balance", _params=q))
-    suite.addTest(CheckBalance("test_02_refill", _params=q))
-    suite.addTest(CheckBalance("test_01_balance", _params=q))
+    suite.addTest(CheckBalance("test_02_refill_full", _params=q))
+    #несколько счетов в одном запросе
+    q1= deepcopy(q)
+    q1["refill"].append(
+                {"TransactionGuid":"3420E605-ADFA-4FBC-8B7C-588222EA45B2",
+                     "CompanyEdrpoSender": "30000039",
+                     "CompanyEdrpoReceiver": "30000039",
+                     "Amount": "55",
+                     "Currency": "UAH"
+                })
+
+    suite.addTest(CheckBalance("test_02_refill_full", _params=q1))
+
+
     return suite
 
 
