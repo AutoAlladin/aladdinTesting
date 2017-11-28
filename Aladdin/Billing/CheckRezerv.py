@@ -166,7 +166,7 @@ class CheckReserv(ParamsTestCase):
             amount_db = get_db_reserve(self.params["rezerv"]["CompanyUuid"])
             print("add_reserv ", amount, "prev_amount_db", prev_amount_db, "amount_db", amount_db)
 
-        self.assertEqual(prev_amount_db-amount_db,
+        self.assertEqual(amount_db - prev_amount_db,
                          amount,
                          "Сумма резерва не равна разнице суммы до и после резервирования")
 
@@ -184,7 +184,7 @@ class CheckReserv(ParamsTestCase):
         if prev_amount_db is not None:
             amount_db = get_db_reserve(self.params["cansel_reserv"]["CompanyUuid"])
 
-        self.assertGreater(amount_db, prev_amount_db,
+        self.assertGreater(prev_amount_db, amount_db,
                          "Сумма резерва не изменилась после отмены резервирования")
 
 

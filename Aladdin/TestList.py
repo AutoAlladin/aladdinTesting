@@ -255,11 +255,12 @@ def s_checkBalance():
     """
 
     q = dict(service="http://192.168.95.153:91/api/balance?companyUuid={0}",
-             service_refill = "http://192.168.80.198:54685/api/Private24/test",
+             #service_refill = "http://192.168.80.198:54685/api/Private24/test",
+             service_refill = "http://192.168.95.153:121/api/Private24/test",
              acc="9DA86558-58C3-4089-8C43-216160F444BA",
              refill=[{"TransactionGuid":"3420E605-ADFA-4FBC-8B7C-588222EA45B2",
-                     "CompanyEdrpoSender": "30000043",
-                     "CompanyEdrpoReceiver": "30000043",
+                     "CompanyEdrpoSender": "30000045",
+                     "CompanyEdrpoReceiver": "30000045",
                      "Amount": "1000",
                      "Currency": "UAH"
                 }]
@@ -294,26 +295,26 @@ def s_checkRezerv():
             "service_return_money": "http://192.168.95.153:91/api/balance/ReturnMonies"
         },
         "rezerv": {
-            "TenderId": 700,
+            "TenderId": 602,
             "LotId": 3,
             "Amount": 4000.0,
             "Currency": "UAH",
             "Descriptions": "chupakabra",
-            "TotalMoney": 100.0,
-            "CompanyUuid": "9da86558-58c3-4089-8c43-216160f444ba"
+            "TotalMoney": 500.0,
+            "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043"
         },
         "cansel_reserv": {
-            "TenderId": 700,
-            "LotId": 7,
-            "CompanyUuid": "9da86558-58c3-4089-8c43-216160f444ba"
+            "TenderId": 602,
+            "LotId": 3,
+            "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043"
         },
         "return_money": {
-            "CompanyUuid": "9da86558-58c3-4089-8c43-216160f444ba"
+            "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043"
         },
         "fix_money": {
-            "TenderId": 700,
+            "TenderId": 602,
             "SiteType": 1,
-            "CompanyUuid": "9da86558-58c3-4089-8c43-216160f444ba",
+            "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043",
         }
     }
 
