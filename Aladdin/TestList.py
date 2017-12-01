@@ -260,9 +260,9 @@ def s_checkBalance():
              service_refill="http://192.168.95.153:121/api/Private24/test",
              acc="9DA86558-58C3-4089-8C43-216160F444BA",
              refill=[{"TransactionGuid":"3420E605-ADFA-4FBC-8B7C-588222EA45B2",
-                     "CompanyEdrpoSender": "30000046",
-                     "CompanyEdrpoReceiver": "30000046",
-                     "Amount": "1000",
+                     "CompanyEdrpoSender": "30000057",
+                     "CompanyEdrpoReceiver": "30000057",
+                     "Amount": "20000",
                      "Currency": "UAH"
                 }]
              )
@@ -296,34 +296,34 @@ def s_checkRezerv():
             "service_return_money": "http://192.168.95.153:91/api/balance/ReturnMonies"
         },
         "rezerv": {
-            "TenderId": 500,
-            "LotId": 3,
+            "TenderId": 506,
+            "LotId": 1,
             "Amount": 4000.0,
             "Currency": "UAH",
             "Descriptions": "chupakabra",
-            "TotalMoney": 1000.0,
-            "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043"
+            "TotalMoney": 5000.0,
+            "CompanyUuid": "D9B92253-6275-42D8-9D04-7A3258DD9728"
         },
         "cansel_reserv": {
-            "TenderId": 602,
-            "LotId": 3,
-            "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043"
+            "TenderId": 506,
+            "LotId": 1,
+            "CompanyUuid": "D9B92253-6275-42D8-9D04-7A3258DD9728"
         },
         "return_money": {
             "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043"
         },
         "fix_money": {
-            "TenderId": 602,
+            "TenderId": 506,
             "SiteType": 1,
-            "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043",
+            "CompanyUuid": "D9B92253-6275-42D8-9D04-7A3258DD9728",
         }
     }
 
     suite = ParamsTestSuite(_params={})
     #suite.addTest(CheckReserv("test_01_add_rezerv", _params=q))
-    #suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q))
+    suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q))
     #suite.addTest(CheckReserv("test_03_return_money", _params=q))
-    suite.addTest(CheckReserv("test_04_charge_off", _params=q))
+    #suite.addTest(CheckReserv("test_04_charge_off", _params=q))
     return suite
 
 

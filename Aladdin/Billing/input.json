@@ -1,10 +1,10 @@
 {
     "new_account": {
-        "uuid": "a7fcaa1d-622d-47d3-bb27-0458923f1f1f",
-        "edrpou": "30000054",
+        "uuid": "06588a99-6231-46fb-914f-9bbc0d6c0788",
+        "edrpou": "30000058",
         "TenderId": "506",
         "LotId": "1",
-        "TotalMoney": "1000"
+        "TotalMoney": "5000"
     },
     "used_data": {
         "accounts": [
@@ -1695,6 +1695,26 @@
             {
                 "uuid": "a7fcaa1d-622d-47d3-bb27-0458923f1f1f",
                 "edrpou": "30000054",
+                "status": "PASS"
+            },
+            {
+                "uuid": "adc42330-080c-4d07-82a0-b69ef069bf5b",
+                "edrpou": "30000055",
+                "status": "PASS"
+            },
+            {
+                "uuid": "8687a190-e813-412d-b40c-6addd0501ef2",
+                "edrpou": "30000056",
+                "status": "PASS"
+            },
+            {
+                "uuid": "d9b92253-6275-42d8-9d04-7a3258dd9728",
+                "edrpou": "30000057",
+                "status": "PASS"
+            },
+            {
+                "uuid": "06588a99-6231-46fb-914f-9bbc0d6c0788",
+                "edrpou": "30000058",
                 "status": "PASS"
             }
         ]

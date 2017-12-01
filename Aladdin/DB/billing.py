@@ -54,7 +54,7 @@ def get_db_balance(uuid=None, edr=None ):
     crs_account = mssql_connection.cursor()
 
     if uuid is not None:
-        crs_account.execute( SQL["uid_get_balance"].format(uuid))
+        crs_account.execute(SQL["uid_get_balance"].format(uuid))
     elif edr is not None:
         crs_account.execute(SQL["edr_get_balance"].format(edr))
 
@@ -62,7 +62,7 @@ def get_db_balance(uuid=None, edr=None ):
 
     # если есть
     if row is None:
-        return  None
+        return None
     else:
         if row.Balance is None:
             return 0.0
