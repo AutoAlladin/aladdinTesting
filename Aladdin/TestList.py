@@ -20,6 +20,7 @@ from Aladdin.Billing.CreateAccount import *
 from Aladdin.Billing.CreateAccount import CreateAccount
 from Aladdin.Billing.CheckRezerv import CheckReserv
 from Aladdin.Billing.CheckBalance import CheckBalance
+from Aladdin.Billing.full_billing import full_billing
 
 def s_user_registration():
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(UserRegistrationEDRPOU)
@@ -256,12 +257,12 @@ def s_checkBalance():
 
     q = dict(service="http://192.168.95.153:91/api/balance?companyUuid={0}",
              #service_refill = "http://192.168.80.198:54685/api/Private24/test",
-             service_refill = "http://192.168.95.153:121/api/Private24/test",
+             service_refill="http://192.168.95.153:121/api/Private24/test",
              acc="9DA86558-58C3-4089-8C43-216160F444BA",
              refill=[{"TransactionGuid":"3420E605-ADFA-4FBC-8B7C-588222EA45B2",
-                     "CompanyEdrpoSender": "30000045",
-                     "CompanyEdrpoReceiver": "30000045",
-                     "Amount": "1000",
+                     "CompanyEdrpoSender": "30000057",
+                     "CompanyEdrpoReceiver": "30000057",
+                     "Amount": "20000",
                      "Currency": "UAH"
                 }]
              )
@@ -273,9 +274,9 @@ def s_checkBalance():
     q1= deepcopy(q)
     q1["refill"].append(
                 {"TransactionGuid":"3420E605-ADFA-4FBC-8B7C-588222EA45B2",
-                     "CompanyEdrpoSender": "30000039",
-                     "CompanyEdrpoReceiver": "30000039",
-                     "Amount": "55",
+                     "CompanyEdrpoSender": "30000046",
+                     "CompanyEdrpoReceiver": "30000046",
+                     "Amount": "1000",
                      "Currency": "UAH"
                 })
 
@@ -295,34 +296,121 @@ def s_checkRezerv():
             "service_return_money": "http://192.168.95.153:91/api/balance/ReturnMonies"
         },
         "rezerv": {
-            "TenderId": 602,
-            "LotId": 3,
+            "TenderId": 506,
+            "LotId": 1,
             "Amount": 4000.0,
             "Currency": "UAH",
             "Descriptions": "chupakabra",
-            "TotalMoney": 500.0,
-            "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043"
+            "TotalMoney": 5000.0,
+            "CompanyUuid": "D9B92253-6275-42D8-9D04-7A3258DD9728"
         },
         "cansel_reserv": {
-            "TenderId": 602,
-            "LotId": 3,
-            "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043"
+            "TenderId": 506,
+            "LotId": 1,
+            "CompanyUuid": "D9B92253-6275-42D8-9D04-7A3258DD9728"
         },
         "return_money": {
             "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043"
         },
         "fix_money": {
-            "TenderId": 602,
+            "TenderId": 506,
             "SiteType": 1,
-            "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043",
+            "CompanyUuid": "D9B92253-6275-42D8-9D04-7A3258DD9728",
         }
     }
 
     suite = ParamsTestSuite(_params={})
     #suite.addTest(CheckReserv("test_01_add_rezerv", _params=q))
-    #suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q))
+    suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q))
     #suite.addTest(CheckReserv("test_03_return_money", _params=q))
-    suite.addTest(CheckReserv("test_04_charge_off", _params=q))
+    #suite.addTest(CheckReserv("test_04_charge_off", _params=q))
+    return suite
+
+
+def s_full_billinig():
+    """
+    params for create account:
+
+    """
+    in_dic = dict()
+    with open(os.path.dirname(os.path.abspath(__file__)) + '\\Billing\\input.json', 'r',
+              encoding="UTF-8") as test_params_file:
+        in_dic = json.load(test_params_file)
+
+    in_dic["new_account"]["uuid"] = str(uuid.uuid4())
+
+    q = dict(in_dic=in_dic,
+             msg_create_company_account=json.dumps({'companyAccount': in_dic["new_account"]}),
+             old_id=in_dic["new_account"]["uuid"],
+             old_edr=in_dic["new_account"]["edrpou"]
+             )
+
+
+    """
+    params for refill balance:
+    
+    """
+    q1 = dict(service="http://192.168.95.153:91/api/balance?companyUuid={0}",
+             # service_refill = "http://192.168.80.198:54685/api/Private24/test",
+             service_refill="http://192.168.95.153:121/api/Private24/test",
+             acc=in_dic["new_account"]["TenderId"],
+             #acc="9DA86558-58C3-4089-8C43-216160F444BA",
+              edr=in_dic["new_account"]["edrpou"],
+             refill=[{"TransactionGuid": "3420E605-ADFA-4FBC-8B7C-588222EA45B2",
+                      "CompanyEdrpoSender": in_dic["new_account"]["edrpou"],
+                      "CompanyEdrpoReceiver": in_dic["new_account"]["edrpou"],
+                      "Amount": "1000",
+                      "Currency": "UAH"
+                      }]
+             )
+
+    """
+    params for add reserve:
+    
+    """
+    q2 = {
+        "services": {
+            "service_fix_money": "http://192.168.95.153:91/api/balance/WriteOffMoney",
+            "service_add_reserv": "http://192.168.95.153:91/api/balance/reserve",
+            "service_cansel_reserv": "http://192.168.95.153:91/api/balance/CancelReserve",
+            "service_return_money": "http://192.168.95.153:91/api/balance/ReturnMonies"
+        },
+        "rezerv": {
+            "TenderId": in_dic["new_account"]["TenderId"],
+            "LotId": in_dic["new_account"]["LotId"],
+            "Amount": 4000.0,
+            "Currency": "UAH",
+            "Descriptions": "chupakabra",
+            "TotalMoney": in_dic["new_account"]["TotalMoney"],
+            "CompanyUuid": in_dic["new_account"]["uuid"]
+        },
+        "cansel_reserv": {
+            "TenderId": in_dic["new_account"]["TenderId"],
+            "LotId": in_dic["new_account"]["LotId"],
+            "CompanyUuid": in_dic["new_account"]["uuid"]
+        },
+        "return_money": {
+            "CompanyUuid": in_dic["new_account"]["uuid"]
+        },
+        "fix_money": {
+            "TenderId": in_dic["new_account"]["TenderId"],
+            "SiteType": 1,
+            "CompanyUuid": in_dic["new_account"]["uuid"]
+        }
+        }
+
+
+    suite = ParamsTestSuite(_params={})
+    suite.addTest(CreateAccount("test_01_new_UUID_new_EDR", _params=q))
+    suite.addTest(CheckBalance("test_02_refill_full", _params=q1))
+    suite.addTest(CheckBalance("test_01_balance", _params=q1))
+    suite.addTest(CheckReserv("test_01_add_rezerv", _params=q2))
+    suite.addTest(CheckBalance("test_01_balance", _params=q1))
+    suite.addTest(CheckReserv("test_04_charge_off", _params=q2))
+    suite.addTest(CheckBalance("test_01_balance", _params=q1))
+    suite.addTest(CheckReserv("test_01_add_rezerv", _params=q2))
+    suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q2))
+    suite.addTest(CheckBalance("test_01_balance", _params=q1))
     return suite
 
 
@@ -370,6 +458,8 @@ if __name__ == '__main__':
         ttt = s_checkRezerv()
     elif opt == 'CheckBalance':
         ttt = s_checkBalance()
+    elif opt == 'full_billinig':
+        ttt = s_full_billinig()
 
     if ttt is not None:
         try:

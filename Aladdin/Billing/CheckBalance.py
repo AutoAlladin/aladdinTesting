@@ -14,7 +14,7 @@ class CheckBalance(ParamsTestCase):
         self.assertEqual(rq.status_code, 200)
 
         amount = float(rq.text)
-        amount_db = get_db_balance(self.params["acc"])
+        amount_db = get_db_balance(edr=self.params["edr"])
         print("balance", amount, amount_db, amount == amount_db)
 
         if amount_db is None:
@@ -58,7 +58,7 @@ class CheckBalance(ParamsTestCase):
             print("PASS", response["companyEdrpoReceiver"])
 
 
-    def test_02_refill_partial(self):
+    def test_03_refill_partial(self):
         rq = requests.post(self.params["service_refill"],
                            data=json.dumps(self.params["refill"]),
                            headers={'content-type': 'application/json'})
