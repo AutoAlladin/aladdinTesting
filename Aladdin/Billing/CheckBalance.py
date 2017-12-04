@@ -21,6 +21,7 @@ class CheckBalance(ParamsTestCase):
             amount_db = 0.0
 
 
+
         self.assertEqual(amount, amount_db)
 
     def test_02_refill_full(self):

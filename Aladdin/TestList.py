@@ -268,8 +268,8 @@ def s_checkBalance():
              )
 
     suite = ParamsTestSuite(_params={})
-    #suite.addTest(CheckBalance("test_01_balance", _params=q))
-    suite.addTest(CheckBalance("test_02_refill_full", _params=q))
+    suite.addTest(CheckBalance("test_01_balance", _params=q))
+    #suite.addTest(CheckBalance("test_02_refill_full", _params=q))
     #несколько счетов в одном запросе
     q1= deepcopy(q)
     q1["refill"].append(
@@ -310,6 +310,7 @@ def s_checkRezerv():
             "CompanyUuid": "BB2ABCD6-9933-4F54-A2F4-53027C05CE89"
         },
         "return_money": {
+
             "CompanyUuid": "BB2ABCD6-9933-4F54-A2F4-53027C05CE89"
         },
         "fix_money": {
@@ -320,8 +321,8 @@ def s_checkRezerv():
     }
 
     suite = ParamsTestSuite(_params={})
-    #suite.addTest(CheckReserv("test_01_add_rezerv", _params=q))
-    #suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q))
+    suite.addTest(CheckReserv("test_01_add_rezerv", _params=q))
+    suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q))
     #suite.addTest(CheckReserv("test_03_return_money", _params=q))
     suite.addTest(CheckReserv("test_04_charge_off", _params=q))
     return suite
@@ -378,7 +379,7 @@ def s_full_billinig():
         "rezerv": {
             "TenderId": in_dic["new_account"]["TenderId"],
             "LotId": in_dic["new_account"]["LotId"],
-            "Amount": 4000.0,
+            "Amount": 5000.0,
             "Currency": "UAH",
             "Descriptions": "chupakabra",
             "TotalMoney": in_dic["new_account"]["TotalMoney"],
