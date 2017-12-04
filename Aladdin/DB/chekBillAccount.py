@@ -49,7 +49,7 @@ crs_account = mssql_connection.cursor()
 
 # crs_account.execute(sql["up_bal"].format("30010001"))
 # crs_account.commit()
-crs_account.execute(sql["edr"].format("30000057"))
+crs_account.execute(sql["edr"].format("30000064"))
 
 
 #  20171510824356

@@ -245,7 +245,7 @@ class CheckReserv(ParamsTestCase):
 
     # списание денег
     def test_04_charge_off(self):
-        prev_amount_db = get_db_balance(self.params["fix_money"]["CompanyUuid"])
+        prev_amount_db = get_db_reserve(self.params["fix_money"]["CompanyUuid"])
 
         rq = requests.post(self.params["services"]["service_fix_money"],
                            data=json.dumps(self.params["fix_money"]),
@@ -256,7 +256,7 @@ class CheckReserv(ParamsTestCase):
                          "POST" + self.params["services"]["service_fix_money"] + " response " + rq.text)
 
         if prev_amount_db is not None:
-            amount_db = get_db_balance(self.params["fix_money"]["CompanyUuid"])
+            amount_db = get_db_reserve(self.params["fix_money"]["CompanyUuid"])
 
-        self.assertGreater(amount_db, prev_amount_db,
+        self.assertLess(amount_db, prev_amount_db,
                          "Баланс не изменился после списания денег")

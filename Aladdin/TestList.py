@@ -260,9 +260,9 @@ def s_checkBalance():
              service_refill="http://192.168.95.153:121/api/Private24/test",
              acc="9DA86558-58C3-4089-8C43-216160F444BA",
              refill=[{"TransactionGuid":"3420E605-ADFA-4FBC-8B7C-588222EA45B2",
-                     "CompanyEdrpoSender": "30000057",
-                     "CompanyEdrpoReceiver": "30000057",
-                     "Amount": "20000",
+                     "CompanyEdrpoSender": "30000064",
+                     "CompanyEdrpoReceiver": "30000064",
+                     "Amount": "5000",
                      "Currency": "UAH"
                 }]
              )
@@ -301,29 +301,29 @@ def s_checkRezerv():
             "Amount": 4000.0,
             "Currency": "UAH",
             "Descriptions": "chupakabra",
-            "TotalMoney": 5000.0,
-            "CompanyUuid": "D9B92253-6275-42D8-9D04-7A3258DD9728"
+            "TotalMoney": 3000.0,
+            "CompanyUuid": "BB2ABCD6-9933-4F54-A2F4-53027C05CE89"
         },
         "cansel_reserv": {
             "TenderId": 506,
             "LotId": 1,
-            "CompanyUuid": "D9B92253-6275-42D8-9D04-7A3258DD9728"
+            "CompanyUuid": "BB2ABCD6-9933-4F54-A2F4-53027C05CE89"
         },
         "return_money": {
-            "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043"
+            "CompanyUuid": "BB2ABCD6-9933-4F54-A2F4-53027C05CE89"
         },
         "fix_money": {
             "TenderId": 506,
             "SiteType": 1,
-            "CompanyUuid": "D9B92253-6275-42D8-9D04-7A3258DD9728",
+            "CompanyUuid": "BB2ABCD6-9933-4F54-A2F4-53027C05CE89",
         }
     }
 
     suite = ParamsTestSuite(_params={})
     #suite.addTest(CheckReserv("test_01_add_rezerv", _params=q))
-    suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q))
+    #suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q))
     #suite.addTest(CheckReserv("test_03_return_money", _params=q))
-    #suite.addTest(CheckReserv("test_04_charge_off", _params=q))
+    suite.addTest(CheckReserv("test_04_charge_off", _params=q))
     return suite
 
 
@@ -359,7 +359,7 @@ def s_full_billinig():
              refill=[{"TransactionGuid": "3420E605-ADFA-4FBC-8B7C-588222EA45B2",
                       "CompanyEdrpoSender": in_dic["new_account"]["edrpou"],
                       "CompanyEdrpoReceiver": in_dic["new_account"]["edrpou"],
-                      "Amount": "1000",
+                      "Amount": "5000",
                       "Currency": "UAH"
                       }]
              )
