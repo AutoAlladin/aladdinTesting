@@ -4,7 +4,8 @@ import unittest
 import requests
 from decimal import Decimal
 
-from Aladdin.DB.billing import get_db_reserve
+from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
+from Aladdin.DB.billing import get_db_reserve, get_db_balance
 
 
 # service_fix_money     = "http://192.168.95.153:91/api/balance/WriteOffMoney"
@@ -16,29 +17,29 @@ from Aladdin.DB.billing import get_db_reserve
 # full_acc  = "28DAE9EC-6D86-417C-AC22-46F73EC1EB44"
 # full_acc1 = "FBF3CF0B-4226-4367-9A40-B4CB10C882F7"
 #
-
-
+#
+#
 # rezerv=dict(
-#     TenderId = 700,                 # any
-#     LotId =9,                       # any
-#     Amount =789000.0,               # any
-#     Currency = 'UAH',               # UAH only
-#     Descriptions ="chupakabra",     # any
-#     TotalMoney =100.0,              # сумма для снятия
-#     CompanyUuid = full_acc          # company guid
+#     TenderId=700,                 # any
+#     LotId=9,                       # any
+#     Amount=789000.0,               # any
+#     Currency='UAH',               # UAH only
+#     Descriptions="chupakabra",     # any
+#     TotalMoney=100.0,              # сумма для снятия
+#     CompanyUuid=full_acc          # company guid
 #    # ServiceIdentifierUuid = None
 #    )  # now it is Prozorro
 #
 # cansel_reserv = dict(
-#     TenderId = rezerv["TenderId"],
-#     LotId = rezerv["LotId"],
-#     CompanyUuid = rezerv["CompanyUuid"]
+#     TenderId=rezerv["TenderId"],
+#     LotId=rezerv["LotId"],
+#     CompanyUuid=rezerv["CompanyUuid"]
 # )
 #
 # fix_money = dict(
-#     TenderId = 600,
+#     TenderId=600,
 #     #ServiceIdentifierUuid = 1  # Prozorro
-#     SiteType= 1  # Prozorro
+#     SiteType=1  # Prozorro
 # )
 #
 #
@@ -97,10 +98,7 @@ from Aladdin.DB.billing import get_db_reserve
     #     print()
     #     print("service_fix_money")
     #
-    #     fix_mon = dict(
-    #         TenderId=rzv["TenderId"],
-    #         SiteType=1  # Prozorro
-    #     )
+    #
     #     prev_amount_db = get_db_reserve(rezerv["CompanyUuid"])
     #
     #     rq = requests.post(service_fix_money,
@@ -149,73 +147,45 @@ from Aladdin.DB.billing import get_db_reserve
 
 
 
-class CheckReserv(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.service_fix_money = "http://192.168.95.153:91/api/balance/WriteOffMoney"
-        cls.service_add_reserv = "http://192.168.95.153:91/api/balance/reserve"
-        cls.service_cansel_reserv = "http://192.168.95.153:91/api/balance/CancelReserve"
-        cls.service_return_money = "http://192.168.95.153:91/api/balance/ReturnMonies"
+class CheckReserv(ParamsTestCase):
 
-        cls.empty_acc = "2F6D3BCD-8898-44EB-9C0D-9969E5776C66"
-        cls.full_acc = "28DAE9EC-6D86-417C-AC22-46F73EC1EB44"
-        cls.full_acc1 = "FBF3CF0B-4226-4367-9A40-B4CB10C882F7"
+    def test_01_add_rezerv(self):
+        # до резервирования  1000
+        prev_amount_db = get_db_reserve(self.params["rezerv"]["CompanyUuid"])
 
-        cls.rezerv = dict(
-            TenderId=700,  # any
-            LotId=9,  # any
-            Amount=789000.0,  # any
-            Currency='UAH',  # UAH only
-            Descriptions="chupakabra",  # any
-            TotalMoney=100.0,  # сумма для снятия
-            CompanyUuid=cls.full_acc  # company guid
-            # ServiceIdentifierUuid = None
-        )  # now it is Prozorro
-
-        cls.cansel_reserv = dict(
-            TenderId=cls.rezerv["TenderId"],
-            LotId=cls.rezerv["LotId"],
-            CompanyUuid=cls.rezerv["CompanyUuid"]
-        )
-
-        cls.fix_money = dict(
-            TenderId=600,
-            # ServiceIdentifierUuid = 1  # Prozorro
-            SiteType=1  # Prozorro
-        )
-
-
-
-
-
-    def test_01_rezerv(self):
-        prev_amount_db = get_db_reserve(self.rezerv["CompanyUuid"])
-        rq = requests.post(self.service_add_reserv,
-                        data=json.dumps(self.rezerv),
-                      headers={'Content-type': 'application/json'}
+        rq = requests.post(self.params["services"]["service_add_reserv"],
+                           data=json.dumps(self.params["rezerv"]),
+                           headers={'Content-type': 'application/json'}
                         )
-        amount = self.rezerv["TotalMoney"]
-        print(":", prev_amount_db)
-        if prev_amount_db != None:
-            amount_db = get_db_reserve(self.rezerv["CompanyUuid"]) - prev_amount_db
+        self.assertEqual(rq.json()["result"],
+                         1,
+                         "POST"+self.params["services"]["service_add_reserv"]+" response "+ rq.text)
+        amount = self.params["rezerv"]["TotalMoney"]
+
+        if prev_amount_db is not None:
+            amount_db = get_db_reserve(self.params["rezerv"]["CompanyUuid"])
             print("add_reserv ", amount, "prev_amount_db", prev_amount_db, "amount_db", amount_db)
 
+        self.assertEqual(amount_db - prev_amount_db,
+                         amount,
+                         "Сумма резерва не равна разнице суммы до и после резервирования")
 
-    def test_02_CanselResrv(self):
-        cabb_reserv = dict(
-            TenderId=self.rezerv["TenderId"],
-            LotId=self.rezerv["LotId"],
-            CompanyUuid=self.rezerv["CompanyUuid"]
-        )
-        rq = requests.post(self.service_cansel_reserv,
-                            data=json.dumps(cabb_reserv),
-                            headers={'content-type': 'application/json'})
-        print("HTTP: ", rq.text, rq.reason)
-        print("runCanselResrv")
+    def test_02_cansel_rezerv(self):
+        prev_amount_db = get_db_reserve(self.params["cansel_reserv"]["CompanyUuid"])
 
+        rq = requests.post(self.params["services"]["service_cansel_reserv"],
+                           data=json.dumps(self.params["cansel_reserv"]),
+                           headers={'content-type': 'application/json'})
 
+        self.assertEqual(rq.json()["result"],
+                         1,
+                         "POST" + self.params["services"]["service_cansel_reserv"] + " response " + rq.text)
 
+        if prev_amount_db is not None:
+            amount_db = get_db_reserve(self.params["cansel_reserv"]["CompanyUuid"])
 
+        self.assertGreater(prev_amount_db, amount_db,
+                         "Сумма резерва не изменилась после отмены резервирования")
 
 
 
@@ -256,4 +226,37 @@ class CheckReserv(unittest.TestCase):
     #         print(g)
 
 
+    def test_03_return_money(self):
+        prev_amount_db = get_db_balance(self.params["return_money"]["CompanyUuid"])
 
+        rq = requests.post(self.params["services"]["service_return_money"],
+                           data=json.dumps(self.params["return_money"]),
+                           headers={'content-type': 'application/json'})
+
+        self.assertEqual(rq.json()["result"],
+                         1,
+                         "POST" + self.params["services"]["service_return_money"] + " response " + rq.text)
+
+        if prev_amount_db is not None:
+            amount_db = get_db_balance(self.params["return_money"]["CompanyUuid"])
+
+        self.assertGreater(amount_db, prev_amount_db,
+                         "Баланс не изменился после возврата денег")
+
+    # списание денег
+    def test_04_charge_off(self):
+        prev_amount_db = get_db_balance(self.params["fix_money"]["CompanyUuid"])
+
+        rq = requests.post(self.params["services"]["service_fix_money"],
+                           data=json.dumps(self.params["fix_money"]),
+                           headers={'content-type': 'application/json'})
+
+        self.assertEqual(rq.json()["result"],
+                         1,
+                         "POST" + self.params["services"]["service_fix_money"] + " response " + rq.text)
+
+        if prev_amount_db is not None:
+            amount_db = get_db_balance(self.params["fix_money"]["CompanyUuid"])
+
+        self.assertGreater(amount_db, prev_amount_db,
+                         "Баланс не изменился после списания денег")

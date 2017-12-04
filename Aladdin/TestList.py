@@ -2,6 +2,8 @@ import unittest
 import sys
 from optparse import make_option, OptionParser
 
+from copy import deepcopy
+
 from Aladdin.Accounting.AladdinUtils import WebTestSession, AvaliableBrowsers
 from Aladdin.Accounting.Docs import Docs
 from Aladdin.Accounting.Registration.UserRegistrationEDRPOU import UserRegistrationEDRPOU
@@ -223,13 +225,13 @@ def s_createAccount_billing():
     """
 
     in_dic = dict()
-    with open(os.path.dirname(os.path.abspath(__file__)) + '\\input.json', 'r',
+    with open(os.path.dirname(os.path.abspath(__file__)) + '\\Billing\\input.json', 'r',
               encoding="UTF-8") as test_params_file:
         in_dic = json.load(test_params_file)
 
     in_dic["new_account"]["uuid"] = str(uuid.uuid4())
 
-    q = dict(in_dic=json.load(test_params_file),
+    q = dict(in_dic=in_dic,
              msg_create_company_account=json.dumps({'companyAccount': in_dic["new_account"]}),
              old_id=in_dic["new_account"]["uuid"],
              old_edr=in_dic["new_account"]["edrpou"]
@@ -237,11 +239,11 @@ def s_createAccount_billing():
 
     suite = ParamsTestSuite(_params={})
     suite.addTest(CreateAccount("test_01_new_UUID_new_EDR", _params=q))
-    suite.addTest(CreateAccount("test_02_new_UUID_old_EDR", _params=q))
-    suite.addTest(CreateAccount("test_03_old_UUID_old_EDR", _params=q))
-    suite.addTest(CreateAccount("test_04_fail_UUID_new_EDR", _params=q))
-    suite.addTest(CreateAccount("test_05_new_UUID_less_EDR", _params=q))
-    suite.addTest(CreateAccount("test_06_new_UUID_more_EDR", _params=q))
+    #suite.addTest(CreateAccount("test_02_new_UUID_old_EDR", _params=q))
+    #suite.addTest(CreateAccount("test_03_old_UUID_old_EDR", _params=q))
+    #suite.addTest(CreateAccount("test_04_fail_UUID_new_EDR", _params=q))
+    #suite.addTest(CreateAccount("test_05_new_UUID_less_EDR", _params=q))
+    #suite.addTest(CreateAccount("test_06_new_UUID_more_EDR", _params=q))
 
     return suite
 
@@ -252,24 +254,75 @@ def s_checkBalance():
     :return:
     """
 
-    q = dict(service= "http://192.168.95.153:91/api/balance?companyUuid={0}",
-             empty_acc="2F6D3BCD-8898-44EB-9C0D-9969E5776C66",
-             full_acc="28DAE9EC-6D86-417C-AC22-46F73EC1EB44"
+    q = dict(service="http://192.168.95.153:91/api/balance?companyUuid={0}",
+             #service_refill = "http://192.168.80.198:54685/api/Private24/test",
+             service_refill = "http://192.168.95.153:121/api/Private24/test",
+             acc="9DA86558-58C3-4089-8C43-216160F444BA",
+             refill=[{"TransactionGuid":"3420E605-ADFA-4FBC-8B7C-588222EA45B2",
+                     "CompanyEdrpoSender": "30000045",
+                     "CompanyEdrpoReceiver": "30000045",
+                     "Amount": "1000",
+                     "Currency": "UAH"
+                }]
              )
 
-    suite = ParamsTestSuite( _params={})
-    suite.addTest(CheckBalance("test_01_empty_acc", _params= q))
-    suite.addTest(CheckBalance("test_02_full_acc", _params= q))
+    suite = ParamsTestSuite(_params={})
+    #suite.addTest(CheckBalance("test_01_balance", _params=q))
+    suite.addTest(CheckBalance("test_02_refill_full", _params=q))
+    #несколько счетов в одном запросе
+    q1= deepcopy(q)
+    q1["refill"].append(
+                {"TransactionGuid":"3420E605-ADFA-4FBC-8B7C-588222EA45B2",
+                     "CompanyEdrpoSender": "30000039",
+                     "CompanyEdrpoReceiver": "30000039",
+                     "Amount": "55",
+                     "Currency": "UAH"
+                })
+
+    #suite.addTest(CheckBalance("test_02_refill_full", _params=q1))
+
 
     return suite
 
 
 def s_checkRezerv():
+
+    q = {
+        "services": {
+            "service_fix_money": "http://192.168.95.153:91/api/balance/WriteOffMoney",
+            "service_add_reserv": "http://192.168.95.153:91/api/balance/reserve",
+            "service_cansel_reserv": "http://192.168.95.153:91/api/balance/CancelReserve",
+            "service_return_money": "http://192.168.95.153:91/api/balance/ReturnMonies"
+        },
+        "rezerv": {
+            "TenderId": 602,
+            "LotId": 3,
+            "Amount": 4000.0,
+            "Currency": "UAH",
+            "Descriptions": "chupakabra",
+            "TotalMoney": 500.0,
+            "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043"
+        },
+        "cansel_reserv": {
+            "TenderId": 602,
+            "LotId": 3,
+            "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043"
+        },
+        "return_money": {
+            "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043"
+        },
+        "fix_money": {
+            "TenderId": 602,
+            "SiteType": 1,
+            "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043",
+        }
+    }
+
     suite = ParamsTestSuite(_params={})
-
-    suite.addTest(CheckReserv("test_01_rezerv"))
-    suite.addTest(CheckReserv("test_02_CanselResrv"))
-
+    #suite.addTest(CheckReserv("test_01_add_rezerv", _params=q))
+    #suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q))
+    #suite.addTest(CheckReserv("test_03_return_money", _params=q))
+    suite.addTest(CheckReserv("test_04_charge_off", _params=q))
     return suite
 
 
