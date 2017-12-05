@@ -160,7 +160,7 @@ class CheckReserv(ParamsTestCase):
         self.assertEqual(rq.json()["result"],
                          1,
                          "POST"+self.params["services"]["service_add_reserv"]+" response "+ rq.text)
-        amount = self.params["rezerv"]["TotalMoney"]
+        amount = float(self.params["rezerv"]["TotalMoney"])
 
         if prev_amount_db is not None:
             amount_db = get_db_reserve(self.params["rezerv"]["CompanyUuid"])
