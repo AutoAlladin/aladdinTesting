@@ -1,6 +1,6 @@
 from selenium.common.exceptions import StaleElementReferenceException
-from selenium.webdriver.support.select import Select
-from selenium import webdriver
+from selenium.webdriver.support import expected_conditions
+
 from Prozorro.Pages.LoginPage import LoginPage
 from Prozorro.Pages.TenderNew import *
 from Prozorro.Pages.TenderView import TenderView
@@ -20,13 +20,24 @@ class MainPage:
         self.liLoginNoAuthenticated = self.drv.find_element_by_id("liLoginNoAuthenticated")
         self.butLoginPartial = self.drv.find_element_by_id("butLoginPartial")
         self.butRegPartial = self.drv.find_element_by_id("butRegisterPartial")
+        self.liCultureSelector =self.drv.find_element_by_id("liCultureSelector")
+        self.liCultureSelector.click()
+        self.drv.find_element_by_id("select_lang_uk-ua").click()
+        time.sleep(3)
+
 
     def open_reg_form(self):
         self.liLoginNoAuthenticated.click()
         self.butRegPartial.click()
+        WebDriverWait(self.drv, 10).until(
+            expected_conditions.visibility_of_element_located(
+                (By.CLASS_NAME, "btn-success")))
+
         return UserRegForm(self.drv)
 
     def open_login_form(self):
+        self.liLoginNoAuthenticated = self.drv.find_element_by_id("liLoginNoAuthenticated")
+        self.butLoginPartial = self.drv.find_element_by_id("butLoginPartial")
         self.liLoginNoAuthenticated.click()
         self.butLoginPartial.click()
         return LoginPage(self.drv)
