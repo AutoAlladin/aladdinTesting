@@ -2,6 +2,7 @@ import getopt
 import sys
 import time
 
+from Prozorro.Procedures.Registration import registerUserCompany
 from Prozorro.Procedures.Tenders import *
 
 
@@ -9,12 +10,13 @@ def list_params():
     return "-n [below,openua,openeu, concurenrUA]  - создать тендер \n" \
            "-o [uaid or guid]         - открыть просмотр \n" \
            "-e [uaid or guid]         - открыть на редактирование\n" \
-           "-b [uaid or guid]         - подать бид\n"
+           "-b [uaid or guid]         - подать бид\n"\
+           "-R [uaid or guid]         - регистрация пользователя\n" \
 
 def check(args):
 
     try:
-        opts, arg = getopt.getopt(args, "n:o:e:b:")
+        opts, arg = getopt.getopt(args, "n:o:e:b:R")
     except getopt.GetoptError:
         list_params()
         sys.exit(2)
@@ -114,6 +116,17 @@ def check(args):
                 print(create_bids(fin=os.path.dirname(os.path.abspath(__file__))+'\\uaids.json',prepare=1))
             elif arg == "on_time":
                 print(send_bids(fin=os.path.dirname(os.path.abspath(__file__))+'\\uaids.json',prepare=0))
+        elif opt == '-R':
+            print("registartion " + arg)
+            start = datetime.datetime.now()
+            filename = 'CompanyUsers.json'
+            print(start)
+            registerUserCompany(filename)
+
+            # with(open(os.path.dirname(os.path.abspath(__file__)) + '\\uaids.json', 'w', encoding="UTF-8")) as uaid_file:
+            #     json.dump(uaids, uaid_file)
+            print(datetime.datetime.now(),  (datetime.datetime.now() - start).total_seconds())
+            sys.exit()
 
 
 

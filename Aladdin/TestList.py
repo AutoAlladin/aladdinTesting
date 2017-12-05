@@ -211,7 +211,6 @@ def s_login_after_full_registration(g, cmd_bro):
 
     return suite
 
-
 def s_createAccount_billing():
     """
         по быстрому тестируем создание счетов от фонаря
@@ -284,7 +283,6 @@ def s_checkBalance():
 
 
     return suite
-
 
 def s_checkRezerv():
 
@@ -412,6 +410,8 @@ def s_full_billinig():
     suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q2))
     suite.addTest(CheckBalance("test_01_balance", _params=q1))
     return suite
+
+def s_checkBilling():
 
 
 if __name__ == '__main__':

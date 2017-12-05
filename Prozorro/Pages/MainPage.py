@@ -4,6 +4,7 @@ from selenium import webdriver
 from Prozorro.Pages.LoginPage import LoginPage
 from Prozorro.Pages.TenderNew import *
 from Prozorro.Pages.TenderView import TenderView
+from Prozorro.Pages.UserRegForm import UserRegForm
 from Prozorro.Utils import *
 import time
 
@@ -18,6 +19,12 @@ class MainPage:
         #self.drv = webdriver.Chrome(_drv)
         self.liLoginNoAuthenticated = self.drv.find_element_by_id("liLoginNoAuthenticated")
         self.butLoginPartial = self.drv.find_element_by_id("butLoginPartial")
+        self.butRegPartial = self.drv.find_element_by_id("butRegisterPartial")
+
+    def open_reg_form(self):
+        self.liLoginNoAuthenticated.click()
+        self.butRegPartial.click()
+        return UserRegForm(self.drv)
 
     def open_login_form(self):
         self.liLoginNoAuthenticated.click()
