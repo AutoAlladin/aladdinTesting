@@ -119,7 +119,7 @@ def check(args):
         elif opt == '-R':
             print("registartion " + arg)
             start = datetime.datetime.now()
-            filename = 'CompanyUsers.json'
+            filename = 'UserAdded_v2.json'
             print(start)
             registerUserCompany(filename)
 

@@ -1,6 +1,6 @@
 {
 	"main":{
-		"url":"https://test-gov.ald.in.ua"
+		"url":"https://192.168.95.133:444"
 	},
 	"below":{
 		"login":"testertestaladdin+owner@gmail.com",
