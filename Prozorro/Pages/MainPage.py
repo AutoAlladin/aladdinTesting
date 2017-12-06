@@ -17,6 +17,7 @@ class MainPage:
     def __init__(self, _drv):
         self.drv =_drv
         #self.drv = webdriver.Chrome(_drv)
+        waitFadeIn(self.drv)
         self.liLoginNoAuthenticated = self.drv.find_element_by_id("liLoginNoAuthenticated")
         self.butLoginPartial = self.drv.find_element_by_id("butLoginPartial")
         self.butRegPartial = self.drv.find_element_by_id("butRegisterPartial")
@@ -27,6 +28,7 @@ class MainPage:
 
 
     def open_reg_form(self):
+        waitFadeIn(self.drv)
         self.liLoginNoAuthenticated.click()
         self.butRegPartial.click()
         WebDriverWait(self.drv, 10).until(
@@ -36,6 +38,7 @@ class MainPage:
         return UserRegForm(self.drv)
 
     def open_login_form(self):
+        waitFadeIn(self.drv)
         self.liLoginNoAuthenticated = self.drv.find_element_by_id("liLoginNoAuthenticated")
         self.butLoginPartial = self.drv.find_element_by_id("butLoginPartial")
         self.liLoginNoAuthenticated.click()

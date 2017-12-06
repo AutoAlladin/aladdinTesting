@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
+from Prozorro.Utils import paint
 
 
 class UserRegForm:
@@ -27,7 +28,9 @@ class UserRegForm:
         self.ConfirmPassword.send_keys("123456")
         self.drv.execute_script("$('#AgreementPolicy').click()")
         self.btn_ok.click()
-        WebDriverWait(self.drv, 5).until(
-               expected_conditions.visibility_of_element_located((By.XPATH, "//md-tab-item[@aria-controls='tab-content-1']")))
-
+        try:
+            WebDriverWait(self.drv, 5).until(
+                   expected_conditions.visibility_of_element_located((By.XPATH, "//md-tab-item[@aria-controls='tab-content-1']")))
+        except:
+            paint( self.drv,user["user_name"]+"ERROR.png" )
         print('register user', user["user_name"] )
