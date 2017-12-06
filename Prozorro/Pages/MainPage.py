@@ -18,11 +18,11 @@ class MainPage:
         self.drv =_drv
         #self.drv = webdriver.Chrome(_drv)
         waitFadeIn(self.drv)
-        self.liLoginNoAuthenticated = self.drv.find_element_by_id("liLoginNoAuthenticated")
+        # self.liLoginNoAuthenticated = self.drv.find_element_by_id("liLoginNoAuthenticated")
         self.butLoginPartial = self.drv.find_element_by_id("butLoginPartial")
         self.butRegPartial = self.drv.find_element_by_id("butRegisterPartial")
-        self.liCultureSelector =self.drv.find_element_by_id("liCultureSelector")
-        self.liCultureSelector.click()
+        # self.liCultureSelector =self.drv.find_element_by_id("liCultureSelector")
+        # self.liCultureSelector.click()
         self.drv.find_element_by_id("select_lang_uk-ua").click()
         time.sleep(3)
 
@@ -39,9 +39,9 @@ class MainPage:
 
     def open_login_form(self):
         waitFadeIn(self.drv)
-        self.liLoginNoAuthenticated = self.drv.find_element_by_id("liLoginNoAuthenticated")
+        # self.liLoginNoAuthenticated = self.drv.find_element_by_id("liLoginNoAuthenticated")
         self.butLoginPartial = self.drv.find_element_by_id("butLoginPartial")
-        self.liLoginNoAuthenticated.click()
+        # self.liLoginNoAuthenticated.click()
         self.butLoginPartial.click()
         return LoginPage(self.drv)
 

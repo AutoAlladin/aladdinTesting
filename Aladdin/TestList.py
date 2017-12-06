@@ -412,7 +412,7 @@ def s_full_billinig():
     return suite
 
 def s_checkBilling():
-
+    pass
 
 if __name__ == '__main__':
 
