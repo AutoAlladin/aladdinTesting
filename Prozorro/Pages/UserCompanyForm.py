@@ -110,6 +110,30 @@ class UserCompanyForm:
             elif company["addr_region"].strip() == '30':
                 Select(self.drv.find_element_by_id("select_regions")). \
                     select_by_visible_text("Київська")
+            elif company["addr_region"].strip() == '71':
+                Select(self.drv.find_element_by_id("select_regions")). \
+                    select_by_visible_text("Черкаська")
+            elif company["addr_region"].strip() == '23':
+                Select(self.drv.find_element_by_id("select_regions")). \
+                    select_by_visible_text("Запорізька")
+            elif company["addr_region"].strip() == '56':
+                Select(self.drv.find_element_by_id("select_regions")). \
+                    select_by_visible_text("Рівненська")
+            elif company["addr_region"].strip() == '68':
+                Select(self.drv.find_element_by_id("select_regions")). \
+                    select_by_visible_text("Хмельницька")
+            elif company["addr_region"].strip() == '14':
+                Select(self.drv.find_element_by_id("select_regions")). \
+                    select_by_visible_text("Донецька")
+            elif company["addr_region"].strip() == '65':
+                Select(self.drv.find_element_by_id("select_regions")). \
+                    select_by_visible_text("Херсонська")
+            elif company["addr_region"].strip() == '53':
+                Select(self.drv.find_element_by_id("select_regions")). \
+                    select_by_visible_text("Полтавська")
+            elif company["addr_region"].strip() == '51':
+                Select(self.drv.find_element_by_id("select_regions")). \
+                    select_by_visible_text("Одеська")
             else:
                 Select(self.drv.find_element_by_id("select_regions")). \
                     select_by_visible_text("Автономна Республіка Крим")
