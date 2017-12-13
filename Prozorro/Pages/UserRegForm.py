@@ -29,8 +29,8 @@ class UserRegForm:
         self.drv.execute_script("$('#AgreementPolicy').click()")
         self.btn_ok.click()
         try:
-            WebDriverWait(self.drv, 5).until(
-                   expected_conditions.visibility_of_element_located((By.XPATH, "//md-tab-item[@aria-controls='tab-content-1']")))
+            WebDriverWait(self.drv, 15).until(
+                   expected_conditions.visibility_of_element_located((By.XPATH, "//span[@class='label label-danger")))
         except:
             paint( self.drv,user["user_name"]+"ERROR.png" )
         print('register user', user["user_name"] )

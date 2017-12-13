@@ -59,10 +59,11 @@ class TenderNew:
 
     def click_next_button(self):
         try:
-            next_step = self.drv.find_element_by_id("next_step")
-            self.drv.execute_script("window.scroll(0, "+str(next_step.location["y"])+")")
+            #next_step = self.drv.find_element_by_xpath("//button[@id='next_step'][2]")
+            #self.drv.execute_script("window.scroll(0, "+str(next_step.location["y"])+")")
             waitFadeIn(self.drv)
-            next_step.click()
+            self.drv.execute_script("$('#next_step').click()")
+            #next_step.click()
         except WebDriverException as w:
             raise Exception("Не нажимается кнопка next_step  - \n" + w.msg)
         return self
@@ -100,6 +101,7 @@ class TenderNew:
         select_currencies = self.drv.find_element_by_id("select_currencies")
         Select(select_currencies).select_by_value("string:UAH")
         is_vat = self.drv.find_element_by_xpath("//*[@id='is_vat']/div[1]/div[2]/div")
+        waitFadeIn(self.drv)
         is_vat.click()
         return self
 
@@ -108,7 +110,7 @@ class TenderNew:
         if (is_multi == "true"):
             is_multilot.click()
         else:
-            bu = random.randrange(1000, 99990000)
+            bu = random.randrange(1000, 990000)
             budget = self.drv.find_element_by_id("budget")
             budget.send_keys(bu)
             #budget.send_keys(get_dic_val(dic, "below.budget"))
@@ -125,7 +127,7 @@ class TenderNew:
             for currentLot in range(count):
                 lotid = str(1)
                 #lotid = str(currentLot+1)
-                WebDriverWait(self.drv, 2).until(
+                WebDriverWait(self.drv, 20).until(
                     EC.element_to_be_clickable((By.ID, "buttonAddNewLot")))
                 is_add_lot = self.drv.find_element_by_id("buttonAddNewLot")
                 is_add_lot.click()
@@ -142,10 +144,11 @@ class TenderNew:
                 min_step_of_lot_perc.send_keys(get_dic_val(dic, "below.min_step_of_lot_perc"))
                 save_lot = self.drv.find_element_by_xpath("//div[contains(@id,'updateOrCreateLot')]//button[@class='btn btn-success']").click()
 
-            next_step = self.drv.find_element_by_id("next_step")
-            self.drv.execute_script("window.scroll(0, " + str(next_step.location["y"]) + ")")
+            next_step = self.drv.find_element_by_xpath("//button[@id='next_step'][1]")
+            self.drv.execute_script("window.scroll(0, " + str(next_step.location["y"]+10) + ")")
             waitFadeIn(self.drv)
-            next_step.click()
+            #next_step.click()
+            self.drv.execute_script("$('#next_step').click()")
 
         return self
 
@@ -189,7 +192,11 @@ class TenderNew:
     def set_dk2015(self, dic):
         cls_click_ = self.drv.find_element_by_id("cls_click_")
         cls_click_.click()
-        self.set_classifier(dic)
+        add_classifier = WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add-classifier")))
+        search_classifier_text = self.drv.find_element_by_id("search-classifier-text")
+        search_classifier_text.send_keys(get_dic_val(dic, "below.search_classifier_cpv"))
+        WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.XPATH, "//li[@aria-selected = 'true']")))
+        add_classifier.click()
 
     def set_classifier(self, dic):
         add_classifier = WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add-classifier")))
@@ -253,11 +260,11 @@ class TenderNew:
             WebDriverWait(self.drv, 20).until(EC.invisibility_of_element_located((By.XPATH, "//div[@id = 'modDialog']")))
             self.set_otherDK(dic)
             self.set_delivery_period(item_id)
+            self.set_delivery_adress(dic, item_id)
+
             add_item_button = WebDriverWait(self.drv, 20).until(
                 EC.element_to_be_clickable((By.ID, "update_" + item_id)))
             scroll_to_element(self.drv, add_item_button)
-
-            self.set_delivery_adress(dic, item_id)
             self.click_add_item(item_id)
 
     def add_doc(self, docs):
@@ -298,7 +305,7 @@ class TenderNew:
         featureDescription=self.drv.find_element_by_id("featureDescription_"+end)
         featureDescription.send_keys(get_dic_val(dic, "feature.description"))
 
-    def set_feature_enum(dic):
+    def set_feature_enum(dic,lot=None):
         pass
 
     def set_feature_zero_enum(self, dic):
@@ -311,7 +318,6 @@ class TenderNew:
         featureEnumDescription.clear()
         featureEnumDescription.send_keys(get_dic_val(dic, "feature.descriptionEnum_zero"))
 
-        pass
 
     def add_feature_to_tender(self, features, items, dic):
         WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add_features0")))
@@ -324,12 +330,32 @@ class TenderNew:
             for enum_index in range(get_dic_val(dic,"feature.enum_count",2)):
                 self.add_feature_enum(dic)
             updateFeature=WebDriverWait(self.drv, 20).until(EC.element_to_be_clickable((By.ID, "updateFeature_0_0")))
-            time.sleep(2000)
+            time.sleep(2)
             updateFeature.click()
         pass
 
     def add_feature_to_lot(self, features, lots, items,dic):
-        pass
+        for lotix in range(lots):
+            WebDriverWait(self.drv, 20).until(
+                EC.visibility_of_element_located(
+                    (By.ID, "add_features"+str(lotix))
+                )
+            )
+            add_features = self.drv.find_element_by_id("add_features"+str(lotix))
+            for findex in range(features):
+                waitFadeIn(self.drv)
+                add_features.click()
+                self.set_feature_decription(dic, "0_0")
+                self.set_feature_zero_enum(dic)
+                # for enum_index in range(get_dic_val(dic, "feature.enum_count", 2)):
+                #     self.add_feature_enum(dic,lot=lotix)
+                updateFeature = WebDriverWait(self.drv, 20).until(
+                    EC.element_to_be_clickable(
+                        (By.ID, "updateFeature_"+str(findex)+"_0")
+                    )
+                )
+                updateFeature.click()
+
 
     def add_features(self, dic, lots, items, features=0):
         try:
@@ -340,9 +366,10 @@ class TenderNew:
                 waitFadeIn(self.drv)
                 features_tab.click()
 
-                self.add_feature_to_tender(features, items, dic)
                 if lots > 0:
                     self.add_feature_to_lot(features, lots, items, dic)
+                else:
+                    self.add_feature_to_tender(features, items, dic)
 
         except WebDriverException as e:
             paint(self.drv, "addFeatureERROR.png")

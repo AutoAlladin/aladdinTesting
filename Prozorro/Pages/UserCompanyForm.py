@@ -53,8 +53,8 @@ class UserCompanyForm:
             self.short_name.send_keys(company["subj_short_name"])
             self.short_name_en.send_keys(company["subj_short_name_eng"])
             self.edrpou.send_keys(company["subj_ident_code"])
-            self.phones0.send_keys("380970000000")
-            self.emails0.send_keys("company@email.ua")
+            self.phones0.send_keys(company["subj_phone"])
+            self.emails0.send_keys(company["subj_email"])
 
 
             if company["state_company"]==True:

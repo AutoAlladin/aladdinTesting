@@ -29,7 +29,7 @@ def registerUserCompany(filename):
         lf = mpg.open_login_form()
         lf.login(ussr["login"], "123456")
         try:
-            WebDriverWait(lf.drv, 1).until(
+            WebDriverWait(lf.drv, 2).until(
                 expected_conditions.visibility_of_element_located(
                     (By.ID, "error")))
             error = lf.drv.find_element_by_id("error")
@@ -38,7 +38,8 @@ def registerUserCompany(filename):
             if error.text == "Невірна спроба входу в систему":
                 lf.drv.find_element_by_id("btnRegister").click()
                 WebDriverWait(lf.drv, 5).until(
-                    expected_conditions.visibility_of_element_located(
+                    expected_conditions.
+                        visibility_of_element_located(
                         (By.CLASS_NAME, "btn-success")))
                 print("START USER registartion",ussr["login"])
                 rf= UserRegForm(lf.drv)
