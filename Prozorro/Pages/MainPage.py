@@ -1,9 +1,10 @@
 from selenium.common.exceptions import StaleElementReferenceException
-from selenium.webdriver.support.select import Select
-from selenium import webdriver
+from selenium.webdriver.support import expected_conditions
+
 from Prozorro.Pages.LoginPage import LoginPage
 from Prozorro.Pages.TenderNew import *
 from Prozorro.Pages.TenderView import TenderView
+from Prozorro.Pages.UserRegForm import UserRegForm
 from Prozorro.Utils import *
 import time
 
@@ -16,10 +17,45 @@ class MainPage:
     def __init__(self, _drv):
         self.drv =_drv
         #self.drv = webdriver.Chrome(_drv)
+        waitFadeIn(self.drv)
+        #self.liLoginNoAuthenticated = self.drv.find_element_by_id("liLoginNoAuthenticated")
+        self.butLoginPartial = self.drv.find_element_by_id("butLoginPartial")
+        self.butRegPartial = self.drv.find_element_by_id("butRegisterPartial")
+
+        self.liCultureSelector =self.drv.find_element_by_id("liCultureSelector")
+
+        waitFadeIn(self.drv)
+        self.liCultureSelector.click()
+        WebDriverWait(self.drv, 10).until(
+            expected_conditions.visibility_of_element_located(
+                (By.ID, "select_lang_uk-ua")))
+
+
+        self.drv.find_element_by_id("select_lang_uk-ua").click()
+        WebDriverWait(self.drv, 10).until(
+            expected_conditions.text_to_be_present_in_element(
+                (By.CLASS_NAME, "content"), "Aladdin Government закупівлі"))
+        waitFadeIn(self.drv)
+
+
+
+
+    def open_reg_form(self):
+        waitFadeIn(self.drv)
+        #self.liLoginNoAuthenticated.click()
+        self.butRegPartial.click()
+        WebDriverWait(self.drv, 10).until(
+            expected_conditions.visibility_of_element_located(
+                (By.CLASS_NAME, "btn-success")))
+
+        return UserRegForm(self.drv)
+
+    def open_login_form(self):
+        waitFadeIn(self.drv)
         self.liLoginNoAuthenticated = self.drv.find_element_by_id("liLoginNoAuthenticated")
         self.butLoginPartial = self.drv.find_element_by_id("butLoginPartial")
 
-    def open_login_form(self):
+        waitFadeIn(self.drv)
         self.liLoginNoAuthenticated.click()
         self.butLoginPartial.click()
         return LoginPage(self.drv)

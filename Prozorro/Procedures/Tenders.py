@@ -18,6 +18,7 @@ def init_driver():
     with open(os.path.dirname(os.path.abspath(__file__))+'\\..\\test_params.json', 'r', encoding="UTF-8") as test_params_file:
        tp = json.load(test_params_file)
     chrm = webdriver.Chrome()
+
     chrm.maximize_window()
     chrm.implicitly_wait(5)
     chrm.get(tp["main"]["url"])

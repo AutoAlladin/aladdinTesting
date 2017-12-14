@@ -274,15 +274,14 @@ def s_checkBalance():
              )
 
     suite = ParamsTestSuite(_params={})
-    suite.addTest(CheckBalance("test_01_balance", _params=q))
+    #suite.addTest(CheckBalance("test_01_balance", _params=q))
     suite.addTest(CheckBalance("test_02_refill_full", _params=q))
-    suite.addTest(CheckBalance("test_01_balance", _params=q))
     #несколько счетов в одном запросе
     q1= deepcopy(q)
     q1["refill"].append(
                 {"TransactionGuid":"3420E605-ADFA-4FBC-8B7C-588222EA45B2",
-                     "CompanyEdrpoSender": "30000084",
-                     "CompanyEdrpoReceiver": "30000084",
+                     "CompanyEdrpoSender": "30000046",
+                     "CompanyEdrpoReceiver": "30000046",
                      "Amount": "1000",
                      "Currency": "UAH"
                 })
@@ -291,7 +290,6 @@ def s_checkBalance():
 
 
     return suite
-
 
 def s_checkRezerv():
 
@@ -308,30 +306,29 @@ def s_checkRezerv():
             "Amount": 4000.0,
             "Currency": "UAH",
             "Descriptions": "chupakabra",
-            "TotalMoney": 3000.0,
-            "CompanyUuid": "BB2ABCD6-9933-4F54-A2F4-53027C05CE89"
+            "TotalMoney": 5000.0,
+            "CompanyUuid": "D9B92253-6275-42D8-9D04-7A3258DD9728"
         },
         "cansel_reserv": {
             "TenderId": 506,
             "LotId": 1,
-            "CompanyUuid": "BB2ABCD6-9933-4F54-A2F4-53027C05CE89"
+            "CompanyUuid": "D9B92253-6275-42D8-9D04-7A3258DD9728"
         },
         "return_money": {
-
-            "CompanyUuid": "BB2ABCD6-9933-4F54-A2F4-53027C05CE89"
+            "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043"
         },
         "fix_money": {
             "TenderId": 506,
             "SiteType": 1,
-            "CompanyUuid": "BB2ABCD6-9933-4F54-A2F4-53027C05CE89",
+            "CompanyUuid": "D9B92253-6275-42D8-9D04-7A3258DD9728",
         }
     }
 
     suite = ParamsTestSuite(_params={})
-    suite.addTest(CheckReserv("test_01_add_rezerv", _params=q))
+    #suite.addTest(CheckReserv("test_01_add_rezerv", _params=q))
     suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q))
     #suite.addTest(CheckReserv("test_03_return_money", _params=q))
-    suite.addTest(CheckReserv("test_04_charge_off", _params=q))
+    #suite.addTest(CheckReserv("test_04_charge_off", _params=q))
     return suite
 
 
@@ -408,11 +405,10 @@ def s_full_billinig():
 
     suite = ParamsTestSuite(_params={})
     suite.addTest(CreateAccount("test_01_new_UUID_new_EDR", _params=q))
-    time.sleep(3)
     suite.addTest(CheckBalance("test_02_refill_full", _params=q1))
-    time.sleep(3)
     suite.addTest(CheckBalance("test_01_balance", _params=q1))
     suite.addTest(CheckReserv("test_01_add_rezerv", _params=q2))
+    suite.addTest(CheckBalance("test_01_balance", _params=q1))
     suite.addTest(CheckReserv("test_04_charge_off", _params=q2))
     suite.addTest(CheckBalance("test_01_balance", _params=q1))
     suite.addTest(CheckBalance("test_02_refill_full", _params=q1))
@@ -421,6 +417,8 @@ def s_full_billinig():
     suite.addTest(CheckBalance("test_01_balance", _params=q1))
     return suite
 
+def s_checkBilling():
+    pass
 
 if __name__ == '__main__':
 

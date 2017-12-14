@@ -24,7 +24,10 @@ def set_datepicker(drv, ID, value):
 
 
 def waitFadeIn(drv):
-    WebDriverWait(drv, 10).until( EC.invisibility_of_element_located ((By.XPATH, "//div[@class='page-loader animated fadeIn']")))
+    try:
+        WebDriverWait(drv, 20).until( EC.invisibility_of_element_located ((By.XPATH, "//div[@class='page-loader animated fadeIn']")))
+    except:
+        pass
 
 
 def waitNotifyToast(drv):

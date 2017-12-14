@@ -1,7 +1,7 @@
 {
     "new_account": {
-        "uuid": "1093bad1-0442-4a9b-a52b-7e8ebac1c686",
-        "edrpou": "30000094",
+        "uuid": "06588a99-6231-46fb-914f-9bbc0d6c0788",
+        "edrpou": "30000058",
         "TenderId": "506",
         "LotId": "1",
         "TotalMoney": "5000",
@@ -1716,96 +1716,6 @@
             {
                 "uuid": "06588a99-6231-46fb-914f-9bbc0d6c0788",
                 "edrpou": "30000058",
-                "status": "PASS"
-            },
-            {
-                "uuid": "26310412-583b-4c5b-9ff8-139a9efb597c",
-                "edrpou": "30000059",
-                "status": "PASS"
-            },
-            {
-                "uuid": "b027080c-0375-4401-9f1b-4171c9b7fa53",
-                "edrpou": "30000060",
-                "status": "PASS"
-            },
-            {
-                "uuid": "2069f22f-e946-4b3d-8e97-8d4612de9845",
-                "edrpou": "30000062",
-                "status": "PASS"
-            },
-            {
-                "uuid": "bb2abcd6-9933-4f54-a2f4-53027c05ce89",
-                "edrpou": "30000064",
-                "status": "PASS"
-            },
-            {
-                "uuid": "2d4102a4-e727-4c47-becf-e7e4a5dc7769",
-                "edrpou": "30000068",
-                "status": "PASS"
-            },
-            {
-                "uuid": "409c0805-e2b7-43b9-8cad-19ac4f0cc758",
-                "edrpou": "30000072",
-                "status": "PASS"
-            },
-            {
-                "uuid": "0a1d177a-5345-4c4b-a3f5-73d727731f81",
-                "edrpou": "30000074",
-                "status": "PASS"
-            },
-            {
-                "uuid": "d50c0ecf-6107-4891-9695-dbd5ed4738b8",
-                "edrpou": "30000076",
-                "status": "PASS"
-            },
-            {
-                "uuid": "4239040c-02bd-475a-b504-dd25f26c1045",
-                "edrpou": "30000078",
-                "status": "PASS"
-            },
-            {
-                "uuid": "43905798-79dd-4c5c-b72d-0d191370da9c",
-                "edrpou": "30000080",
-                "status": "PASS"
-            },
-            {
-                "uuid": "9004c970-e1d2-40fb-a738-75e8b40e5228",
-                "edrpou": "30000082",
-                "status": "PASS"
-            },
-            {
-                "uuid": "68f7963b-487f-46c4-ab75-ac8a778ddd76",
-                "edrpou": "30000084",
-                "status": "PASS"
-            },
-            {
-                "uuid": "1419694e-2dc3-4f7d-9a3e-18f5ba665bfc",
-                "edrpou": "30000086s",
-                "status": "PASS"
-            },
-            {
-                "uuid": "dce791a7-134e-4d87-a985-70f47c58bfec",
-                "edrpou": "30000086",
-                "status": "PASS"
-            },
-            {
-                "uuid": "0882f264-d917-449b-a419-b082aa236cc7",
-                "edrpou": "30000088",
-                "status": "PASS"
-            },
-            {
-                "uuid": "dd46a99c-b943-46ab-977c-553575e2953c",
-                "edrpou": "30000090",
-                "status": "PASS"
-            },
-            {
-                "uuid": "e032516a-877d-4004-818d-f879d2677484",
-                "edrpou": "30000092",
-                "status": "PASS"
-            },
-            {
-                "uuid": "1093bad1-0442-4a9b-a52b-7e8ebac1c686",
-                "edrpou": "30000094",
                 "status": "PASS"
             }
         ]
