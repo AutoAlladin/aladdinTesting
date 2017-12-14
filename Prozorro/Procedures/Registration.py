@@ -68,16 +68,17 @@ def registerUserCompany(filename):
                     (By.ID, "edit")))
 
             Utils.waitFadeIn(lf.drv)
-            print("b1")
-            exit =  lf.drv.find_element_by_id("liLoginAuthenticated")
-            exit.click()
-            exit = lf.drv.find_element_by_id("butLoginPartial")
-            exit.click()
-            time.sleep(5)
-            print("b232")
-            Utils.waitFadeIn(lf.drv)
+            lf.drv.execute_script("$('#butLogoutPartial').click()")
+            # print("b1")
+            # exit =  lf.drv.find_element_by_id("liLoginAuthenticated")
+            # exit.click()
+            # exit = lf.drv.find_element_by_id("butLoginPartial")
+            # exit.click()
+            # time.sleep(5)
+            # print("b232")
+            # Utils.waitFadeIn(lf.drv)
 
-            time.sleep(5)
+            # time.sleep(5)
 
         except:
             pass
