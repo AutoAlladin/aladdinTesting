@@ -2,6 +2,7 @@ import getopt
 import sys
 import time
 
+from Prozorro.Procedures.Filters import testFilters
 from Prozorro.Procedures.Registration import registerUserCompany
 from Prozorro.Procedures.Tenders import *
 
@@ -11,12 +12,12 @@ def list_params():
            "-o [uaid or guid]         - открыть просмотр \n" \
            "-e [uaid or guid]         - открыть на редактирование\n" \
            "-b [uaid or guid]         - подать бид\n"\
-           "-R [uaid or guid]         - регистрация пользователя\n" \
+           "-R                        - регистрация пользователя\n" \
 
 def check(args):
 
     try:
-        opts, arg = getopt.getopt(args, "n:o:e:b:R")
+        opts, arg = getopt.getopt(args, "n:o:e:b:R:F")
     except getopt.GetoptError:
         list_params()
         sys.exit(2)
@@ -127,38 +128,13 @@ def check(args):
             #     json.dump(uaids, uaid_file)
             print(datetime.datetime.now(),  (datetime.datetime.now() - start).total_seconds())
             sys.exit()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        elif opt == '-F':
+            print("filters " + arg)
+            start = datetime.datetime.now()
+            print(start)
+            testFilters()
+            print(datetime.datetime.now(),  (datetime.datetime.now() - start).total_seconds())
+            sys.exit()
 
 
 

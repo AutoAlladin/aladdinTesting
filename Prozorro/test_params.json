@@ -1,20 +1,20 @@
 {
 	"main":{
-		"url":"https://192.168.95.133:444"
+      "url":"https://test-gov.ald.in.ua/purchases"
 	},
 	"below":{
-		"login":"testertestaladdin+owner@gmail.com",
-		"password":"aladdin54321",
-		"enqueriPeriod":2,
-		"tenderPeriod":600,
+		"login":"aladdin.for.test+owner@gmail.com",
+		"password":"zxcvbn00",
+		"enqueriPeriod":5,
+		"tenderPeriod":60,
         "title":"Для тестування.",
-        "description":"1 позиція, 2 хвилини на редагування, 10 годин на подачу пропозицій",
-        "budget":"77777.15",
+        "description":"5 хвилин на редагування, 1 годинa на подачу пропозицій",
+        "budget":"100777.15",
         "min_step":"150",
         "min_step_percentage":"1.54",
         "item_descr":"item description",
         "quantity":"100",
-        "search_classifier_cpv":"15000000-8",
+        "search_classifier_cpv":"15110000-2",
         "search_classifier_other":"000",
         "zip_code_":"3354345345",
         "locality_":"Чернівці",
@@ -38,8 +38,8 @@
 	},
     "feature":{
         "enum_count":3,
-        "title":"шо",
-        "titleEnum_zero":"не чіпай мене",
+        "title":"загадкови параметр",
+        "titleEnum_zero":"нульової загадковості параметр",
         "description":"дерево",
         "descriptionEnum_zero":"низько зрізане дерево, а не пеньок"
     }
