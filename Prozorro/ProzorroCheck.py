@@ -17,8 +17,9 @@ def list_params():
 def check(args):
 
     try:
-        opts, arg = getopt.getopt(args, "n:o:e:b:R:F")
-    except getopt.GetoptError:
+        opts, arg = getopt.getopt(args, "n:o:e:b:r:F")
+    except getopt.GetoptError as ff:
+        print(str(ff))
         list_params()
         sys.exit(2)
     for opt, arg in opts:
@@ -117,7 +118,7 @@ def check(args):
                 print(create_bids(fin=os.path.dirname(os.path.abspath(__file__))+'\\uaids.json',prepare=1))
             elif arg == "on_time":
                 print(send_bids(fin=os.path.dirname(os.path.abspath(__file__))+'\\uaids.json',prepare=0))
-        elif opt == '-R':
+        elif opt == '-r':
             print("registartion " + arg)
             start = datetime.datetime.now()
             filename = 'CompanyUsers.json'

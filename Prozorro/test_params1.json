@@ -1,17 +1,17 @@
 {
 	"main":{
-      "url":"https://gov.ald.in.ua/purchases"
+      "url":"https://test-gov.ald.in.ua/purchases"
 	},
 	"below":{
-        "login":"tender_owner@meta.ua",
-        "password":"123456",
+        "login":"aladdin.for.test+owner@gmail.com",
+        "password":"zxcvbn00",
 		"enqueriPeriod":5,
 		"tenderPeriod":20,
         "title":"Для тестування.",
         "description":"5 хвилин на редагування, 20 на подачу пропозицій",
-        "budget":"100777.15",
-        "min_step":"150",
-        "min_step_percentage":"1.54",
+        "budget":"48007.15",
+        "min_step":"50",
+        "min_step_percentage":"2.54",
         "item_descr":"item description",
         "quantity":"100",
         "search_classifier_cpv":"15110000-2",
@@ -23,7 +23,7 @@
         "longitude_":"47",
         "title_ofLot":"i-01355d1b: Періодичні видання оригінальні на 2016 рік (газети України, журнали України, журнали Росії)",
         "description_of_lot":"Кремпілець драгун п'яно бердник кишкатий попівський тіснитися порозгризати.",
-        "budget_of_lot":"5000",
+        "budget_of_lot":"4500",
         "min_step_of_lot":"150",
         "min_step_of_lot_perc":"1.54"
 	},
@@ -37,6 +37,8 @@
 
 	},
     "feature":{
+        "tender_item":true,
+        "lot_item":true,
         "enum_count":3,
         "title":"загадкови параметр",
         "titleEnum_zero":"нульової загадковості параметр",

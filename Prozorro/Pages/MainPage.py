@@ -26,12 +26,11 @@ class MainPage:
 
         waitFadeIn(self.drv)
         self.liCultureSelector.click()
-        WebDriverWait(self.drv, 10).until(
+        select_lang = WebDriverWait(self.drv, 20).until(
             expected_conditions.visibility_of_element_located(
                 (By.ID, "select_lang_uk-ua")))
+        select_lang.click()
 
-
-        self.drv.find_element_by_id("select_lang_uk-ua").click()
         WebDriverWait(self.drv, 10).until(
             expected_conditions.text_to_be_present_in_element(
                 (By.CLASS_NAME, "content"), "Aladdin Government закупівлі"))

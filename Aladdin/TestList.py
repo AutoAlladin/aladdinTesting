@@ -353,7 +353,7 @@ def s_full_billinig():
              service_refill="http://192.168.95.153:121/api/Private24/test",
              acc=in_dic["new_account"]["TenderId"],
              #acc="9DA86558-58C3-4089-8C43-216160F444BA",
-              edr=in_dic["new_account"]["edrpou"],
+             edr=in_dic["new_account"]["edrpou"],
              refill=[{"TransactionGuid": "3420E605-ADFA-4FBC-8B7C-588222EA45B2",
                       "CompanyEdrpoSender": in_dic["new_account"]["edrpou"],
                       "CompanyEdrpoReceiver": in_dic["new_account"]["edrpou"],
@@ -410,8 +410,6 @@ def s_full_billinig():
     suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q2))
     suite.addTest(CheckBalance("test_01_balance", _params=q1))
     return suite
-
-def s_checkBilling():
 
 
 if __name__ == '__main__':
