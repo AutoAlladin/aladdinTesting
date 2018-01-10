@@ -19,7 +19,10 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
            'wts': self.wts
          }
 
-        full_reg = RegistrationCompany(_params=w)
+
+        #  RegistrationCompany -> UserRegistrationEDRPOU ->
+        # получаем и сохраняем в параметрах сьюита логин и пароль при первой  регистрации
+        full_reg = RegistrationCompany(_params=w, _parent_suite= self.parent_suite)
 
         full_reg.test_01_registration_user()
         full_reg.test_02_tax_system()
@@ -49,8 +52,6 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         full_reg.test_26_confidant_phone()
         full_reg.test_27_contract_offer()
         full_reg.test_28_save()
-        self.params["email"] = full_reg.params["email"]
-        self.params["password"] = full_reg.params["password"]
 
     @add_res_to_DB()
     def test_02_exit(self):
@@ -63,8 +64,8 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
     @add_res_to_DB()
     def test_03_login(self):
         self.wts.drv.get(self.params['login_url'])
-        test_input(self, "exampleInputEmail1", self.params["email"])
-        test_input(self, "pswd", self.params["password"])
+        test_input(self, "exampleInputEmail1", self.parent_suite.suite_params["email"])
+        test_input(self, "pswd", self.parent_suite.suite_params["password"])
         btn_sub = self.wts.drv.find_element_by_id("submitLogin")
         btn_sub.click()
         time.sleep(2)
