@@ -4,8 +4,8 @@ import unittest
 
 
 class ParamsTestSuite(unittest.TestSuite):
-    params= dict()
+    suite_params = dict()
 
     def __init__(self, tests=(),  _params=None):
         super().__init__(self)
-        self.params=_params
+        self.suite_params=_params

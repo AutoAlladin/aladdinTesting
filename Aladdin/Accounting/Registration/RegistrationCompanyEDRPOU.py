@@ -11,7 +11,7 @@ class RegistrationCompany(ParamsTestCase):
                              'group': self.params['query']['q']['group']}},
              'wts': self.wts
              }
-        reg = UserRegistrationEDRPOU(_params=w)
+        reg = UserRegistrationEDRPOU(_params=w, _parent_suite= self.parent_suite)
         reg.test_01_company_name()
         reg.test_02_company_name_en()
         reg.test_03_check_ownership()
@@ -26,8 +26,6 @@ class RegistrationCompany(ParamsTestCase):
         reg.test_12_password()
         reg.test_13_confirm_password()
         reg.test_14_click_next_step_btn()
-        self.params["email"] = reg.params["email"]
-        self.params["password"] = reg.params["password"]
 
     def test_02_tax_system(self):
         test_select(self, "company_taxSystem", "5")
@@ -113,4 +111,4 @@ class RegistrationCompany(ParamsTestCase):
     def test_28_save(self):
         btn_save = self.wts.drv.find_element_by_id("btn_save_changes")
         btn_save.click()
-        WebDriverWait(self.wts.drv, 5).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
+        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_edit")))

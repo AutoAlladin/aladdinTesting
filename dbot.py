@@ -95,7 +95,7 @@ def getUserCompany(connection, cols=False):
              where SUBSTRING(cmp.Edrpou,1,4)!='0000'
                and cmp.DateCreate >= '20171201'
               -- and cmp.DateCreate <= '20171222'
-             
+             order by cmpDateModified
 
        """
     crs = connection.cursor()

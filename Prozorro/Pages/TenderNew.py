@@ -82,24 +82,24 @@ class TenderNew:
             set_datepicker(
                 self.drv,
                 "period_enquiry_start",
-                (dt + timedelta(minutes=1)).strftime("%Y-%m-%d %H:%M:%S"))
+                (dt + timedelta(minutes=1)).strftime("%d-%m-%Y %H:%M:%S"))
             set_datepicker(
                 self.drv,
                 "period_enquiry_end",
                 (dt + timedelta(
                     minutes=get_dic_val(dic,"below.enqueriPeriod")
                 )
-                 ).strftime("%Y-%m-%d %H:%M:%S"))
+                 ).strftime("%d-%m-%Y %H:%M:%S"))
 
             set_datepicker(self.drv, "period_tender_start",
                            (dt + timedelta(
                                minutes=get_dic_val(dic,"below.enqueriPeriod"))
-                            ).strftime("%Y-%m-%d %H:%M:%S"))
+                            ).strftime("%d-%m-%Y %H:%M:%S"))
 
             set_datepicker(self.drv, "period_tender_end",
                            (dt + timedelta(
                                minutes=get_dic_val(dic,"below.enqueriPeriod")+get_dic_val(dic,"below.tenderPeriod"))
-                            ).strftime("%Y-%m-%d %H:%M:%S"))
+                            ).strftime("%d-%m-%Y %H:%M:%S"))
 
         except Exception as e:
             raise Exception("Чтото не так с датами шапки тендера - \n" + e)
@@ -203,9 +203,9 @@ class TenderNew:
 
     def set_delivery_period(self, item_id):
         set_datepicker(self.drv, "delivery_start_" + item_id,
-                       (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%S"))
+                       (datetime.now() + timedelta(days=1)).strftime("%d-%m-%Y %H:%M:%S"))
         set_datepicker(self.drv, "delivery_end_" + item_id,
-                       (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%S"))
+                       (datetime.now() + timedelta(days=1)).strftime("%d-%m-%Y %H:%M:%S"))
 
     def set_otherDK(self, dic):
         btn_otherClassifier = self.drv.find_element_by_id("btn_otherClassifier")
@@ -335,8 +335,25 @@ class TenderNew:
         featureDescription=self.drv.find_element_by_id("featureDescription_"+end)
         featureDescription.send_keys(get_dic_val(dic, "feature.description"))
 
-    def set_feature_enum(dic,lot=None):
-        pass
+    def add_feature_enum(self,dic,enum_index, lot_index=0):
+        featureEnumAdd = self.drv.find_element_by_id("addFeatureEnum_"+str(lot_index)+"_0")
+        featureEnumAdd.click()
+
+        featureEnumValue =   WebDriverWait(self.drv, 20).until(
+                EC.visibility_of_element_located(
+                    (By.ID, "featureEnumValue_"+str(lot_index)+"_0_"+str(enum_index))))
+        featureEnumValue.clear()
+        featureEnumValue.send_keys(str(enum_index))
+
+        featureEnumTitle = self.drv.find_element_by_id(
+            "featureEnumTitle_"+str(lot_index)+"_0_"+str(enum_index))
+        featureEnumTitle.clear()
+        featureEnumTitle.send_keys(get_dic_val(dic, "feature.option_name"))
+
+        featureEnumDescription = self.drv.find_element_by_id(
+            "featureEnumDescription_"+str(lot_index)+"_0_"+str(enum_index))
+        featureEnumDescription.clear()
+        featureEnumDescription.send_keys(get_dic_val(dic, "feature.option_description"))
 
     def set_feature_zero_enum(self, dic, end="0"):
         WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "featureEnumTitle_"+end+"_0_0")))
@@ -367,8 +384,10 @@ class TenderNew:
                 Select(select).select_by_index(1)
 
             self.set_feature_zero_enum(dic)
-            # for enum_index in range(get_dic_val(dic,"feature.enum_count",2)):
-            #     self.add_feature_enum(dic)
+
+            for enum_index in range(get_dic_val(dic,"feature.enum_count", 2)-1):
+                self.add_feature_enum(dic, enum_index+1)
+
             updateFeature=WebDriverWait(self.drv, 20).until(EC.element_to_be_clickable((By.ID, "updateFeature_0_0")))
             updateFeature.click()
         pass
@@ -402,8 +421,10 @@ class TenderNew:
                     Select(select).select_by_index(1)
 
                 self.set_feature_zero_enum(dic,end=str(lotix))
-                # for enum_index in range(get_dic_val(dic, "feature.enum_count", 2)):
-                #     self.add_feature_enum(dic,lot=lotix)
+
+                for enum_index in range(get_dic_val(dic, "feature.enum_count", 2)-1):
+                     self.add_feature_enum(dic,enum_index+1, lotix)
+
                 updateFeature = WebDriverWait(self.drv, 20).until(
                     EC.visibility_of_element_located(
                         (By.ID, "updateFeature_"+str(lotix)+"_0")

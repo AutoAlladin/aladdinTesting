@@ -14,9 +14,16 @@ from Prozorro import Utils
 
 
 
-def init_driver():
-    with open(os.path.dirname(os.path.abspath(__file__))+'\\..\\test_params.json', 'r', encoding="UTF-8") as test_params_file:
+def init_driver(test_mode):
+    file_name=""
+    if test_mode :
+        file_name = os.path.dirname(os.path.abspath(__file__))+'\\..\\test_params.json'
+    else:
+        file_name = os.path.dirname(os.path.abspath(__file__)) + '\\..\\prod_params.json'
+
+    with open(file_name, 'r', encoding="UTF-8") as test_params_file:
        tp = json.load(test_params_file)
+
     chrm = webdriver.Chrome()
 
     chrm.maximize_window()
@@ -25,8 +32,14 @@ def init_driver():
     return chrm, tp, MainPage(chrm)
 
 
-def create_below(countLots, countFeatures=0, countDocs=0, countTenders=1, countItems=1, tender_dict=None):
-    chrm, tp, mpg = init_driver()
+def create_below(countLots,
+                 countFeatures=0,
+                 countDocs=0,
+                 countTenders=1,
+                 countItems=1,
+                 tender_dict=None,
+                 ttest_mode=False):
+    chrm, tp, mpg = init_driver(ttest_mode)
     mpg.open_login_form().login(tp["below"]["login"], tp["below"]["password"])
     uaid = []
 

@@ -49,8 +49,8 @@ class UserRegistrationEDRPOU(ParamsTestCase):
     def test_11_email(self):
         test_input(self, "email", **self.params['query'])
         eml = self.wts.__mongo__.test_params.find_one(self.params['query']["q"])
-        self.params.update({"email": eml["inputs"]["email"]})
-        print("email",  self.params["email"])
+        self.parent_suite.suite_params.update({"email": eml["inputs"]["email"]})
+        print("email",  self.parent_suite.suite_params["email"])
         next = str(int(eml["inputs"]["email_next"]) + 1)
         self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {
         "$set": {"inputs.email": "forTestRegEmail_" + next.rjust(5, '0') + "@cucumber.com"}})
@@ -59,8 +59,8 @@ class UserRegistrationEDRPOU(ParamsTestCase):
     def test_12_password(self):
         test_input(self, "password", **self.params['query'])
         psw = self.wts.__mongo__.test_params.find_one(self.params['query']["q"])
-        self.params.update({"password": psw["inputs"]["password"]})
-        print("password", self.params["password"])
+        self.parent_suite.suite_params.update({"password": psw["inputs"]["password"]})
+        print("password", self.parent_suite.suite_params["password"])
 
     def test_13_confirm_password(self):
         test_input(self, "confirm_password", **self.params['query'])
