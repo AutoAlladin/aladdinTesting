@@ -24,3 +24,4 @@ def send_simple(que_name, body, _durable=True):
         print(" [x] Sent " + body)
     finally:
         con_rabbit.close()
+

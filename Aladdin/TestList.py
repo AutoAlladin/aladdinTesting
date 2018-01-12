@@ -201,16 +201,15 @@ def s_login_after_full_registration(g, cmd_bro):
 
     qqq = s_login_after_full_registration_init(cmd_bro)
     suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id, "DB": qqq["wts"].__mongo__})
-    suite.addTest(LoginAfterRegistrationCompany("test_01", _params=qqq))
-    suite.addTest(LoginAfterRegistrationCompany("test_02_exit", _params=qqq))
-    suite.addTest(LoginAfterRegistrationCompany("test_03_login", _params=qqq))
-    suite.addTest(LoginAfterRegistrationCompany("test_04_edit", _params=qqq))
-    suite.addTest(LoginAfterRegistrationCompany("test_05_add_view_delete_docs", _params=qqq))
-    suite.addTest(LoginAfterRegistrationCompany("test_06_add_employees", _params=qqq))
+    suite.addTest(LoginAfterRegistrationCompany("test_01", _params=qqq, _parent_suite= suite))
+    suite.addTest(LoginAfterRegistrationCompany("test_02_exit", _params=qqq, _parent_suite= suite))
+    suite.addTest(LoginAfterRegistrationCompany("test_03_login", _params=qqq, _parent_suite= suite))
+    suite.addTest(LoginAfterRegistrationCompany("test_04_edit", _params=qqq, _parent_suite= suite))
+    suite.addTest(LoginAfterRegistrationCompany("test_05_add_view_delete_docs", _params=qqq, _parent_suite= suite))
+    suite.addTest(LoginAfterRegistrationCompany("test_06_add_employees", _params=qqq, _parent_suite= suite))
     # suite.addTest(LoginAfterRegistrationCompany("test_07_edit_employees"))
 
     return suite
-
 
 def s_createAccount_billing():
     """
@@ -381,7 +380,7 @@ def s_full_billinig():
         "rezerv": {
             "TenderId": in_dic["new_account"]["TenderId"],
             "LotId": in_dic["new_account"]["LotId"],
-            "Amount": 5000.0,
+            "Amount": 4000.0,
             "Currency": "UAH",
             "Descriptions": "chupakabra",
             "TotalMoney": in_dic["new_account"]["TotalMoney"],
@@ -411,7 +410,6 @@ def s_full_billinig():
     suite.addTest(CheckBalance("test_01_balance", _params=q1))
     suite.addTest(CheckReserv("test_04_charge_off", _params=q2))
     suite.addTest(CheckBalance("test_01_balance", _params=q1))
-    suite.addTest(CheckBalance("test_02_refill_full", _params=q1))
     suite.addTest(CheckReserv("test_01_add_rezerv", _params=q2))
     suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q2))
     suite.addTest(CheckBalance("test_01_balance", _params=q1))
@@ -471,11 +469,11 @@ if __name__ == '__main__':
         try:
             runner.run(ttt)
         except:
-            ttt.params["DB"].test_result.update(
-                {"_id": ttt.params["result_id"]},
+            ttt.suite_params["DB"].test_result.update(
+                {"_id": ttt.suite_params["result_id"]},
                 {"$set": {"test_result": "FAILED"}})
         finally:
-            if "DB" in ttt.params:
-                ttt.params["DB"].test_result.update(
-                    {"_id": ttt.params["result_id"]},
+            if "DB" in ttt.suite_params:
+                ttt.suite_params["DB"].test_result.update(
+                    {"_id": ttt.suite_params["result_id"]},
                     {"$set": {"test_result": "PASSED"}})
