@@ -40,6 +40,10 @@ def s_load_main_page(g, t, cmbro):
 
 if __name__ == '__main__':
 
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+    subdirs= [x[0] for x in os.walk(os.path.dirname(os.path.abspath(__file__))) if not x[0].startswith("_") and not x[0].startswith(".")]
+    sys.path.extend(subdirs)
+
     parser = OptionParser()
     parser.add_option("-s", action="store", type="string")
     parser.add_option("-g", action="store", type="string")
