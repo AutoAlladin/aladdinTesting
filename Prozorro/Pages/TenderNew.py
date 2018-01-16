@@ -1,9 +1,6 @@
 import os
 import random
-from time import sleep
-from xml.sax.handler import feature_external_ges
 
-from selenium import webdriver
 from datetime import datetime, timedelta
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
