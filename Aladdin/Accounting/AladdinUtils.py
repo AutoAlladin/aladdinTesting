@@ -28,7 +28,6 @@ def test_select(cls, id_field, input_val=None, q=None):
     except Exception as e:
         cls.wts.drv.get_screenshot_as_file("output\\"+id_field+"_ERROR.png")
 
-
 def test_input(cls, id_field, input_val=None, q=None):
     try:
         if input_val is None:
