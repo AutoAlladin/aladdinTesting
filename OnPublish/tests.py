@@ -29,6 +29,8 @@ def s_load_main_page(g, t, cmbro):
     suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id, "DB": qqq["wts"].__mongo__})
     suite.addTest(Load_main_page("page_loaded", _params=qqq))
     suite.addTest(Load_main_page("menu_presented", _params=qqq))
+    suite.addTest(Load_main_page("set_lang", _params=qqq))
+
     return suite
 
 def runner(arg):
@@ -36,6 +38,7 @@ def runner(arg):
     parser.add_option("-s", action="store", type="string")
     parser.add_option("-g", action="store", type="string")
     parser.add_option("-b", action="store", type="string")
+    parser.add_option("--name", action="store", type="string")
 
     (options, args) = parser.parse_args(arg)
 
@@ -44,6 +47,8 @@ def runner(arg):
                                      verbosity=2)
     opt = options.s
     bro = options.b
+    tname =options.name
+    if tname is None: tname="test development "+datetime.datetime.now().isoformat()
 
     if bro == "ch":
         bro = AvaliableBrowsers.Chrome
@@ -55,7 +60,7 @@ def runner(arg):
     ttt = None
 
     if opt == 'main_page':
-        ttt = s_load_main_page(options.g, "xxx", bro)
+        ttt = s_load_main_page(options.g, tname, bro)
 
     if ttt is not None:
         try:
