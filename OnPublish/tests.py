@@ -29,6 +29,8 @@ def s_load_main_page(g, t, cmbro):
     suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id, "DB": qqq["wts"].__mongo__})
     suite.addTest(Load_main_page("page_loaded", _params=qqq))
     suite.addTest(Load_main_page("menu_presented", _params=qqq))
+    suite.addTest(Load_main_page("set_lang", _params=qqq))
+
     return suite
 
 def runner(arg):
@@ -46,7 +48,7 @@ def runner(arg):
     opt = options.s
     bro = options.b
     tname =options.name
-    if tname is None: tname="xxx"
+    if tname is None: tname="test development "+datetime.datetime.now().isoformat()
 
     if bro == "ch":
         bro = AvaliableBrowsers.Chrome
