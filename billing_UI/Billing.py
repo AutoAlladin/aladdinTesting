@@ -4,16 +4,19 @@ from Prozorro.Pages.LoginPage import LoginPage
 from Prozorro.Procedures.Tenders import init_driver
 from Prozorro.Procedures.Tenders import create_below
 from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
+from Prozorro.ProzorroCheck import init_driver
+from Prozorro.ProzorroCheck import create_below
 
 
 class BalanceAfterBid(ParamsTestCase):
     def open_main_page(self):
-        MainPage.__init__()
-
+        #MainPage.__init__()
+        init_driver()
+        create_below()
 
     def login_owner(self):
-        LoginPage.__init__()
-        LoginPage.login()
+        pass
+
 
     def create_tender(self):
         pass
@@ -42,7 +45,7 @@ class Bids(ParamsTestCase):
     def logout(self):
         pass
 
-class BalanceAfterCancelBid():
+class BalanceAfterCancelBid(ParamsTestCase):
     def login_owner(self):
         pass
 
