@@ -35,6 +35,7 @@ class CheckBalance(ParamsTestCase):
         rq = requests.post(self.params["service_refill"],
                            data=json.dumps(self.params["refill"]),
                            headers={'content-type': 'application/json'})
+        print(rq.json())
         self.assertEqual(rq.status_code, 200)
         self.assertIsNotNone(rq.json())
 

@@ -58,6 +58,7 @@ class CreateAccount(ParamsTestCase):
                           dic=self.params["in_dic"])
 
         print("duration", (datetime.datetime.now() - self.start_test_method).total_seconds())
+
         self.assertEqual(res[0:4], "PASS")
 
 

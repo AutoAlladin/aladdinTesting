@@ -294,38 +294,47 @@ def s_checkRezerv():
 
     q = {
         "services": {
-            "service_fix_money": "http://192.168.95.153:91/api/balance/WriteOffMoney",
-            "service_add_reserv": "http://192.168.95.153:91/api/balance/reserve",
-            "service_cansel_reserv": "http://192.168.95.153:91/api/balance/CancelReserve",
-            "service_return_money": "http://192.168.95.153:91/api/balance/ReturnMonies"
+            "service_fix_money": "http://192.168.95.153:91/api/balance/WriteOffMoney",  #  2 - сразу резерв и списание, 1 - только списание
+            "service_add_reserv": "http://192.168.95.153:91/api/balance/reserve", #  только 1
+            "service_cansel_reserv": "http://192.168.95.153:91/api/balance/CancelReserve",  # for  1
+            "service_return_money": "http://192.168.95.153:91/api/balance/ReturnMonies" # for 1
         },
         "rezerv": {
-            "TenderId": 506,
-            "LotId": 1,
+            "TenderId": 516,
+            "LotId": 4,
             "Amount": 4000.0,
             "Currency": "UAH",
             "Descriptions": "chupakabra",
-            "TotalMoney": 5000.0,
-            "CompanyUuid": "D9B92253-6275-42D8-9D04-7A3258DD9728"
+            "TotalMoney": 1000.0,
+            "CompanyUuid": "0B94D9B3-B2B4-4647-8CE9-3F51019151B3"
         },
         "cansel_reserv": {
-            "TenderId": 506,
-            "LotId": 1,
-            "CompanyUuid": "D9B92253-6275-42D8-9D04-7A3258DD9728"
+            "TenderId": 516,
+            "LotId": 3,
+            "CompanyUuid": "0B94D9B3-B2B4-4647-8CE9-3F51019151B3"
         },
         "return_money": {
             "CompanyUuid": "2C6A97A8-4BDE-48BE-A3BB-A4BDA2DEF043"
         },
         "fix_money": {
-            "TenderId": 506,
-            "SiteType": 1,
-            "CompanyUuid": "D9B92253-6275-42D8-9D04-7A3258DD9728",
+            "TenderId": 516,
+            "LotId": 2,
+            "Amount": 500,
+            "Currency": "UAH",
+            #"Descriptions": "test test",
+            #"TotalMoney": 1489,
+            "SiteType": 2,  #1 - prozorro  2 - aladdin
+            "CompanyUuid": "0B94D9B3-B2B4-4647-8CE9-3F51019151B3",
+            "ServiceIdentifierUuid": "AEB2F433-ED73-4EDD-B42D-9BBF20DCD985"
+            #"TenderId": 507,
+            #"SiteType": 2,  #1 - prozorro
+            #"CompanyUuid": "A86BAA01-C98A-4EFE-9380-2A299165D051",
         }
     }
 
     suite = ParamsTestSuite(_params={})
-    #suite.addTest(CheckReserv("test_01_add_rezerv", _params=q))
-    suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q))
+    suite.addTest(CheckReserv("test_01_add_rezerv", _params=q))
+    #suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q))
     #suite.addTest(CheckReserv("test_03_return_money", _params=q))
     #suite.addTest(CheckReserv("test_04_charge_off", _params=q))
     return suite
@@ -380,7 +389,7 @@ def s_full_billinig():
         "rezerv": {
             "TenderId": in_dic["new_account"]["TenderId"],
             "LotId": in_dic["new_account"]["LotId"],
-            "Amount": 4000.0,
+            "Amount": 5000.0,
             "Currency": "UAH",
             "Descriptions": "chupakabra",
             "TotalMoney": in_dic["new_account"]["TotalMoney"],
@@ -410,9 +419,10 @@ def s_full_billinig():
     suite.addTest(CheckBalance("test_01_balance", _params=q1))
     suite.addTest(CheckReserv("test_04_charge_off", _params=q2))
     suite.addTest(CheckBalance("test_01_balance", _params=q1))
-    suite.addTest(CheckReserv("test_01_add_rezerv", _params=q2))
-    suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q2))
-    suite.addTest(CheckBalance("test_01_balance", _params=q1))
+    #suite.addTest(CheckBalance("test_02_refill_full", _params=q1))
+    #suite.addTest(CheckReserv("test_01_add_rezerv", _params=q2))
+    #suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q2))
+    #suite.addTest(CheckBalance("test_01_balance", _params=q1))
     return suite
 
 def s_checkBilling():

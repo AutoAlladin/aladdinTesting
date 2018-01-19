@@ -153,6 +153,7 @@ class CheckReserv(ParamsTestCase):
         # до резервирования  1000
         prev_amount_db = get_db_reserve(self.params["rezerv"]["CompanyUuid"])
 
+        print (json.dumps(self.params["rezerv"]))
         rq = requests.post(self.params["services"]["service_add_reserv"],
                            data=json.dumps(self.params["rezerv"]),
                            headers={'Content-type': 'application/json'}
@@ -260,3 +261,7 @@ class CheckReserv(ParamsTestCase):
 
         self.assertLess(amount_db, prev_amount_db,
                          "Баланс не изменился после списания денег")
+
+
+
+

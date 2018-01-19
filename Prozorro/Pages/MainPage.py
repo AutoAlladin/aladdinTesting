@@ -7,7 +7,7 @@ from Prozorro.Pages.TenderView import TenderView
 from Prozorro.Pages.UserRegForm import UserRegForm
 from Prozorro.Utils import *
 import time
-
+from datetime import datetime, timedelta, time
 
 
 
@@ -123,7 +123,7 @@ class MainPage:
                 add_lot(lots, dic).\
                 add_item(dic, lots, items). \
                 click_next_button(). \
-                add_features(dic,lots,items,features).\
+                add_features(dic,lots,features).\
                 add_doc(docs).\
                 click_finish_edit_button().\
                 click_publish_button()
