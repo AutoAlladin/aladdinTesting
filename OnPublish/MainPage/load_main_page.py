@@ -31,8 +31,11 @@ class Load_main_page(ParamsTestCase):
             check((By.XPATH, ".//*[@id='ownerOfTenders']/div"), "Organizer of the auction")
             check((By.XPATH, ".//*[@id='navigation']/div/button[2]"), "Search")
             check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[1]/h2"), "Aladdin Government public procurement")
-
-
+            check((By.ID, "searchType"), "Search:")
+            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[1]/label"), "Active")
+            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[2]/label"), "Completed")
+            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[3]/label"), "Archive")
+            check((By.ID, "clear_all"), "Clear")
 
         elif lang=='ru':
             check((By.ID, 'hrefPurchases'), "Тендеры")
@@ -46,6 +49,12 @@ class Load_main_page(ParamsTestCase):
             check((By.XPATH, ".//*[@id='ownerOfTenders']/div"), "Организатор торгов")
             check((By.XPATH, ".//*[@id='navigation']/div/button[2]"), "Искать")
             check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[1]/h2"), "Aladdin Government закупки")
+            check((By.ID, "searchType"), "Искать:")
+            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[1]/label"), "Активные")
+            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[2]/label"), "Завершенные")
+            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[3]/label"), "Архивные")
+            check((By.ID, "clear_all"), "Очистить")
+
 
         elif lang == 'ua':
             check((By.ID, 'hrefPurchases'), "Тендери")
@@ -59,6 +68,11 @@ class Load_main_page(ParamsTestCase):
             check((By.XPATH, ".//*[@id='ownerOfTenders']/div"), "Організатор торгів")
             check((By.XPATH, ".//*[@id='navigation']/div/button[2]"), "Шукати")
             check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[1]/h2"), "Aladdin Government закупівлі")
+            check((By.ID, "searchType"), "Шукати:")
+            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[1]/label"), "Активні")
+            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[2]/label"), "Завершені")
+            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[3]/label"), "Архівні")
+            check((By.ID, "clear_all"), "Очистити")
 
 
     #страница загружена, есть хотя бы один тендер на странице
