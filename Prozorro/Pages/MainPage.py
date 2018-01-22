@@ -76,7 +76,7 @@ class MainPage:
         self.butSimpleSearch.click()
 
         waitFadeIn(self.drv)
-
+        print((By.XPATH,"//span[text()='"+uaid+"']/../a"))
         tenderLink =WebDriverWait(self.drv, 20).until(
             EC.visibility_of_element_located((By.XPATH,"//span[text()='"+uaid+"']/../a")))
         tenderLink.click()

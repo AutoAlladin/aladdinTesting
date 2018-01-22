@@ -109,8 +109,8 @@ def open_tender(id,role, test_mode=True):
     if str(role) in Utils.roles and role == "provider":
         mpg.open_login_form().login(tp["billing_ui"]["bids"]["login"], tp["billing_ui"]["bids"]["password"])
 
-    mpg.open_tender(id)
-    print(id())
+    mpg.open_tender(id[0][0])
+    print(id([0][0]))
 
 def create_concurentUA(countLots, countFeatures, countDocs=0, countTenders=1, countItems=1, tender_dict=None):
     chrm, tp,mpg = init_driver()

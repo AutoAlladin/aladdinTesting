@@ -16,8 +16,9 @@ class BalanceAfterBid(ParamsTestCase):
     @add_res_to_DB()
     def create_below(self):
         uaid = create_below(tender_dict=self.parent_suite.suite_params["dic_params"])
-        self.parent_suite.suite_params.update({"uaid": uaid})
-        self.tlog.append("create_below OK - " + str(uaid))
+        self.parent_suite.suite_params.update({"uaid": uaid[0][0]})
+        self.tlog.append("create_below OK - " + str(uaid[0][0]))
+        print(uaid[0][0])
         open_tender(uaid, role="provider")
         #create_bids(uaid)
 
