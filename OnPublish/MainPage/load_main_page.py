@@ -299,9 +299,19 @@ class Tender_Tab(TabTest):
 
         except Exception as e:
             self.assertEqual(True, False, "TENDER PANEL - " + e.__str__())
+
     @add_res_to_DB(test_name='Панель фильтров тендеров')
     def tab_filters(self):
-        pass
+        id_searchType='searchType'
+        id_findbykeywords='findbykeywords'
+        id_butSimpleSearch='butSimpleSearch'
+        id_clear_all="clear_all"
+        xpath_activ="//span[@class='check-wrap']/input[@id='topStatus3']/../label"
+        xpath_done="//span[@class='check-wrap']/input[@id='topStatus5']/../label"
+        xpath_archive="//span[@class='check-wrap']/input[@id='topStatus4']/../label"
+        xpath_excell="//button[contains(@ng-click,'postFilterExcel')]"   #IdExportExcelButton
+        xpath_page_total="//div[contains(@class,'pager-total')]/span"
+
 
     @add_res_to_DB(test_name='Поиск тендеров')
     def tab_search(self):
