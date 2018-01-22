@@ -16,7 +16,7 @@ from Prozorro.Utils import set_datepicker,waitFadeIn,get_dic_val, paint,scroll_t
 class TenderNew:
     def __init__(self, _drv):
         self.drv = _drv
-        self.drv = webdriver.Chrome(_drv)
+        #self.drv = webdriver.Chrome(_drv)
 
     def click_finish_edit_button(self):
         try:

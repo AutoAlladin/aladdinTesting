@@ -8,14 +8,22 @@ from Prozorro.Procedures.Tenders import create_below
 from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 from Prozorro.ProzorroCheck import init_driver
 from Prozorro.ProzorroCheck import create_below
+from Prozorro.ProzorroCheck import create_bids
+from Prozorro.ProzorroCheck import open_tender
 
 
 class BalanceAfterBid(ParamsTestCase):
     @add_res_to_DB()
     def create_below(self):
-        uaids = create_below(tender_dict=self.parent_suite.suite_params["dic_params"])
-        self.parent_suite.suite_params.update({"uaid": uaids})
-        self.tlog.append("create_below OK - " + str(uaids))
+        uaid = create_below(tender_dict=self.parent_suite.suite_params["dic_params"])
+        self.parent_suite.suite_params.update({"uaid": uaid})
+        self.tlog.append("create_below OK - " + str(uaid))
+        open_tender(uaid, role="provider")
+        #create_bids(uaid)
+
+    @add_res_to_DB()
+    def creare_bids(self):
+        pass
 
 
 

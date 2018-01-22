@@ -39,8 +39,7 @@ def create_below(countLots=1,
                  countItems=1,
                  tender_dict=None,
                  ttest_mode=True,
-                 test_log=None
-                 ):
+                 test_log=None):
     chrm, tp, mpg = init_driver(ttest_mode)
     if tender_dict is not None and isinstance(tender_dict, dict):
         tp = tender_dict
@@ -81,10 +80,10 @@ def create_openUA(countLots, countFeatures, countDocs=0, countTenders=1, countIt
 
     return uaid
 
-def create_bids(uaids=[],fin=None, prepare=0):
+def create_bids(uaids=[],fin=None, prepare=0, test_mode=True):
     print("start bids", datetime.datetime.now())
-    chrm, tp,mpg = init_driver()
-    mpg.open_login_form().login(tp["bids"]["login"], tp["bids"]["password"])
+    chrm, tp,mpg = init_driver(test_mode)
+    mpg.open_login_form().login(tp["billing_ui"]["bids"]["login"], tp["billing_ui"]["bids"]["password"])
     bid_uaids=[]
 
     if(os.path.isfile(fin)):
@@ -105,12 +104,13 @@ def create_bids(uaids=[],fin=None, prepare=0):
     print("finish bids", datetime.datetime.now())
     return bid_uaids
 
-def open_tender(id,role):
-    chrm,tp, mpg=init_driver()
+def open_tender(id,role, test_mode=True):
+    chrm,tp, mpg=init_driver(test_mode)
     if str(role) in Utils.roles and role == "provider":
-        mpg.open_login_form().login(tp["bids"]["login"], tp["bids"]["password"])
+        mpg.open_login_form().login(tp["billing_ui"]["bids"]["login"], tp["billing_ui"]["bids"]["password"])
 
     mpg.open_tender(id)
+    print(id())
 
 def create_concurentUA(countLots, countFeatures, countDocs=0, countTenders=1, countItems=1, tender_dict=None):
     chrm, tp,mpg = init_driver()
