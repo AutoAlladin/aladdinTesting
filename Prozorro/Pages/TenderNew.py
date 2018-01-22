@@ -2,6 +2,8 @@ import os
 import random
 
 from datetime import datetime, timedelta
+
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -14,7 +16,7 @@ from Prozorro.Utils import set_datepicker,waitFadeIn,get_dic_val, paint,scroll_t
 class TenderNew:
     def __init__(self, _drv):
         self.drv = _drv
-        #self.drv = webdriver.Chrome(_drv)
+        self.drv = webdriver.Chrome(_drv)
 
     def click_finish_edit_button(self):
         try:

@@ -7,7 +7,7 @@ import xmlrunner
 from Aladdin.Accounting.AladdinUtils import WebTestSession, AvaliableBrowsers
 from Aladdin.Accounting.decorators.StoreTestResult import create_result_DB
 from Aladdin.Billing.CreateAccount import *
-from OnPublish.MainPage.load_main_page import Load_main_page
+from OnPublish.MainPage.load_main_page import Load_main_page, Tender_Tab
 from billing_UI.Billing import BalanceAfterBid
 
 
@@ -28,9 +28,15 @@ def s_load_main_page(g, t, cmbro):
     #dbid = 18
     qqq = s_load_main_page_init(cmbro)
     suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id, "DB": qqq["wts"].__mongo__})
+
     suite.addTest(Load_main_page("page_loaded", _params=qqq))
     suite.addTest(Load_main_page("menu_presented", _params=qqq))
     suite.addTest(Load_main_page("set_lang", _params=qqq))
+
+    suite.addTest(Tender_Tab("tab_visible", _params=qqq))
+    suite.addTest(Tender_Tab("tab_list", _params=qqq))
+    suite.addTest(Tender_Tab("tab_filters", _params=qqq))
+    suite.addTest(Tender_Tab("tab_search", _params=qqq))
 
     return suite
 
@@ -51,7 +57,15 @@ def s_run_bil(g, t, cmbro):
 
     #dbid = 19
     qqq = s_load_main_page_init(cmbro)
-    suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id, "DB": qqq["wts"].__mongo__})
+
+    file_name = os.path.dirname(os.path.abspath(__file__)) + '\\..\\Prozorro\\test_params.json'
+    with open(file_name, 'r', encoding="UTF-8") as test_params_file:
+        dic_params = json.load(test_params_file)
+
+    suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id,
+                                     "DB": qqq["wts"].__mongo__,
+                                     "dic_params":dic_params["billing_ui"]
+                                     })
     suite.addTest(BalanceAfterBid("create_below", _params=qqq, _parent_suite=suite))
 
 

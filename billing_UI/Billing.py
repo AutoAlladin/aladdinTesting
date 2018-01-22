@@ -13,10 +13,7 @@ from Prozorro.ProzorroCheck import create_below
 class BalanceAfterBid(ParamsTestCase):
     @add_res_to_DB()
     def create_below(self):
-        #MainPage.__init__()
-
-        uaids = create_below()
-
+        uaids = create_below(tender_dict=self.parent_suite.suite_params["dic_params"])
         self.parent_suite.suite_params.update({"uaid": uaids})
         self.tlog.append("create_below OK - " + str(uaids))
 

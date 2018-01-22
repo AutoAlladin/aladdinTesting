@@ -95,7 +95,8 @@ class MainPage:
 
 
 
-    def create_tender(self, procurementMethodType, lots=0, items=1, docs=0, features=0, dic=None, nom=""):
+    def create_tender(self, procurementMethodType, lots=0, items=1, docs=0, features=0,
+                      dic=None, nom="", log=None):
         self.btn_create_purchase=self.drv.find_element_by_id("btn_create_purchase")
         waitFadeIn(self.drv)
         WebDriverWait(self.drv, 3).until(

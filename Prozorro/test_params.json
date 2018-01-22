@@ -46,5 +46,39 @@
         "descriptionEnum_zero":"низько зрізане дерево, а не пеньок",
         "option_description":"blue cups",
         "option_name":"forgotten items"
+    },
+
+    "billing_ui":{
+        "bids":{
+          "login":"senya22051989@gmail.com",
+          "password":"123456",
+          "startTime":"2017-09-30 18:43"
+
+        },
+        "below":{
+            "login":"aladdin.for.test+owner@gmail.com",
+            "password":"zxcvbn00",
+            "enqueriPeriod":3,
+            "tenderPeriod":10,
+            "title":"Для тестування быллынгу.",
+            "description":"3 хвилин на редагування, 10 на подачу пропозицій",
+            "budget":"10000.15",
+            "min_step":"10",
+            "min_step_percentage":"0.54",
+            "item_descr":"item description",
+            "quantity":"100",
+            "search_classifier_cpv":"15110000-2",
+            "search_classifier_other":"000",
+            "zip_code_":"3354345345",
+            "locality_":"Чернівці",
+            "street_":"Європейська",
+            "latutide_":"65",
+            "longitude_":"47",
+            "title_ofLot":"i-01355d1b: Періодичні видання оригінальні на 2016 рік (газети України, журнали України, журнали Росії)",
+            "description_of_lot":"Кремпілець драгун п'яно бердник кишкатий попівський тіснитися порозгризати.",
+            "budget_of_lot":"4500",
+            "min_step_of_lot":"150",
+            "min_step_of_lot_perc":"1.54"
+          }
     }
 }

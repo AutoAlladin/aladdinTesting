@@ -38,10 +38,15 @@ def create_below(countLots=1,
                  countTenders=1,
                  countItems=1,
                  tender_dict=None,
-                 ttest_mode=True
+                 ttest_mode=True,
+                 test_log=None
                  ):
     chrm, tp, mpg = init_driver(ttest_mode)
+    if tender_dict is not None and isinstance(tender_dict, dict):
+        tp = tender_dict
+
     mpg.open_login_form().login(tp["below"]["login"], tp["below"]["password"])
+
     uaid = []
 
     args=dict(procurementMethodType='belowThreshold',
@@ -49,7 +54,8 @@ def create_below(countLots=1,
               items=countItems,
               docs=countDocs,
               features=countFeatures,
-              dic=tp
+              dic=tp,
+              log = test_log
               )
 
     for i in range(countTenders):
