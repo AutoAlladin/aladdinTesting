@@ -22,7 +22,7 @@ def create_result_DB(init_params_test):
         res=pts['wts'].__mongo__.test_result.find_one({"_id": pts["wts"].result_id})
 
         res["test_name"]= pts['test_name']
-        res["test_timestamp"]=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f%z")
+        res["test_timestamp"]=datetime.datetime.utcnow()  #.strftime("%Y-%m-%d %H:%M:%S.%f%z")
         res["run_info"]["user"] =os.path.split(os.path.expanduser('~'))[-1]
         res["run_info"]["ip"]=get_ip_address()
 
@@ -50,15 +50,15 @@ def add_res_to_DB(test_name=None,
             test_method_result = {
                 "name": tt,
                 "status": "STARTED",
-                "timing": {"end": "",
-                           "start": "",
+                "timing": {"end": None,
+                           "start": None,
                            "duration": 0}
             }
 
             if test_description is not None: test_method_result.update({"description": test_description})
 
-            start_test_method = datetime.datetime.now()
-            test_method_result["timing"]["start"]=start_test_method.strftime("%Y-%m-%d %H:%M:%S.%f%z")
+            start_test_method = datetime.datetime.utcnow()
+            test_method_result["timing"]["start"]=start_test_method  #.strftime("%Y-%m-%d %H:%M:%S.%f%z")
 
             try:
                 if parent is None:
@@ -87,8 +87,8 @@ def add_res_to_DB(test_name=None,
             finally:
                 if test_method_result["status"]=="":
                     test_method_result["status"] = "NOT RUNED"
-                final_test_method = datetime.datetime.now()
-                test_method_result["timing"]["end"]= final_test_method.strftime("%Y-%m-%d %H:%M:%S.%f%z")
+                final_test_method = datetime.datetime.utcnow()
+                test_method_result["timing"]["end"]= final_test_method #  .strftime("%Y-%m-%d %H:%M:%S.%f%z")
                 test_method_result["timing"]["duration"]= (final_test_method-start_test_method).total_seconds()
 
                 if len(self.tlog)>0 :
@@ -137,15 +137,15 @@ def return_for_DB(test_name=None,
             test_method_result = {
                 "name": tt,
                 "status": "STARTED",
-                "timing": {"end": "",
-                           "start": "",
+                "timing": {"end": None,
+                           "start": None,
                            "duration": 0}
             }
 
             if test_description is not None: test_method_result.update({"description": test_description})
 
-            start_test_method = datetime.datetime.now()
-            test_method_result["timing"]["start"]=start_test_method.strftime("%Y-%m-%d %H:%M:%S.%f%z")
+            start_test_method = datetime.datetime.utcnow()
+            test_method_result["timing"]["start"]=start_test_method #.strftime("%Y-%m-%d %H:%M:%S.%f%z")
 
             try:
                 test_method(self)
@@ -166,8 +166,8 @@ def return_for_DB(test_name=None,
             finally:
                 if "status" in test_method_result:
                     test_method_result["status"] = "NOT RUNED"
-                final_test_method = datetime.datetime.now()
-                test_method_result["timing"]["end"]= final_test_method.strftime("%Y-%m-%d %H:%M:%S.%f%z")
+                final_test_method = datetime.datetime.utcnow()
+                test_method_result["timing"]["end"]= final_test_method  #.strftime("%Y-%m-%d %H:%M:%S.%f%z")
                 test_method_result["timing"]["duration"]= (final_test_method-start_test_method).total_seconds()
 
                 if len(self.tlog)>0 :

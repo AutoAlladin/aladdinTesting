@@ -10,7 +10,9 @@ class ParamsTestCase(unittest.TestCase):
     wts = None
     parent_suite = None
 
-
+    def log(self,msg):
+        self.tlog.append(msg)
+        print(msg)
 
     def __init__(self, name='runTest', _params=None, _parent_suite=None):
         super().__init__(methodName=name)
