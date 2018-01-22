@@ -272,7 +272,7 @@ class Tender_Tab(TabTest):
                 expected_conditions.visibility_of_element_located((By.XPATH, "//div[@id='purchase-page']/div/div[@class='col-md-12'][2]")))
             self.assertIsNotNone(one_tender)
 
-            title =one_tender.find_element_by_xpath("//h4/a")
+            title =one_tender.find_element_by_xpath("//p/a")
             self.assertIsNotNone(title, "Элемент title не найден")
             self.tlog.append("заголовок ОК - "+title.text)
 
