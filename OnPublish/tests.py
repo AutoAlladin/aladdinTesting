@@ -8,6 +8,7 @@ from Aladdin.Accounting.AladdinUtils import WebTestSession, AvaliableBrowsers
 from Aladdin.Accounting.decorators.StoreTestResult import create_result_DB
 from Aladdin.Billing.CreateAccount import *
 from OnPublish.MainPage.load_main_page import Load_main_page
+from billing_UI.Billing import BalanceAfterBid
 
 
 def s_load_main_page(g, t, cmbro):
@@ -33,6 +34,30 @@ def s_load_main_page(g, t, cmbro):
 
     return suite
 
+
+def s_run_bil(g, t, cmbro):
+    @create_result_DB
+    def s_load_main_page_init(bro):
+        qa = {"query": { "q": {
+                        "name": "run_bil",
+                        "version": "0.0.0.1",
+                        "group": g}
+                },
+              'test_name': t,
+              'wts': WebTestSession()
+              }
+        qa['wts'].set_main_page(qa['query'])
+        return qa
+
+    #dbid = 19
+    qqq = s_load_main_page_init(cmbro)
+    suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id, "DB": qqq["wts"].__mongo__})
+    suite.addTest(BalanceAfterBid("create_below", _params=qqq, _parent_suite=suite))
+
+
+    return suite
+
+
 def runner(arg):
     parser = OptionParser()
     parser.add_option("-s", action="store", type="string")
@@ -48,7 +73,7 @@ def runner(arg):
     opt = options.s
     bro = options.b
     tname =options.name
-    if tname is None: tname="test development "+datetime.datetime.now().isoformat()
+    if tname is None: tname=opt + " test development "+datetime.datetime.now().isoformat()
 
     if bro == "ch":
         bro = AvaliableBrowsers.Chrome
@@ -61,6 +86,11 @@ def runner(arg):
 
     if opt == 'main_page':
         ttt = s_load_main_page(options.g, tname, bro)
+    elif opt =='run_bil':
+        ttt = s_run_bil(options.g,  # test group from D
+                        tname,  # test name for report
+                        bro)    # browser? default - Chrome
+
 
     if ttt is not None:
         try:

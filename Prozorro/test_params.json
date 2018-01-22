@@ -6,7 +6,7 @@
         "login":"aladdin.for.test+owner@gmail.com",
         "password":"zxcvbn00",
 		"enqueriPeriod":5,
-		"tenderPeriod":20,
+		"tenderPeriod":10,
         "title":"Для тестування.",
         "description":"5 хвилин на редагування, 20 на подачу пропозицій",
         "budget":"48007.15",

@@ -32,13 +32,14 @@ def init_driver(test_mode):
     return chrm, tp, MainPage(chrm)
 
 
-def create_below(countLots,
+def create_below(countLots=1,
                  countFeatures=0,
                  countDocs=0,
                  countTenders=1,
                  countItems=1,
                  tender_dict=None,
-                 ttest_mode=False):
+                 ttest_mode=True
+                 ):
     chrm, tp, mpg = init_driver(ttest_mode)
     mpg.open_login_form().login(tp["below"]["login"], tp["below"]["password"])
     uaid = []
