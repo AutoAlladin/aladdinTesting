@@ -246,7 +246,7 @@ class Tender_Tab(TabTest):
             with self.subTest("pagi_prev"):
                 pagi_prev = WebDriverWait(self.wts.drv, 20).until(
                     expected_conditions.visibility_of_element_located((By.XPATH, xpath_prev)))
-                self.assertIsNotNone(pagi_prev, "Элемент pagi_first не найден  " + xpath_prev)
+                self.assertIsNotNone(pagi_prev, "Элемент pagi_prev не найден  " + xpath_prev)
                 self.log("Кнопка \"Предыдущая страница\" пагинации ОК " + xpath_prev)
 
             with self.subTest("pagi_next"):
@@ -258,8 +258,8 @@ class Tender_Tab(TabTest):
             with self.subTest("pagi_last"):
                 pagi_last = WebDriverWait(self.wts.drv, 20).until(
                     expected_conditions.visibility_of_element_located((By.XPATH, xpath_last)))
-                self.assertIsNotNone(pagi_last, "Элемент pagi_next не найден  " + xpath_last)
-                self.log("Кнопка \"Следующая страница\" пагинации ОК " + xpath_last)
+                self.assertIsNotNone(pagi_last, "Элемент pagi_last не найден  " + xpath_last)
+                self.log("Кнопка \"Последняя страница\" пагинации ОК " + xpath_last)
 
         except Exception as e:
             self.assertEqual(True, False, "PAGINATION - " + e.__str__())
@@ -311,6 +311,8 @@ class Tender_Tab(TabTest):
         xpath_archive="//span[@class='check-wrap']/input[@id='topStatus4']/../label"
         xpath_excell="//button[contains(@ng-click,'postFilterExcel')]"   #IdExportExcelButton
         xpath_page_total="//div[contains(@class,'pager-total')]/span"
+
+
 
 
     @add_res_to_DB(test_name='Поиск тендеров')
