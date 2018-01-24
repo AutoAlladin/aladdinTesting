@@ -304,10 +304,6 @@ class Tender_Tab(TabTest):
         except Exception as e:
             self.assertEqual(True, False, "TENDER PANEL - " + e.__str__())
 
-    @add_res_to_DB(test_name='Панель фильтров тендеров')
-    def tab_filters(self):
-        pass
-
     @add_res_to_DB(test_name='Поиск тендеров')
     def tab_search(self):
         id_searchType='searchType'
@@ -334,10 +330,10 @@ class Tender_Tab(TabTest):
                 searchType_option = self.wts.drv.find_elements_by_xpath(xpat)
                 self.assertIsNotNone(searchType_option, "Элемент searchType_option не найден  " + xpat)
                 self.assertGreater(len(searchType_option),0, "Количество типов поиска !=4 : "+str(len(searchType_option)))
-            with self.subTest("searchType_optionText"):
-                for value in searchType_option:
+            for value in searchType_option:
+                with self.subTest("searchType_optionText"):
                     self.assertIn(value.text, searchType_text, "Невалидный текст типа поиска - "+value.text)
-                self.log("Названия типов поиска ОК")
+            self.log("Названия типов поиска ОК")
 
         except Exception as e:
             self.assertEqual(True, False, "select_searchType - " + e.__str__())
@@ -424,10 +420,108 @@ class Tender_Tab(TabTest):
                 orderingType_option = self.wts.drv.find_elements_by_xpath(xpat)
                 self.assertIsNotNone(orderingType_option, "Элемент orderingType_option не найден  " + xpat)
                 self.assertGreater(len(orderingType_option),0, "Количество типов поиска !=5 : "+str(len(orderingType_option)))
-            with self.subTest("orderingType_optionText"):
-                for value in orderingType_option:
+            for value in orderingType_option:
+                with self.subTest("orderingType_optionText"):
                     self.assertIn(value.text, sort_list, "Невалидный текст типа сортировки - "+value.text)
-                self.log("Названия типа сортировки ОК")
+            self.log("Названия типов сортировки ОК")
 
+    @add_res_to_DB(test_name='Панель фильтров тендеров')
+    def tab_filters(self):
+        id_button_all = "butSelectFilterGeo"
+        id_button_clear = "butClearFilterGeo"
 
+        with self.subTest("proc_type"):
+            xpath_proc_type="//ul[@id='filterblock']/li/div[@id='headingTwo']"
+            xpath_proc_labels="//div[@id='tender']/div/div/div/label"
+
+            proc_type = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.XPATH, xpath_proc_type)))
+            self.assertIsNotNone(proc_type, "Элемент proc_type filter не найден  " + xpath_proc_type)
+            proc_type.click()
+
+            with self.subTest("button_all"):
+                button_all = WebDriverWait(self.wts.drv, 15).until(
+                    expected_conditions.visibility_of_element_located((By.ID, id_button_all)))
+                self.assertIsNotNone(button_all, "Элемент button_all filter не найден  " + id_button_all)
+                button_all.click()
+                self.log("Кнопка выбрать все типов тендеров ОК - " + id_button_all)
+
+            with self.subTest("button_clear"):
+                button_clear = WebDriverWait(self.wts.drv, 15).until(
+                    expected_conditions.visibility_of_element_located((By.ID, id_button_clear)))
+                self.assertIsNotNone(button_clear, "Элемент button_clear filter не найден  " + id_button_clear)
+                button_clear.click()
+                self.log("Кнопка очистить все типов тендеров ОК - " + id_button_all)
+
+            proc_labels = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_any_elements_located((By.XPATH, xpath_proc_labels)))
+            self.assertIsNotNone(proc_labels, "Элемент proc_labels  не найден  " + xpath_proc_labels)
+            self.assertEqual(len(proc_labels), 12 , "Типов процедур !=12 : "+ str(len(proc_labels)) )
+
+            proc_labels_text ={'Відкриті торги','Відкриті торги для закупівлі енергосервісу',
+                'Відкриті торги з публікацією англійською мовою','Допорогова закупівля',
+                'Звіт про укладені договори','Конкурентний діалог',
+                'Конкурентний діалог (2ий етап)','Конкурентний діалог з публікацією англійською мовою',
+                'Конкурентний діалог з публікацією англійською мовою (2ий етап)',
+                'Переговорна процедура для потреб оборони','Переговорна процедура закупівлі',
+                'Переговорна процедура скорочена'
+            }
+
+            for value in proc_labels:
+                with self.subTest("proc_labels_text"):
+                    self.assertIn(value.text, proc_labels_text, "Невалидный текст типа тендера - "+value.text)
+            self.log("Названия типов тендера ОК ")
+            proc_type.click()
+
+            self.log("Фильтр типов тендеров ОК - " + xpath_proc_type)
+
+        with self.subTest('tenderEtap'):
+            id_tenderEtap = "headingOne"
+            xpath_tenderEtap_label="//div[@id='tenderEtap']/div/div/div/label"
+
+            tenderEtap = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.ID, id_tenderEtap)))
+            self.assertIsNotNone(tenderEtap, "Элемент tenderEtap filter не найден  " + id_tenderEtap)
+            tenderEtap.click()
+
+            with self.subTest("button_all"):
+                id_button_all = "//div[@id='tenderEtap']//button[@id='butSelectFilterGeo']"
+                button_all = WebDriverWait(self.wts.drv, 10).until(
+                    expected_conditions.visibility_of_element_located((By.XPATH, id_button_all)))
+                self.assertIsNotNone(button_all, "Элемент button_all filter не найден  " + id_button_all)
+                button_all.click()
+                self.log("Кнопка выбрать все типов тендеров ОК - " + id_button_all)
+
+            with self.subTest("button_clear"):
+                id_button_clear ="//div[@id='tenderEtap']//button[@id='butClearFilterGeo']"
+                button_clear = WebDriverWait(self.wts.drv, 10).until(
+                    expected_conditions.visibility_of_element_located((By.XPATH, id_button_clear)))
+                self.assertIsNotNone(button_clear, "Элемент button_clear filter не найден  " + id_button_clear)
+                button_clear.click()
+                self.log("Кнопка очистить все типов тендеров ОК - " + id_button_clear)
+
+            tenderEtap_labels = WebDriverWait(self.wts.drv, 15).until(
+                expected_conditions.visibility_of_any_elements_located((By.XPATH, xpath_tenderEtap_label)))
+            self.assertIsNotNone(tenderEtap_labels, "Элемент tenderEtap_labels  не найден  " + xpath_tenderEtap_label)
+            self.assertEqual(len(tenderEtap_labels), 16, "Этапов тендера !=16 : " + str(len(tenderEtap_labels)))
+
+            tenderEtap_labels_text = {'Чернетка', 'Публікація торгів/планів',
+                                'Період уточнень','Подача пропозицій',
+                                'Період аукціону','Кваліфікація',
+                                'Намір укласти договір','Торги відмінено',
+                                'Завершено','Відмінена',
+                                'Прекваліфікація','Оприлюднення укладеного договору',
+                                'Чернетка 2-го етапу (конкурентний діалог)',
+                                'Опубліковано протокол розгляду',
+                                'Очікування початку 2-го етапу (технічний етап)',
+                                'Проміжок між прийняттям рішення і появою тендеру 2'
+                                }
+
+            for value in tenderEtap_labels:
+                with self.subTest("tenderEtap_labels"):
+                    self.assertIn(value.text, tenderEtap_labels_text, "Невалидный текст этапа тендера - "+value.text)
+            self.log("Названия этапов тендера ОК ")
+            tenderEtap.click()
+
+            self.log("Фильтр этапов тендеров ОК - " + id_tenderEtap)
 

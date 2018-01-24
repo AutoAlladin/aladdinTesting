@@ -35,8 +35,8 @@ def s_load_main_page(g, t, cmbro):
 
     suite.addTest(Tender_Tab("tab_visible", _params=qqq))
     suite.addTest(Tender_Tab("tab_list", _params=qqq))
-    suite.addTest(Tender_Tab("tab_filters", _params=qqq))
     suite.addTest(Tender_Tab("tab_search", _params=qqq))
+    suite.addTest(Tender_Tab("tab_filters", _params=qqq))
 
     return suite
 
