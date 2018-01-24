@@ -1,6 +1,10 @@
+from datetime import time
+from time import sleep
+
 from selenium.webdriver.chrome import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
@@ -80,7 +84,6 @@ class Load_main_page(ParamsTestCase):
             check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[2]/label"), "Завершені")
             check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[3]/label"), "Архівні")
             check((By.ID, "clear_all"), "Очистити")
-
 
     #страница загружена, есть хотя бы один тендер на странице
     @add_res_to_DB(test_name="Загрузка страницы")
@@ -212,12 +215,13 @@ class Tender_Tab(TabTest):
         self.log("Проверка пагинации")
 
         try:
-            xpath = "//div[@id='purchase-page']//div[@class='col-md-12']"
-            tender_list = WebDriverWait(self.wts.drv, 20).until(
-                expected_conditions.visibility_of_any_elements_located((By.XPATH, xpath)))
-            self.assertIsNotNone(tender_list, "Элемент tender_list не найден  " + xpath)
-            self.assertGreater(len(tender_list),0, "Нет тендеров в списке " + xpath)
-            self.log("количество тендеров "+str(len(tender_list)))
+            with self.subTest("tender_list"):
+                xpath = "//div[@id='purchase-page']//div[@class='col-md-12']"
+                tender_list = WebDriverWait(self.wts.drv, 20).until(
+                    expected_conditions.visibility_of_any_elements_located((By.XPATH, xpath)))
+                self.assertIsNotNone(tender_list, "Элемент tender_list не найден  " + xpath)
+                self.assertGreater(len(tender_list),0, "Нет тендеров в списке " + xpath)
+                self.log("количество тендеров "+str(len(tender_list)))
 
         except Exception as e :
             self.assertEqual(True, False, "tender_list - "+e.__str__())
@@ -302,6 +306,10 @@ class Tender_Tab(TabTest):
 
     @add_res_to_DB(test_name='Панель фильтров тендеров')
     def tab_filters(self):
+        pass
+
+    @add_res_to_DB(test_name='Поиск тендеров')
+    def tab_search(self):
         id_searchType='searchType'
         id_findbykeywords='findbykeywords'
         id_butSimpleSearch='butSimpleSearch'
@@ -309,18 +317,117 @@ class Tender_Tab(TabTest):
         xpath_activ="//span[@class='check-wrap']/input[@id='topStatus3']/../label"
         xpath_done="//span[@class='check-wrap']/input[@id='topStatus5']/../label"
         xpath_archive="//span[@class='check-wrap']/input[@id='topStatus4']/../label"
-        xpath_excell="//button[contains(@ng-click,'postFilterExcel')]"   #IdExportExcelButton
+        id_excell="IdExportExcelButton"
         xpath_page_total="//div[contains(@class,'pager-total')]/span"
 
+        try:
+            with self.subTest("select_searchType"):
+                select_searchType = WebDriverWait(self.wts.drv, 5).until(
+                    expected_conditions.visibility_of_element_located((By.ID, id_searchType)))
+                self.assertIsNotNone(select_searchType, "Элемент select_searchType не найден  " + id_searchType)
+                self.log("Выбор типов поиска ОК - " + id_searchType)
 
+            searchType_text={"Шукати:","По назві","Системному номеру (у форматі UA-....)","По опису"}
 
+            with self.subTest("searchType_option"):
+                xpat = "//select[@id='searchType']/option"
+                searchType_option = self.wts.drv.find_elements_by_xpath(xpat)
+                self.assertIsNotNone(searchType_option, "Элемент searchType_option не найден  " + xpat)
+                self.assertGreater(len(searchType_option),0, "Количество типов поиска !=4 : "+str(len(searchType_option)))
+            with self.subTest("searchType_optionText"):
+                for value in searchType_option:
+                    self.assertIn(value.text, searchType_text, "Невалидный текст типа поиска - "+value.text)
+                self.log("Названия типов поиска ОК")
 
-    @add_res_to_DB(test_name='Поиск тендеров')
-    def tab_search(self):
-        pass
+        except Exception as e:
+            self.assertEqual(True, False, "select_searchType - " + e.__str__())
 
+        with self.subTest("findbykeywords") :
+            findbykeywords = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.ID, id_findbykeywords)))
+            self.assertIsNotNone(findbykeywords, "Элемент findbykeywords не найден  " + id_findbykeywords)
+            # findbykeywords.clear()
+            # findbykeywords.send_keys("xxx")
+            # self.assertEqual(findbykeywords.text, "xxx")
+            self.log("Текст поиска ОК - " + id_findbykeywords)
+        with self.subTest("butSimpleSearch"):
+            butSimpleSearch = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.ID, id_butSimpleSearch)))
+            self.assertIsNotNone(butSimpleSearch, "Элемент butSimpleSearch не найден  " + id_butSimpleSearch)
+            self.log("Кнопка поиска ОК - " + id_butSimpleSearch)
+        with self.subTest("clear_all"):
+            clear_all = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.ID, id_clear_all)))
+            self.assertIsNotNone(clear_all, "Элемент butSimpleSearch не найден  " + id_clear_all)
+            self.log("Кнопка очистки поиска ОК - " + id_clear_all)
+        with self.subTest("find one tender"):
+            one_tender = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located(
+                    (By.XPATH, "//div[@id='purchase-page']/div/div[@class='col-md-12'][2]")))
 
+            id = one_tender.find_element_by_xpath("//span[@class='spanProzorroId']")
+            select_searchType = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.ID, id_searchType)))
+            Select(select_searchType).select_by_visible_text("Системному номеру (у форматі UA-....)")
+            butSimpleSearch = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.ID, id_butSimpleSearch)))
+            findbykeywords = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.ID, id_findbykeywords)))
+            findbykeywords.clear()
+            findbykeywords.send_keys(id.text)
+            butSimpleSearch.click()
+            # sleep(10)
+            # wanted_tender = WebDriverWait(self.wts.drv, 15).until(
+            #     expected_conditions.visibility_of_any_elements_located(
+            #         (By.XPATH, "//div[@id='purchase-page']/div/div[@class='col-md-12']")))
+            #
+            # self.assertIsNotNone(wanted_tender, "Тендер "+id.text+" не найден, хотя он есть :(  " )
+            self.log("Поиск тендера КАКБЫ ОК но не совсем - нужны доработки по структруе страницы - " + id.text)
+        with self.subTest("topStatus3-active"):
+            label = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.XPATH, xpath_activ)))
+            self.assertIsNotNone(label, "Элемент label_active не найден  " + xpath_activ)
+            self.log("Чекбокс активные ОК - " + xpath_activ)
+        with self.subTest("topStatus5-done"):
+            label = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.XPATH, xpath_done)))
+            self.assertIsNotNone(label, "Элемент label_done не найден  " + xpath_done)
+            self.log("Чекбокс завершенные ОК - " + xpath_done)
+        with self.subTest("topStatus4-archive"):
+            label = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.XPATH, xpath_archive)))
+            self.assertIsNotNone(label, "Элемент label_archive не найден  " + xpath_archive)
+            self.log("Чекбокс архивные ОК - " + xpath_archive)
+        with self.subTest("id_excell"):
+            button = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.ID, id_excell)))
+            self.assertIsNotNone(button, "Элемент id_excell не найден  " + id_excell)
+            button.click()
+            self.log("Кнопка сохранения в ексель ОК - " + id_excell)
+        with self.subTest("page_total"):
+            page_total = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.XPATH, xpath_page_total)))
+            self.assertIsNotNone(page_total, "Элемент page_total не найден  " + xpath_page_total)
+            self.log("Всего страниц ОК - " +page_total.text+" - "+ xpath_page_total)
+        with self.subTest("orderingType"):
+            xpath_orderingType = "//select[@ng-model='orderingType.selected']"
+            orderingType = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.XPATH, xpath_orderingType)))
+            self.assertIsNotNone(orderingType, "Элемент orderingType не найден  " + xpath_orderingType)
+            self.log("Список способов сортировки ОК - " + " - " + xpath_orderingType)
 
+            sort_list={'Сортувати по:','Бюджет за спаданням','Бюджет за зростанням',
+                       'Дата публікації за зростанням','Дата публікації за спаданням'}
+
+            with self.subTest("orderingType_option"):
+                xpat = "//select[@ng-model='orderingType.selected']/option"
+                orderingType_option = self.wts.drv.find_elements_by_xpath(xpat)
+                self.assertIsNotNone(orderingType_option, "Элемент orderingType_option не найден  " + xpat)
+                self.assertGreater(len(orderingType_option),0, "Количество типов поиска !=5 : "+str(len(orderingType_option)))
+            with self.subTest("orderingType_optionText"):
+                for value in orderingType_option:
+                    self.assertIn(value.text, sort_list, "Невалидный текст типа сортировки - "+value.text)
+                self.log("Названия типа сортировки ОК")
 
 
 
