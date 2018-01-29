@@ -76,7 +76,7 @@ class MainPage:
         self.butSimpleSearch.click()
 
         waitFadeIn(self.drv)
-        print((By.XPATH,"//span[text()='"+uaid+"']/../a"))
+        #print((By.XPATH,"//span[text()='"+uaid+"']/../a"))
         tenderLink =WebDriverWait(self.drv, 20).until(
             EC.visibility_of_element_located((By.XPATH,"//span[text()='"+uaid+"']/../a")))
         tenderLink.click()
@@ -170,9 +170,9 @@ class MainPage:
                 open_bids().\
                 new(1,uaid);
         else:
-            return self.open_tender_url(uaid). \
-                open_bids(). \
-                new(prepare,uaid)
+            return self.open_tender_url(uaid).\
+                open_bids().\
+                new(prepare, uaid)
 
 
 

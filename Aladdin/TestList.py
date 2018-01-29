@@ -275,6 +275,11 @@ def s_checkBalance():
     suite = ParamsTestSuite(_params={})
     #suite.addTest(CheckBalance("test_01_balance", _params=q))
     suite.addTest(CheckBalance("test_02_refill_full", _params=q))
+
+
+
+
+
     #несколько счетов в одном запросе
     q1= deepcopy(q)
     q1["refill"].append(
@@ -413,12 +418,12 @@ def s_full_billinig():
 
     suite = ParamsTestSuite(_params={})
     suite.addTest(CreateAccount("test_01_new_UUID_new_EDR", _params=q))
-    suite.addTest(CheckBalance("test_02_refill_full", _params=q1))
-    suite.addTest(CheckBalance("test_01_balance", _params=q1))
-    suite.addTest(CheckReserv("test_01_add_rezerv", _params=q2))
-    suite.addTest(CheckBalance("test_01_balance", _params=q1))
-    suite.addTest(CheckReserv("test_04_charge_off", _params=q2))
-    suite.addTest(CheckBalance("test_01_balance", _params=q1))
+    #suite.addTest(CheckBalance("test_02_refill_full", _params=q1))
+    #suite.addTest(CheckBalance("test_01_balance", _params=q1))
+    #suite.addTest(CheckReserv("test_01_add_rezerv", _params=q2))
+    #suite.addTest(CheckBalance("test_01_balance", _params=q1))
+    #suite.addTest(CheckReserv("test_04_charge_off", _params=q2))
+    #suite.addTest(CheckBalance("test_01_balance", _params=q1))
     #suite.addTest(CheckBalance("test_02_refill_full", _params=q1))
     #suite.addTest(CheckReserv("test_01_add_rezerv", _params=q2))
     #suite.addTest(CheckReserv("test_02_cansel_rezerv", _params=q2))

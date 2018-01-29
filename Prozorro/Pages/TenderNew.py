@@ -54,6 +54,7 @@ class TenderNew:
             raise Exception("Не нажимается кнопка publishPurchase {0}  - \n\t {1}\t{2}".\
                             format(self.drv.current_url, toast_title, toast_message) +\
                             w.msg)
+
         return None
 
 
