@@ -8,6 +8,7 @@ from Aladdin.Accounting.AladdinUtils import WebTestSession, AvaliableBrowsers
 from Aladdin.Accounting.decorators.StoreTestResult import create_result_DB
 from Aladdin.Billing.CreateAccount import *
 from OnPublish.MainPage.load_main_page import Load_main_page, Tender_Tab
+from OnPublish.MainPage.login_page import Login_page
 from billing_UI.Billing import BalanceAfterBid
 
 
@@ -29,14 +30,35 @@ def s_load_main_page(g, t, cmbro):
     qqq = s_load_main_page_init(cmbro)
     suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id, "DB": qqq["wts"].__mongo__})
 
-    suite.addTest(Load_main_page("page_loaded", _params=qqq))
+    suite.suite_params.update({
+        "authorization":{
+            "owner_login": "aladdin.for.test+owner@gmail.com",
+            "owner_password": "zxcvbn00",
+            "provider_login":"aladdin.for.test+provider@gmail.com",
+            "provider_password":"123123"
+        }
+    })
+
+    suite.addTest(Load_main_page("page_loaded", _params=qqq ))
     suite.addTest(Load_main_page("menu_presented", _params=qqq))
     suite.addTest(Load_main_page("set_lang", _params=qqq))
 
-    suite.addTest(Tender_Tab("tab_visible", _params=qqq))
-    suite.addTest(Tender_Tab("tab_list", _params=qqq))
-    suite.addTest(Tender_Tab("tab_filters", _params=qqq))
-    suite.addTest(Tender_Tab("tab_search", _params=qqq))
+    # suite.addTest(Tender_Tab("tab_visible", _params=qqq))
+    # suite.addTest(Tender_Tab("tab_list", _params=qqq))
+    # suite.addTest(Tender_Tab("tab_search", _params=qqq))
+    # suite.addTest(Tender_Tab("tab_filters", _params=qqq))
+
+    suite.addTest(Login_page("login_menu", _params=qqq))
+    suite.addTest(Login_page("open_login", _params=qqq))
+    suite.addTest(Login_page("check_lang", _params=qqq))
+    suite.addTest(Login_page("login_owner", _params=qqq))
+
+    # suite.addTest(Login_page("login_provider", _params=qqq))
+    #
+    # suite.addTest(Login_page("failed_login", _params=qqq))
+    # suite.addTest(Login_page("open_register_form", _params=qqq))
+    # suite.addTest(Login_page("open_restore_password", _params=qqq))
+
 
     return suite
 
