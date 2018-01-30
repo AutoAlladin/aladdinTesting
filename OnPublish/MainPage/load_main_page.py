@@ -474,7 +474,6 @@ class Tender_Tab(TabTest):
             proc_type.click()
 
             self.log("Фильтр типов тендеров ОК - " + xpath_proc_type)
-
         with self.subTest('tenderEtap'):
             id_tenderEtap = "headingOne"
             xpath_tenderEtap_label="//div[@id='tenderEtap']/div/div/div/label"
@@ -524,4 +523,121 @@ class Tender_Tab(TabTest):
             tenderEtap.click()
 
             self.log("Фильтр этапов тендеров ОК - " + id_tenderEtap)
+        with self.subTest('regions'):
+            id_regions = "headingThree"
+            xpath_regions_label="//div[@id='collapseFour']/div/div/div/label"
+
+            regions = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.ID, id_regions)))
+            self.assertIsNotNone(tenderEtap, "Элемент regions filter не найден  " + id_regions)
+            regions.click()
+            self.log("Фильтр регионов visible ОК - " + id_regions)
+
+            self.wts.drv.execute_script("$('#navigation').slimScroll({ scrollTo: '100px' })")
+
+            with self.subTest("button_all"):
+                id_button_all = "//div[@id='collapseFour']//button[@id='butSelectFilterGeo']"
+                button_all = WebDriverWait(self.wts.drv, 10).until(
+                    expected_conditions.visibility_of_element_located((By.XPATH, id_button_all)))
+                self.assertIsNotNone(button_all, "Элемент button_all filter не найден  " + id_button_all)
+                button_all.click()
+                self.log("Кнопка выбрать все регионы ОК - " + id_button_all)
+            with self.subTest("button_clear"):
+                id_button_clear ="//div[@id='collapseFour']//button[@id='butClearFilterGeo']"
+                button_clear = WebDriverWait(self.wts.drv, 10).until(
+                    expected_conditions.visibility_of_element_located((By.XPATH, id_button_clear)))
+                self.assertIsNotNone(button_clear, "Элемент button_clear filter не найден  " + id_button_clear)
+                button_clear.click()
+                self.log("Кнопка очистить все регионы ОК - " + id_button_clear)
+
+            regions_label = WebDriverWait(self.wts.drv, 15).until(
+                expected_conditions.visibility_of_any_elements_located((By.XPATH, xpath_regions_label)))
+            self.assertIsNotNone(regions_label, "Элемент regions_label  не найден  " + xpath_regions_label)
+            self.assertEqual(len(regions_label), 26, "Регионов !=26 : " + str(len(regions_label)))
+            self.log("Количесвто регионов ОК - " + str(len(regions_label)))
+
+            regions_labels_text = {
+                'Відповідно до тендерної документації', 'Автономна Республіка Крим',
+                'Вінницька', 'Волинська', 'Дніпропетровська', 'Донецька',
+                'Житомирська', 'Закарпатська', 'Запорізька', 'Івано-Франківська',
+                'Київська','Кіровоградська','Луганська','Львівська','Миколаївська',
+                'Одеська','Полтавська','Рівненська','Сумська','Тернопільська',
+                'Харківська','Херсонська','Хмельницька','Черкаська','Чернівецька',
+                'Чернігівська'
+            }
+
+            for value in regions_label:
+                with self.subTest("regions_labels_text"):
+                    self.assertIn(value.text, regions_labels_text, "Невалидное название региона - " + value.text)
+            self.log("Названия регионов ОК ")
+
+            self.wts.drv.execute_script("$('#navigation').slimScroll({ scrollTo: '-100px' })")
+            regions.click()
+
+            self.log("Фильтр регионов ОК - " + id_regions)
+
+        with self.subTest("dkHelpers"):
+            id_dkHelpers = "dkHelpers"
+
+            xpath_cpv = "//a[@property='CPV']"
+            xpath_cpv_dialog = "//div[@id='modDialog']//h4['CPV']"
+
+            xpath_dk = "//a[@property='Other']"
+            xpath_dk = "//div[@id='modDialog']//h4['Other']"
+
+            xpath_kekv = "//a[@property='KEKV']"
+            xpath__kekv= "//div[@id='modDialog']//h4['KEKV']"
+
+            xpath_dialog_items = "//div[@id='dialogContent']//div[@id='tree']/ul/li"
+            id_dk_search = "search-classifier-text"
+
+            txt_cpv = "ДК021:2015"
+            txt_dk = "Інші ДК"
+            txt_kekv = "КЕКВ"
+
+            dkHelpers = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.ID, id_dkHelpers)))
+            self.assertIsNotNone(tenderEtap, "Элемент dkHelpers filter не найден  " + id_dkHelpers)
+            dkHelpers.click()
+            self.log("Фильтр dkHelpers visible ОК - " + id_regions)
+
+            cpv = WebDriverWait(self.wts.drv, 5).until(
+                expected_conditions.visibility_of_element_located((By.XPATH, xpath_cpv)))
+            self.assertIsNotNone(cpv, "Элемент CPV filter не найден  " + id_regions)
+
+            self.assertEqual(cpv.text, txt_cpv, "CPV_LABEL "+cpv.text)
+            self.log("Текст cpv OK - "+cpv.text)
+
+            cpv.click()
+
+            with self.subTest("dialogCPV"):
+                dialog=WebDriverWait(self.wts.drv, 10).until(
+                       expected_conditions.visibility_of_element_located((By.XPATH, xpath_cpv_dialog)))
+                self.log("Фильтр dialogCPV visible ОК - " + xpath_cpv_dialog)
+
+                dk_search = WebDriverWait(self.wts.drv, 10).until(
+                    expected_conditions.visibility_of_element_located((By.ID, id_dk_search)))
+                self.log("Строка поиска dialogCPV visible ОК - " + id_dk_search )
+
+            with self.subTest("dialogCPV_items"):
+                sleep(5)
+                dialog_items = WebDriverWait(self.wts.drv, 10).until(
+                       expected_conditions.visibility_of_any_elements_located((By.XPATH, xpath_dialog_items)))
+                self.assertIsNotNone(dialog_items, "Элемент dialog_items  не найден  " + xpath_dialog_items)
+                self.assertGreater(len(dialog_items), 10, "Кодов <=10 : " + str(len(dialog_items)))
+                self.log("Много пунктов CPV ОК - " + str(len(dialog_items)))
+
+
+                button_close =   WebDriverWait(self.wts.drv, 10).until(
+                       expected_conditions.visibility_of_element_located((By.XPATH,  "//div[@id='dialogContent']//button[contains(.,'Закрити')]")))
+                self.assertIsNotNone(button_close, "Элемент button_close диалога CPV не найден")
+                button_close.click()
+                self.log("Кнопка button_close диалога CPV ОК ")
+
+                WebDriverWait(self.wts.drv, 5).until(
+                    expected_conditions.invisibility_of_element_located((By.XPATH, xpath_cpv_dialog)))
+                self.log("dialogCPV ОК")
+
+
+
 

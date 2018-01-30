@@ -14,6 +14,14 @@ class ParamsTestCase(unittest.TestCase):
         self.tlog.append(msg)
         print(msg)
 
+    def log_test_res(self,msg):
+        self.tlog.append({"test_res":msg})
+        print(msg)
+
+    def log_subtest_res(self,msg):
+        self.tlog.append({"subtest_res":msg})
+        print(msg)
+
     def __init__(self, name='runTest', _params=None, _parent_suite=None):
         super().__init__(methodName=name)
         self.params=_params
