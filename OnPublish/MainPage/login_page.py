@@ -43,53 +43,35 @@ class Login_page(ParamsTestCase):
     def check_lang(self):
         lform = self.parent_suite.suite_params["login_form"]
 
+        def set_elements(ddd):
+            self.assertEqual(lform.greeting.text, ddd["greeting"])
+            self.assertEqual(lform.label_for_email.text, ddd["label_for_email"])
+            self.assertEqual(lform.label_for_password.text, ddd["label_for_password"])
+            self.assertEqual(lform.msg_email.text, ddd["msg_email"])
+            self.assertEqual(lform.msg_password.text, ddd["msg_password"])
+            self.assertEqual(lform.remember_me_label.text, ddd["remember_me_label"])
+            self.assertEqual(lform.remember_me_private.text, ddd["remember_me_private"])
+            self.assertEqual(lform.btnLogin.text, ddd["btnLogin"])
+            self.assertEqual(lform.register.text, ddd["register"])
+            self.assertEqual(lform.restorePass.text, ddd["restorePass"])
+            
         with self.subTest("ru"):
             lform = lform.set_ru()
-
-            self.assertEqual(lform.greeting.text,"Добро пожаловать на Aladdin Government")
-            self.assertEqual(lform.label_for_email.text,"Электронная почта")
-            self.assertEqual(lform.label_for_password.text,"Пароль")
-            self.assertEqual(lform.msg_email.text,"Ваше уникальное имя пользователя")
-            self.assertEqual(lform.msg_password.text,"Пароль")
-            self.assertEqual(lform.remember_me_label.text, "Запомнить меня?")
-            self.assertEqual(lform.remember_me_private.text,"(если это частный компьютер)")
-            self.assertEqual(lform.btnLogin.text,"Вход")
-            self.assertEqual(lform.register.text,"Регистрация")
-            self.assertEqual(lform.restorePass.text,"Забыли пароль ?")
-
+            dic = self.parent_suite.suite_params["lang"]["ru"]
+            set_elements(dic)
             self.log_subtest_res("Русский интекрфейс OK")
 
 
         with self.subTest("en"):
             lform = lform.set_en()
-
-            self.assertEqual(lform.greeting.text,"Welcome to Aladdin Government")
-            self.assertEqual(lform.label_for_email.text,"E-mail")
-            self.assertEqual(lform.label_for_password.text,"Password")
-            self.assertEqual(lform.msg_email.text,"Your unique username to app")
-            self.assertEqual(lform.msg_password.text,"Password")
-            self.assertEqual(lform.remember_me_label.text,"Remember me?")
-            self.assertEqual(lform.remember_me_private.text,"(if this is a private computer)")
-            self.assertEqual(lform.btnLogin.text,"Login")
-            self.assertEqual(lform.register.text,"Registration")
-            self.assertEqual(lform.restorePass.text,"Forgot password ?")
-
+            dic = self.parent_suite.suite_params["lang"]["en"]
+            set_elements(dic)
             self.log_subtest_res("Английский интерфейс OK")
 
         with self.subTest("ua"):
             lform = lform.set_ua()
-
-            self.assertEqual(lform.greeting.text,"Ласкаво просимо до Aladdin Government")
-            self.assertEqual(lform.label_for_email.text,"Електронна пошта")
-            self.assertEqual(lform.label_for_password.text,"Пароль")
-            self.assertEqual(lform.msg_email.text,"Ваше унікальне ім'я користувача")
-            self.assertEqual(lform.msg_password.text,"Пароль")
-            self.assertEqual(lform.remember_me_label.text, "Запам'ятати мене?")
-            self.assertEqual(lform.remember_me_private.text,"(якщо це приватний комп'ютер)")
-            self.assertEqual(lform.btnLogin.text,"Вхід")
-            self.assertEqual(lform.register.text,"Реєстрація")
-            self.assertEqual(lform.restorePass.text,"Забули пароль ?")
-
+            dic = self.parent_suite.suite_params["lang"]["ua"]
+            set_elements(dic)
             self.log_subtest_res("Украинский интерфейс OK")
 
             self.parent_suite.suite_params.update({"login_form": lform})
@@ -108,26 +90,55 @@ class Login_page(ParamsTestCase):
         self.assertIsNotNone(login_form, "Форма авторизации не загрузилась")
         self.parent_suite.suite_params.update({"login_form":login_form})
 
-
     @add_res_to_DB(test_name="Авторизация заказчиком")
     def login_owner(self):
         lform =  self.parent_suite.suite_params["login_form"]
-
         login = self.parent_suite.suite_params["authorization"]["owner_login"]
         password = self.parent_suite.suite_params["authorization"]["owner_password"]
+        lform.login(login, password)
+        WebDriverWait(self.wts.drv, 10).until(
+                expected_conditions.visibility_of_element_located((By.ID, "butLogoutPartial")))\
+        .click()
 
-        lform.login(self, login, password)
+        liLoginNoAuthenticated = WebDriverWait(self.wts.drv, 10).until(
+            expected_conditions.visibility_of_element_located((By.ID, "liLoginNoAuthenticated")))
+        liLoginNoAuthenticated.click()
+        butLoginPartial = WebDriverWait(self.wts.drv, 10).until(
+            expected_conditions.visibility_of_element_located((By.ID, "butLoginPartial")))
+        butLoginPartial.click()
+        login_form = LoginPage(self.wts.drv)
+        self.parent_suite.suite_params.update({"login_form": login_form})
 
     @add_res_to_DB(test_name="Авторизация поставщиком")
     def login_provider(self):
         lform = self.parent_suite.suite_params["login_form"]
-
         login = self.parent_suite.suite_params["authorization"]["provider_login"]
         password = self.parent_suite.suite_params["authorization"]["provider_password"]
+        lform.login(login, password)
+        WebDriverWait(self.wts.drv, 10).until(
+                expected_conditions.visibility_of_element_located((By.ID, "butLogoutPartial")))\
+        .click()
+        liLoginNoAuthenticated = WebDriverWait(self.wts.drv, 10).until(
+            expected_conditions.visibility_of_element_located((By.ID, "liLoginNoAuthenticated")))
+        liLoginNoAuthenticated.click()
+        butLoginPartial = WebDriverWait(self.wts.drv, 10).until(
+                expected_conditions.visibility_of_element_located((By.ID, "butLoginPartial")))
+        butLoginPartial.click()
+        login_form = LoginPage(self.wts.drv)
+        self.parent_suite.suite_params.update({"login_form":login_form})
 
-        lform.login(self, login, password)
+    @add_res_to_DB(test_name="Открыть восстановление пароля")
+    def open_restore_password(self):
+        self.wts.drv.get('https://test-gov.ald.in.ua/Account/Login')
+        lform = LoginPage(self.wts.drv)
+        lform.restorePass.click()
+        WebDriverWait(self.wts.drv, 10).until(
+            expected_conditions.visibility_of_element_located((By.ID, "butForgotPassword")))
 
-
-# failed_login
-# open_register_form
-# open_restore_password
+    @add_res_to_DB(test_name="Открыть форму регистрации")
+    def open_register_form(self):
+        self.wts.drv.get('https://test-gov.ald.in.ua/Account/Login')
+        lform = LoginPage(self.wts.drv)
+        lform.register.click()
+        WebDriverWait(self.wts.drv, 10).until(
+            expected_conditions.visibility_of_element_located((By.XPATH, "//form[@action='/Account/Register']//button[@type='submit']")))
