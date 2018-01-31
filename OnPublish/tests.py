@@ -36,6 +36,41 @@ def s_load_main_page(g, t, cmbro):
             "owner_password": "zxcvbn00",
             "provider_login":"aladdin.for.test+provider@gmail.com",
             "provider_password":"123123"
+        },
+        "lang": {
+            "ru": {"greeting": "Добро пожаловать на Aladdin Government",
+                   "label_for_email": "Электронная почта",
+                   "label_for_password": "Пароль",
+                   "msg_email": "Ваше уникальное имя пользователя",
+                   "msg_password": "Пароль",
+                   "remember_me_label": "Запомнить меня?",
+                   "remember_me_private": "(если это частный компьютер)",
+                   "btnLogin": "Вход",
+                   "register": "Регистрация",
+                   "restorePass": "Забыли пароль ?"
+                   },
+            "ua": {"greeting": "Ласкаво просимо до Aladdin Government",
+                   "label_for_email": "Електронна пошта",
+                   "label_for_password": "Пароль",
+                   "msg_email": "Ваше унікальне ім'я користувача",
+                   "msg_password": "Пароль",
+                   "remember_me_label": "Запам'ятати мене?",
+                   "remember_me_private": "(якщо це приватний комп'ютер)",
+                   "btnLogin": "Вхід",
+                   "register": "Реєстрація",
+                   "restorePass": "Забули пароль ?"
+                   },
+            "en": {"greeting": "Welcome to Aladdin Government",
+                   "label_for_email": "E-mail",
+                   "label_for_password": "Password",
+                   "msg_email": "Your unique username to app",
+                   "msg_password": "Password",
+                   "remember_me_label": "Remember me?",
+                   "remember_me_private": "(if this is a private computer)",
+                   "btnLogin": "Login",
+                   "register": "Registration",
+                   "restorePass": "Forgot password ?"
+                   }
         }
     })
 
@@ -52,12 +87,10 @@ def s_load_main_page(g, t, cmbro):
     suite.addTest(Login_page("open_login", _params=qqq))
     suite.addTest(Login_page("check_lang", _params=qqq))
     suite.addTest(Login_page("login_owner", _params=qqq))
+    suite.addTest(Login_page("login_provider", _params=qqq))
 
-    # suite.addTest(Login_page("login_provider", _params=qqq))
-    #
-    # suite.addTest(Login_page("failed_login", _params=qqq))
-    # suite.addTest(Login_page("open_register_form", _params=qqq))
-    # suite.addTest(Login_page("open_restore_password", _params=qqq))
+    suite.addTest(Login_page("open_register_form", _params=qqq))
+    suite.addTest(Login_page("open_restore_password", _params=qqq))
 
 
     return suite
