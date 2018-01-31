@@ -102,6 +102,7 @@ class WebTestSession:
         self.result_id = None
         self.test_name = None
         self.group = None
+        self.drv = None
         self.__mongo__ = MdbUtils()
 
         if useBrowser:

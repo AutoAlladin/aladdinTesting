@@ -72,14 +72,14 @@ def add_res_to_DB(test_name=None,
                 test_method(self)
 
                 test_method_result["status"]="PASSED"
-                if screenshotOK:
+                if screenshotOK and self.wts.drv is not None :
                     pngOK=self.wts.drv.get_screenshot_as_png()
                     test_method_result.update({"screen_id": self.wts.__mongo__.fs.put(pngOK, file_name=test_method.__name__+"OK.png")})
 
             except Exception as e:
                 test_method_result["status"] = "ERROR"
                 test_method_result.update({"exception_msg": e.__str__()})
-                if screenshotERROR:
+                if screenshotERROR and self.wts.drv is not None:
                     pngERROR = self.wts.drv.get_screenshot_as_png()
                     test_method_result.update({"screen_id": self.wts.__mongo__.fs.put(pngERROR, file_name=test_method.__name__+"ERROR.png")})
                 e.test_method=tt
@@ -94,9 +94,9 @@ def add_res_to_DB(test_name=None,
                 if len(self.tlog)>0 :
                     test_method_result.update({"logs":self.tlog});
 
-                if test_method_result["screen_id"] != "":
-                    dir=os.path.dirname(os.path.abspath( prozorro.__file__ ))
-                    dir+="\\Aladdin\\output\\"
+                if self.wts.drv is not None and test_method_result["screen_id"] != "":
+                    dir= os.path.dirname(os.path.abspath( prozorro.__file__ ))
+                    dir+= "\\Aladdin\\output\\"
                     self.wts.drv.get_screenshot_as_file(dir + test_method.__name__+"_"+str(test_method_result["screen_id"]) + ".png")
 
                 if parent is None:
