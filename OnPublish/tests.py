@@ -78,10 +78,10 @@ def s_load_main_page(g, t, cmbro):
     suite.addTest(Load_main_page("menu_presented", _params=qqq))
     suite.addTest(Load_main_page("set_lang", _params=qqq))
 
-    # suite.addTest(Tender_Tab("tab_visible", _params=qqq))
-    # suite.addTest(Tender_Tab("tab_list", _params=qqq))
-    # suite.addTest(Tender_Tab("tab_search", _params=qqq))
-    # suite.addTest(Tender_Tab("tab_filters", _params=qqq))
+    suite.addTest(Tender_Tab("tab_visible", _params=qqq))
+    suite.addTest(Tender_Tab("tab_list", _params=qqq))
+    suite.addTest(Tender_Tab("tab_search", _params=qqq))
+    suite.addTest(Tender_Tab("tab_filters", _params=qqq))
 
     suite.addTest(Login_page("login_menu", _params=qqq))
     suite.addTest(Login_page("open_login", _params=qqq))
