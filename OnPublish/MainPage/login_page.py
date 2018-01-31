@@ -102,6 +102,8 @@ class Login_page(ParamsTestCase):
             lform.login(login, password)
 
         with self.subTest("повторный вход в форму авторизации"):
+
+            waitFadeIn(self.wts.drv)
             WebDriverWait(self.wts.drv, 10).until(
                     expected_conditions.visibility_of_element_located((By.ID, "butLogoutPartial")))\
             .click()
@@ -126,11 +128,14 @@ class Login_page(ParamsTestCase):
             lform.login(login, password)
 
         with self.subTest("повторный вход в форму авторизации"):
+            waitFadeIn(self.wts.drv)
             WebDriverWait(self.wts.drv, 10).until(
                     expected_conditions.visibility_of_element_located((By.ID, "butLogoutPartial")))\
             .click()
+
             liLoginNoAuthenticated = WebDriverWait(self.wts.drv, 10).until(
                 expected_conditions.visibility_of_element_located((By.ID, "liLoginNoAuthenticated")))
+            waitFadeIn(self.wts.drv)
             liLoginNoAuthenticated.click()
             butLoginPartial = WebDriverWait(self.wts.drv, 10).until(
                     expected_conditions.visibility_of_element_located((By.ID, "butLoginPartial")))

@@ -9,6 +9,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 from Aladdin.Accounting.decorators.StoreTestResult import add_res_to_DB
+from Prozorro.Utils import waitFadeIn
+
 
 class TabTest(ParamsTestCase):
     def tab_visible(self):
@@ -408,6 +410,7 @@ class Tender_Tab(TabTest):
             button = WebDriverWait(self.wts.drv, 5).until(
                 expected_conditions.visibility_of_element_located((By.ID, id_excell)))
             self.assertIsNotNone(button, "Элемент id_excell не найден  " + id_excell)
+            waitFadeIn(self.wts.drv)
             button.click()
             self.log("Кнопка сохранения в ексель ОК - " + id_excell)
 
