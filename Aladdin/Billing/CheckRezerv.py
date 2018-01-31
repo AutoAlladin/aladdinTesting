@@ -153,6 +153,7 @@ class CheckReserv(ParamsTestCase):
         # до резервирования  1000
         prev_amount_db = get_db_reserve(self.params["rezerv"]["CompanyUuid"])
 
+        print (json.dumps(self.params["rezerv"]))
         rq = requests.post(self.params["services"]["service_add_reserv"],
                            data=json.dumps(self.params["rezerv"]),
                            headers={'Content-type': 'application/json'}
@@ -160,7 +161,7 @@ class CheckReserv(ParamsTestCase):
         self.assertEqual(rq.json()["result"],
                          1,
                          "POST"+self.params["services"]["service_add_reserv"]+" response "+ rq.text)
-        amount = self.params["rezerv"]["TotalMoney"]
+        amount = float(self.params["rezerv"]["TotalMoney"])
 
         if prev_amount_db is not None:
             amount_db = get_db_reserve(self.params["rezerv"]["CompanyUuid"])
@@ -245,7 +246,7 @@ class CheckReserv(ParamsTestCase):
 
     # списание денег
     def test_04_charge_off(self):
-        prev_amount_db = get_db_balance(self.params["fix_money"]["CompanyUuid"])
+        prev_amount_db = get_db_reserve(self.params["fix_money"]["CompanyUuid"])
 
         rq = requests.post(self.params["services"]["service_fix_money"],
                            data=json.dumps(self.params["fix_money"]),
@@ -256,7 +257,11 @@ class CheckReserv(ParamsTestCase):
                          "POST" + self.params["services"]["service_fix_money"] + " response " + rq.text)
 
         if prev_amount_db is not None:
-            amount_db = get_db_balance(self.params["fix_money"]["CompanyUuid"])
+            amount_db = get_db_reserve(self.params["fix_money"]["CompanyUuid"])
 
-        self.assertGreater(amount_db, prev_amount_db,
+        self.assertLess(amount_db, prev_amount_db,
                          "Баланс не изменился после списания денег")
+
+
+
+

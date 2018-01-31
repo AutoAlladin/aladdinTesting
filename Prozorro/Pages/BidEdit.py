@@ -1,4 +1,5 @@
 import os
+import time
 from selenium.webdriver.chrome import webdriver
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -12,6 +13,7 @@ class bid:
         #self.drv = webdriver.Chrome(_drv)
 
     def new(self,prepare,uaid=""):
+
         try:
             try:
                 bidAmount = self.drv.find_element_by_id("bidAmount")

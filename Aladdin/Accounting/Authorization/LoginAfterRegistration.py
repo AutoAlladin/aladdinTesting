@@ -10,7 +10,6 @@ from Aladdin.Accounting.decorators.StoreTestResult import add_res_to_DB
 
 
 class LoginAfterRegistrationCompany(ParamsTestCase):
-
     @add_res_to_DB()
     def test_01(self):
         w={"query": {"q": {"name": "UserCompanyRegistrationForm", "version": "0.0.0.3",

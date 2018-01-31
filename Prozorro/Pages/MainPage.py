@@ -7,7 +7,7 @@ from Prozorro.Pages.TenderView import TenderView
 from Prozorro.Pages.UserRegForm import UserRegForm
 from Prozorro.Utils import *
 import time
-
+from datetime import datetime, timedelta, time
 
 
 
@@ -76,7 +76,7 @@ class MainPage:
         self.butSimpleSearch.click()
 
         waitFadeIn(self.drv)
-
+        #print((By.XPATH,"//span[text()='"+uaid+"']/../a"))
         tenderLink =WebDriverWait(self.drv, 20).until(
             EC.visibility_of_element_located((By.XPATH,"//span[text()='"+uaid+"']/../a")))
         tenderLink.click()
@@ -95,7 +95,8 @@ class MainPage:
 
 
 
-    def create_tender(self, procurementMethodType, lots=0, items=1, docs=0, features=0, dic=None, nom=""):
+    def create_tender(self, procurementMethodType, lots=0, items=1, docs=0, features=0,
+                      dic=None, nom="", log=None):
         self.btn_create_purchase=self.drv.find_element_by_id("btn_create_purchase")
         waitFadeIn(self.drv)
         WebDriverWait(self.drv, 3).until(
@@ -123,7 +124,7 @@ class MainPage:
                 add_lot(lots, dic).\
                 add_item(dic, lots, items). \
                 click_next_button(). \
-                add_features(dic,lots,items,features).\
+                add_features(dic,lots,features).\
                 add_doc(docs).\
                 click_finish_edit_button().\
                 click_publish_button()
@@ -169,9 +170,9 @@ class MainPage:
                 open_bids().\
                 new(1,uaid);
         else:
-            return self.open_tender_url(uaid). \
-                open_bids(). \
-                new(prepare,uaid)
+            return self.open_tender_url(uaid).\
+                open_bids().\
+                new(prepare, uaid)
 
 
 

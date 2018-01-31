@@ -67,7 +67,7 @@ def get_db_balance(uuid=None, edr=None ):
         if row.Balance is None:
             return 0.0
         else:
-            return float(row.Balance)
+            return float(row.Balance)  #(row.Balance)
 
 def get_db_reserve(uuid):
     mssql_connection = get_connection(**conn_billing_test)
