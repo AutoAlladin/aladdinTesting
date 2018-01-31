@@ -142,11 +142,16 @@ class TestByBilling(ParamsTestCase):
 
     @add_res_to_DB(test_name="cancel_reserve_money_positive")
     def test_17_cancel_reserve_money_positive(self):
+        par = self.parent_suite.suite_params["par"]["test_17_1"]
+        req = requests.post("http://192.168.95.153:91/api/balance/Reserve", data=json.dumps(par), headers={"content-type": "application/json"})
+        self.assertEqual(req.status_code, 200)
+
         par = self.parent_suite.suite_params["par"]["test_17"]
         req = requests.post("http://192.168.95.153:91/api/balance/CancelReserve", data=json.dumps(par),
                             headers={"content-type": "application/json"})
-        #self.assertEqual(req.status_code, 200)
+        self.assertEqual(req.status_code, 200)
 
+    @add_res_to_DB(test_name="cancel_reserve_money_tender_id_is_null_negative")
     def test_18_cancel_reserve_money_tender_id_is_null_negative(self):
         par = self.parent_suite.suite_params["par"]["test_18"]
 
@@ -155,6 +160,7 @@ class TestByBilling(ParamsTestCase):
         self.assertNotEquals(req.status_code, 200, 201)
         self.assertEqual(req.status_code, 400)
 
+    @add_res_to_DB(test_name="cancel_reserve_money_error_negative")
     def test_19_cancel_reserve_money_error_negative(self):
         par = self.parent_suite.suite_params["par"]["test_19"]
 
