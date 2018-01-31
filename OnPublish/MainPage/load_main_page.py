@@ -28,13 +28,12 @@ class Load_main_page(ParamsTestCase):
 
     def check_labels(self, lang):
         def check(locator, wait_text):
-            element = WebDriverWait(self.wts.drv, 20).until(
-                expected_conditions.visibility_of_element_located(locator))
-            self.assertIsNotNone(element, "Элемент tab_tenders не найден  "+str(locator))
-            self.log(wait_text + " VISIBLE")
-            self.assertEqual(element.text, wait_text,
-                             "Интерфейс английский, вкладка называется - " + element.text)
-            self.log("element.text = "+wait_text)
+            with self.subTest("проверка " + wait_text):
+                element = WebDriverWait(self.wts.drv, 20).until(
+                    expected_conditions.visibility_of_element_located(locator))
+                self.assertIsNotNone(element, "Проверка надписей, элемент  не найден  "+str(locator))
+                self.assertEqual(element.text, wait_text,"не совпадают значение в интерфейсе и ожидаемое")
+                self.log("element.text = "+wait_text)
 
         if lang=='en':
             check((By.ID, 'hrefPurchases'), "Tenders")
@@ -97,7 +96,7 @@ class Load_main_page(ParamsTestCase):
     def menu_presented(self):
         #кнопка есть и кликабельна
 
-        with self.subTest('меню'):
+        with self.subTest('главное меню'):
             xpath = '//a[@class="dropdown-toggle"]/i[@class="pe-7s-menu"]/..'
             element =WebDriverWait(self.wts.drv, 20).until(
                 expected_conditions.visibility_of_element_located(
@@ -106,9 +105,8 @@ class Load_main_page(ParamsTestCase):
                     )
             self.assertIsNotNone(element, "Элемент меню не найден  "+xpath)
             self.log("subTest('меню') OK")
-            print("subTest('меню')", "OK")
 
-        with self.subTest('мова'):
+        with self.subTest('переключение языка интерфейса'):
             xpath = "//li[@id='liCultureSelector']"
             element = WebDriverWait(self.wts.drv, 20).until(
                 expected_conditions.visibility_of_element_located(
@@ -119,7 +117,7 @@ class Load_main_page(ParamsTestCase):
             self.log("subTest('мова') OK")
 
 
-        with self.subTest('вхід'):
+        with self.subTest('меню авторизации'):
             xpath = '//li[@id="liLoginNoAuthenticated"]/..'
             element = WebDriverWait(self.wts.drv, 20).until(
                 expected_conditions.visibility_of_element_located(
@@ -143,24 +141,22 @@ class Load_main_page(ParamsTestCase):
         except Exception as e :
             self.assertEqual(True, False, "liCultureSelector - "+e.__str__())
 
-        with self.subTest('select_lang_en-us'):
+        with self.subTest('английский интерфейс'):
             try:
                 xpath = "//a[@id='select_lang_en-us']"
                 select_lang_en = WebDriverWait(self.wts.drv, 20).until(
                     expected_conditions.visibility_of_element_located((By.XPATH, xpath)))
 
                 self.assertIsNotNone(select_lang_en, "Элемент select_lang_en не найден  " + xpath)
-                self.log("select_lang_en VISIBLE")
                 select_lang_en.click()
                 self.log("select_lang_en CLICK OK")
 
                 self.check_labels('en')
 
-
             except Exception as e :
                 self.assertEqual(True, False, "select_lang_en-us - "+e.__str__())
 
-        with self.subTest('select_lang_ru-ru'):
+        with self.subTest("русский интерфейс"):
             try:
                 self.wts.drv.find_element_by_id('liCultureSelector').click()
 
@@ -169,7 +165,6 @@ class Load_main_page(ParamsTestCase):
                     expected_conditions.visibility_of_element_located((By.XPATH, xpath)))
 
                 self.assertIsNotNone(select_lang_en, "Элемент select_lang_ru-ru не найден  " + xpath)
-                self.log("select_lang_ru-ru VISIBLE")
                 select_lang_en.click()
                 self.log("select_lang_ru-ru CLICK OK")
 
@@ -179,7 +174,7 @@ class Load_main_page(ParamsTestCase):
                 self.assertEqual(True, False, "select_lang_ru-ru - "+e.__str__())
 
 
-        with self.subTest('select_lang_uk-ua'):
+        with self.subTest("украинский интерфейс"):
             try:
                 self.wts.drv.find_element_by_id('liCultureSelector').click()
 
@@ -188,7 +183,6 @@ class Load_main_page(ParamsTestCase):
                     expected_conditions.visibility_of_element_located((By.XPATH, xpath)))
 
                 self.assertIsNotNone(select_lang_en, "Элемент select_lang_uk-ua не найден  " + xpath)
-                self.log("select_lang_uk-ua VISIBLE")
                 select_lang_en.click()
                 self.log("select_lang_uk-ua CLICK OK")
 
@@ -215,7 +209,7 @@ class Tender_Tab(TabTest):
         self.log("Проверка пагинации")
 
         try:
-            with self.subTest("tender_list"):
+            with self.subTest("список тендеров"):
                 xpath = "//div[@id='purchase-page']//div[@class='col-md-12']"
                 tender_list = WebDriverWait(self.wts.drv, 20).until(
                     expected_conditions.visibility_of_any_elements_located((By.XPATH, xpath)))
@@ -228,12 +222,14 @@ class Tender_Tab(TabTest):
 
         try:
             xpath_number = "//ul[@class='pagination']//a[@ng-click='selectPage(page.number)']"
-            xpath_first  = '//ul[@class="pagination"]//a[@ng-click="selectPage(1)"]'
+            #xpath_first  = '//ul[@class="pagination"]//a[@ng-click="selectPage(1)"]'
+            #xpath_last = '//ul[@class="pagination"]//a[@ng-click="selectPage(totalPages)"]'
+
             xpath_prev   = '//ul[@class="pagination"]//a[@ng-click="selectPage(page - 1)"]'
             xpath_next   = '//ul[@class="pagination"]//a[@ng-click="selectPage(page + 1)"]'
-            xpath_last   = '//ul[@class="pagination"]//a[@ng-click="selectPage(totalPages)"]'
 
-            with self.subTest("pagi_number"):
+
+            with self.subTest("выбор страницы с тендерами по номеру"):
                 pagi_number = WebDriverWait(self.wts.drv, 20).until(
                     expected_conditions.visibility_of_any_elements_located((By.XPATH, xpath_number)))
 
@@ -241,29 +237,29 @@ class Tender_Tab(TabTest):
                 self.assertGreater(len(pagi_number), 0, "Нет страниц в списке " + xpath_number)
                 self.log("Кнопки перехода на выбраные страницы пагинации ОК " + str(len(pagi_number)))
 
-            with self.subTest("pagi_first"):
-                pagi_first = WebDriverWait(self.wts.drv, 20).until(
-                    expected_conditions.visibility_of_element_located((By.XPATH, xpath_first)))
-                self.assertIsNotNone(pagi_first, "Элемент pagi_first не найден  " + xpath_first)
-                self.log("Кнопка \"Первая страница\" пагинации ОК " + xpath_first)
+            # with self.subTest("pagi_first"):
+            #     pagi_first = WebDriverWait(self.wts.drv, 20).until(
+            #         expected_conditions.visibility_of_element_located((By.XPATH, xpath_first)))
+            #     self.assertIsNotNone(pagi_first, "Элемент pagi_first не найден  " + xpath_first)
+            #     self.log("Кнопка \"Первая страница\" пагинации ОК " + xpath_first)
 
-            with self.subTest("pagi_prev"):
+            with self.subTest("выбор предыдущей страницы с тендерами"):
                 pagi_prev = WebDriverWait(self.wts.drv, 20).until(
                     expected_conditions.visibility_of_element_located((By.XPATH, xpath_prev)))
                 self.assertIsNotNone(pagi_prev, "Элемент pagi_prev не найден  " + xpath_prev)
                 self.log("Кнопка \"Предыдущая страница\" пагинации ОК " + xpath_prev)
 
-            with self.subTest("pagi_next"):
+            with self.subTest("выбор следующей страницы с тендерами"):
                 pagi_next = WebDriverWait(self.wts.drv, 20).until(
                     expected_conditions.visibility_of_element_located((By.XPATH, xpath_next)))
                 self.assertIsNotNone(pagi_next, "Элемент pagi_next не найден  " + xpath_next)
                 self.log("Кнопка \"Следующая страница\" пагинации ОК " + xpath_next)
 
-            with self.subTest("pagi_last"):
-                pagi_last = WebDriverWait(self.wts.drv, 20).until(
-                    expected_conditions.visibility_of_element_located((By.XPATH, xpath_last)))
-                self.assertIsNotNone(pagi_last, "Элемент pagi_last не найден  " + xpath_last)
-                self.log("Кнопка \"Последняя страница\" пагинации ОК " + xpath_last)
+            # with self.subTest("pagi_last"):
+            #     pagi_last = WebDriverWait(self.wts.drv, 20).until(
+            #         expected_conditions.visibility_of_element_located((By.XPATH, xpath_last)))
+            #     self.assertIsNotNone(pagi_last, "Элемент pagi_last не найден  " + xpath_last)
+            #     self.log("Кнопка \"Последняя страница\" пагинации ОК " + xpath_last)
 
         except Exception as e:
             self.assertEqual(True, False, "PAGINATION - " + e.__str__())
@@ -272,33 +268,40 @@ class Tender_Tab(TabTest):
         try:
             self.log("Элементы отдельного тендера")
 
-            one_tender=WebDriverWait(self.wts.drv, 20).until(
-                expected_conditions.visibility_of_element_located((By.XPATH, "//div[@id='purchase-page']/div/div[@class='col-md-12'][2]")))
-            self.assertIsNotNone(one_tender)
+            with self.subTest("отображение первого тендера в списке"):
+                one_tender=WebDriverWait(self.wts.drv, 20).until(
+                    expected_conditions.visibility_of_element_located((By.XPATH, "//div[@id='purchase-page']/div/div[@class='col-md-12'][2]")))
+                self.assertIsNotNone(one_tender)
 
-            title =one_tender.find_element_by_xpath("//p/a")
-            self.assertIsNotNone(title, "Элемент title не найден")
-            self.log("заголовок ОК - "+title.text)
+            with self.subTest("заголовок первого тендера в списке"):
+                title =one_tender.find_element_by_xpath("//p/a")
+                self.assertIsNotNone(title, "Элемент title не найден")
+                self.log("заголовок ОК - "+title.text)
 
-            owner_name = one_tender.find_element_by_xpath("//div[contains(@ng-click,'clickOnCompanyInfo')]")
-            self.assertIsNotNone(owner_name, "Элемент owner_name не найден")
-            self.log("название закупщика ОК - "+owner_name.text)
+            with self.subTest("название заказчика первого тендера в списке"):
+                owner_name = one_tender.find_element_by_xpath("//div[contains(@ng-click,'clickOnCompanyInfo')]")
+                self.assertIsNotNone(owner_name, "Элемент owner_name не найден")
+                self.log("название закупщика ОК - "+owner_name.text)
 
-            ID = one_tender.find_element_by_xpath("//span[@class='spanProzorroId']")
-            self.assertIsNotNone(ID, "Элемент ID не найден")
-            self.log("ИД прозорро ОК - "+ID.text)
+            with self.subTest("ИД прозорро первого тендера в списке"):
+                ID = one_tender.find_element_by_xpath("//span[@class='spanProzorroId']")
+                self.assertIsNotNone(ID, "Элемент ID не найден")
+                self.log("ИД прозорро ОК - "+ID.text)
 
-            proc_type = one_tender.find_element_by_xpath("//div[@class='col-md-6']/span/span[3]")
-            self.assertIsNotNone(proc_type, "Элемент proc_type не найден")
-            self.log("тип процедуры ОК - "+proc_type.text)
+            with self.subTest("тип процедуры первого тендера в списке"):
+                proc_type = one_tender.find_element_by_xpath("//div[@class='col-md-6']/span/span[3]")
+                self.assertIsNotNone(proc_type, "Элемент proc_type не найден")
+                self.log("тип процедуры ОК - "+proc_type.text)
 
-            status = one_tender.find_element_by_xpath("//div[@class='project-label text-success']/span")
-            self.assertIsNotNone(status, "Элемент status не найден")
-            self.log("этап  тендера ОК - "+status.text)
+            with self.subTest("этап первого тендера в списке"):
+                status = one_tender.find_element_by_xpath("//div[@class='project-label text-success']/span")
+                self.assertIsNotNone(status, "Элемент status не найден")
+                self.log("этап  тендера ОК - "+status.text)
 
-            mode_time = one_tender.find_element_by_xpath("//div[@class='row row-with-purchase-times']/div[3]/span")
-            self.assertIsNotNone(mode_time, "Элемент mode_time не найден")
-            self.log("дата  модификации ОК - "+mode_time.text)
+            with self.subTest("дата модификации первого тендера в списке"):
+                mode_time = one_tender.find_element_by_xpath("//div[@class='row row-with-purchase-times']/div[3]/span")
+                self.assertIsNotNone(mode_time, "Элемент mode_time не найден")
+                self.log("дата  модификации ОК - "+mode_time.text)
 
 
         except Exception as e:
@@ -317,7 +320,7 @@ class Tender_Tab(TabTest):
         xpath_page_total="//div[contains(@class,'pager-total')]/span"
 
         try:
-            with self.subTest("select_searchType"):
+            with self.subTest("типы поиска тедера"):
                 select_searchType = WebDriverWait(self.wts.drv, 5).until(
                     expected_conditions.visibility_of_element_located((By.ID, id_searchType)))
                 self.assertIsNotNone(select_searchType, "Элемент select_searchType не найден  " + id_searchType)
@@ -325,7 +328,7 @@ class Tender_Tab(TabTest):
 
             searchType_text={"Шукати:","По назві","Системному номеру (у форматі UA-....)","По опису"}
 
-            with self.subTest("searchType_option"):
+            with self.subTest("названия типов поиска"):
                 xpat = "//select[@id='searchType']/option"
                 searchType_option = self.wts.drv.find_elements_by_xpath(xpat)
                 self.assertIsNotNone(searchType_option, "Элемент searchType_option не найден  " + xpat)
@@ -338,7 +341,7 @@ class Tender_Tab(TabTest):
         except Exception as e:
             self.assertEqual(True, False, "select_searchType - " + e.__str__())
 
-        with self.subTest("findbykeywords") :
+        with self.subTest("поле ввода текста поиска") :
             findbykeywords = WebDriverWait(self.wts.drv, 5).until(
                 expected_conditions.visibility_of_element_located((By.ID, id_findbykeywords)))
             self.assertIsNotNone(findbykeywords, "Элемент findbykeywords не найден  " + id_findbykeywords)
@@ -346,17 +349,20 @@ class Tender_Tab(TabTest):
             # findbykeywords.send_keys("xxx")
             # self.assertEqual(findbykeywords.text, "xxx")
             self.log("Текст поиска ОК - " + id_findbykeywords)
-        with self.subTest("butSimpleSearch"):
+
+        with self.subTest("кнопка поиска"):
             butSimpleSearch = WebDriverWait(self.wts.drv, 5).until(
                 expected_conditions.visibility_of_element_located((By.ID, id_butSimpleSearch)))
             self.assertIsNotNone(butSimpleSearch, "Элемент butSimpleSearch не найден  " + id_butSimpleSearch)
             self.log("Кнопка поиска ОК - " + id_butSimpleSearch)
-        with self.subTest("clear_all"):
+
+        with self.subTest("элемент очистить все"):
             clear_all = WebDriverWait(self.wts.drv, 5).until(
                 expected_conditions.visibility_of_element_located((By.ID, id_clear_all)))
             self.assertIsNotNone(clear_all, "Элемент butSimpleSearch не найден  " + id_clear_all)
             self.log("Кнопка очистки поиска ОК - " + id_clear_all)
-        with self.subTest("find one tender"):
+
+        with self.subTest("попытка найти повторно первый тендер из списка"):
             one_tender = WebDriverWait(self.wts.drv, 5).until(
                 expected_conditions.visibility_of_element_located(
                     (By.XPATH, "//div[@id='purchase-page']/div/div[@class='col-md-12'][2]")))
@@ -379,33 +385,39 @@ class Tender_Tab(TabTest):
             #
             # self.assertIsNotNone(wanted_tender, "Тендер "+id.text+" не найден, хотя он есть :(  " )
             self.log("Поиск тендера КАКБЫ ОК но не совсем - нужны доработки по структруе страницы - " + id.text)
-        with self.subTest("topStatus3-active"):
+
+        with self.subTest("чекбокс активные тендера"):
             label = WebDriverWait(self.wts.drv, 5).until(
                 expected_conditions.visibility_of_element_located((By.XPATH, xpath_activ)))
             self.assertIsNotNone(label, "Элемент label_active не найден  " + xpath_activ)
             self.log("Чекбокс активные ОК - " + xpath_activ)
-        with self.subTest("topStatus5-done"):
+
+        with self.subTest("чекбокс завершенные тендера"):
             label = WebDriverWait(self.wts.drv, 5).until(
                 expected_conditions.visibility_of_element_located((By.XPATH, xpath_done)))
             self.assertIsNotNone(label, "Элемент label_done не найден  " + xpath_done)
             self.log("Чекбокс завершенные ОК - " + xpath_done)
-        with self.subTest("topStatus4-archive"):
+
+        with self.subTest("чекбокс архивные тендера"):
             label = WebDriverWait(self.wts.drv, 5).until(
                 expected_conditions.visibility_of_element_located((By.XPATH, xpath_archive)))
             self.assertIsNotNone(label, "Элемент label_archive не найден  " + xpath_archive)
             self.log("Чекбокс архивные ОК - " + xpath_archive)
-        with self.subTest("id_excell"):
+
+        with self.subTest("кнопка занрузки в ексель"):
             button = WebDriverWait(self.wts.drv, 5).until(
                 expected_conditions.visibility_of_element_located((By.ID, id_excell)))
             self.assertIsNotNone(button, "Элемент id_excell не найден  " + id_excell)
             button.click()
             self.log("Кнопка сохранения в ексель ОК - " + id_excell)
-        with self.subTest("page_total"):
-            page_total = WebDriverWait(self.wts.drv, 5).until(
-                expected_conditions.visibility_of_element_located((By.XPATH, xpath_page_total)))
-            self.assertIsNotNone(page_total, "Элемент page_total не найден  " + xpath_page_total)
-            self.log("Всего страниц ОК - " +page_total.text+" - "+ xpath_page_total)
-        with self.subTest("orderingType"):
+
+        # with self.subTest("page_total"):
+        #     page_total = WebDriverWait(self.wts.drv, 5).until(
+        #         expected_conditions.visibility_of_element_located((By.XPATH, xpath_page_total)))
+        #     self.assertIsNotNone(page_total, "Элемент page_total не найден  " + xpath_page_total)
+        #     self.log("Всего страниц ОК - " +page_total.text+" - "+ xpath_page_total)
+
+        with self.subTest("выбор сортировки"):
             xpath_orderingType = "//select[@ng-model='orderingType.selected']"
             orderingType = WebDriverWait(self.wts.drv, 5).until(
                 expected_conditions.visibility_of_element_located((By.XPATH, xpath_orderingType)))
@@ -415,13 +427,13 @@ class Tender_Tab(TabTest):
             sort_list={'Сортувати по:','Бюджет за спаданням','Бюджет за зростанням',
                        'Дата публікації за зростанням','Дата публікації за спаданням'}
 
-            with self.subTest("orderingType_option"):
+            with self.subTest("типы сортировки"):
                 xpat = "//select[@ng-model='orderingType.selected']/option"
                 orderingType_option = self.wts.drv.find_elements_by_xpath(xpat)
                 self.assertIsNotNone(orderingType_option, "Элемент orderingType_option не найден  " + xpat)
-                self.assertGreater(len(orderingType_option),0, "Количество типов поиска !=5 : "+str(len(orderingType_option)))
+                self.assertGreater(len(orderingType_option),0, "Количество типов сортировки !=5 : "+str(len(orderingType_option)))
             for value in orderingType_option:
-                with self.subTest("orderingType_optionText"):
+                with self.subTest("тип сортировки - "+value.text):
                     self.assertIn(value.text, sort_list, "Невалидный текст типа сортировки - "+value.text)
             self.log("Названия типов сортировки ОК")
 
@@ -430,7 +442,7 @@ class Tender_Tab(TabTest):
         id_button_all = "butSelectFilterGeo"
         id_button_clear = "butClearFilterGeo"
 
-        with self.subTest("proc_type"):
+        with self.subTest("фильтр по типам тендеров"):
             xpath_proc_type="//ul[@id='filterblock']/li/div[@id='headingTwo']"
             xpath_proc_labels="//div[@id='tender']/div/div/div/label"
 
@@ -439,14 +451,14 @@ class Tender_Tab(TabTest):
             self.assertIsNotNone(proc_type, "Элемент proc_type filter не найден  " + xpath_proc_type)
             proc_type.click()
 
-            with self.subTest("button_all"):
+            with self.subTest("кнопка выбрать все"):
                 button_all = WebDriverWait(self.wts.drv, 15).until(
                     expected_conditions.visibility_of_element_located((By.ID, id_button_all)))
                 self.assertIsNotNone(button_all, "Элемент button_all filter не найден  " + id_button_all)
                 button_all.click()
                 self.log("Кнопка выбрать все типов тендеров ОК - " + id_button_all)
 
-            with self.subTest("button_clear"):
+            with self.subTest("кнопка очистить все"):
                 button_clear = WebDriverWait(self.wts.drv, 15).until(
                     expected_conditions.visibility_of_element_located((By.ID, id_button_clear)))
                 self.assertIsNotNone(button_clear, "Элемент button_clear filter не найден  " + id_button_clear)
@@ -468,13 +480,14 @@ class Tender_Tab(TabTest):
             }
 
             for value in proc_labels:
-                with self.subTest("proc_labels_text"):
+                with self.subTest("тип тендерп - "+value.text):
                     self.assertIn(value.text, proc_labels_text, "Невалидный текст типа тендера - "+value.text)
             self.log("Названия типов тендера ОК ")
             proc_type.click()
 
             self.log("Фильтр типов тендеров ОК - " + xpath_proc_type)
-        with self.subTest('tenderEtap'):
+
+        with self.subTest('фильтр по этапам тендеров'):
             id_tenderEtap = "headingOne"
             xpath_tenderEtap_label="//div[@id='tenderEtap']/div/div/div/label"
 
@@ -483,7 +496,7 @@ class Tender_Tab(TabTest):
             self.assertIsNotNone(tenderEtap, "Элемент tenderEtap filter не найден  " + id_tenderEtap)
             tenderEtap.click()
 
-            with self.subTest("button_all"):
+            with self.subTest("кнопка выбрать все"):
                 id_button_all = "//div[@id='tenderEtap']//button[@id='butSelectFilterGeo']"
                 button_all = WebDriverWait(self.wts.drv, 10).until(
                     expected_conditions.visibility_of_element_located((By.XPATH, id_button_all)))
@@ -491,7 +504,7 @@ class Tender_Tab(TabTest):
                 button_all.click()
                 self.log("Кнопка выбрать все типов тендеров ОК - " + id_button_all)
 
-            with self.subTest("button_clear"):
+            with self.subTest("кнопка очистить все"):
                 id_button_clear ="//div[@id='tenderEtap']//button[@id='butClearFilterGeo']"
                 button_clear = WebDriverWait(self.wts.drv, 10).until(
                     expected_conditions.visibility_of_element_located((By.XPATH, id_button_clear)))
@@ -517,13 +530,14 @@ class Tender_Tab(TabTest):
                                 }
 
             for value in tenderEtap_labels:
-                with self.subTest("tenderEtap_labels"):
+                with self.subTest("этап тендера - "+value.text):
                     self.assertIn(value.text, tenderEtap_labels_text, "Невалидный текст этапа тендера - "+value.text)
             self.log("Названия этапов тендера ОК ")
             tenderEtap.click()
 
             self.log("Фильтр этапов тендеров ОК - " + id_tenderEtap)
-        with self.subTest('regions'):
+
+        with self.subTest('фильр по регионам доставки'):
             id_regions = "headingThree"
             xpath_regions_label="//div[@id='collapseFour']/div/div/div/label"
 
@@ -535,14 +549,15 @@ class Tender_Tab(TabTest):
 
             self.wts.drv.execute_script("$('#navigation').slimScroll({ scrollTo: '100px' })")
 
-            with self.subTest("button_all"):
+            with self.subTest("кнопка выбрать все"):
                 id_button_all = "//div[@id='collapseFour']//button[@id='butSelectFilterGeo']"
                 button_all = WebDriverWait(self.wts.drv, 10).until(
                     expected_conditions.visibility_of_element_located((By.XPATH, id_button_all)))
                 self.assertIsNotNone(button_all, "Элемент button_all filter не найден  " + id_button_all)
                 button_all.click()
                 self.log("Кнопка выбрать все регионы ОК - " + id_button_all)
-            with self.subTest("button_clear"):
+
+            with self.subTest("кнопка очистить все"):
                 id_button_clear ="//div[@id='collapseFour']//button[@id='butClearFilterGeo']"
                 button_clear = WebDriverWait(self.wts.drv, 10).until(
                     expected_conditions.visibility_of_element_located((By.XPATH, id_button_clear)))
@@ -567,7 +582,7 @@ class Tender_Tab(TabTest):
             }
 
             for value in regions_label:
-                with self.subTest("regions_labels_text"):
+                with self.subTest("регион - "+value.text):
                     self.assertIn(value.text, regions_labels_text, "Невалидное название региона - " + value.text)
             self.log("Названия регионов ОК ")
 
@@ -576,7 +591,7 @@ class Tender_Tab(TabTest):
 
             self.log("Фильтр регионов ОК - " + id_regions)
 
-        with self.subTest("dkHelpers"):
+        with self.subTest("фильтр по классификаторам"):
             id_dkHelpers = "dkHelpers"
 
             xpath_cpv = "//a[@property='CPV']"
@@ -595,48 +610,50 @@ class Tender_Tab(TabTest):
             txt_dk = "Інші ДК"
             txt_kekv = "КЕКВ"
 
-            dkHelpers = WebDriverWait(self.wts.drv, 5).until(
-                expected_conditions.visibility_of_element_located((By.ID, id_dkHelpers)))
-            self.assertIsNotNone(tenderEtap, "Элемент dkHelpers filter не найден  " + id_dkHelpers)
-            dkHelpers.click()
-            self.log("Фильтр dkHelpers visible ОК - " + id_regions)
+            with self.subTest("видимость фтльтров классификаторов"):
+                dkHelpers = WebDriverWait(self.wts.drv, 5).until(
+                    expected_conditions.visibility_of_element_located((By.ID, id_dkHelpers)))
+                self.assertIsNotNone(tenderEtap, "Элемент dkHelpers filter не найден  " + id_dkHelpers)
+                dkHelpers.click()
+                self.log("Фильтр dkHelpers visible ОК - " + id_regions)
 
-            cpv = WebDriverWait(self.wts.drv, 5).until(
-                expected_conditions.visibility_of_element_located((By.XPATH, xpath_cpv)))
-            self.assertIsNotNone(cpv, "Элемент CPV filter не найден  " + id_regions)
+            with self.subTest("классификатор CPV"):
+                cpv = WebDriverWait(self.wts.drv, 5).until(
+                    expected_conditions.visibility_of_element_located((By.XPATH, xpath_cpv)))
+                self.assertIsNotNone(cpv, "Элемент CPV filter не найден  " + id_regions)
 
-            self.assertEqual(cpv.text, txt_cpv, "CPV_LABEL "+cpv.text)
-            self.log("Текст cpv OK - "+cpv.text)
+                self.assertEqual(cpv.text, txt_cpv, "CPV_LABEL "+cpv.text)
+                self.log("Текст cpv OK - "+cpv.text)
 
-            cpv.click()
+                cpv.click()
 
-            with self.subTest("dialogCPV"):
-                dialog=WebDriverWait(self.wts.drv, 10).until(
-                       expected_conditions.visibility_of_element_located((By.XPATH, xpath_cpv_dialog)))
-                self.log("Фильтр dialogCPV visible ОК - " + xpath_cpv_dialog)
+                with self.subTest("диалог выбора CPV"):
+                    dialog=WebDriverWait(self.wts.drv, 10).until(
+                           expected_conditions.visibility_of_element_located((By.XPATH, xpath_cpv_dialog)))
+                    self.log("Фильтр dialogCPV visible ОК - " + xpath_cpv_dialog)
 
-                dk_search = WebDriverWait(self.wts.drv, 10).until(
-                    expected_conditions.visibility_of_element_located((By.ID, id_dk_search)))
-                self.log("Строка поиска dialogCPV visible ОК - " + id_dk_search )
+                    dk_search = WebDriverWait(self.wts.drv, 10).until(
+                        expected_conditions.visibility_of_element_located((By.ID, id_dk_search)))
+                    self.log("Строка поиска dialogCPV visible ОК - " + id_dk_search )
 
-            with self.subTest("dialogCPV_items"):
-                sleep(5)
-                dialog_items = WebDriverWait(self.wts.drv, 10).until(
-                       expected_conditions.visibility_of_any_elements_located((By.XPATH, xpath_dialog_items)))
-                self.assertIsNotNone(dialog_items, "Элемент dialog_items  не найден  " + xpath_dialog_items)
-                self.assertGreater(len(dialog_items), 10, "Кодов <=10 : " + str(len(dialog_items)))
-                self.log("Много пунктов CPV ОК - " + str(len(dialog_items)))
+                with self.subTest("выбор номенклатуры CPV"):
+                    sleep(5)
+                    dialog_items = WebDriverWait(self.wts.drv, 10).until(
+                           expected_conditions.visibility_of_any_elements_located((By.XPATH, xpath_dialog_items)))
+                    self.assertIsNotNone(dialog_items, "Элемент dialog_items  не найден  " + xpath_dialog_items)
+                    self.assertGreater(len(dialog_items), 10, "Кодов <=10 : " + str(len(dialog_items)))
+                    self.log("Много пунктов CPV ОК - " + str(len(dialog_items)))
 
 
-                button_close =   WebDriverWait(self.wts.drv, 10).until(
-                       expected_conditions.visibility_of_element_located((By.XPATH,  "//div[@id='dialogContent']//button[contains(.,'Закрити')]")))
-                self.assertIsNotNone(button_close, "Элемент button_close диалога CPV не найден")
-                button_close.click()
-                self.log("Кнопка button_close диалога CPV ОК ")
+                    button_close =   WebDriverWait(self.wts.drv, 10).until(
+                           expected_conditions.visibility_of_element_located((By.XPATH,  "//div[@id='dialogContent']//button[contains(.,'Закрити')]")))
+                    self.assertIsNotNone(button_close, "Элемент button_close диалога CPV не найден")
+                    button_close.click()
+                    self.log("Кнопка button_close диалога CPV ОК ")
 
-                WebDriverWait(self.wts.drv, 5).until(
-                    expected_conditions.invisibility_of_element_located((By.XPATH, xpath_cpv_dialog)))
-                self.log("dialogCPV ОК")
+                    WebDriverWait(self.wts.drv, 5).until(
+                        expected_conditions.invisibility_of_element_located((By.XPATH, xpath_cpv_dialog)))
+                    self.log("dialogCPV ОК")
 
 
 

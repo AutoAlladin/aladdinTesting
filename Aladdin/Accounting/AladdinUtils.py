@@ -97,23 +97,24 @@ class MdbUtils():
 
 
 class WebTestSession:
-    def __init__(self, url=None, browser=None):
+    def __init__(self, url=None, browser=None, useBrowser=True):
         self.url = url
         self.result_id = None
         self.test_name = None
         self.group = None
         self.__mongo__ = MdbUtils()
 
-        if browser is None:
-            browser = AvaliableBrowsers.Chrome
+        if useBrowser:
+            if browser is None:
+                browser = AvaliableBrowsers.Chrome
 
-        if browser == AvaliableBrowsers.Chrome:
-            self.drv = webdriver.Chrome()
-        else:
-            self.drv = webdriver.Firefox()
+            if browser == AvaliableBrowsers.Chrome:
+                self.drv = webdriver.Chrome()
+            else:
+                self.drv = webdriver.Firefox()
 
-        self.drv.set_window_size(1900,1020)
-        self.drv.implicitly_wait(5)
+            self.drv.set_window_size(1900,1020)
+            self.drv.implicitly_wait(5)
 
 
     def set_main_page(self,q):

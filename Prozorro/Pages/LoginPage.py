@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
+from Prozorro.Utils import waitFadeIn
 
 
 class LoginPage:
@@ -117,6 +118,7 @@ class LoginPage:
     def login(self, login, password):
         self.txtLogin.send_keys(login)
         self.txtPassword.send_keys(password)
+        waitFadeIn(self.drv)
         self.btnLogin.click()
 
     def set_ua(self):

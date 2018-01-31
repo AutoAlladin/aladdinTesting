@@ -1,26 +1,23 @@
 import requests
 import json
-import unittest
-import HtmlTestRunner
 
 from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
-
+from Aladdin.Accounting.decorators.StoreTestResult import add_res_to_DB
 
 
 class TestByBilling(ParamsTestCase):
-    def test_01_get_balance_positive(self):
-        par = self.parent_suite.parent_suite["par"]["test_01"]
-        req = requests.get("http://192.168.95.153:91/api/balance", params=par)
-        self.assertEqual(req.status_code, 200)
 
+    @add_res_to_DB(test_name='Получить баланс')
+    def test_01_get_balance_positive(self, ):
+        par = self.parent_suite.suite_params["par"]["test_01"]
+        req = requests.get("http://192.168.95.153:91/api/balance", params=par)
+        self.assertEqual(req.status_code, 200,"")
 
         print(req.url)
         print(req.status_code)
-        #print(req.text)
-
 
     def test_02_get_balance_acc_negative(self):
-        par = self.parent_suite.parent_suite["par"]["test_02"]
+        par = self.parent_suite.suite_params["par"]["test_02"]
         req = requests.get("http://192.168.95.153:91/api/balance", params=par)
         self.assertNotEquals(req.status_code, 200, 201)
         self.assertEqual(req.status_code, 400)
@@ -30,7 +27,7 @@ class TestByBilling(ParamsTestCase):
         #print(req.text)
 
     def test_03_get_balance_without_guid_negative(self):
-        par = self.parent_suite.parent_suite["par"]["test_03"]
+        par = self.parent_suite.suite_params["par"]["test_03"]
         req = requests.get("http://192.168.95.153:91/api/balance", params=par)
         self.assertNotEquals(req.status_code, 200, 201)
         self.assertEqual(req.status_code, 400)
@@ -40,7 +37,7 @@ class TestByBilling(ParamsTestCase):
         #print(req.text)
 
     def test_04_reserve_balance_positive(self):
-        par = self.parent_suite.parent_suite["par"]["test_04"]
+        par = self.parent_suite.suite_params["par"]["test_04"]
         req = requests.post("http://192.168.95.153:91/api/balance/Reserve", data=json.dumps(par), headers={"content-type": "application/json"})
         self.assertEqual(req.status_code, 200)
 
