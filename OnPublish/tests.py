@@ -338,7 +338,7 @@ def s_billing_metods(g, t, cmbro):
     suite.addTest(TestByBilling("test_03_get_balance_without_guid_negative", _params=qqq))
     suite.addTest(TestByBilling("test_04_reserve_balance_positive", _params=qqq))
     suite.addTest(TestByBilling("test_05_reserve_balance_tender_id_is_null_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_06_reserve_balance_total_money_is_zero_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_06_reserve_balance_total_money_is_zero_positive", _params=qqq))
     suite.addTest(TestByBilling("test_07_return_monies_positive", _params=qqq))
     suite.addTest(TestByBilling("test_08_return_monies_tender_is_null_negative", _params=qqq))
     suite.addTest(TestByBilling("test_09_return_monies_error_negative", _params=qqq))

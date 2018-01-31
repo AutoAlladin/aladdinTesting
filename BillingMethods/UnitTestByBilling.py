@@ -9,7 +9,7 @@ from Aladdin.Accounting.decorators.StoreTestResult import add_res_to_DB
 class TestByBilling(ParamsTestCase):
     @add_res_to_DB(test_name='get_balance_positive')
     def test_01_get_balance_positive(self):
-        par = self.parent_suite.parent_suite["par"]["test_01"]
+        par = self.parent_suite.suite_params["par"]["test_01"]
         req = requests.get("http://192.168.95.153:91/api/balance", params=par)
         self.assertEqual(req.status_code, 200, "")
 
