@@ -169,6 +169,7 @@ class TestByBilling(ParamsTestCase):
         self.assertNotEquals(req.status_code, 200, 201)
         self.assertEqual(req.status_code, 400)
 
+
 # if __name__ == '__main__':
 #     utb = TestByBilling()
 #     utb.test_01_get_balance_positive()
