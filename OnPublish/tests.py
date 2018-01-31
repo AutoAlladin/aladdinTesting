@@ -161,6 +161,17 @@ billing_methods_json = {
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
+    "test_17_1": {
+        "tenderId": 26285,
+        "lotId": 11,
+        "amount": 1000.0,
+        "currency": "ГРН",
+        "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
+        "totalMoney": 511.5,
+        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
+        "siteType": "1"
+    },
     "test_17": {
         "tenderId": 26285,
         "lotId": 11,
@@ -184,9 +195,8 @@ billing_methods_json = {
         "siteType": "1"
     },
     "test_19": {
-        "tenderId": 26285,
         "lotId": 11,
-        "amount": 1000.0,  # передача json без currency
+        "amount": 1000.0,  # передача json без currency, tenderId
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
         "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
@@ -330,7 +340,7 @@ def s_billing_metods(g, t, cmbro):
     suite = ParamsTestSuite(
                 _params={"result_id": qqq["wts"].result_id,
                          "DB": qqq["wts"].__mongo__,
-                         "par": json
+                         "par": billing_methods_json
                          }
     )
 
@@ -375,7 +385,7 @@ def s_publish_test(g, t, cmbro):
     suite = ParamsTestSuite(_params={
                 "result_id": qqq["wts"].result_id,
                 "DB": qqq["wts"].__mongo__,
-                "par" : billing_methods_json
+                "par": billing_methods_json
 
     })
 
