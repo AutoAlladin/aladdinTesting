@@ -24,7 +24,7 @@ billing_methods_json = {
         "companyUuid": ""
     },
     "test_04": {
-        "tenderId": 26285,
+        "tenderId": 26287,
         "lotId": 11,
         "amount": 1000.0,
         "currency": "ГРН",
@@ -90,7 +90,7 @@ billing_methods_json = {
         "siteType": "1"
     },
     "test_09_1": {
-        "tenderId": 26285,
+        "tenderId": 26284,
         "lotId": 11,
         "amount": 1000.0,
         "currency": "ГРН",
@@ -110,6 +110,17 @@ billing_methods_json = {
         "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
+    },
+     "test_10_1": {
+         "tenderId": 26285,
+         "lotId": 1,
+         "amount": 1000.0,
+         "currency": "ГРН",
+         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
+         "totalMoney": 511.5,
+         "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
+         "siteType": "1"
     },
     "test_10": {
         "amount": 1000.0, #передача json без lotId, tenderId

@@ -46,6 +46,7 @@ class TestByBilling(ParamsTestCase):
         par["siteType"] = self.params["siteType"]
         req = requests.post("http://192.168.95.153:91/api/balance/Reserve", data=json.dumps(par), headers={"content-type": "application/json"})
         self.assertEqual(req.status_code, 200, "Метод Reserve не отработал. Средства не зарезервировались")
+        print(par["siteType"])
 
         # print(req.url)
         # print(req.status_code)
