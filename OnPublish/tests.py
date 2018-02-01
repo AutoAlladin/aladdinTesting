@@ -15,13 +15,13 @@ from billing_UI.Billing import BalanceAfterBid
 
 billing_methods_json = {
     "test_01": {
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b"
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b"
     },
     "test_02": {
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad7400"
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad7400"
     },
     "test_03": {
-        "companyUuid": ""
+        "edrpo": ""
     },
     "test_04": {
         "tenderId": 26287,
@@ -30,7 +30,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -41,7 +41,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -52,7 +52,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "0bc3cdd5-11c7-4aa6-a249-591c0b197f24",  # учетка с нулевым балансом
+        "edrpo": "0bc3cdd5-11c7-4aa6-a249-591c0b197f24",  # учетка с нулевым балансом
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -63,7 +63,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -74,7 +74,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -85,7 +85,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -96,7 +96,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -107,7 +107,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -118,7 +118,7 @@ billing_methods_json = {
          "currency": "ГРН",
          "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
          "totalMoney": 511.5,
-         "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+         "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
          "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
          "siteType": "1"
     },
@@ -127,7 +127,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -138,7 +138,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -149,7 +149,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -158,7 +158,7 @@ billing_methods_json = {
         "amount": "1000.0",
         "currency": "ГРН",  # отправка json без totalMoney, tenderId
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -169,7 +169,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -180,7 +180,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -191,7 +191,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": ""
     },
@@ -201,7 +201,7 @@ billing_methods_json = {
         "amount": 1000.0,
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
-        "totalMoney": 511.5,  # передача json без companyUuid
+        "totalMoney": 511.5,  # передача json без edrpo
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -212,7 +212,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -223,7 +223,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -234,7 +234,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -243,7 +243,7 @@ billing_methods_json = {
         "amount": 1000.0,  # передача json без currency, tenderId
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     }
