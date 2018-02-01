@@ -11,6 +11,7 @@ from Aladdin.Billing.CreateAccount import *
 from BillingMethods.UnitTestByBilling import TestByBilling
 from OnPublish.MainPage.load_main_page import Load_main_page, Tender_Tab
 from OnPublish.MainPage.login_page import Login_page
+from OnPublish.Procedures.below import Test_Below
 from billing_UI.Billing import BalanceAfterBid
 
 billing_methods_json = {
@@ -473,10 +474,12 @@ def s_publish_test(g, t, cmbro):
 
     #dbid = 20
     qqq = s_publish_test_init(cmbro)
+
     suite = ParamsTestSuite(_params={
                 "result_id": qqq["wts"].result_id,
                 "DB": qqq["wts"].__mongo__,
-                "par": billing_methods_json
+                "par": billing_methods_json,
+                "tender_json": qqq["wts"].__mongo__.get_ui_test_params(22)
 
     })
 
@@ -543,6 +546,21 @@ def s_publish_test(g, t, cmbro):
 
     suite.addTest(Login_page("open_register_form", _params=qqq))
     suite.addTest(Login_page("open_restore_password", _params=qqq))
+
+    suite.addTest(Test_Below("create_menu", _params=qqq))
+    suite.addTest(Test_Below("select_below_menu", _params=qqq))
+    suite.addTest(Test_Below("set_description", _params=qqq))
+    suite.addTest(Test_Below("set_curr", _params=qqq))
+    suite.addTest(Test_Below("set_multilot", _params=qqq))
+    suite.addTest(Test_Below("set_dates", _params=qqq))
+    suite.addTest(Test_Below("add_lot", _params=qqq))
+    suite.addTest(Test_Below("add_item", _params=qqq))
+    suite.addTest(Test_Below("add_features", _params=qqq))
+    suite.addTest(Test_Below("add_doc", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url_edit", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url_delete", _params=qqq))
+    suite.addTest(Test_Below("create_below_publish", _params=qqq))
 
     suite.addTest(TestByBilling("test_01_get_balance_positive", _params=qqq))
     suite.addTest(TestByBilling("test_02_get_balance_acc_negative", _params=qqq))
