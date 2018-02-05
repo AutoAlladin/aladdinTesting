@@ -80,10 +80,10 @@ class Load_main_page(ParamsTestCase):
             check((By.XPATH, ".//*[@id='sumOfTenders']/div"), "Бюджет тендера".upper())
             check((By.XPATH, ".//*[@id='filterblock']/li[6]/div[1]/div"), "Фільтр по датам".upper())
             check((By.XPATH, ".//*[@id='ownerOfTenders']/div"), "Організатор торгів".upper())
-            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[1]/h2"), "Aladdin Government закупівлі")
-            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[1]/label"), "Активні")
-            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[2]/label"), "Завершені")
-            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[3]/label"), "Архівні")
+            check((By.XPATH, ".//*[@id='applicationNameTitle']"), "Aladdin Government закупівлі")
+            check((By.XPATH, ".//*[@id='topActiveStatusLabel']"), "Активні")
+            check((By.XPATH, ".//*[@id='topOverStatusLabel']"), "Завершені")
+            check((By.XPATH, ".//*[@id='topArchiveStatusLabel']"), "Архівні")
             check((By.ID, "clear_all"), "Очистити")
 
     #страница загружена, есть хотя бы один тендер на странице

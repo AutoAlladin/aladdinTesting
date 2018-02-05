@@ -1,5 +1,6 @@
 import unittest
 import sys
+from copy import deepcopy
 from optparse import make_option, OptionParser
 
 import xmlrunner
@@ -16,22 +17,22 @@ from billing_UI.Billing import BalanceAfterBid
 
 billing_methods_json = {
     "test_01": {
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b"
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b"
     },
     "test_02": {
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad7400"
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad7400"
     },
     "test_03": {
-        "companyUuid": ""
+        "edrpo": ""
     },
     "test_04": {
-        "tenderId": 26285,
+        "tenderId": 26287,
         "lotId": 11,
         "amount": 1000.0,
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -42,7 +43,7 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -53,7 +54,18 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "0bc3cdd5-11c7-4aa6-a249-591c0b197f24",  # учетка с нулевым балансом
+        "edrpo": "0bc3cdd5-11c7-4aa6-a249-591c0b197f24",  # учетка с нулевым балансом
+        "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
+        "siteType": "1"
+    },
+    "test_07_1": {
+        "tenderId": 26285,
+        "lotId": 11,
+        "amount": 1000.0,
+        "currency": "ГРН",
+        "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
+        "totalMoney": 511.5,
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
@@ -64,94 +76,115 @@ billing_methods_json = {
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
-    "test_08": {
-        "tenderId": 0,
+    "test_08":{
+        "tenderId": 26987,
         "lotId": 11,
         "amount": 1000.0,
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
+        "siteType": "1"
+    },
+    "test_09_1": {
+        "tenderId": 26284,
+        "lotId": 11,
+        "amount": 1000.0,
+        "currency": "ГРН",
+        "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
+        "totalMoney": 511.5,
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
     "test_09": {
-        "tenderId": 26285,
-        "amount": 1000.0,
-        "currency": "ГРН",
-        "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
-        "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
-        "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
-        "siteType": "1"
-    },
-    "test_10": {
-        "tenderId": 26285,
+        "tenderId": 0,
         "lotId": 11,
         "amount": 1000.0,
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
+        "siteType": "1"
+    },
+     "test_10_1": {
+         "tenderId": 26285,
+         "lotId": 1,
+         "amount": 1000.0,
+         "currency": "ГРН",
+         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
+         "totalMoney": 511.5,
+         "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
+         "siteType": "1"
+    },
+    "test_10": {
+        "amount": 1000.0, #передача json без lotId, tenderId
+        "currency": "ГРН",
+        "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
+        "totalMoney": 511.5,
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
     "test_11": {
-        "tenderId": 0,
+        "tenderId": 26285,
         "lotId": 11,
         "amount": 1000.0,
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
     "test_12": {
-        "lotId": "11",
-        "amount": "1000.0",
-        "currency": "ГРН",  # отправка json без totalMoney, tenderId
-        "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
-        "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
-        "siteType": "1"
-    },
-    "test_13": {
-        "tenderId": 26285,
-        "lotId": 11,
-        "amount": 1000.0,
-        "currency": "ГРН",
-        "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
-        "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
-        "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
-        "siteType": "1"
-    },
-    "test_14": {
         "tenderId": 0,
         "lotId": 11,
         "amount": 1000.0,
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
-    "test_15": {
+    "test_13": {
+        "lotId": "11",
+        "amount": "1000.0",
+        "currency": "ГРН",  # отправка json без totalMoney, tenderId
+        "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
+        "siteType": "1"
+    },
+    "test_14": {
         "tenderId": 26285,
         "lotId": 11,
         "amount": 1000.0,
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
-        "siteType": ""
+        "siteType": "1"
+    },
+    "test_15": {
+        "tenderId": 0,
+        "lotId": 11,
+        "amount": 1000.0,
+        "currency": "ГРН",
+        "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
+        "totalMoney": 511.5,
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
+        "siteType": "1"
     },
     "test_16": {
         "tenderId": 26285,
@@ -159,20 +192,10 @@ billing_methods_json = {
         "amount": 1000.0,
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
-        "totalMoney": 511.5,  # передача json без companyUuid
-        "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
-        "siteType": "1"
-    },
-    "test_17_1": {
-        "tenderId": 26285,
-        "lotId": 11,
-        "amount": 1000.0,
-        "currency": "ГРН",
-        "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
-        "siteType": "1"
+        "siteType": ""
     },
     "test_17": {
         "tenderId": 26285,
@@ -180,28 +203,49 @@ billing_methods_json = {
         "amount": 1000.0,
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
+        "totalMoney": 511.5,  # передача json без edrpo
+        "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
+        "siteType": "1"
+    },
+    "test_18_1": {
+        "tenderId": 26285,
+        "lotId": 11,
+        "amount": 1000.0,
+        "currency": "ГРН",
+        "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
     "test_18": {
+        "tenderId": 26285,
+        "lotId": 11,
+        "amount": 1000.0,
+        "currency": "ГРН",
+        "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
+        "totalMoney": 511.5,
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
+        "siteType": "1"
+    },
+    "test_19": {
         "tenderId": 0,
         "lotId": 11,
         "amount": 1000.0,
         "currency": "ГРН",
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     },
-    "test_19": {
+    "test_20": {
         "lotId": 11,
         "amount": 1000.0,  # передача json без currency, tenderId
         "descriptions": "Тендер: Соль таблетированная 22 000 кг. Лот №1 Позиції: Сіль таблетована   ",
         "totalMoney": 511.5,
-        "companyUuid": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
+        "edrpo": "68a14f2a-c5a2-4a76-9d86-88c2ffad742b",
         "serviceIdentifierUuid": "00e525f3-420b-4d76-b538-d0efc7957cd2",
         "siteType": "1"
     }
@@ -331,8 +375,9 @@ def s_billing_metods(g, t, cmbro):
                         "version": "0.0.0.1",
                         "group": g}
                 },
-              'test_name': t,
-              'wts': WebTestSession(useBrowser=False)
+                'test_name': t,
+                'wts': WebTestSession(useBrowser=False),
+                "siteType": '1'
               }
 
         return qa
@@ -353,18 +398,64 @@ def s_billing_metods(g, t, cmbro):
     suite.addTest(TestByBilling("test_05_reserve_balance_tender_id_is_null_negative", _params=qqq))
     suite.addTest(TestByBilling("test_06_reserve_balance_total_money_is_zero_positive", _params=qqq))
     suite.addTest(TestByBilling("test_07_return_monies_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_08_return_monies_tender_is_null_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_09_return_monies_error_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_10_return_monies_by_company_uuid_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_11_return_monies_by_company_uuid_tender_is_null_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_12_return_monies_by_company_uuid_error_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_13_write_off_money_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_14_write_off_money_tender_is_null_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_15_write_off_money_site_type_not_found_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_16_write_off_money_error_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_17_cancel_reserve_money_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_18_cancel_reserve_money_tender_id_is_null_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_19_cancel_reserve_money_error_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_08_return_monies_without_reserve_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_09_return_monies_tender_is_null_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_10_return_monies_error_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_11_return_monies_by_company_uuid_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_12_return_monies_by_company_uuid_tender_is_null_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_13_return_monies_by_company_uuid_error_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_14_write_off_money_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_15_write_off_money_tender_is_null_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_16_write_off_money_site_type_not_found_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_17_write_off_money_error_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_18_cancel_reserve_money_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_19_cancel_reserve_money_tender_id_is_null_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_20_cancel_reserve_money_error_negative", _params=qqq))
+
+    qqq2={"query": { "q": {
+                        "name": "billing_metods",
+                        "version": "0.0.0.1",
+                        "group": g}
+                },
+                'test_name': t,
+                'wts': WebTestSession(useBrowser=False),
+                "siteType": '2'
+              }
+
+    suite.addTest(TestByBilling("test_04_reserve_balance_positive", _params=qqq2))
+    suite.addTest(TestByBilling("test_05_reserve_balance_tender_id_is_null_negative", _params=qqq2))
+    suite.addTest(TestByBilling("test_06_reserve_balance_total_money_is_zero_positive", _params=qqq2))
+    suite.addTest(TestByBilling("test_07_return_monies_positive", _params=qqq2))
+    suite.addTest(TestByBilling("test_08_return_monies_without_reserve_negative", _params=qqq2))
+    suite.addTest(TestByBilling("test_09_return_monies_tender_is_null_negative", _params=qqq2))
+    suite.addTest(TestByBilling("test_10_return_monies_error_negative", _params=qqq2))
+    suite.addTest(TestByBilling("test_11_return_monies_by_company_uuid_positive", _params=qqq2))
+    suite.addTest(TestByBilling("test_12_return_monies_by_company_uuid_tender_is_null_negative", _params=qqq2))
+    suite.addTest(TestByBilling("test_13_return_monies_by_company_uuid_error_negative", _params=qqq2))
+    suite.addTest(TestByBilling("test_14_write_off_money_positive", _params=qqq2))
+    suite.addTest(TestByBilling("test_15_write_off_money_tender_is_null_negative", _params=qqq2))
+    suite.addTest(TestByBilling("test_16_write_off_money_site_type_not_found_negative", _params=qqq2))
+    suite.addTest(TestByBilling("test_17_write_off_money_error_negative", _params=qqq2))
+    suite.addTest(TestByBilling("test_18_cancel_reserve_money_positive", _params=qqq2))
+    suite.addTest(TestByBilling("test_19_cancel_reserve_money_tender_id_is_null_negative", _params=qqq2))
+    suite.addTest(TestByBilling("test_20_cancel_reserve_money_error_negative", _params=qqq2))
+
+
+    qqq3={"query": { "q": {
+                        "name": "billing_metods",
+                        "version": "0.0.0.1",
+                        "group": g}
+                },
+                'test_name': t,
+                'wts': WebTestSession(useBrowser=False),
+                "siteType": '2'
+              }
+
+    suite.addTest(TestByBilling("test_14_write_off_money_positive", _params=qqq3))
+    suite.addTest(TestByBilling("test_15_write_off_money_tender_is_null_negative", _params=qqq3))
+    suite.addTest(TestByBilling("test_16_write_off_money_site_type_not_found_negative", _params=qqq3))
+    suite.addTest(TestByBilling("test_17_write_off_money_error_negative", _params=qqq3))
+
 
     return suite
 
@@ -445,7 +536,6 @@ def s_publish_test(g, t, cmbro):
     suite.addTest(Test_Below("open_draft_by_url", _params=qqq))
     suite.addTest(Test_Below("open_draft_by_url_edit", _params=qqq))
     suite.addTest(Test_Below("open_draft_by_url_delete", _params=qqq))
-
     suite.addTest(Test_Below("create_below_publish", _params=qqq))
 
     suite.addTest(Below_Bid("login_provider", _params=qqq))
