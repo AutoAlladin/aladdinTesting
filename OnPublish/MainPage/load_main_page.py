@@ -281,7 +281,7 @@ class Tender_Tab(TabTest):
                 self.log("заголовок ОК - "+title.text)
 
             with self.subTest("название заказчика первого тендера в списке"):
-                owner_name = one_tender.find_element_by_xpath("//div[contains(@ng-click,'clickOnCompanyInfo')]")
+                owner_name = one_tender.find_element_by_xpath("//small[contains(@id,'companyName')]")
                 self.assertIsNotNone(owner_name, "Элемент owner_name не найден")
                 self.log("название закупщика ОК - "+owner_name.text)
 
@@ -315,9 +315,9 @@ class Tender_Tab(TabTest):
         id_findbykeywords='findbykeywords'
         id_butSimpleSearch='butSimpleSearch'
         id_clear_all="clear_all"
-        xpath_activ="//span[@class='check-wrap']/input[@id='topStatus3']/../label"
-        xpath_done="//span[@class='check-wrap']/input[@id='topStatus5']/../label"
-        xpath_archive="//span[@class='check-wrap']/input[@id='topStatus4']/../label"
+        xpath_activ="//span[@id='topActiveStatusWrap']"
+        xpath_done="//span[@id='topOverStatusWrap']"
+        xpath_archive="//span[@id='topArchiveStatusWrap']"
         id_excell="IdExportExcelButton"
         xpath_page_total="//div[contains(@class,'pager-total')]/span"
 

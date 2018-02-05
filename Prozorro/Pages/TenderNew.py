@@ -32,11 +32,11 @@ class TenderNew:
         try:
             waitFadeIn(self.drv)
             publishPurchase = self.drv.find_element_by_id("publishPurchase")
+
             waitFadeIn(self.drv)
             publishPurchase.click()
 
             waitFadeIn(self.drv)
-
             WebDriverWait(self.drv, 120).until(EC.visibility_of_element_located((By.ID, "purchaseProzorroId")))
             purchaseProzorroId = self.drv.find_element_by_id("purchaseProzorroId")
             print(self.drv.current_url)
@@ -306,6 +306,8 @@ class TenderNew:
                         (By.ID, "upload_document")
                     )
                 )
+
+                waitFadeIn(self.drv)
                 upload_document.click()
 
                 WebDriverWait(self.drv, 20).until(

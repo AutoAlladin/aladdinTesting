@@ -16,12 +16,14 @@ class Test_Below(ParamsTestCase):
 
     @add_res_to_DB(test_name="Меню создания тендеров")
     def create_menu(self):
-        self.wts.drv.get('https://test-gov.ald.in.ua/Account/Login')
+
+        url = self.parent_suite.suite_params["start_url"]
+        self.wts.drv.get(url)
 
         with self.subTest("авторизация"):
             LoginPage(self.wts.drv).login(
-                self.parent_suite.suite_params["authorization"]["owner_login"],
-                self.parent_suite.suite_params["authorization"]["owner_password"]
+                self.parent_suite.suite_params["tender_json"]["authorization"]["owner_login"],
+                self.parent_suite.suite_params["tender_json"]["authorization"]["owner_password"]
             )
 
         with self.subTest("меню создать"):
@@ -222,25 +224,28 @@ class Test_Below(ParamsTestCase):
         self.select_below_menu_F()
         dic = self.parent_suite.suite_params["tender_json"]
 
+        l=0
+        i=1
+
         TenderNew(self.wts.drv). \
-            set_description(dic, "XXX"). \
+            set_description(dic, "Для подачі пропозицій "). \
             set_curr(). \
-            set_multilot(dic, "true"). \
+            set_multilot(dic, "false"). \
             set_dates(dic). \
             click_next_button(). \
-            add_lot(1, dic). \
-            add_item(dic, 1, 1). \
+            add_lot(l, dic). \
+            add_item(dic,  lot=l, item=i). \
             click_next_button(). \
-            add_features(dic, 1, 2). \
+            add_features(dic, lots=l , items=i). \
             add_doc(1). \
             click_finish_edit_button(). \
             click_publish_button()
 
         tenderGUD = WebDriverWait(self.wts.drv, 25).until(
             expected_conditions.visibility_of_element_located(
-                (By.ID, "purchaseGuid"))).text
+                (By.ID, "purchaseProzorroId"))).text
 
-        self.parent_suite.suite_params.update({"tenderGUID": tenderGUD})
+        self.parent_suite.suite_params.update({"ProzorroId": tenderGUD})
         self.log(tenderGUD)
 
 

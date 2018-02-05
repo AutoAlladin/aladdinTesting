@@ -12,7 +12,7 @@ class bid:
         self.drv = _drv
         #self.drv = webdriver.Chrome(_drv)
 
-    def new(self,prepare,uaid=""):
+    def new(self,prepare=0,uaid=""):
 
         try:
             try:

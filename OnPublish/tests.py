@@ -11,6 +11,7 @@ from BillingMethods.UnitTestByBilling import TestByBilling
 from OnPublish.MainPage.load_main_page import Load_main_page, Tender_Tab
 from OnPublish.MainPage.login_page import Login_page
 from OnPublish.Procedures.below import Test_Below
+from OnPublish.Procedures.bid import Below_Bid
 from billing_UI.Billing import BalanceAfterBid
 
 billing_methods_json = {
@@ -392,49 +393,26 @@ def s_publish_test(g, t, cmbro):
 
     })
 
-    suite.suite_params.update({
-        "authorization": {
-            "owner_login": "aladdin.for.test+owner@gmail.com",
-            "owner_password": "zxcvbn00",
-            "provider_login": "aladdin.for.test+provider@gmail.com",
-            "provider_password": "123123"
-        },
-        "lang": {
-            "ru": {"greeting": "Добро пожаловать на Aladdin Government",
-                   "label_for_email": "Электронная почта",
-                   "label_for_password": "Пароль",
-                   "msg_email": "Ваше уникальное имя пользователя",
-                   "msg_password": "Пароль",
-                   "remember_me_label": "Запомнить меня?",
-                   "remember_me_private": "(если это частный компьютер)",
-                   "btnLogin": "Вход",
-                   "register": "Регистрация",
-                   "restorePass": "Забыли пароль ?"
-                   },
-            "ua": {"greeting": "Ласкаво просимо до Aladdin Government",
-                   "label_for_email": "Електронна пошта",
-                   "label_for_password": "Пароль",
-                   "msg_email": "Ваше унікальне ім'я користувача",
-                   "msg_password": "Пароль",
-                   "remember_me_label": "Запам'ятати мене?",
-                   "remember_me_private": "(якщо це приватний комп'ютер)",
-                   "btnLogin": "Вхід",
-                   "register": "Реєстрація",
-                   "restorePass": "Забули пароль ?"
-                   },
-            "en": {"greeting": "Welcome to Aladdin Government",
-                   "label_for_email": "E-mail",
-                   "label_for_password": "Password",
-                   "msg_email": "Your unique username to app",
-                   "msg_password": "Password",
-                   "remember_me_label": "Remember me?",
-                   "remember_me_private": "(if this is a private computer)",
-                   "btnLogin": "Login",
-                   "register": "Registration",
-                   "restorePass": "Forgot password ?"
-                   }
-        }
-    })
+    suite.addTest(TestByBilling("test_01_get_balance_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_02_get_balance_acc_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_03_get_balance_without_guid_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_04_reserve_balance_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_05_reserve_balance_tender_id_is_null_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_06_reserve_balance_total_money_is_zero_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_07_return_monies_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_08_return_monies_tender_is_null_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_09_return_monies_error_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_10_return_monies_by_company_uuid_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_11_return_monies_by_company_uuid_tender_is_null_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_12_return_monies_by_company_uuid_error_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_13_write_off_money_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_14_write_off_money_tender_is_null_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_15_write_off_money_site_type_not_found_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_16_write_off_money_error_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_17_cancel_reserve_money_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_18_cancel_reserve_money_tender_id_is_null_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_19_cancel_reserve_money_error_negative", _params=qqq))
+
 
     suite.addTest(Load_main_page("page_loaded", _params=qqq ))
     suite.addTest(Load_main_page("menu_presented", _params=qqq))
@@ -467,27 +445,15 @@ def s_publish_test(g, t, cmbro):
     suite.addTest(Test_Below("open_draft_by_url", _params=qqq))
     suite.addTest(Test_Below("open_draft_by_url_edit", _params=qqq))
     suite.addTest(Test_Below("open_draft_by_url_delete", _params=qqq))
+
     suite.addTest(Test_Below("create_below_publish", _params=qqq))
 
-    suite.addTest(TestByBilling("test_01_get_balance_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_02_get_balance_acc_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_03_get_balance_without_guid_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_04_reserve_balance_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_05_reserve_balance_tender_id_is_null_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_06_reserve_balance_total_money_is_zero_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_07_return_monies_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_08_return_monies_tender_is_null_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_09_return_monies_error_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_10_return_monies_by_company_uuid_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_11_return_monies_by_company_uuid_tender_is_null_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_12_return_monies_by_company_uuid_error_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_13_write_off_money_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_14_write_off_money_tender_is_null_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_15_write_off_money_site_type_not_found_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_16_write_off_money_error_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_17_cancel_reserve_money_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_18_cancel_reserve_money_tender_id_is_null_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_19_cancel_reserve_money_error_negative", _params=qqq))
+    suite.addTest(Below_Bid("login_provider", _params=qqq))
+    suite.addTest(Below_Bid("select_below_type", _params=qqq))
+    suite.addTest(Below_Bid("select_tender_period", _params=qqq))
+    suite.addTest(Below_Bid("find_tender_for_bid", _params=qqq))
+    suite.addTest(Below_Bid("wait_for_tender_period", _params=qqq))
+    suite.addTest(Below_Bid("add_bid", _params=qqq))
 
     return suite
 

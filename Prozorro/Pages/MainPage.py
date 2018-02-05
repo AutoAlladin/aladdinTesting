@@ -36,9 +36,6 @@ class MainPage:
                 (By.CLASS_NAME, "content"), "Aladdin Government закупівлі"))
         waitFadeIn(self.drv)
 
-
-
-
     def open_reg_form(self):
         waitFadeIn(self.drv)
         #self.liLoginNoAuthenticated.click()
@@ -92,8 +89,6 @@ class MainPage:
         WebDriverWait(self.drv, 2).until(
             EC.visibility_of_element_located((By.ID, "goToListPurchase")))
         return TenderView(self.drv)
-
-
 
     def create_tender(self, procurementMethodType, lots=0, items=1, docs=0, features=0,
                       dic=None, nom="", log=None):

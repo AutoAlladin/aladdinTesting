@@ -1,6 +1,3 @@
-# страница загружена, есть хотя бы один тендер на странице
-from time import sleep
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
@@ -59,19 +56,19 @@ class Login_page(ParamsTestCase):
             
         with self.subTest("русский интерфейс"):
             lform = lform.set_ru()
-            dic = self.parent_suite.suite_params["lang"]["ru"]
+            dic = self.parent_suite.suite_params["tender_json"]["lang"]["ru"]
             set_elements(dic)
             self.log_subtest_res("Русский интекрфейс OK")
 
         with self.subTest("английский интерфейс"):
             lform = lform.set_en()
-            dic = self.parent_suite.suite_params["lang"]["en"]
+            dic = self.parent_suite.suite_params["tender_json"]["lang"]["en"]
             set_elements(dic)
             self.log_subtest_res("Английский интерфейс OK")
 
         with self.subTest("украинский интерфейс"):
             lform = lform.set_ua()
-            dic = self.parent_suite.suite_params["lang"]["ua"]
+            dic = self.parent_suite.suite_params["tender_json"]["lang"]["ua"]
             set_elements(dic)
             self.log_subtest_res("Украинский интерфейс OK")
 
@@ -95,8 +92,8 @@ class Login_page(ParamsTestCase):
     def login_owner(self):
 
         lform =  self.parent_suite.suite_params["login_form"]
-        login = self.parent_suite.suite_params["authorization"]["owner_login"]
-        password = self.parent_suite.suite_params["authorization"]["owner_password"]
+        login = self.parent_suite.suite_params["tender_json"]["authorization"]["owner_login"]
+        password = self.parent_suite.suite_params["tender_json"]["authorization"]["owner_password"]
 
         with self.subTest("авторизация"):
             lform.login(login, password)
@@ -120,9 +117,11 @@ class Login_page(ParamsTestCase):
 
     @add_res_to_DB(test_name="Авторизация поставщиком")
     def login_provider(self):
+        lform = None
         lform = self.parent_suite.suite_params["login_form"]
-        login = self.parent_suite.suite_params["authorization"]["provider_login"]
-        password = self.parent_suite.suite_params["authorization"]["provider_password"]
+
+        login = self.parent_suite.suite_params["tender_json"]["authorization"]["provider_login"]
+        password = self.parent_suite.suite_params["tender_json"]["authorization"]["provider_password"]
 
         with self.subTest("авторизация"):
             lform.login(login, password)
