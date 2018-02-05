@@ -152,7 +152,7 @@ def s_billing_metods(g, t, cmbro):
     suite = ParamsTestSuite(
                 _params={"result_id": qqq["wts"].result_id,
                          "DB": qqq["wts"].__mongo__,
-                         "par": billing_methods_json
+                         "tender_json": qqq["wts"].__mongo__.get_ui_test_params(22)
                          }
     )
 
