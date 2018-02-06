@@ -4,6 +4,7 @@ from copy import deepcopy
 from optparse import make_option, OptionParser
 
 import xmlrunner
+from bson import ObjectId
 
 from Aladdin.Accounting.AladdinUtils import WebTestSession, AvaliableBrowsers
 from Aladdin.Accounting.decorators.StoreTestResult import create_result_DB
@@ -150,10 +151,64 @@ def s_billing_metods(g, t, cmbro):
 
     #dbid = 18
     qqq = s_load_main_page_init(cmbro)
+
+    par = qqq["wts"].__mongo__.get_params(24)["par"]
+    # tenderId = par["tenderId"]
+    # tenderId += 1
+    # par["tenderId"] = tenderId
+
+    tenderId_04 = par["test_04"]["tenderId"]
+    tenderId_04 += 1
+    par["tenderId"] = tenderId_04
+
+
+    qqq["wts"].__mongo__.\
+        test_params.\
+        update_one({"_id": 24},
+                   {"$set": {"par.test_04.tenderId": tenderId_04}})
+
+
+
+    tenderId_07 = par["test_07"]["tenderId"]
+    tenderId_07 += 1
+    par["tenderId"] = tenderId_07
+
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_07.tenderId": tenderId_07}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_07_1.tenderId": tenderId_07}})
+
+
+
+    tenderId_09 = par["test_09_1"]["tenderId"]
+    tenderId_09 += 1
+    par["tenderId"] = tenderId_09
+
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_09_1.tenderId": tenderId_09}})
+
+
+
+    tenderId_10 = par["test_10_1"]["tenderId"]
+    tenderId_10 +=1
+    par["tenderId"] = tenderId_10
+
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_10_1.tenderId": tenderId_10}})
+
+
+
+    tenderId_18 = par["test_18_1"]["tenderId"]
+    tenderId_18 += 1
+    par["tenderId"] = tenderId_18
+
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_18.tenderId": tenderId_18}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_18_1.tenderId": tenderId_18}})
+
+
+
+
+
     suite = ParamsTestSuite(
                 _params={"result_id": qqq["wts"].result_id,
                          "DB": qqq["wts"].__mongo__,
-                         "tender_json": qqq["wts"].__mongo__.get_ui_test_params(22)
+                         "par":par
                          }
     )
 
