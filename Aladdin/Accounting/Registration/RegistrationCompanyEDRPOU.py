@@ -111,4 +111,4 @@ class RegistrationCompany(ParamsTestCase):
     def test_28_save(self):
         btn_save = self.wts.drv.find_element_by_id("btn_save_changes")
         btn_save.click()
-        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
+        #WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
