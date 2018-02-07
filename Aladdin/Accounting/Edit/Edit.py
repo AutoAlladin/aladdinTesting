@@ -28,28 +28,33 @@ class Edit(ParamsTestCase):
         #self.wts.drv.execute_script("window.scrollTo(0, 0);")
 
     def test_03_click_btn_edit(self):
-        self.wts.drv.execute_script("window.scrollBy(0, 1500);")
-        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
-        btn_edit = self.wts.drv.find_element_by_id("btn_edit")
+        #self.wts.drv.execute_script("window.scrollBy(0, 1500);")
+        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_edit_no_active")))
+        btn_edit = self.wts.drv.find_element_by_id("btn_edit_no_active")
         btn_edit.click()
 
     def test_04_clear_field_comp_name(self):
+        f_comp_name = self.wts.drv.find_element_by_id("nameUA")
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "nameUA")))
-        input_ELEMENT_IN_BROWSER_U_KOTOROGO_EST_METODY = self.wts.drv.find_element_by_id("nameUA")
-        #self.wts.drv.execute_script("window.scrollBy(0, 1500);")
-        test_KOTORYI_IZ_ELEMENTA_NET_METODA_SEND_KEYS = input_ELEMENT_IN_BROWSER_U_KOTOROGO_EST_METODY.get_attribute('value')
-        print("Текст, который находится в веб єлементе" + test_KOTORYI_IZ_ELEMENTA_NET_METODA_SEND_KEYS)
-        time.sleep(5)
-        le = len(test_KOTORYI_IZ_ELEMENTA_NET_METODA_SEND_KEYS)
-        deleter=""
-        for n in range(le):
-            deleter += Keys.BACK_SPACE
-        input_ELEMENT_IN_BROWSER_U_KOTOROGO_EST_METODY.send_keys(deleter)
-        time.sleep(1)
-        time.sleep(1)
-        #f_comp_name.clear()
-        #self.wts.drv.execute_script("$("#nameUA").val('');")
-        self.wts.drv.execute_script("#nameUA").val('');""
+        f_comp_name.clear()
+
+        #WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "nameUA")))
+        #input_ELEMENT_IN_BROWSER_U_KOTOROGO_EST_METODY = self.wts.drv.find_element_by_id("nameUA")
+        ####self.wts.drv.execute_script("window.scrollBy(0, 1500);")
+        #test_KOTORYI_IZ_ELEMENTA_NET_METODA_SEND_KEYS = input_ELEMENT_IN_BROWSER_U_KOTOROGO_EST_METODY.get_attribute('value')
+        #print("Текст, который находится в веб єлементе" + test_KOTORYI_IZ_ELEMENTA_NET_METODA_SEND_KEYS)
+        #time.sleep(5)
+        #le = len(test_KOTORYI_IZ_ELEMENTA_NET_METODA_SEND_KEYS)
+        #deleter=""
+        #for n in range(le):
+            #deleter += Keys.BACK_SPACE
+        #input_ELEMENT_IN_BROWSER_U_KOTOROGO_EST_METODY.send_keys(deleter)
+        #time.sleep(1)
+        #time.sleep(1)
+
+        ####self.wts.drv.execute_script("$("#nameUA").val('');")
+        ####self.wts.drv.execute_script("nameUA".val('');")
+        ####self.wts.drv.execute_script("#nameUA").val('');""
 
 
     def test_05_update_comp_name(self):
@@ -147,9 +152,12 @@ class Edit(ParamsTestCase):
 
     def test_23_click_btn_save_changes(self):
     #self.wts.drv.execute_script("window.scrollTo(0, 2500);")
-        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_save_changes")))
-        btn_s_changes = self.wts.drv.find_element_by_id("btn_save_changes")
-        btn_s_changes.click()
+        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable(
+            (By.XPATH, "//div[@class='form-actions']//button[contains(@class,'btn-success')]"))
+        )
+
+        btn_s_changes = self.wts.drv.find_element_by_xpath("//div[@class='form-actions']//button[contains(@class,'btn-success')]")
+        btn_s_changes[0].click()
         WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
 
     def test_24_click_tab_profile_tab_about(self):

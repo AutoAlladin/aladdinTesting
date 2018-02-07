@@ -191,7 +191,7 @@ def s_login_after_full_registration(g, cmd_bro):
     def s_login_after_full_registration_init(bro):
         qa = {"query": {"q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}},
               'test_name': 'UserRegistrationFormTest',
-              'login_url': 'https://192.168.80.169:44310/Account/Login',
+              'login_url': 'https://win-net-core:44320/account/login',
               'wts': WebTestSession(browser=bro)
               }
         if g is not None:
