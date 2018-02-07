@@ -9,6 +9,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 from Aladdin.Accounting.decorators.StoreTestResult import add_res_to_DB
+from Prozorro.Utils import waitFadeIn
+
 
 class TabTest(ParamsTestCase):
     def tab_visible(self):
@@ -40,7 +42,7 @@ class Load_main_page(ParamsTestCase):
             check((By.XPATH, ".//*[@id='navigation']/div/button[1]"), "Clear")
             check((By.XPATH, ".//*[@id='headingTwo']/div/span"), "Type of procedure".upper())
             check((By.XPATH, ".//*[@id='headingOne']/div"), "Stages".upper())
-            check((By.XPATH, ".//*[@id='headingThree']/div"), "Region".upper())
+            check((By.XPATH, ".//*[@id='headingThree']/div"), "Delivery region".upper())
             check((By.XPATH, ".//*[@id='dkHelpers']/div"), "Reference nomenclatures".upper())
             check((By.XPATH, ".//*[@id='sumOfTenders']/div"), "Budget of the tender".upper())
             check((By.XPATH, ".//*[@id='filterblock']/li[6]/div[1]/div"), "Filter by dates".upper())
@@ -56,7 +58,7 @@ class Load_main_page(ParamsTestCase):
             check((By.XPATH, ".//*[@id='navigation']/div/button[1]"), "Очистить")
             check((By.XPATH, ".//*[@id='headingTwo']/div/span"), "Тип процедуры".upper())
             check((By.XPATH, ".//*[@id='headingOne']/div"), "Этапы".upper())
-            check((By.XPATH, ".//*[@id='headingThree']/div"), "Регион".upper())
+            check((By.XPATH, ".//*[@id='headingThree']/div"), "Регион доставки".upper())
             check((By.XPATH, ".//*[@id='dkHelpers']/div"), "Справочник номенклатур".upper())
             check((By.XPATH, ".//*[@id='sumOfTenders']/div"), "Бюджет тендера".upper())
             check((By.XPATH, ".//*[@id='filterblock']/li[6]/div[1]/div"), "Фильтр по датам".upper())
@@ -73,15 +75,15 @@ class Load_main_page(ParamsTestCase):
             check((By.XPATH, ".//*[@id='navigation']/div/button[1]"), "Очистити")
             check((By.XPATH, ".//*[@id='headingTwo']/div/span"), "Тип процедури".upper())
             check((By.XPATH, ".//*[@id='headingOne']/div"), "Етапи".upper())
-            check((By.XPATH, ".//*[@id='headingThree']/div"), "Регіон".upper())
+            check((By.XPATH, ".//*[@id='headingThree']/div"), "Регіон доставки".upper())
             check((By.XPATH, ".//*[@id='dkHelpers']/div"), "Довідник номенклатур".upper())
             check((By.XPATH, ".//*[@id='sumOfTenders']/div"), "Бюджет тендера".upper())
             check((By.XPATH, ".//*[@id='filterblock']/li[6]/div[1]/div"), "Фільтр по датам".upper())
             check((By.XPATH, ".//*[@id='ownerOfTenders']/div"), "Організатор торгів".upper())
-            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[1]/h2"), "Aladdin Government закупівлі")
-            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[1]/label"), "Активні")
-            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[2]/label"), "Завершені")
-            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[3]/label"), "Архівні")
+            check((By.XPATH, ".//*[@id='applicationNameTitle']"), "Aladdin Government закупівлі")
+            check((By.XPATH, ".//*[@id='topActiveStatusLabel']"), "Активні")
+            check((By.XPATH, ".//*[@id='topOverStatusLabel']"), "Завершені")
+            check((By.XPATH, ".//*[@id='topArchiveStatusLabel']"), "Архівні")
             check((By.ID, "clear_all"), "Очистити")
 
     #страница загружена, есть хотя бы один тендер на странице
@@ -279,7 +281,7 @@ class Tender_Tab(TabTest):
                 self.log("заголовок ОК - "+title.text)
 
             with self.subTest("название заказчика первого тендера в списке"):
-                owner_name = one_tender.find_element_by_xpath("//div[contains(@ng-click,'clickOnCompanyInfo')]")
+                owner_name = one_tender.find_element_by_xpath("//small[contains(@id,'companyName')]")
                 self.assertIsNotNone(owner_name, "Элемент owner_name не найден")
                 self.log("название закупщика ОК - "+owner_name.text)
 
@@ -313,9 +315,9 @@ class Tender_Tab(TabTest):
         id_findbykeywords='findbykeywords'
         id_butSimpleSearch='butSimpleSearch'
         id_clear_all="clear_all"
-        xpath_activ="//span[@class='check-wrap']/input[@id='topStatus3']/../label"
-        xpath_done="//span[@class='check-wrap']/input[@id='topStatus5']/../label"
-        xpath_archive="//span[@class='check-wrap']/input[@id='topStatus4']/../label"
+        xpath_activ="//span[@id='topActiveStatusWrap']"
+        xpath_done="//span[@id='topOverStatusWrap']"
+        xpath_archive="//span[@id='topArchiveStatusWrap']"
         id_excell="IdExportExcelButton"
         xpath_page_total="//div[contains(@class,'pager-total')]/span"
 
@@ -408,6 +410,7 @@ class Tender_Tab(TabTest):
             button = WebDriverWait(self.wts.drv, 5).until(
                 expected_conditions.visibility_of_element_located((By.ID, id_excell)))
             self.assertIsNotNone(button, "Элемент id_excell не найден  " + id_excell)
+            waitFadeIn(self.wts.drv)
             button.click()
             self.log("Кнопка сохранения в ексель ОК - " + id_excell)
 

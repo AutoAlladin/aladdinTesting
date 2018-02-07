@@ -5,6 +5,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
+
+from Prozorro.Pages.UserRegForm import UserRegForm
 from Prozorro.Utils import waitFadeIn
 
 
@@ -110,10 +112,15 @@ class LoginPage:
             raise Exception("not restorePass found - btnForgotPassword")
 
 
-    def register(self):
-        pass
+    def open_register(self):
+        self.register.click()
+        WebDriverWait(self.drv, 10).until(
+            expected_conditions.visibility_of_element_located(
+                (By.XPATH, "//form[@action='/Account/Register']//button[@type='submit']")))
 
+        r = UserRegForm(self.drv)
 
+        return r
 
     def login(self, login, password):
         self.txtLogin.send_keys(login)

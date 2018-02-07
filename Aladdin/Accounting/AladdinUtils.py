@@ -95,6 +95,8 @@ class MdbUtils():
             f.write(f_data.read())
         return os.path.dirname(os.path.abspath(__file__)) + '\\dir\\'+name
 
+    def get_params(self, id):
+        return self.test_params.find_one({"_id":id,"group":"pure_json"})
 
 class WebTestSession:
     def __init__(self, url=None, browser=None, useBrowser=True):
@@ -102,6 +104,7 @@ class WebTestSession:
         self.result_id = None
         self.test_name = None
         self.group = None
+        self.drv = None
         self.__mongo__ = MdbUtils()
 
         if useBrowser:
@@ -113,9 +116,9 @@ class WebTestSession:
             else:
                 self.drv = webdriver.Firefox()
 
-            self.drv.set_window_size(1900,1020)
+            self.drv.set_window_size(1900, 1050)
+            self.drv.set_window_position(2, 2)
             self.drv.implicitly_wait(5)
-
 
     def set_main_page(self,q):
         if q is not None:
