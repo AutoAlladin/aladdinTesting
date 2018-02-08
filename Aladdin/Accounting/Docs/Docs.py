@@ -24,7 +24,8 @@ class Docs(ParamsTestCase):
         WebDriverWait(self.wts.drv, 20).until(
             EC.element_to_be_clickable((By.CLASS_NAME, "ui-datatable")))
 
-        taxpayerCertificateINN = self.wts.drv.find_element_by_id("load_TaxpayerCertificateINN")
+        #taxpayerCertificateINN = self.wts.drv.find_element_by_id("load_TaxpayerCertificateINN")
+        taxpayerCertificateINN = self.wts.drv.find_element_by_id("button_attach_document_")
         file_name = self.wts.__mongo__.get_file(doc_name="TaxpayerCertificateINN")
         taxpayerCertificateINN.send_keys(file_name)
         time.sleep(10)
@@ -41,8 +42,9 @@ class Docs(ParamsTestCase):
         # time.sleep(20)
 
     def test_5_doc_delete(self):
-        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "delete_TaxpayerCertificateINN")))
-        btn_delete_doc = self.wts.drv.find_element_by_id("delete_TaxpayerCertificateINN")
+        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "delete_")))
+        btn_delete_doc = self.wts.drv.find_element_by_id("delete_")
+        #btn_delete_doc = self.wts.drv.find_element_by_id("delete_TaxpayerCertificateINN")
         btn_delete_doc.click()
 
     def test_6_doc2_add(self):

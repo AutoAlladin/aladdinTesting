@@ -129,7 +129,7 @@ def s_edit_information():
     suite.addTest(Edit("test_04_clear_field_comp_name"))
     suite.addTest(Edit("test_05_update_comp_name"))
     # suite.addTest(Edit("test_06_ownership_type"))
-    # suite.addTest(Edit("test_06_company_taxSystem"))
+    suite.addTest(Edit("test_06_tax_system"))
     suite.addTest(Edit("test_07_phone_ad"))
     suite.addTest(Edit("test_08_clear_email"))
     suite.addTest(Edit("test_09_update_email"))

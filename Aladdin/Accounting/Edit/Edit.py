@@ -198,11 +198,12 @@ class Edit(ParamsTestCase):
         contract_offer_s = self.wts.drv.find_element_by_xpath("//*[@id='contract_offer_container']/label")
         contract_offer_s.click()
 
-        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "save_company")))
+        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "save_company_bottom")))
 
-        btn_s_changes = self.wts.drv.find_element_by_id("save_company")
-        btn_s_changes[1].click()
-        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
+        btn_s_changes = self.wts.drv.find_element_by_id("save_company_bottom")
+        btn_s_changes.click()
+        time.sleep(5)
+        #WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_edit")))
 
     def test_40_click_tab_profile_tab_about(self):
         self.wts.drv.execute_script("window.scrollTo(0, 0);")
