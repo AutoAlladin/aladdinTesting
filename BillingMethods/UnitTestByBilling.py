@@ -48,6 +48,13 @@ class TestByBilling(ParamsTestCase):
         self.assertEqual(req.status_code, 200, "Метод Reserve не отработал. Средства не зарезервировались")
         print(par["siteType"])
 
+
+        # par1 = self.parent_suite.suite_params["par"]["test_04_siteType_2"]
+        # par1["siteType"] = self.params["siteType"]
+        # req1 = requests.post("http://192.168.95.153:91/api/balance/Reserve", data=json.dumps(par),
+        #                     headers={"content-type": "application/json"})
+        # self.assertEqual(req1.status_code, 200, "Метод Reserve не отработал. Средства не зарезервировались")
+
         # print(req.url)
         # print(req.status_code)
         #print(req.text)
@@ -68,6 +75,7 @@ class TestByBilling(ParamsTestCase):
 
     @add_res_to_DB(test_name="return_monies_positive")
     def test_07_return_monies_positive(self):
+        # резервирование
         par = self.parent_suite.suite_params["par"]["test_07_1"]
         req_rez = requests.post("http://192.168.95.153:91/api/balance/Reserve", data=json.dumps(par),
                             headers={"content-type": "application/json"})
@@ -86,6 +94,7 @@ class TestByBilling(ParamsTestCase):
 
     @add_res_to_DB(test_name="return_monies_tender_is_null_negative")
     def test_09_return_monies_tender_is_null_negative(self):
+        # резервирование
         par = self.parent_suite.suite_params["par"]["test_09_1"]
         req_rez = requests.post("http://192.168.95.153:91/api/balance/Reserve", data=json.dumps(par),
                                 headers={"content-type": "application/json"})
@@ -99,27 +108,49 @@ class TestByBilling(ParamsTestCase):
 
     @add_res_to_DB(test_name="return_monies_error_negative")
     def test_10_return_monies_error_negative(self):  #передача json без lotId, tenderId
+        #резервирование
         par = self.parent_suite.suite_params["par"]["test_10_1"]
         req_rez = requests.post("http://192.168.95.153:91/api/balance/Reserve", data=json.dumps(par),
                                 headers={"content-type": "application/json"})
         self.assertEqual(req_rez.status_code, 200, "Метод Reserve не отработал. Средства не зарезервировались")
 
+        #возврат средств
         par = self.parent_suite.suite_params["par"]["test_10"]
         req = requests.post("http://192.168.95.153:91/api/balance/ReturnMonies", data=json.dumps(par),
                             headers={"content-type": "application/json"})
-        self.assertNotEquals(req.status_code, 200, 201)
+        self.assertNotEquals(req.status_code, 200)
         self.assertEqual(req.status_code, 400, "Метод ReturnMonies отработал без параметра \"tenderId\". Ожидаемый статус-код - 400")
 
     @add_res_to_DB(test_name="return_monies_by_company_uuid_positive")
     def test_11_return_monies_by_company_uuid_positive(self):
+        #резервирование
+        par = self.parent_suite.suite_params["par"]["test_11_1"]
+        req_rez = requests.post("http://192.168.95.153:91/api/balance/Reserve", data=json.dumps(par),
+                                headers={"content-type": "application/json"})
+        self.assertEqual(req_rez.status_code, 200, "Метод Reserve не отработал. Средства не зарезервировались")
+
+        #списание
+        par_wr = self.parent_suite.suite_params["par"]["test_11_2"]
+        req_wr = requests.post("http://192.168.95.153:91/api/balance/WriteOffMoney", data=json.dumps(par),
+                               headers={"content-type": "application/json"})
+        self.assertEqual(req_wr.status_code, 200, "Метод WriteOffMoney не отработал. Средства не списались")
+
+
+        #возврат после списания
         par = self.parent_suite.suite_params["par"]["test_11"]
         req = requests.post("http://192.168.95.153:91/api/balance/ReturnMoniesByCompany", data=json.dumps(par),
                             headers={"content-type": "application/json"})
-        self.assertNotEquals(req.status_code, 200, 201)
-        self.assertEqual(req.status_code, 400, "")
+        self.assertEqual(req.status_code, 200, "Метод WriteOffMoney не отработал. Средства не вернулись после списания")
+
 
     @add_res_to_DB(test_name="return_monies_by_company_uuid_tender_is_null_negative")
     def test_12_return_monies_by_company_uuid_tender_is_null_negative(self):
+        # резервирование
+        par = self.parent_suite.suite_params["par"]["test_12_1"]
+        req_rez = requests.post("http://192.168.95.153:91/api/balance/Reserve", data=json.dumps(par),
+                                headers={"content-type": "application/json"})
+        self.assertEqual(req_rez.status_code, 200, "Метод Reserve не отработал. Средства не зарезервировались")
+
         par = self.parent_suite.suite_params["par"]["test_12"]
         req = requests.post("http://192.168.95.153:91/api/balance/ReturnMoniesByCompany", data=json.dumps(par),
                             headers={"content-type": "application/json"})
@@ -136,8 +167,14 @@ class TestByBilling(ParamsTestCase):
 
     @add_res_to_DB(test_name="write_off_money_positive")
     def test_14_write_off_money_positive(self):
-        par = self.parent_suite.suite_params["par"]["test_14"]
+        # резервирование
+        par = self.parent_suite.suite_params["par"]["test_14_1"]
+        req_rez = requests.post("http://192.168.95.153:91/api/balance/Reserve", data=json.dumps(par),
+                                headers={"content-type": "application/json"})
+        self.assertEqual(req_rez.status_code, 200, "Метод Reserve не отработал. Средства не зарезервировались")
 
+        #списание
+        par = self.parent_suite.suite_params["par"]["test_14"]
         req = requests.post("http://192.168.95.153:91/api/balance/WriteOffMoney", data=json.dumps(par), headers={"content-type": "application/json"})
         self.assertEqual(req.status_code, 200)
 
@@ -158,10 +195,12 @@ class TestByBilling(ParamsTestCase):
 
     @add_res_to_DB(test_name="write_off_money_error_negative")
     def test_17_write_off_money_error_negative(self):
+
+
         par = self.parent_suite.suite_params["par"]["test_17"]
         req = requests.post("http://192.168.95.153:91/api/balance/WriteOffMoney", data=json.dumps(par),
                             headers={"content-type": "application/json"})
-        self.assertNotEquals(req.status_code, 200, 201)
+        #self.assertNotEquals(req.status_code, 200)
         self.assertEqual(req.status_code, 400)
 
     @add_res_to_DB(test_name="cancel_reserve_money_positive")
@@ -192,6 +231,30 @@ class TestByBilling(ParamsTestCase):
                             headers={"content-type": "application/json"})
         self.assertNotEquals(req.status_code, 200, 201)
         self.assertEqual(req.status_code, 400)
+
+
+    @add_res_to_DB(test_name="reserve_balance_positive_sitetype_2_suite_2")
+    def test_21_reserve_balance_positive_sitetype_2_suite_2(self):
+        par = self.parent_suite.suite_params["par"]["test_04_siteType_2"]
+        par["siteType"] = self.params["siteType"]
+        req = requests.post("http://192.168.95.153:91/api/balance/Reserve", data=json.dumps(par),
+                            headers={"content-type": "application/json"})
+        self.assertEqual(req.status_code, 200, "Метод Reserve не отработал. Средства не зарезервировались (sitetype_2_suite_2)")
+
+
+    @add_res_to_DB(test_name="reserve_balance_tender_id_is_null_negative_sitetype_2_suite_2")
+    def test_22_reserve_balance_tender_id_is_null_negative_sitetype_2_suite_2(self):
+        par = self.parent_suite.suite_params["par"]["test_05_siteType_2"]
+        req = requests.post("http://192.168.95.153:91/api/balance/Reserve", data=json.dumps(par), headers={"content-type": "application/json"})
+        self.assertNotEquals(req.status_code, 200, 201)
+        self.assertEqual(req.status_code, 400, "Метод Reserve отработал с нулевым тендером. Ожидаемый статус-код - 400.")
+
+
+    @add_res_to_DB(test_name="reserve_balance_total_money_is_zero_positive_sitetype_2_suite_2")
+    def test_23_reserve_balance_total_money_is_zero_positive_sitetype_2_suite_2(self):
+        par = self.parent_suite.suite_params["par"]["test_06_siteType_2"]
+        req = requests.post("http://192.168.95.153:91/api/balance/Reserve", data=json.dumps(par), headers= {"content-type": "application/json"})
+        self.assertEqual(req.status_code, 200, "Метод Reserve не отработал. Не прошло резервирование с нулевым балансом.")
 
 
 # if __name__ == '__main__':
