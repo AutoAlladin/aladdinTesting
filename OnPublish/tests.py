@@ -10,12 +10,199 @@ from Aladdin.Accounting.AladdinUtils import WebTestSession, AvaliableBrowsers
 from Aladdin.Accounting.decorators.StoreTestResult import create_result_DB
 from Aladdin.Billing.CreateAccount import *
 from BillingMethods.UnitTestByBilling import TestByBilling
+from BillingMethods.aladdin_like_prozzoro import TestByBilling
 from OnPublish.MainPage.load_main_page import Load_main_page, Tender_Tab
 from OnPublish.MainPage.login_page import Login_page
 from OnPublish.MainPage.registration import Registartion
 from OnPublish.Procedures.below import Test_Below
 from OnPublish.Procedures.bid import Below_Bid
 from billing_UI.Billing import BalanceAfterBid
+
+
+def s_aladdin_like_prozorro(pure_json, t, cmbro):
+    @create_result_DB
+    def s_aladdin_like_prozorro_init(bro):
+        qa = {"query": { "q": {
+                        "name": "aladdin_like_prozorro",
+                        "version": "0.0.0.1",
+                        "group": 'pure_json'}
+                },
+              'test_name': t,
+              'wts': WebTestSession(useBrowser=False)
+              }
+        return qa
+
+    #dbid = 19
+    qqq = s_aladdin_like_prozorro_init(cmbro)
+
+    par = qqq["wts"].__mongo__.get_params(25)["par"]
+    suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id,
+                                     "DB": qqq["wts"].__mongo__,
+                                     "par": par
+                                     })
+
+
+    tenderId_04 = par["test_04"]["tenderId"]
+    tenderId_04 += 1
+    par["tenderId"] = tenderId_04
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_04.tenderId": tenderId_04}})
+
+
+    tenderId_06 = par["test_06"]["tenderId"]
+    tenderId_06 += 1
+    par["tenderId"] = tenderId_06
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_06.tenderId": tenderId_06}})
+
+
+    tenderId_07 = par["test_07"]["tenderId"]
+    tenderId_07 += 1
+    par["tenderId"] = tenderId_07
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_07.tenderId": tenderId_07}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_07_1.tenderId": tenderId_07}})
+
+
+    tenderId_08 = par["test_08"]["tenderId"]
+    tenderId_08 += 1
+    par["tenderId"] = tenderId_08
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_08.tenderId": tenderId_08}})
+
+
+    tenderId_09 = par["test_09_1"]["tenderId"]
+    tenderId_09 += 1
+    par["tenderId"] = tenderId_09
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_09_1.tenderId": tenderId_09}})
+
+
+    tenderId_10 = par["test_10_1"]["tenderId"]
+    tenderId_10 +=1
+    par["tenderId"] = tenderId_10
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_10_1.tenderId": tenderId_10}})
+
+
+    tenderId_11 = par["test_11"]["tenderId"]
+    tenderId_11 += 1
+    par["tenderId"] = tenderId_11
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_11.tenderId": tenderId_11}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_11_1.tenderId": tenderId_11}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_11_2.tenderId": tenderId_11}})
+
+
+    tenderId_14 = par["test_14_1"]["tenderId"]
+    tenderId_14 += 1
+    par["tenderId"] = tenderId_14
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_14.tenderId": tenderId_14}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_14_1.tenderId": tenderId_14}})
+
+
+    tenderId_18 = par["test_18_1"]["tenderId"]
+    tenderId_18 += 1
+    par["tenderId"] = tenderId_18
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_18.tenderId": tenderId_18}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_18_1.tenderId": tenderId_18}})
+
+
+    tenderId_19_1 = par["test_19_1"]["tenderId"]
+    tenderId_19_1 += 1
+    par["tenderId"] = tenderId_19_1
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_19_1.tenderId": tenderId_19_1}})
+
+
+    tenderId_20_1 = par["test_20_1"]["tenderId"]
+    tenderId_20_1 += 1
+    par["tenderId"] = tenderId_20_1
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_20_1.tenderId": tenderId_20_1}})
+
+
+    suite.addTest(TestByBilling("test_01_get_balance_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_02_get_balance_acc_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_03_get_balance_without_guid_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_04_reserve_balance_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_05_reserve_balance_tender_id_is_null_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_06_reserve_balance_total_money_is_zero_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_07_return_monies_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_08_return_monies_without_reserve_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_09_return_monies_tender_is_null_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_10_return_monies_error_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_11_return_monies_by_company_uuid_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_12_return_monies_by_company_uuid_tender_is_null_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_13_return_monies_by_company_uuid_error_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_14_write_off_money_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_15_write_off_money_tender_is_null_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_16_write_off_money_site_type_not_found_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_17_write_off_money_error_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_18_cancel_reserve_money_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_19_cancel_reserve_money_tender_id_is_null_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_20_cancel_reserve_money_error_negative", _params=qqq))
+    # suite.addTest(TestByBilling("test_21_reserve_balance_positive_sitetype_2_suite_2", _params=qqq))
+    # suite.addTest(TestByBilling("test_22_reserve_balance_tender_id_is_null_negative_sitetype_2_suite_2", _params=qqq))
+    # suite.addTest(TestByBilling("test_23_reserve_balance_total_money_is_zero_positive_sitetype_2_suite_2", _params=qqq))
+    # suite.addTest(TestByBilling("test_24_return_monies_positive_sitetype_2_suite_2", _params=qqq))
+    # suite.addTest(TestByBilling("test_25_return_monies_without_reserve_negative_sitetype_2_suite_2", _params=qqq))
+    # suite.addTest(TestByBilling("test_26_return_monies_tender_is_null_negative_sitetype_2_suite_2", _params=qqq))
+    # suite.addTest(TestByBilling("test_27_return_monies_error_negative_sitetype_2_suite_2", _params=qqq))
+
+
+    return suite
+
+
+def s_aladdin_pure(pure_json, t, cmbro):
+    @create_result_DB
+    def s_aladdin_pure_init(bro):
+        qa = {"query": { "q": {
+                        "name": "aladdin_like_prozorro",
+                        "version": "0.0.0.1",
+                        "group": 'pure_json'}
+                },
+              'test_name': t,
+              'wts': WebTestSession(useBrowser=False)
+              }
+        return qa
+
+    #dbid = 19
+    qqq = s_aladdin_pure_init(cmbro)
+
+    par = qqq["wts"].__mongo__.get_params(26)["par"]
+    suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id,
+                                     "DB": qqq["wts"].__mongo__,
+                                     "par": par
+                                     })
+
+    tenderId_14 = par["test_14_1"]["tenderId"]
+    tenderId_14 += 1
+    par["tenderId"] = tenderId_14
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 26}, {"$set": {"par.test_14.tenderId": tenderId_14}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 26}, {"$set": {"par.test_14_1.tenderId": tenderId_14}})
+
+
+    tenderId_18 = par["test_18_1"]["tenderId"]
+    tenderId_18 += 1
+    par["tenderId"] = tenderId_18
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 26}, {"$set": {"par.test_18.tenderId": tenderId_18}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 26}, {"$set": {"par.test_18_1.tenderId": tenderId_18}})
+
+
+    tenderId_19_1 = par["test_19_1"]["tenderId"]
+    tenderId_19_1 += 1
+    par["tenderId"] = tenderId_19_1
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 26}, {"$set": {"par.test_19_1.tenderId": tenderId_19_1}})
+
+
+    tenderId_20_1 = par["test_20_1"]["tenderId"]
+    tenderId_20_1 += 1
+    par["tenderId"] = tenderId_20_1
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 26}, {"$set": {"par.test_20_1.tenderId": tenderId_20_1}})
+
+    suite.addTest(TestByBilling("test_01_get_balance_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_02_get_balance_acc_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_03_get_balance_without_guid_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_14_write_off_money_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_15_write_off_money_tender_is_null_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_16_write_off_money_site_type_not_found_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_17_write_off_money_error_negative", _params=qqq))
+    suite.addTest(TestByBilling("test_18_cancel_reserve_money_positive", _params=qqq))
+    suite.addTest(TestByBilling("test_19_cancel_reserve_money_tender_id_is_null_negative", _params=qqq))
+
+    return suite
 
 
 def s_load_main_page(g, t, cmbro):
@@ -197,11 +384,43 @@ def s_billing_metods(g, t, cmbro):
 
 
 
+    tenderId_07_sitetype_2_suite_2 = par["test_07_siteType_2"]["tenderId"]
+    tenderId_07_sitetype_2_suite_2 += 1
+    par["tenderId"] = tenderId_07_sitetype_2_suite_2
+
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_07_siteType_2.tenderId": tenderId_07_sitetype_2_suite_2}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_07_1_siteType_2.tenderId": tenderId_07_sitetype_2_suite_2}})
+
+
+    tenderId_08 = par["test_08"]["tenderId"]
+    tenderId_08 += 1
+    par["tenderId"] = tenderId_08
+
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_08.tenderId": tenderId_08}})
+
+
+
+
+
+    tenderId_08_sitetype_2_suite_2 = par["test_08_siteType_2"]["tenderId"]
+    tenderId_08_sitetype_2_suite_2 += 1
+    par["tenderId"] = tenderId_08_sitetype_2_suite_2
+
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_08_siteType_2.tenderId": tenderId_08_sitetype_2_suite_2}})
+
+
     tenderId_09 = par["test_09_1"]["tenderId"]
     tenderId_09 += 1
     par["tenderId"] = tenderId_09
 
     qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_09_1.tenderId": tenderId_09}})
+
+
+    tenderId_09_sitetype_2_suite_2 = par["test_09_siteType_2"]["tenderId"]
+    tenderId_09_sitetype_2_suite_2 += 1
+    par["tenderId"] = tenderId_09_sitetype_2_suite_2
+
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_09_1_siteType_2.tenderId": tenderId_09_sitetype_2_suite_2}})
 
 
 
@@ -210,7 +429,13 @@ def s_billing_metods(g, t, cmbro):
     par["tenderId"] = tenderId_10
 
     qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_10_1.tenderId": tenderId_10}})
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_10.tenderId": tenderId_10}})
+
+
+    tenderId_10_1_siteType_2 = par["test_10_1_siteType_2"]["tenderId"]
+    tenderId_10_1_siteType_2 += 1
+    par["tenderId"] = tenderId_10_1_siteType_2
+
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_10_1_siteType_2.tenderId": tenderId_10_1_siteType_2}})
 
 
     tenderId_11 = par["test_11"]["tenderId"]
@@ -256,29 +481,34 @@ def s_billing_metods(g, t, cmbro):
                          }
     )
 
-    suite.addTest(TestByBilling("test_01_get_balance_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_02_get_balance_acc_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_03_get_balance_without_guid_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_04_reserve_balance_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_05_reserve_balance_tender_id_is_null_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_06_reserve_balance_total_money_is_zero_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_07_return_monies_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_08_return_monies_without_reserve_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_09_return_monies_tender_is_null_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_10_return_monies_error_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_11_return_monies_by_company_uuid_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_12_return_monies_by_company_uuid_tender_is_null_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_13_return_monies_by_company_uuid_error_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_14_write_off_money_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_15_write_off_money_tender_is_null_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_16_write_off_money_site_type_not_found_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_17_write_off_money_error_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_18_cancel_reserve_money_positive", _params=qqq))
-    suite.addTest(TestByBilling("test_19_cancel_reserve_money_tender_id_is_null_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_20_cancel_reserve_money_error_negative", _params=qqq))
-    suite.addTest(TestByBilling("test_21_reserve_balance_positive_sitetype_2_suite_2", _params=qqq))
-    suite.addTest(TestByBilling("test_22_reserve_balance_tender_id_is_null_negative_sitetype_2_suite_2", _params=qqq))
-    suite.addTest(TestByBilling("test_23_reserve_balance_total_money_is_zero_positive_sitetype_2_suite_2", _params=qqq))
+    # suite.addTest(TestByBilling("test_01_get_balance_positive", _params=qqq))
+    # suite.addTest(TestByBilling("test_02_get_balance_acc_negative", _params=qqq))
+    # suite.addTest(TestByBilling("test_03_get_balance_without_guid_negative", _params=qqq))
+    # suite.addTest(TestByBilling("test_04_reserve_balance_positive", _params=qqq))
+    # suite.addTest(TestByBilling("test_05_reserve_balance_tender_id_is_null_negative", _params=qqq))
+    # suite.addTest(TestByBilling("test_06_reserve_balance_total_money_is_zero_positive", _params=qqq))
+    # suite.addTest(TestByBilling("test_07_return_monies_positive", _params=qqq))
+    # suite.addTest(TestByBilling("test_08_return_monies_without_reserve_negative", _params=qqq))
+    # suite.addTest(TestByBilling("test_09_return_monies_tender_is_null_negative", _params=qqq))
+    # suite.addTest(TestByBilling("test_10_return_monies_error_negative", _params=qqq))
+    # suite.addTest(TestByBilling("test_11_return_monies_by_company_uuid_positive", _params=qqq))
+    # suite.addTest(TestByBilling("test_12_return_monies_by_company_uuid_tender_is_null_negative", _params=qqq))
+    # suite.addTest(TestByBilling("test_13_return_monies_by_company_uuid_error_negative", _params=qqq))
+    # suite.addTest(TestByBilling("test_14_write_off_money_positive", _params=qqq))
+    # suite.addTest(TestByBilling("test_15_write_off_money_tender_is_null_negative", _params=qqq))
+    # suite.addTest(TestByBilling("test_16_write_off_money_site_type_not_found_negative", _params=qqq))
+    # suite.addTest(TestByBilling("test_17_write_off_money_error_negative", _params=qqq))
+    # suite.addTest(TestByBilling("test_18_cancel_reserve_money_positive", _params=qqq))
+    # suite.addTest(TestByBilling("test_19_cancel_reserve_money_tender_id_is_null_negative", _params=qqq))
+    # suite.addTest(TestByBilling("test_20_cancel_reserve_money_error_negative", _params=qqq))
+    # suite.addTest(TestByBilling("test_21_reserve_balance_positive_sitetype_2_suite_2", _params=qqq))
+    # suite.addTest(TestByBilling("test_22_reserve_balance_tender_id_is_null_negative_sitetype_2_suite_2", _params=qqq))
+    # suite.addTest(TestByBilling("test_23_reserve_balance_total_money_is_zero_positive_sitetype_2_suite_2", _params=qqq))
+    # suite.addTest(TestByBilling("test_24_return_monies_positive_sitetype_2_suite_2", _params=qqq))
+    # suite.addTest(TestByBilling("test_25_return_monies_without_reserve_negative_sitetype_2_suite_2", _params=qqq))
+    # suite.addTest(TestByBilling("test_26_return_monies_tender_is_null_negative_sitetype_2_suite_2", _params=qqq))
+    # suite.addTest(TestByBilling("test_27_return_monies_error_negative_sitetype_2_suite_2", _params=qqq))
+
 
     qqq2={"query": { "q": {
                         "name": "billing_metods",
@@ -502,6 +732,10 @@ def runner(arg):
         ttt = s_billing_metods(options.g,tname,  bro)
     elif opt == 'publish_test':
         ttt = s_publish_test(options.g,tname,  bro)
+    elif opt == 'aladdin_like_prozorro':
+        ttt = s_aladdin_like_prozorro(options.g, tname,  bro)
+    elif opt == 'aladdin_pure':
+        ttt = s_aladdin_pure(options.g, tname,  bro)
 
 
     if ttt is not None:
