@@ -57,7 +57,7 @@ class TestProzorro(ParamsTestCase):
         self.assertEqual(req.status_code, 200, "Метод ReturnMonies не отработал. Средства не вернулись.")
 
 
-    @unittest.skip("Без предварительного резерва отвечает 200, BUG 5603")
+    #@unittest.skip("Без предварительного резерва отвечает 200, BUG 5603")
     @add_res_to_DB(test_name="return_monies_without_reserve")
     def test_08_return_monies_without_reserve_negative(self):
         par = self.parent_suite.suite_params["par"]["test_08"]

@@ -64,7 +64,7 @@ class TestAladdinLikeProzorro(ParamsTestCase):
         self.assertEqual(req.status_code, 200, "Метод ReturnMonies не отработал. Средства не вернулись.")
 
     @add_res_to_DB(test_name="return_monies_without_reserve")
-    @unittest.skip("Без предварительного резерва отвечает 200, BUG 5603")
+    #@unittest.skip("Без предварительного резерва отвечает 200, BUG 5603")
     def test_08_return_monies_without_reserve_negative(self):
         par = self.parent_suite.suite_params["par"]["test_08"]
         req = requests.post("http://192.168.95.153:91/api/balance/ReturnMonies", data=json.dumps(par), headers= {"content-type": "application/json"})
@@ -100,7 +100,7 @@ class TestAladdinLikeProzorro(ParamsTestCase):
         self.assertEqual(req.status_code, 400, "Метод ReturnMonies отработал без параметра \"tenderId\". Ожидаемый статус-код - 400")
 
 
-    @unittest.skip("Не работает метод WriteOffMoney после резервирования при siteType: 2, BUG 5701")
+    #@unittest.skip("Не работает метод WriteOffMoney после резервирования при siteType: 2, BUG 5701")
     @add_res_to_DB(test_name="return_monies_by_company_uuid_positive")
     def test_11_return_monies_by_company_uuid_positive(self):
         #резервирование
@@ -143,7 +143,7 @@ class TestAladdinLikeProzorro(ParamsTestCase):
         self.assertNotEquals(req.status_code, 200, 201)
         self.assertEqual(req.status_code, 400)
 
-    @unittest.skip("Не работает метод WriteOffMoney после резервирования при siteType: 2, BUG 5701")
+    #@unittest.skip("Не работает метод WriteOffMoney после резервирования при siteType: 2, BUG 5701")
     @add_res_to_DB(test_name="write_off_money_positive")
     def test_14_write_off_money_positive(self):
         # резервирование

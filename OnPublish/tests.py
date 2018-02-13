@@ -142,6 +142,7 @@ def s_aladdin_like_prozorro(pure_json, t, cmbro):
     qqq["wts"].__mongo__.test_params.update_one({"_id": 25}, {"$set": {"par.test_20_1.tenderId": tenderId_20_1}})
 
 
+
     suite.addTest(TestAladdinLikeProzorro("test_01_get_balance_positive", _params=qqq))
     suite.addTest(TestAladdinLikeProzorro("test_02_get_balance_acc_negative", _params=qqq))
     suite.addTest(TestAladdinLikeProzorro("test_03_get_balance_without_guid_negative", _params=qqq))
@@ -162,13 +163,6 @@ def s_aladdin_like_prozorro(pure_json, t, cmbro):
     suite.addTest(TestAladdinLikeProzorro("test_18_cancel_reserve_money_positive", _params=qqq))
     suite.addTest(TestAladdinLikeProzorro("test_19_cancel_reserve_money_tender_id_is_null_negative", _params=qqq))
     suite.addTest(TestAladdinLikeProzorro("test_20_cancel_reserve_money_error_negative", _params=qqq))
-    # suite.addTest(TestByBilling("test_21_reserve_balance_positive_sitetype_2_suite_2", _params=qqq))
-    # suite.addTest(TestByBilling("test_22_reserve_balance_tender_id_is_null_negative_sitetype_2_suite_2", _params=qqq))
-    # suite.addTest(TestByBilling("test_23_reserve_balance_total_money_is_zero_positive_sitetype_2_suite_2", _params=qqq))
-    # suite.addTest(TestByBilling("test_24_return_monies_positive_sitetype_2_suite_2", _params=qqq))
-    # suite.addTest(TestByBilling("test_25_return_monies_without_reserve_negative_sitetype_2_suite_2", _params=qqq))
-    # suite.addTest(TestByBilling("test_26_return_monies_tender_is_null_negative_sitetype_2_suite_2", _params=qqq))
-    # suite.addTest(TestByBilling("test_27_return_monies_error_negative_sitetype_2_suite_2", _params=qqq))
 
 
     return suite
@@ -391,7 +385,6 @@ def s_aladdin_pure(pure_json, t, cmbro):
 
     return suite
 
-#TODO: код который добавляет тесты в сюит вынести в отдельные процедуры !!!
 
 def s_load_main_page(g, t, cmbro):
     @create_result_DB
