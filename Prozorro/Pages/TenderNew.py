@@ -230,7 +230,9 @@ class TenderNew:
         add_classifier.click()
 
     def set_item_base_info(self, dic, item_id,item_vomber):
-        procurementSubject_description = self.drv.find_element_by_id("procurementSubject_description" + item_id)
+        procurementSubject_description =WebDriverWait(self.drv, 20).\
+        until(EC.visibility_of_element_located((By.ID, "procurementSubject_description" + item_id)))
+
         procurementSubject_description.send_keys(str(item_vomber)+str(item_id)+" - "+get_dic_val(dic, "below.item_descr"))
 
         q=random.randrange(1,700)
@@ -273,7 +275,10 @@ class TenderNew:
     def set_item(self, dic, item, j):
         for i in range(item):
             waitFadeIn(self.drv)
-            add_procurement_subject = self.drv.find_element_by_id("add_procurement_subject" + str(j))
+            add_procurement_subject = \
+                WebDriverWait(self.drv, 5).until(
+                    EC.element_to_be_clickable((By.ID,"add_procurement_subject" + str(j))))
+
             waitFadeIn(self.drv)
             scroll_to_element(self.drv,add_procurement_subject)
             add_procurement_subject.click()

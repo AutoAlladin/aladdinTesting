@@ -96,7 +96,7 @@ class MdbUtils():
         return os.path.dirname(os.path.abspath(__file__)) + '\\dir\\'+name
 
     def get_params(self, id):
-        return self.test_params.find_one({"_id":id,"group":"pure_json"})
+        return self.test_params.find_one({"_id":id})
 
 class WebTestSession:
     def __init__(self, url=None, browser=None, useBrowser=True):

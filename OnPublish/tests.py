@@ -411,50 +411,6 @@ def s_load_main_page(g, t, cmbro):
     qqq = s_load_main_page_init(cmbro)
     suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id, "DB": qqq["wts"].__mongo__})
 
-    suite.suite_params.update({
-        "authorization":{
-            "owner_login": "aladdin.for.test+owner@gmail.com",
-            "owner_password": "zxcvbn00",
-            "provider_login":"aladdin.for.test+provider@gmail.com",
-            "provider_password":"123123"
-        },
-        "lang": {
-            "ru": {"greeting": "Добро пожаловать на Aladdin Government",
-                   "label_for_email": "Электронная почта",
-                   "label_for_password": "Пароль",
-                   "msg_email": "Ваше уникальное имя пользователя",
-                   "msg_password": "Пароль",
-                   "remember_me_label": "Запомнить меня?",
-                   "remember_me_private": "(если это частный компьютер)",
-                   "btnLogin": "Вход",
-                   "register": "Регистрация",
-                   "restorePass": "Забыли пароль ?"
-                   },
-            "ua": {"greeting": "Ласкаво просимо до Aladdin Government",
-                   "label_for_email": "Електронна пошта",
-                   "label_for_password": "Пароль",
-                   "msg_email": "Ваше унікальне ім'я користувача",
-                   "msg_password": "Пароль",
-                   "remember_me_label": "Запам'ятати мене?",
-                   "remember_me_private": "(якщо це приватний комп'ютер)",
-                   "btnLogin": "Вхід",
-                   "register": "Реєстрація",
-                   "restorePass": "Забули пароль ?"
-                   },
-            "en": {"greeting": "Welcome to Aladdin Government",
-                   "label_for_email": "E-mail",
-                   "label_for_password": "Password",
-                   "msg_email": "Your unique username to app",
-                   "msg_password": "Password",
-                   "remember_me_label": "Remember me?",
-                   "remember_me_private": "(if this is a private computer)",
-                   "btnLogin": "Login",
-                   "register": "Registration",
-                   "restorePass": "Forgot password ?"
-                   }
-        }
-    })
-
     suite.addTest(Load_main_page("page_loaded", _params=qqq ))
     suite.addTest(Load_main_page("menu_presented", _params=qqq))
     suite.addTest(Load_main_page("set_lang", _params=qqq))
@@ -758,120 +714,76 @@ def s_publish_test(g, t, cmbro):
               'wts': WebTestSession(),
               'siteType': '1'
               }
+        qa.update({"registartion_data":qa["wts"].__mongo__.get_params(23)["company"][0]})
         qa['wts'].set_main_page(qa['query'])
         return qa
 
     #dbid = 20
     qqq = s_publish_test_init(cmbro)
 
+    t = qqq["wts"].__mongo__.get_params(21)
+
     suite = ParamsTestSuite(_params={
                 "result_id": qqq["wts"].result_id,
                 "DB": qqq["wts"].__mongo__,
-                "tender_json": qqq["wts"].__mongo__.get_params(21),
-                "registartion_data": qqq["wts"].__mongo__.get_params(23)
-
-
+                "tender_json": qqq["wts"].__mongo__.get_params(22),
+                "start_url": t["start_url"],
+                "login_url": t["login_url"],
+                "authorization": t["authorization"],
+                "lang": t["lang"]
     })
 
-
-    # suite.addTest(TestByBilling("test_01_get_balance_positive", _params=qqq))
-    # suite.addTest(TestByBilling("test_02_get_balance_acc_negative", _params=qqq))
-    # suite.addTest(TestByBilling("test_03_get_balance_without_guid_negative", _params=qqq))
-    # suite.addTest(TestByBilling("test_04_reserve_balance_positive", _params=qqq))
-    # suite.addTest(TestByBilling("test_05_reserve_balance_tender_id_is_null_negative", _params=qqq))
-    # suite.addTest(TestByBilling("test_06_reserve_balance_total_money_is_zero_positive", _params=qqq))
-    # suite.addTest(TestByBilling("test_07_return_monies_positive", _params=qqq))
-    # suite.addTest(TestByBilling("test_08_return_monies_without_reserve_negative", _params=qqq))
-    # suite.addTest(TestByBilling("test_09_return_monies_tender_is_null_negative", _params=qqq))
-    # suite.addTest(TestByBilling("test_10_return_monies_error_negative", _params=qqq))
-    # suite.addTest(TestByBilling("test_11_return_monies_by_company_uuid_positive", _params=qqq))
-    # suite.addTest(TestByBilling("test_12_return_monies_by_company_uuid_tender_is_null_negative", _params=qqq))
-    # suite.addTest(TestByBilling("test_13_return_monies_by_company_uuid_error_negative", _params=qqq))
-    # suite.addTest(TestByBilling("test_14_write_off_money_positive", _params=qqq))
-    # suite.addTest(TestByBilling("test_15_write_off_money_tender_is_null_negative", _params=qqq))
-    # suite.addTest(TestByBilling("test_16_write_off_money_site_type_not_found_negative", _params=qqq))
-    # suite.addTest(TestByBilling("test_17_write_off_money_error_negative", _params=qqq))
-    # suite.addTest(TestByBilling("test_18_cancel_reserve_money_positive", _params=qqq))
-    # suite.addTest(TestByBilling("test_19_cancel_reserve_money_tender_id_is_null_negative", _params=qqq))
-    # suite.addTest(TestByBilling("test_20_cancel_reserve_money_error_negative", _params=qqq))
-    #
-    # qqq2 = {"query": {"q": {
-    #     "name": "billing_metods",
-    #     "version": "0.0.0.1",
-    #     "group": g}
-    # },
-    #     'test_name': t,
-    #     'wts': WebTestSession(useBrowser=False),
-    #     "siteType": '2'
-    # }
-    #
-    # suite.addTest(TestByBilling("test_04_reserve_balance_positive", _params=qqq2))
-    # suite.addTest(TestByBilling("test_05_reserve_balance_tender_id_is_null_negative", _params=qqq2))
-    # suite.addTest(TestByBilling("test_06_reserve_balance_total_money_is_zero_positive", _params=qqq2))
-    # suite.addTest(TestByBilling("test_07_return_monies_positive", _params=qqq2))
-    # suite.addTest(TestByBilling("test_08_return_monies_without_reserve_negative", _params=qqq2))
-    # suite.addTest(TestByBilling("test_09_return_monies_tender_is_null_negative", _params=qqq2))
-    # suite.addTest(TestByBilling("test_10_return_monies_error_negative", _params=qqq2))
-    # suite.addTest(TestByBilling("test_11_return_monies_by_company_uuid_positive", _params=qqq2))
-    # suite.addTest(TestByBilling("test_12_return_monies_by_company_uuid_tender_is_null_negative", _params=qqq2))
-    # suite.addTest(TestByBilling("test_13_return_monies_by_company_uuid_error_negative", _params=qqq2))
-    # suite.addTest(TestByBilling("test_14_write_off_money_positive", _params=qqq2))
-    # suite.addTest(TestByBilling("test_15_write_off_money_tender_is_null_negative", _params=qqq2))
-    # suite.addTest(TestByBilling("test_16_write_off_money_site_type_not_found_negative", _params=qqq2))
-    # suite.addTest(TestByBilling("test_17_write_off_money_error_negative", _params=qqq2))
-    # suite.addTest(TestByBilling("test_18_cancel_reserve_money_positive", _params=qqq2))
-    # suite.addTest(TestByBilling("test_19_cancel_reserve_money_tender_id_is_null_negative", _params=qqq2))
-    # suite.addTest(TestByBilling("test_20_cancel_reserve_money_error_negative", _params=qqq2))
-    #
-    # qqq3 = {"query": {"q": {
-    #     "name": "billing_metods",
-    #     "version": "0.0.0.1",
-    #     "group": g}
-    # },
-    #     'test_name': t,
-    #     'wts': WebTestSession(useBrowser=False),
-    #     "siteType": '2'
-    # }
-    #
-    # suite.addTest(TestByBilling("test_14_write_off_money_positive", _params=qqq3))
-    # suite.addTest(TestByBilling("test_15_write_off_money_tender_is_null_negative", _params=qqq3))
-    # suite.addTest(TestByBilling("test_16_write_off_money_site_type_not_found_negative", _params=qqq3))
-    # suite.addTest(TestByBilling("test_17_write_off_money_error_negative", _params=qqq3))
-
-
-    # suite.addTest(Load_main_page("page_loaded", _params=qqq ))
-    # suite.addTest(Load_main_page("menu_presented", _params=qqq))
-    # suite.addTest(Load_main_page("set_lang", _params=qqq))
-    #
+    # main page interface not authorization
+    suite.addTest(Load_main_page("page_loaded", _params=qqq))
+    suite.addTest(Load_main_page("menu_presented", _params=qqq))
+    suite.addTest(Load_main_page("set_lang", _params=qqq))
     # suite.addTest(Tender_Tab("tab_visible", _params=qqq))
     # suite.addTest(Tender_Tab("tab_list", _params=qqq))
     # suite.addTest(Tender_Tab("tab_search", _params=qqq))
     # suite.addTest(Tender_Tab("tab_filters", _params=qqq))
-    #
-    # suite.addTest(Login_page("login_menu", _params=qqq))
-    # suite.addTest(Login_page("open_login", _params=qqq))
-    # suite.addTest(Login_page("check_lang", _params=qqq))
-    # suite.addTest(Login_page("login_owner", _params=qqq))
-    # suite.addTest(Login_page("login_provider", _params=qqq))
-    #
-    # suite.addTest(Login_page("open_register_form", _params=qqq))
-    # suite.addTest(Login_page("open_restore_password", _params=qqq))
-    #
-    # suite.addTest(Test_Below("create_menu", _params=qqq))
-    # suite.addTest(Test_Below("select_below_menu", _params=qqq))
-    # suite.addTest(Test_Below("set_description", _params=qqq))
-    # suite.addTest(Test_Below("set_curr", _params=qqq))
-    # suite.addTest(Test_Below("set_multilot", _params=qqq))
-    # suite.addTest(Test_Below("set_dates", _params=qqq))
-    # suite.addTest(Test_Below("add_lot", _params=qqq))
-    # suite.addTest(Test_Below("add_item", _params=qqq))
-    # suite.addTest(Test_Below("add_features", _params=qqq))
-    # suite.addTest(Test_Below("add_doc", _params=qqq))
-    # suite.addTest(Test_Below("open_draft_by_url", _params=qqq))
-    # suite.addTest(Test_Below("open_draft_by_url_edit", _params=qqq))
-    # suite.addTest(Test_Below("open_draft_by_url_delete", _params=qqq))
-    # suite.addTest(Test_Below("create_below_publish", _params=qqq))
-    #
+
+    # login page inteface
+    suite.addTest(Login_page("login_menu", _params=qqq))
+    suite.addTest(Login_page("open_login", _params=qqq))
+    suite.addTest(Login_page("check_lang", _params=qqq))
+    suite.addTest(Login_page("login_owner", _params=qqq))
+    suite.addTest(Login_page("login_provider", _params=qqq))
+    suite.addTest(Login_page("open_register_form", _params=qqq))
+    suite.addTest(Login_page("open_restore_password", _params=qqq))
+
+
+    #tender owner registartion
+    suite.addTest(Registartion("try_login", _params=qqq))
+    suite.addTest(Registartion("open_register_form", _params=qqq))
+    suite.addTest(Registartion("reg_company", _params=qqq))
+
+    #provider registration
+    qqq2={"query": qqq["query"],
+          'test_name': t,
+          'wts': qqq["wts"],
+          "registartion_data":qqq["wts"].__mongo__.get_params(23)["company"][1]
+          }
+    suite.addTest(Registartion("try_login", _params=qqq2))
+    suite.addTest(Registartion("open_register_form", _params=qqq2))
+    suite.addTest(Registartion("reg_company", _params=qqq2))
+
+
+    suite.addTest(Test_Below("create_menu", _params=qqq))
+    suite.addTest(Test_Below("select_below_menu", _params=qqq))
+    suite.addTest(Test_Below("set_description", _params=qqq))
+    suite.addTest(Test_Below("set_curr", _params=qqq))
+    suite.addTest(Test_Below("set_multilot", _params=qqq))
+    suite.addTest(Test_Below("set_dates", _params=qqq))
+    suite.addTest(Test_Below("add_lot", _params=qqq))
+    suite.addTest(Test_Below("add_item", _params=qqq))
+    suite.addTest(Test_Below("add_features", _params=qqq))
+    suite.addTest(Test_Below("add_doc", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url_edit", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url_delete", _params=qqq))
+
+    suite.addTest(Test_Below("create_below_publish", _params=qqq))
+
     # suite.addTest(Below_Bid("login_provider", _params=qqq))
     # suite.addTest(Below_Bid("select_below_type", _params=qqq))
     # suite.addTest(Below_Bid("select_tender_period", _params=qqq))
@@ -879,8 +791,7 @@ def s_publish_test(g, t, cmbro):
     # suite.addTest(Below_Bid("wait_for_tender_period", _params=qqq))
     # suite.addTest(Below_Bid("add_bid", _params=qqq))
 
-    suite.addTest(Registartion("try_login", _params=qqq))
-    suite.addTest(Registartion("open_register_form", _params=qqq))
+
 
     return suite
 
