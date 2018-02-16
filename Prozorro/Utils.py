@@ -8,6 +8,7 @@ import prozorro
 run_guid = str(uuid.uuid1())
 roles={"owner", "provider", "viewer"}
 
+
 def get_root():
     return os.path.dirname(os.path.abspath( prozorro.__file__ ));
 

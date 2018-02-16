@@ -87,7 +87,7 @@ def add_res_to_DB(test_name=None,
             finally:
                 if test_method_result["status"]=="":
                     test_method_result["status"] = "NOT RUNED"
-                final_test_method = datetime.datetime.utcnow()
+                final_test_method = datetime.datetime.now()
                 test_method_result["timing"]["end"]= final_test_method #  .strftime("%Y-%m-%d %H:%M:%S.%f%z")
                 test_method_result["timing"]["duration"]= (final_test_method-start_test_method).total_seconds()
 
@@ -124,7 +124,7 @@ def add_res_to_DB(test_name=None,
 def return_for_DB(test_name=None,
                   test_description=None,
                   screenshotOK=True,
-                  screenshotERROR=True):
+                  screenshotERROR=True,):
     def inner_decorator(test_method):
         def wrapper(self):
 
@@ -144,7 +144,7 @@ def return_for_DB(test_name=None,
 
             if test_description is not None: test_method_result.update({"description": test_description})
 
-            start_test_method = datetime.datetime.utcnow()
+            start_test_method = datetime.datetime.now()
             test_method_result["timing"]["start"]=start_test_method #.strftime("%Y-%m-%d %H:%M:%S.%f%z")
 
             try:

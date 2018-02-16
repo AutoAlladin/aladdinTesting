@@ -17,7 +17,7 @@ class Test_Below(ParamsTestCase):
     @add_res_to_DB(test_name="Меню создания тендеров")
     def create_menu(self):
 
-        url = self.parent_suite.suite_params["start_url"]
+        url = self.parent_suite.suite_params["login_url"]
         self.wts.drv.get(url)
 
         with self.subTest("авторизация"):

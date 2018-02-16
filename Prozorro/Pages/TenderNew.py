@@ -2,6 +2,7 @@ import os
 import random
 
 from datetime import datetime, timedelta
+from time import sleep
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -31,7 +32,8 @@ class TenderNew:
     def click_publish_button(self):
         try:
             waitFadeIn(self.drv)
-            publishPurchase = self.drv.find_element_by_id("publishPurchase")
+            publishPurchase = \
+                WebDriverWait(self.drv, 5).until(EC.visibility_of_element_located((By.ID,"publishPurchase")))
 
             waitFadeIn(self.drv)
             publishPurchase.click()
@@ -82,7 +84,7 @@ class TenderNew:
             set_datepicker(
                 self.drv,
                 "period_enquiry_start",
-                (dt + timedelta(minutes=1)).strftime("%d-%m-%Y %H:%M:%S"))
+                (dt + timedelta(seconds = 20)).strftime("%d-%m-%Y %H:%M:%S"))
             set_datepicker(
                 self.drv,
                 "period_enquiry_end",
@@ -188,6 +190,7 @@ class TenderNew:
 
         select_regions =  self.drv.find_element_by_xpath("//div[@id='procurementSubjectCountryWrap{0}']//select[contains(@id,'regions')]".format(item_id))
         WebDriverWait(self.drv, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@id='procurementSubjectCountryWrap{0}']//select[contains(@id,'regions')]".format(item_id))))
+        sleep(1)
         Select(select_regions).select_by_value("7")
 
         zip_code_ = self.drv.find_element_by_id("zip_code_" + item_id)
