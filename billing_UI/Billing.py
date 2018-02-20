@@ -29,12 +29,6 @@ class BalanceAfterBid(ParamsTestCase):
         wait_period = time.sleep(180)
         create_bid(uaid[0][1])
 
-    @add_res_to_DB()
-    def creare_bids(self):
-        pass
-
-
-
     def logout(self):
         pass
 

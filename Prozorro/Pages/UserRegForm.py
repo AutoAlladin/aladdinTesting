@@ -43,10 +43,9 @@ class UserRegForm:
             raise Exception("not ConfirmPassword found")
         try:
             self.btn_ok = WebDriverWait(self.drv, 10).until(
-                expected_conditions.visibility_of_element_located((By.ID,"btn-success")))
+                expected_conditions.visibility_of_element_located((By.XPATH,"//button[@class='btn btn-success']")))
         except:
             raise Exception("not btn-success found")
-
 
     def set_user_name (self,val):
         self.UserName.send_keys(val)

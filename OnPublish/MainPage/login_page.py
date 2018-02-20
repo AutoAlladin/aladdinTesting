@@ -56,19 +56,19 @@ class Login_page(ParamsTestCase):
             
         with self.subTest("русский интерфейс"):
             lform = lform.set_ru()
-            dic = self.parent_suite.suite_params["tender_json"]["lang"]["ru"]
+            dic = self.parent_suite.suite_params["lang"]["ru"]
             set_elements(dic)
             self.log_subtest_res("Русский интекрфейс OK")
 
         with self.subTest("английский интерфейс"):
             lform = lform.set_en()
-            dic = self.parent_suite.suite_params["tender_json"]["lang"]["en"]
+            dic = self.parent_suite.suite_params["lang"]["en"]
             set_elements(dic)
             self.log_subtest_res("Английский интерфейс OK")
 
         with self.subTest("украинский интерфейс"):
             lform = lform.set_ua()
-            dic = self.parent_suite.suite_params["tender_json"]["lang"]["ua"]
+            dic = self.parent_suite.suite_params["lang"]["ua"]
             set_elements(dic)
             self.log_subtest_res("Украинский интерфейс OK")
 
@@ -92,8 +92,8 @@ class Login_page(ParamsTestCase):
     def login_owner(self):
 
         lform =  self.parent_suite.suite_params["login_form"]
-        login = self.parent_suite.suite_params["tender_json"]["authorization"]["owner_login"]
-        password = self.parent_suite.suite_params["tender_json"]["authorization"]["owner_password"]
+        login = self.parent_suite.suite_params["authorization"]["owner_login"]
+        password = self.parent_suite.suite_params["authorization"]["owner_password"]
 
         with self.subTest("авторизация"):
             lform.login(login, password)
@@ -120,8 +120,8 @@ class Login_page(ParamsTestCase):
         lform = None
         lform = self.parent_suite.suite_params["login_form"]
 
-        login = self.parent_suite.suite_params["tender_json"]["authorization"]["provider_login"]
-        password = self.parent_suite.suite_params["tender_json"]["authorization"]["provider_password"]
+        login = self.parent_suite.suite_params["authorization"]["provider_login"]
+        password = self.parent_suite.suite_params["authorization"]["provider_password"]
 
         with self.subTest("авторизация"):
             lform.login(login, password)
@@ -153,7 +153,7 @@ class Login_page(ParamsTestCase):
 
     @add_res_to_DB(test_name="Открыть форму регистрации")
     def open_register_form(self):
-        self.wts.drv.get('https://test-gov.ald.in.ua/Account/Login')
+        self.wts.drv.get(self.parent_suite.suite_params["login_url"])
         lform = LoginPage(self.wts.drv)
         lform.register.click()
         WebDriverWait(self.wts.drv, 10).until(

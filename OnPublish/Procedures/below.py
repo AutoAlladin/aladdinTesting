@@ -22,8 +22,8 @@ class Test_Below(ParamsTestCase):
 
         with self.subTest("авторизация"):
             LoginPage(self.wts.drv).login(
-                self.parent_suite.suite_params["tender_json"]["authorization"]["owner_login"],
-                self.parent_suite.suite_params["tender_json"]["authorization"]["owner_password"]
+                self.parent_suite.suite_params["authorization"]["owner_login"],
+                self.parent_suite.suite_params["authorization"]["owner_password"]
             )
 
         with self.subTest("меню создать"):
@@ -221,6 +221,15 @@ class Test_Below(ParamsTestCase):
 
     @add_res_to_DB(test_name="Допороговый полный опубликовать")
     def create_below_publish(self):
+
+        if "new_owner_login" in self.parent_suite.suite_params :
+            self.wts.drv.get(self.parent_suite.suite_params["login_url"])
+            with self.subTest("авторизация"):
+                LoginPage(self.wts.drv).login(
+                    self.parent_suite.suite_params["new_owner_login"],
+                    self.parent_suite.suite_params["new_owner_password"]
+                )
+
         self.select_below_menu_F()
         dic = self.parent_suite.suite_params["tender_json"]
 

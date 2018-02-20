@@ -15,8 +15,8 @@ from Prozorro.Utils import waitFadeIn
 class Below_Bid(ParamsTestCase):
 
     def login_provider(self):
-        url = self.parent_suite.suite_params["start_url"]
-        self.wts.drv.get(url)
+
+        self.wts.drv.get(self.parent_suite.suite_params["start_url"])
 
         with self.subTest("авторизация"):
             LoginPage(self.wts.drv).login(
