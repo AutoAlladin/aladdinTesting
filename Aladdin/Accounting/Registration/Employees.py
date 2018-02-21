@@ -44,14 +44,14 @@ class Employees(ParamsTestCase):
 
     def test_09_email(self):
         test_input(self, "userEmail", **self.params["query"])
-        # eml = self.wts.__mongo__.test_params.find_one(self.params["query"]["q"])
-        # time.sleep(3)
-        # self.params.update({"email_": eml["inputs"]["email_"]})
-        # print("email", self.params["email_"])
-        # next = str(int(eml["inputs"]["email_next"]) + 1)
-        # self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {
-        #     "$set": {"inputs.email_": "employeesmail_" + next.rjust(5, '0') + "@ff.ru"}})
-        # self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {"$set": {"inputs.email_next": next}})
+        eml = self.wts.__mongo__.test_params.find_one(self.params["query"]["q"])
+        time.sleep(3)
+        self.params.update({"userEmail": eml["inputs"]["userEmail"]})
+        print("email", self.params["userEmail"])
+        next = str(int(eml["inputs"]["email_next"]) + 1)
+        self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {
+            "$set": {"inputs.userEmail": "employeesmail_" + next.rjust(5, '0') + "@ff.ru"}})
+        self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {"$set": {"inputs.email_next": next}})
 
     def test_10_phone(self):
         test_input(self, "userPhone", **self.params["query"])
@@ -74,8 +74,8 @@ class Employees(ParamsTestCase):
         time.sleep(5)
 
         wanted_email=None
-        email_list = self.wts.drv.find_elements_by_xpath(".//*[contains(@id, 'email_')]")
-        inp_email = self.params['email_']
+        email_list = self.wts.drv.find_elements_by_xpath(".//*[contains(@id, 'userEmail')]")
+        inp_email = self.params['userEmail']
         for email in email_list:
             if email.text == inp_email:
                 wanted_email = inp_email
