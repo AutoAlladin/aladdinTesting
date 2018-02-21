@@ -11,23 +11,27 @@ class Docs(ParamsTestCase):
 
 
     def test_1_Login(self):
-        l = Login()
-        l.test_01_email()
-        l.test_02_pswd()
-        l.test_03_btn()
+        # l = Login()
+        # l.test_01_email()
+        # l.test_02_pswd()
+        # l.test_03_btn()
+        pass
 
     def test_3_add_doc(self):
 
         self.wts.drv.execute_script("window.scrollTo(0, 0);")
         btn_tab_documents = self.wts.drv.find_element_by_id("profile_tab_documents")
         btn_tab_documents.click()
-        WebDriverWait(self.wts.drv, 20).until(
-            EC.element_to_be_clickable((By.CLASS_NAME, "ui-datatable")))
+        time.sleep(5)
+        # WebDriverWait(self.wts.drv, 20).until(
+        #     EC.element_to_be_clickable((By.CLASS_NAME, "ui-datatable")))
 
-        taxpayerCertificateINN = self.wts.drv.find_element_by_id("load_TaxpayerCertificateINN")
+        extractFromLegalEntityOrFop = self.wts.drv.find_element_by_id("load_ExtractFromLegalEntityOrFop")
+        #TaxpayerCertificateINN = self.wts.drv.find_element_by_id("button_attach_document_ExtractFromLegalEntityOrFop")
         file_name = self.wts.__mongo__.get_file(doc_name="TaxpayerCertificateINN")
-        taxpayerCertificateINN.send_keys(file_name)
-        time.sleep(10)
+        extractFromLegalEntityOrFop.send_keys(file_name)
+        #self.wts.drv.execute_script("$('#button_attach_document_ExtractFromLegalEntityOrFop').click();")
+        time.sleep(5)
 
 
     #def test_4_doc_view(self):
@@ -41,8 +45,9 @@ class Docs(ParamsTestCase):
         # time.sleep(20)
 
     def test_5_doc_delete(self):
-        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "delete_TaxpayerCertificateINN")))
-        btn_delete_doc = self.wts.drv.find_element_by_id("delete_TaxpayerCertificateINN")
+        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "delete_ExtractFromLegalEntityOrFop")))
+        btn_delete_doc = self.wts.drv.find_element_by_id("delete_ExtractFromLegalEntityOrFop")
+        #btn_delete_doc = self.wts.drv.find_element_by_id("delete_TaxpayerCertificateINN")
         btn_delete_doc.click()
 
     def test_6_doc2_add(self):
