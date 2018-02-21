@@ -58,15 +58,13 @@ class Employees(ParamsTestCase):
 
     def test_11_role(self):
         #role_ = self.wts.drv.find_elements_by_xpath("//p-multiselect")
-        role_ = self.wts.drv.find_elements_by_xpath("// *[ @class ='ui-multiselect-label-container']")
-        #role_ = self.wts.drv.find_elements_by_xpath("//*[@class='ui-multiselect-label ui-corner-all']")
+        role_ = self.wts.drv.find_element_by_xpath("//p-multiselect[@formcontrolname='roles']/div/div/label")
+        #role_ = self.wts.drv.find_elements_by_xpath("// *[ @class ='ui-multiselect-label-container']")
         role_.click()
-        #test_select(self, "role_", **self.params["query"])
         #test_select(self, "//*[@class='ui-multiselect-label ui-corner-all']", "//div[@class='ui-chkbox ui-widget']")
-        #role_check = self.wts.drv.find_elements_by_xpath("//div[@class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']")
-        role_check = self.wts.drv.find_elements_by_xpath("//div[@class='ui-chkbox ui-widget']")
+        #role_check = self.wts.drv.find_element_by_xpath("//div[@class='ui-chkbox ui-widget']")
+        role_check = self.wts.drv.find_element_by_xpath("//div[@class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']")
         role_check.click()
-
 
         time.sleep(2)
 
