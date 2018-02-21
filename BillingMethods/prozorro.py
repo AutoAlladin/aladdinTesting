@@ -11,6 +11,7 @@ class TestProzorro(ParamsTestCase):
         par = self.parent_suite.suite_params["par"]["test_01"]
         req = requests.get(par["url"], params=par)
         self.assertEqual(req.status_code, 200, "Метод balance не отработал")
+        self.log("")
 
     @add_res_to_DB(test_name="get_balance_acc_negativ")
     def test_02_get_balance_acc_negative(self):
@@ -51,11 +52,12 @@ class TestProzorro(ParamsTestCase):
         req_rez = requests.post(par["url"], data=json.dumps(par),
                             headers={"content-type": "application/json"})
         self.assertEqual(req_rez.status_code, 200, "Метод Reserve не отработал. Средства не зарезервировались")
+        self.log("Reserve pass")
 
         par = self.parent_suite.suite_params["par"]["test_07"]
         req = requests.post(par["url"], data=json.dumps(par), headers= {"content-type": "application/json"})
         self.assertEqual(req.status_code, 200, "Метод ReturnMonies не отработал. Средства не вернулись.")
-
+        self.log("Return pass")
 
     #@unittest.skip("Без предварительного резерва отвечает 200, BUG 5603")
     @add_res_to_DB(test_name="return_monies_without_reserve")
@@ -72,12 +74,15 @@ class TestProzorro(ParamsTestCase):
         req_rez = requests.post(par["url"], data=json.dumps(par),
                                 headers={"content-type": "application/json"})
         self.assertEqual(req_rez.status_code, 200, "Метод Reserve не отработал. Средства не зарезервировались")
+        self.log("TEST Reserve PASS")
 
+        #возврат
         par = self.parent_suite.suite_params["par"]["test_09"]
         req = requests.post(par["url"], data=json.dumps(par),
                             headers={"content-type": "application/json"})
         self.assertNotEquals(req.status_code, 200, 201)
         self.assertEqual(req.status_code, 400, "Метод ReturnMonies отработал с нулевым тендером. Ожидаемый статус-код - 400.")
+        self.log("TEST Return PASS")
 
     @add_res_to_DB(test_name="return_monies_error_negative")
     def test_10_return_monies_error_negative(self):  #передача json без lotId, tenderId
