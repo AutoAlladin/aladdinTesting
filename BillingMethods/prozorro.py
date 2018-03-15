@@ -84,6 +84,7 @@ class TestProzorro(ParamsTestCase):
         self.assertEqual(req.status_code, 400, "Метод ReturnMonies отработал с нулевым тендером. Ожидаемый статус-код - 400.")
         self.log("TEST Return PASS")
 
+
     @add_res_to_DB(test_name="return_monies_error_negative")
     def test_10_return_monies_error_negative(self):  #передача json без lotId, tenderId
         #резервирование
