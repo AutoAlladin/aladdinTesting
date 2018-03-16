@@ -1,0 +1,24 @@
+{
+  "dateStart": "2018-03-14T15:45:47+0200",
+  "dateEnd": "2018-03-14T16:00:47+0200",
+  "additionalStepTime": 2,
+  "additionalStepLimit": 4,
+  "positions": [
+    {
+      "minimalStep": 1000,
+	  "maximalStep": 2000,
+      "rate":6544
+    },
+    {
+      "minimalStep": 2000,
+	  "maximalStep": 3000,
+      "rate":487
+    },
+    {
+      "minimalStep": 3000,
+	  "maximalStep": 4000,
+      "rate":7478
+    }
+  ]
+}
+
