@@ -1,3 +1,5 @@
+from datetime import time
+
 from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 
 from Aladdin.Accounting.AladdinUtils import *
@@ -74,7 +76,7 @@ class UserRegistrationEDRPOU(ParamsTestCase):
         #policy_chb = self.wts.drv.find_element_by_css_selector("#content > div > div > div > div > div > div > form > div.personal-data > div:nth-child(7) > div > div > label")
         policy_chb = self.wts.drv.find_element_by_xpath("//input[@id='user_agreementPolicy']/../label")
         #policy_chb = self.wts.drv.find_element_by_id("user_agreementPolicy")
-        #time.sleep(5)
+        #time.sleep(2)
         policy_chb.click()
 
     def test_14_click_next_step_btn(self):
