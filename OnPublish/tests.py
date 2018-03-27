@@ -9,6 +9,7 @@ from bson import ObjectId
 from Aladdin.Accounting.AladdinUtils import WebTestSession, AvaliableBrowsers
 from Aladdin.Accounting.decorators.StoreTestResult import create_result_DB
 from Aladdin.Billing.CreateAccount import *
+from Auction.run import RegistrationAuction
 from BillingMethods.UnitTestByBilling import TestByBilling
 from BillingMethods.aladdin_like_prozzoro import TestAladdinLikeProzorro
 from BillingMethods.prozorro import TestProzorro
@@ -788,6 +789,11 @@ def s_publish_test(g, t, cmbro):
 
     return suite
 
+def s_auction(g, t, cmbro):
+    suite = ParamsTestSuite()
+    suite.addTest(RegistrationAuction("test_01_Registration_auction"))
+    return suite
+
 def runner(arg):
     parser = OptionParser()
     parser.add_option("-s", action="store", type="string")
@@ -830,6 +836,8 @@ def runner(arg):
         ttt = s_aladdin_pure(options.g, tname,  bro)
     elif opt == 'prozorro':
         ttt = s_prozorro(options.g, tname,  bro)
+
+
 
 
     if ttt is not None:
