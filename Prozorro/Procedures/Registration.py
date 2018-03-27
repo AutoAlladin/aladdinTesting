@@ -12,9 +12,9 @@ from Prozorro.Procedures.Tenders import init_driver
 from Prozorro import Utils
 
 
-def registerUserCompany(filename):
-    chrm, tp, mpg = init_driver()
-    with open(os.path.dirname(os.path.abspath(__file__)) + '\\..\\'+filename, 'r',
+def registerUserCompany(filename, testMode=True):
+    chrm, tp, mpg = init_driver(testMode)
+    with open(filename, 'r',
               encoding="UTF-8") as company_file:
         cmp = json.load(company_file)
 
@@ -24,6 +24,10 @@ def registerUserCompany(filename):
         ussr = cmpp["Users"][0]
         if len(cmpp["Users"])>1:
             ussr = cmpp["Users"][1]
+
+        if ussr["login"].startswith("no@mail"):
+            print("Фейковая почта", ussr["login"])
+            continue
 
         Utils.waitFadeIn(mpg.drv)
         lf = mpg.open_login_form()
@@ -44,16 +48,17 @@ def registerUserCompany(filename):
                 print("START USER registartion",ussr["login"])
                 rf= UserRegForm(lf.drv)
                 rf.set_from_dic(cmpp)
-        except:
-            print("USER registered",ussr["login"])
+        except Exception as e:
+            print("USER register ERROR", e.__str__())
             pass
 
         try:
+            print("USER registered", ussr["login"])
             danger =lf.drv.find_element_by_xpath("//span[@class='label label-danger']")
             lf.drv.find_element_by_xpath("//a[@ng-click=\"userMenuClick('/Profile#/company')\"]/../../..").click()
             butCabinet  = lf.drv.find_element_by_xpath("//a[@ng-click=\"userMenuClick('/Profile#/company')\"]")
             butCabinet.click()
-            WebDriverWait(lf.drv, 5).until(
+            WebDriverWait(lf.drv, 10).until(
                 expected_conditions.visibility_of_element_located(
                     (By.ID, "save_changes")))
             print("START COMPANY registartion",
@@ -67,13 +72,15 @@ def registerUserCompany(filename):
                 expected_conditions.visibility_of_element_located(
                     (By.ID, "edit")))
 
-            lf.drv.find_element_by_id("liLoginAuthenticated").click()
+            WebDriverWait(lf.drv, 15).until(
+                expected_conditions.visibility_of_element_located(
+                    (By.ID, "liLoginAuthenticated"))).click()
 
             WebDriverWait(lf.drv, 15).until(
                 expected_conditions.visibility_of_element_located(
                     (By.ID, "liLoginNoAuthenticated")))
 
-            time.sleep(3)
+            time.sleep(1)
 
         except:
             pass

@@ -1,6 +1,5 @@
 from time import sleep
 
-from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.select import Select
@@ -10,7 +9,6 @@ from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 from Aladdin.Accounting.decorators.StoreTestResult import add_res_to_DB
 from Prozorro.Pages.LoginPage import LoginPage
 from Prozorro.Pages.UserCompanyForm import UserCompanyForm
-from Prozorro.Pages.UserRegForm import UserRegForm
 from Prozorro.Utils import waitFadeIn
 
 
@@ -40,7 +38,6 @@ class Registartion(ParamsTestCase):
         old = user["login"]
         w = user["login"][4:9]
         user["login"] = "test"+str(int(w)+1).rjust(5, '0')+"@ukr.net"
-        self.params["registartion_data"]["users"][0].update({"new_login":user["login"]})
 
         self.wts.__mongo__.test_params.update_one(
             {"_id":23, "company.users.login": old},
@@ -138,8 +135,10 @@ class Registartion(ParamsTestCase):
     @add_res_to_DB(test_name='Создание компании')
     def reg_company(self):
         self.wts.drv.get(self.parent_suite.suite_params["login_url"])
-        login = self.params["registartion_data"]["users"][0]["new_login"]
-        cmpp =  self.params["registartion_data"]
+
+        cmpp = self.params["registartion_data"]
+        login = cmpp["users"][0]["login"]
+
 
         old = cmpp["subj_ident_code"]
         edr = str(int(old)+1).rjust(8,"0")
@@ -294,7 +293,7 @@ class Registartion(ParamsTestCase):
     @add_res_to_DB(test_name='Настройки профиля')
     def profile_settings(self):
         self.wts.drv.get(self.parent_suite.suite_params["login_url"])
-        login = self.params["registartion_data"]["users"][0]["new_login"]
+        login = self.params["registartion_data"]["users"][0]["login"]
         with self.subTest("авторизация"):
             LoginPage(self.wts.drv).login(login,"123456")
 
@@ -335,58 +334,58 @@ class Registartion(ParamsTestCase):
             self.assertTrue(infoStatusEmail.get_attribute('checked'))
             self.log("получение уведомлений - OK")
 
-        with self.subTest("турбо режим"):
-            onTurboCheck_caption = self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='onTurboCheck']/../h4")
-            onTurboCheck_label = self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='onTurboCheck']/../label")
-            onTurboCheck= self.wts.w_id("onTurboCheck")
+        # with self.subTest("турбо режим"):
+        #     onTurboCheck_caption = self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='onTurboCheck']/../h4")
+        #     onTurboCheck_label = self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='onTurboCheck']/../label")
+        #     onTurboCheck= self.wts.w_id("onTurboCheck")
+        #
+        #     self.assertEqual('Турбо-режим', onTurboCheck_caption.text)
+        #     self.assertEqual('Працювати в турбо-режимі',onTurboCheck_label.text)
+        #
+        #     onTurboCheck_label.click()
+        #     sleep(0.1)
+        #     self.assertTrue(onTurboCheck.get_attribute('checked'))
+        #     self.log("турбо режим - OK")
 
-            self.assertEqual('Турбо-режим', onTurboCheck_caption.text)
-            self.assertEqual('Працювати в турбо-режимі',onTurboCheck_label.text)
-
-            onTurboCheck_label.click()
-            sleep(0.1)
-            self.assertTrue(onTurboCheck.get_attribute('checked'))
-            self.log("турбо режим - OK")
-
-        with self.subTest("fast-forward"):
-            onFastForwardCheck_caption= self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='onFastForwardCheck']/../h4")
-            onFastForwardCheck_label= self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='onFastForwardCheck']/../label")
-            onFastForwardCheck= self.wts.w_id("onFastForwardCheck")
-
-            self.assertEqual('Опція fast-forward',onFastForwardCheck_caption.text)
-            self.assertEqual('Опція fast-forward',onFastForwardCheck_label.text)
-
-            onFastForwardCheck_label.click()
-            sleep(0.1)
-            self.assertTrue(onFastForwardCheck.get_attribute('checked'))
-            self.log("fast-forward - OK")
+        # with self.subTest("fast-forward"):
+        #     onFastForwardCheck_caption= self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='onFastForwardCheck']/../h4")
+        #     onFastForwardCheck_label= self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='onFastForwardCheck']/../label")
+        #     onFastForwardCheck= self.wts.w_id("onFastForwardCheck")
+        #
+        #     self.assertEqual('Опція fast-forward',onFastForwardCheck_caption.text)
+        #     self.assertEqual('Опція fast-forward',onFastForwardCheck_label.text)
+        #
+        #     onFastForwardCheck_label.click()
+        #     sleep(0.1)
+        #     self.assertTrue(onFastForwardCheck.get_attribute('checked'))
+        #     self.log("fast-forward - OK")
 
 
-        with self.subTest("этап аукциона"):
-            onAuctionModeCheck_caption= self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='onAuctionModeCheck']/../h4")
-            onAuctionModeCheck_label= self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='onAuctionModeCheck']/../label")
-            onAuctionModeCheck= self.wts.w_id("onAuctionModeCheck")
+        # with self.subTest("этап аукциона"):
+        #     onAuctionModeCheck_caption= self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='onAuctionModeCheck']/../h4")
+        #     onAuctionModeCheck_label= self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='onAuctionModeCheck']/../label")
+        #     onAuctionModeCheck= self.wts.w_id("onAuctionModeCheck")
+        #
+        #     self.assertEqual('Eтап аукціону', onAuctionModeCheck_caption.text)
+        #     self.assertEqual('Ввімкнений етап аукціону', onAuctionModeCheck_label.text)
+        #
+        #     onAuctionModeCheck_label.click()
+        #     sleep(0.1)
+        #     self.assertTrue(onAuctionModeCheck.get_attribute('checked'))
+        #     self.log("этап аукциона - OK")
 
-            self.assertEqual('Eтап аукціону', onAuctionModeCheck_caption.text)
-            self.assertEqual('Ввімкнений етап аукціону', onAuctionModeCheck_label.text)
-
-            onAuctionModeCheck_label.click()
-            sleep(0.1)
-            self.assertTrue(onAuctionModeCheck.get_attribute('checked'))
-            self.log("этап аукциона - OK")
-
-        with self.subTest("акселератор"):
-            acceleratorValue_caption= self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='acceleratorValue']/../h4")
-            acceleratorValue_label= self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='acceleratorValue']/../label")
-            acceleratorValue= self.wts.w_id("acceleratorValue")
-
-            self.assertEqual('Режим прискорення',  acceleratorValue_caption.text)
-            self.assertEqual('Коефіцієнт прискорення', acceleratorValue_label.text)
-
-            acceleratorValue.clear()
-            acceleratorValue.send_keys("1800")
-            self.assertEqual(acceleratorValue.get_attribute('value'),"1800")
-            self.log("акселератор - OK")
+        # with self.subTest("акселератор"):
+        #     acceleratorValue_caption= self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='acceleratorValue']/../h4")
+        #     acceleratorValue_label= self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='acceleratorValue']/../label")
+        #     acceleratorValue= self.wts.w_id("acceleratorValue")
+        #
+        #     self.assertEqual('Режим прискорення',  acceleratorValue_caption.text)
+        #     self.assertEqual('Коефіцієнт прискорення', acceleratorValue_label.text)
+        #
+        #     acceleratorValue.clear()
+        #     acceleratorValue.send_keys("1800")
+        #     self.assertEqual(acceleratorValue.get_attribute('value'),"1800")
+        #     self.log("акселератор - OK")
 
         butSaveSettings = self.wts.w_id("butSaveSettings")
         butSaveSettings.click()

@@ -65,10 +65,10 @@ class UserRegForm:
     def set_confpas(self,val):
         self.ConfirmPassword.send_keys(val)
 
-    def set_agreement(self,val):
+    def set_agreement(self,val=None):
         self.drv.execute_script("$('#AgreementPolicy').click()")
 
-    def set_btn_ok(self,val):
+    def set_btn_ok(self,val=None):
         self.btn_ok.click()
 
     def set_from_dic(self,company):
@@ -83,7 +83,7 @@ class UserRegForm:
         self.set_btn_ok()
         try:
             WebDriverWait(self.drv, 15).until(
-                   expected_conditions.visibility_of_element_located((By.XPATH, "//span[@class='label label-danger")))
+                   expected_conditions.presence_of_element_located((By.XPATH, "//span[@class='label label-danger']")))
         except:
             paint( self.drv,user["user_name"]+"ERROR.png" )
         print('register user', user["user_name"] )

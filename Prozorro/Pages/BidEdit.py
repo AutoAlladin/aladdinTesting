@@ -12,12 +12,15 @@ class bid:
         self.drv = _drv
         #self.drv = webdriver.Chrome(_drv)
 
-    def new(self,prepare=0,uaid=""):
+    def new(self,prepare=0,uaid="", bidAm=100.2):
 
         try:
             try:
-                bidAmount = self.drv.find_element_by_id("bidAmount")
-                bidAmount.send_keys("100.22");
+                bidAmount = WebDriverWait(self.drv, 60).until(
+                    EC.visibility_of_element_located(
+                        (By.ID,"bidAmount")))
+
+                bidAmount.send_keys(str(bidAm));
                 Utils.waitFadeIn(self.drv)
             except Exception as r:
                 raise Exception("bidAmount - "+r)
@@ -38,20 +41,24 @@ class bid:
 
             Utils.scroll_to_element(self.drv,submitBid)
             Utils.waitFadeIn(self.drv)
+
             if prepare == 0:
                 submitBid.click()
                 Utils.waitFadeIn(self.drv)
 
-                WebDriverWait(self.drv, 20).until(
-                    EC.visibility_of_element_located((By.XPATH,"//div[@ng-if='bid.isPublished']/span[2]")))
+                WebDriverWait(self.drv, 5).until(
+                    EC.visibility_of_element_located(
+                        (By.XPATH,
+                         "//div[contains(@class,'jconfirm-box')]/div[contains(@class,'jconfirm-buttons')]/button[1]"))). \
+                    click()
 
-                bidGUID =self.drv.find_element_by_xpath("//div[@ng-if='bid.isPublished']/span[2]")
+                Utils.waitFadeIn(self.drv)
+                bidGUID =WebDriverWait(self.drv, 30).until(
+                    EC.visibility_of_element_located((By.XPATH,"//span[@ng-show='bid.guid']")))
 
-                self.drv.execute_script("window.scroll(0, {0}-105)".format(bidGUID.location.get("y")))
+                print("bid guid: " +bidGUID.text.strip())
 
-                print(bidGUID.text())
-
-                return bidGUID.text()
+                return bidGUID.text.strip()
             else:
                 return None
 

@@ -66,6 +66,7 @@ class TenderNew:
             #self.drv.execute_script("window.scroll(0, "+str(next_step.location["y"])+")")
             waitFadeIn(self.drv)
             self.drv.execute_script("$('#next_step').click()")
+            sleep(1)
 
             # WebDriverWait(self.drv, 20).until(
             #     EC.invisibility_of_element_located(
@@ -268,7 +269,7 @@ class TenderNew:
             else:
                 for j in range(lot):
                         self.set_item(dic, item, j+1)
-
+            sleep(1)
         except Exception as e:
             raise Exception(" Не нажимается кнопка add_item_button "+ str(e))
             paint(self.drv, "add_item_" + item_id + "ERROR.png")
@@ -290,7 +291,9 @@ class TenderNew:
             self.set_item_base_info(dic, item_id, i)
             self.set_dk2015(dic)
             WebDriverWait(self.drv, 20).until(EC.invisibility_of_element_located((By.XPATH, "//div[@id = 'modDialog']")))
-            self.set_otherDK(dic)
+            if dic["name"] != "realto_below_and_bids":
+                self.set_otherDK(dic)
+
             self.set_delivery_period(item_id)
             self.set_delivery_adress(dic, item_id)
 
@@ -302,7 +305,10 @@ class TenderNew:
     def add_doc(self, docs):
         try:
             if docs > 0:
-                documents_tab = self.drv.find_element_by_id("documents-tab")
+                documents_tab = WebDriverWait(self.drv, 20).until(
+                    EC.presence_of_element_located(
+                        (By.ID, "documents-tab")))
+
                 scroll_to_element(self.drv,documents_tab)
                 waitFadeIn(self.drv)
                 documents_tab.click()
@@ -333,10 +339,7 @@ class TenderNew:
                 save_file=self.drv.find_element_by_id("save_file")
                 save_file.click()
 
-
-                WebDriverWait(self.drv, 30).until(
-                    EC.visibility_of_element_located(
-                        (By.XPATH,'//label[@ng-click="removeDocument(document.documentId)"]')))
+                sleep(10)
 
         except Exception as e:
             paint(self.drv, "addDocERROR.png")

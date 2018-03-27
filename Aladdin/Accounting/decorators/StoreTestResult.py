@@ -82,8 +82,9 @@ def add_res_to_DB(test_name=None,
                 if screenshotERROR and self.wts.drv is not None:
                     pngERROR = self.wts.drv.get_screenshot_as_png()
                     test_method_result.update({"screen_id": self.wts.__mongo__.fs.put(pngERROR, file_name=test_method.__name__+"ERROR.png")})
-                e.test_method=tt
-                raise e
+
+                raise Exception(tt,
+                                os.path.dirname(os.path.abspath( prozorro.__file__ ))+"\\Aladdin\\output\\"+test_method.__name__+"ERROR.png"     )
             finally:
                 if test_method_result["status"]=="":
                     test_method_result["status"] = "NOT RUNED"
@@ -94,9 +95,10 @@ def add_res_to_DB(test_name=None,
                 if len(self.tlog)>0 :
                     test_method_result.update({"logs":self.tlog});
 
-                if self.wts.drv is not None and test_method_result["screen_id"] != "":
-                    dir= os.path.dirname(os.path.abspath( prozorro.__file__ ))
-                    dir+= "\\Aladdin\\output\\"
+                if self.wts.drv is not None \
+                and "screen_id" in test_method_result \
+                and test_method_result["screen_id"] != "":
+                    dir= os.path.dirname(os.path.abspath( prozorro.__file__ ))+"\\Aladdin\\output\\"
                     self.wts.drv.get_screenshot_as_file(dir + test_method.__name__+"_"+str(test_method_result["screen_id"]) + ".png")
 
                 if parent is None:
@@ -162,7 +164,10 @@ def return_for_DB(test_name=None,
                     pngERROR = self.wts.drv.get_screenshot_as_png()
                     test_method_result.update({"screen_id":pngERROR})
                 e.test_method=tt
-                raise e
+                raise  Exception(tt,
+                                os.path.dirname(os.path.abspath( prozorro.__file__ ))+"\\Aladdin\\output\\",
+
+                       )
             finally:
                 if "status" in test_method_result:
                     test_method_result["status"] = "NOT RUNED"

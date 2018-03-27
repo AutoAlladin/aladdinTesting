@@ -18,6 +18,8 @@ from OnPublish.MainPage.login_page import Login_page
 from OnPublish.MainPage.registration import Registartion
 from OnPublish.Procedures.below import Test_Below
 from OnPublish.Procedures.bid import Below_Bid
+from OnPublish.Procedures.qualification import Qualification
+from OnPublish.rialto_tests import s_rialto_publish_prod
 from billing_UI.Billing import BalanceAfterBid
 
 
@@ -672,32 +674,32 @@ def s_publish_test(g, t, cmbro):
                 "par":par
     })
     
-    
-    atos_AlladinPure(qqq, suite)
-
-    qqq_prozorro={"query": qqq["query"],
-          'test_name': t,
-          'wts': qqq["wts"],
-          "par":par1
-          }
-    atos_prozorro(qqq_prozorro, suite)
-
-    qqq_alddin_like_prozorro = {"query": qqq["query"],
-                    'test_name': t,
-                    'wts': qqq["wts"],
-                    "par": par2
-                    }
-    atos_aladin_like_prozorro(qqq_alddin_like_prozorro, suite)
-
+    #billing metods
+    # atos_AlladinPure(qqq, suite)
+    #
+    # qqq_prozorro={"query": qqq["query"],
+    #       'test_name': t,
+    #       'wts': qqq["wts"],
+    #       "par":par1
+    #       }
+    # atos_prozorro(qqq_prozorro, suite)
+    #
+    # qqq_alddin_like_prozorro = {"query": qqq["query"],
+    #                 'test_name': t,
+    #                 'wts': qqq["wts"],
+    #                 "par": par2
+    #                 }
+    # atos_aladin_like_prozorro(qqq_alddin_like_prozorro, suite)
+    #
     # # main page interface not authorization
-    # suite.addTest(Load_main_page("page_loaded", _params=qqq))
+    suite.addTest(Load_main_page("page_loaded", _params=qqq))
     # suite.addTest(Load_main_page("menu_presented", _params=qqq))
     # suite.addTest(Load_main_page("set_lang", _params=qqq))
     # suite.addTest(Tender_Tab("tab_visible", _params=qqq))
     # suite.addTest(Tender_Tab("tab_list", _params=qqq))
     # # suite.addTest(Tender_Tab("tab_search", _params=qqq))
-    # # suite.addTest(Tender_Tab("tab_filters", _params=qqq))
-    # 
+    #suite.addTest(Tender_Tab("tab_filters", _params=qqq))
+    #
     # # login page inteface
     # suite.addTest(Login_page("login_menu", _params=qqq))
     # suite.addTest(Login_page("open_login", _params=qqq))
@@ -706,25 +708,26 @@ def s_publish_test(g, t, cmbro):
     # suite.addTest(Login_page("login_provider", _params=qqq))
     # suite.addTest(Login_page("open_register_form", _params=qqq))
     # suite.addTest(Login_page("open_restore_password", _params=qqq))
-    # 
-    # 
+    #
+    #
     # #tender owner registartion
     # suite.addTest(Registartion("try_login", _params=qqq))
     # suite.addTest(Registartion("open_register_form", _params=qqq))
     # suite.addTest(Registartion("reg_company", _params=qqq))
     # suite.addTest(Registartion("profile_settings", _params=qqq))
-    # 
+
     # #provider registration
-    # qqq2={"query": qqq["query"],
+    # q_provider={"query": qqq["query"],
     #       'test_name': t,
     #       'wts': qqq["wts"],
     #       "registartion_data":qqq["wts"].__mongo__.get_params(23)["company"][1]
     #       }
-    # suite.addTest(Registartion("try_login", _params=qqq2))
-    # suite.addTest(Registartion("open_register_form", _params=qqq2))
-    # suite.addTest(Registartion("reg_company", _params=qqq2))
-    # 
-    # 
+    #+380639552988
+    # suite.addTest(Registartion("try_login", _params=q_provider))
+    # suite.addTest(Registartion("open_register_form", _params=q_provider))
+    # suite.addTest(Registartion("reg_company", _params=q_provider))
+    # suite.addTest(Registartion("profile_settings", _params=qqq))
+
     # suite.addTest(Test_Below("create_menu", _params=qqq))
     # suite.addTest(Test_Below("select_below_menu", _params=qqq))
     # suite.addTest(Test_Below("set_description", _params=qqq))
@@ -738,25 +741,148 @@ def s_publish_test(g, t, cmbro):
     # suite.addTest(Test_Below("open_draft_by_url", _params=qqq))
     # suite.addTest(Test_Below("open_draft_by_url_edit", _params=qqq))
     # suite.addTest(Test_Below("open_draft_by_url_delete", _params=qqq))
-    # 
+
     # suite.addTest(Test_Below("create_below_publish", _params=qqq))
-
-    # suite.addTest(Below_Bid("login_provider", _params=qqq))
-    # suite.addTest(Below_Bid("select_below_type", _params=qqq))
-    # suite.addTest(Below_Bid("select_tender_period", _params=qqq))
-    # suite.addTest(Below_Bid("find_tender_for_bid", _params=qqq))
-    # suite.addTest(Below_Bid("wait_for_tender_period", _params=qqq))
-    # suite.addTest(Below_Bid("add_bid", _params=qqq))
-
-
+    #
+    #
+    # q_provider1={"query": qqq["query"],'test_name': t,'wts': qqq["wts"],
+    #       "bid_json": qqq["wts"].__mongo__.get_params(22)["bids"][0]
+    #       }
+    # suite.addTest(Below_Bid("login_provider", _params=q_provider1))
+    # suite.addTest(Below_Bid("select_below_type", _params=q_provider1))
+    # suite.addTest(Below_Bid("select_tender_period", _params=q_provider1))
+    # suite.addTest(Below_Bid("find_tender", _params=q_provider1))
+    # suite.addTest(Below_Bid("wait_for_tender_period", _params=q_provider1))
+    # suite.addTest(Below_Bid("add_bid", _params=q_provider1))
+    #
+    #
+    # q_provider2 = {"query": qqq["query"], 'test_name': t,  'wts': qqq["wts"],
+    #                "bid_json": qqq["wts"].__mongo__.get_params(22)["bids"][1]
+    #                }
+    # suite.addTest(Below_Bid("login_provider", _params=q_provider2))
+    # suite.addTest(Below_Bid("find_tender", _params=q_provider2))
+    # suite.addTest(Below_Bid("add_bid", _params=q_provider2))
+    #
+    # #suite.suite_params.update({"ProzorroId":"UA-2018-03-26-000076-a"})
+    #
+    # suite.addTest(Qualification("login_owner", _params=qqq))
+    # suite.addTest(Below_Bid("find_tender", _params=qqq))
+    # suite.addTest(Qualification("wait_for_status",
+    #                             _params={"query": qqq["query"], 'test_name': t,  'wts': qqq["wts"],
+    #                             "wait_status": 5}))
+    #
+    # suite.addTest(Qualification("q_tabs", _params=q_provider1))
+    # suite.addTest(Qualification("q_tab_result_award_1", _params=q_provider1))
 
     return suite
 
+def s_publish_prod(g, t, cmbro, registartion=0):
+    @create_result_DB
+    def s_publish_prod_init(bro):
+        qa = {"query": {"q": {
+            "name": "publish_app",
+            "version": "0.0.0.1",
+            "group": g}
+        },
+            'test_name': t,
+            'wts': WebTestSession()
+        }
+        qa.update({"registartion_data": qa["wts"].__mongo__.get_params(23)["company"][0]})
+        qa['wts'].set_main_page(qa['query'])
+        return qa
+
+    # dbid = 20
+    qqq = s_publish_prod_init(cmbro)
+    t = qqq["wts"].__mongo__.get_params(28)
+    td = qqq["wts"].__mongo__.get_params(29)
+
+    suite = ParamsTestSuite(_params={
+        "result_id": qqq["wts"].result_id,
+        "DB": qqq["wts"].__mongo__,
+        "tender_json": td,
+        "start_url": t["start_url"],
+        "login_url": t["login_url"],
+        "authorization": t["authorization"],
+        "lang": t["lang"]
+    })
+
+    # # main page interface not authorization
+    suite.addTest(Load_main_page("page_loaded", _params=qqq))
+    suite.addTest(Load_main_page("menu_presented", _params=qqq))
+    suite.addTest(Load_main_page("set_lang", _params=qqq))
+    suite.addTest(Tender_Tab("tab_visible", _params=qqq))
+    suite.addTest(Tender_Tab("tab_list", _params=qqq))
+    # # suite.addTest(Tender_Tab("tab_search", _params=qqq))
+    # suite.addTest(Tender_Tab("tab_filters", _params=qqq))
+    #
+    # # login page inteface
+    # suite.addTest(Login_page("login_menu", _params=qqq))
+    # suite.addTest(Login_page("open_login", _params=qqq))
+    # suite.addTest(Login_page("check_lang", _params=qqq))
+    # suite.addTest(Login_page("login_owner", _params=qqq))
+    # suite.addTest(Login_page("login_provider", _params=qqq))
+    # suite.addTest(Login_page("open_register_form", _params=qqq))
+    # suite.addTest(Login_page("open_restore_password", _params=qqq))
+
+    if registartion>0:
+        # tender owner registartion
+        suite.addTest(Registartion("try_login", _params=qqq))
+        suite.addTest(Registartion("open_register_form", _params=qqq))
+        suite.addTest(Registartion("reg_company", _params=qqq))
+        suite.addTest(Registartion("profile_settings", _params=qqq))
+
+        #provider registration
+        q_provider={"query": qqq["query"],
+              'test_name': t,
+              'wts': qqq["wts"],
+              "registartion_data":qqq["wts"].__mongo__.get_params(23)["company"][1]
+              }
+        suite.addTest(Registartion("try_login", _params=q_provider))
+        suite.addTest(Registartion("open_register_form", _params=q_provider))
+        suite.addTest(Registartion("reg_company", _params=q_provider))
+        suite.addTest(Registartion("profile_settings", _params=q_provider))
+
+    # tender draft
+    suite.addTest(Test_Below("create_menu", _params=qqq))
+    suite.addTest(Test_Below("select_below_menu", _params=qqq))
+    suite.addTest(Test_Below("set_description", _params=qqq))
+    suite.addTest(Test_Below("set_curr", _params=qqq))
+    suite.addTest(Test_Below("set_multilot", _params=qqq))
+    suite.addTest(Test_Below("set_dates", _params=qqq))
+    suite.addTest(Test_Below("add_lot", _params=qqq))
+    suite.addTest(Test_Below("add_item", _params=qqq))
+    suite.addTest(Test_Below("add_features", _params=qqq))
+    suite.addTest(Test_Below("add_doc", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url_edit", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url_delete", _params=qqq))
+
+    # tender publish
+    suite.addTest(Test_Below("create_below_publish", _params=qqq))
+
+    #add bid
+    qqq.update({"bid_json": qqq["wts"].__mongo__.get_params(22)["bids"][0]})
+    suite.addTest(Below_Bid("login_provider", _params=qqq))
+    suite.addTest(Below_Bid("select_below_type", _params=qqq))
+    suite.addTest(Below_Bid("select_tender_period", _params=qqq))
+    suite.addTest(Below_Bid("find_tender_for_bid", _params=qqq))
+    suite.addTest(Below_Bid("wait_for_tender_period", _params=qqq))
+    suite.addTest(Below_Bid("add_bid", _params=qqq))
+
+    qqq.update({"bid_json": qqq["wts"].__mongo__.get_params(22)["bids"][1]})
+    suite.addTest(Below_Bid("login_provider", _params=qqq))
+    suite.addTest(Below_Bid("find_tender_for_bid", _params=qqq))
+    suite.addTest(Below_Bid("add_bid", _params=qqq))
+
+    return suite
+
+
 def runner(arg):
     parser = OptionParser()
-    parser.add_option("-s", action="store", type="string")
-    parser.add_option("-g", action="store", type="string")
-    parser.add_option("-b", action="store", type="string")
+    parser.add_option("-s", action="store", type="string") # test name
+    parser.add_option("-g", action="store", type="string") # group test / prod
+    parser.add_option("-b", action="store", type="string") # browser Chrome default
+    parser.add_option("-r", action="store", type="int")  # registration on/off
     parser.add_option("--name", action="store", type="string")
 
     (options, args) = parser.parse_args(arg)
@@ -786,14 +912,18 @@ def runner(arg):
                         bro)    # browser? default - Chrome
     elif opt == 'billing_metods':
         ttt = s_billing_metods(options.g,tname,  bro)
-    elif opt == 'publish_test':
-        ttt = s_publish_test(options.g,tname,  bro)
     elif opt == 'aladdin_like_prozorro':
         ttt = s_aladdin_like_prozorro(options.g, tname,  bro)
     elif opt == 'aladdin_pure':
         ttt = s_aladdin_pure(options.g, tname,  bro)
     elif opt == 'prozorro':
         ttt = s_prozorro(options.g, tname,  bro)
+    elif opt == 'publish_test':
+        ttt = s_publish_test(options.g,tname,  bro)
+    elif opt == 'publish_prod':
+        ttt = s_publish_prod(options.g,tname,  bro, options.r)
+    elif opt == 'rialto_publish_prod':
+        ttt = s_rialto_publish_prod(options.g,tname,  bro, options.r)
 
 
     if ttt is not None:

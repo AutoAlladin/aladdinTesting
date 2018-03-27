@@ -14,7 +14,7 @@ from Prozorro import Utils
 
 
 
-def init_driver(test_mode):
+def init_driver(test_mode=True):
     file_name=""
     if test_mode :
         file_name = os.path.dirname(os.path.abspath(__file__))+'\\..\\test_params.json'
