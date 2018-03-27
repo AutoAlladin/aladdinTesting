@@ -58,16 +58,28 @@ class Employees(ParamsTestCase):
 
     def test_11_role(self):
         role_ = self.wts.drv.find_element_by_xpath("//p-multiselect[@formcontrolname='roles']/div/div/label")
+        time.sleep(5)
         role_.click()
         role_check = self.wts.drv.find_element_by_xpath("//div[@class='ui-chkbox-box ui-widget ui-corner-all ui-state-default']")
+        time.sleep(5)
         role_check.click()
 
-        time.sleep(2)
+        time.sleep(5)
 
     def test_12_save(self):
         btn_save = self.wts.drv.find_element_by_id("save_changes_")
         btn_save.click()
         time.sleep(5)
+
+    def test_13_delete(self):
+        btn_del = self.wts.drv.find_element_by_xpath(".//*[contains(@id, 'delete_empoyee_')]")
+        time.sleep(5)
+        btn_del.click()
+        btn_del_real = self.wts.drv.find_element_by_xpath("// div[contains(@class ,'jconfirm-box-container')] // button[1]")
+        #btn_del_real = self.wts.drv.find_element_by_id("edit_empoyee_")
+        time.sleep(5)
+        btn_del_real.click()
+        time.sleep(2)
 
         wanted_email=None
         email_list = self.wts.drv.find_elements_by_xpath(".//*[contains(@id, 'userEmail')]")

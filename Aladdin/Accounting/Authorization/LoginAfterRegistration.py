@@ -156,6 +156,7 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         empl.test_10_phone()
         empl.test_11_role()
         empl.test_12_save()
+        empl.test_13_delete()
     #
     # @add_res_to_DB
     # def test_07_edit_employees(self):
