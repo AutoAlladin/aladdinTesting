@@ -1,6 +1,6 @@
 {
     "new_account": {
-        "uuid": "0bc3cdd5-11c7-4aa6-a249-591c0b197f24",
+        "uuid": "5d741e7c-afdb-4fbb-aeb6-d139a1cad967",
         "edrpou": "30000222",
         "TenderId": "506",
         "LotId": "1",
@@ -829,6 +829,12 @@
                 "uuid": "0bc3cdd5-11c7-4aa6-a249-591c0b197f24",
                 "edrpou": "30000222",
                 "status": "PASS"
+            },
+            {
+                "uuid": "5d741e7c-afdb-4fbb-aeb6-d139a1cad967",
+                "edrpou": "30000222",
+                "status": "FAIL",
+                "error_msg": "('42S22', \"[42S22] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Invalid column name 'CompanyUuid'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 13 for SQL Server][SQL Server]Invalid column name 'CompanyUuid'. (207)\")"
             }
         ]
     }

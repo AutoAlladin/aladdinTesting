@@ -1,3 +1,5 @@
+from datetime import time
+
 from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 
 from Aladdin.Accounting.AladdinUtils import *
@@ -46,24 +48,36 @@ class UserRegistrationEDRPOU(ParamsTestCase):
     def test_10_phone(self):
         test_input(self, "resident_phone", **self.params['query'])
 
+    #@create_result_DB
+
+
     def test_11_email(self):
         test_input(self, "email", **self.params['query'])
         eml = self.wts.__mongo__.test_params.find_one(self.params['query']["q"])
         self.parent_suite.suite_params.update({"email": eml["inputs"]["email"]})
+        self.log("email " + self.parent_suite.suite_params["email"])
         print("email",  self.parent_suite.suite_params["email"])
         next = str(int(eml["inputs"]["email_next"]) + 1)
         self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {
         "$set": {"inputs.email": "forTestRegEmail_" + next.rjust(5, '0') + "@cucumber.com"}})
         self.wts.__mongo__.test_params.update_one({"_id": eml["_id"]}, {"$set": {"inputs.email_next": next}})
 
+
     def test_12_password(self):
         test_input(self, "password", **self.params['query'])
         psw = self.wts.__mongo__.test_params.find_one(self.params['query']["q"])
         self.parent_suite.suite_params.update({"password": psw["inputs"]["password"]})
+        self.log("password " + self.parent_suite.suite_params["password"])
         print("password", self.parent_suite.suite_params["password"])
+
 
     def test_13_confirm_password(self):
         test_input(self, "confirm_password", **self.params['query'])
+        #policy_chb = self.wts.drv.find_element_by_css_selector("#content > div > div > div > div > div > div > form > div.personal-data > div:nth-child(7) > div > div > label")
+        policy_chb = self.wts.drv.find_element_by_xpath("//input[@id='user_agreementPolicy']/../label")
+        #policy_chb = self.wts.drv.find_element_by_id("user_agreementPolicy")
+        #time.sleep(2)
+        policy_chb.click()
 
     def test_14_click_next_step_btn(self):
         try:
