@@ -30,7 +30,7 @@ class TestAladdinLikeProzorro(ParamsTestCase):
 
     @add_res_to_DB(test_name="reserve_balance_positive")
     def test_04_reserve_balance_positive(self):
-        par = self.parent_suite.suite_params["par"]["test_04"]
+        par = self.params["par"]["test_04"]
         #par["siteType"] = self.params["siteType"]
         req = requests.post(par["url"], data=json.dumps(par),
                             headers={"content-type": "application/json"})

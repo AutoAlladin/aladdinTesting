@@ -6,7 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as EC, expected_conditions
 from bson.objectid import ObjectId
 from enum import Enum
 
@@ -154,7 +154,17 @@ class WebTestSession:
         #self.drv.get_screenshot_as_file("output\\" + _id + ".png")
         return field.get_attribute('value')
 
+    def w_xpath(self, xpath, timeout=5):
+        element = WebDriverWait(self.drv, timeout).until(
+            expected_conditions.visibility_of_element_located(
+                (By.XPATH, xpath)))
+        return element
 
+    def w_id(self, id, timeout=5):
+        element = WebDriverWait(self.drv, timeout).until(
+            expected_conditions.presence_of_element_located(
+                (By.ID, id)))
+        return element
 
     def close(self):
         self.drv.close()

@@ -17,14 +17,21 @@ class Test_Below(ParamsTestCase):
     @add_res_to_DB(test_name="Меню создания тендеров")
     def create_menu(self):
 
-        url = self.parent_suite.suite_params["start_url"]
+        url = self.parent_suite.suite_params["login_url"]
         self.wts.drv.get(url)
 
-        with self.subTest("авторизация"):
-            LoginPage(self.wts.drv).login(
-                self.parent_suite.suite_params["authorization"]["owner_login"],
-                self.parent_suite.suite_params["authorization"]["owner_password"]
-            )
+        if "new_owner_login" in self.parent_suite.suite_params :
+            with self.subTest("авторизация"):
+                LoginPage(self.wts.drv).login(
+                    self.parent_suite.suite_params["new_owner_login"],
+                    self.parent_suite.suite_params["new_owner_password"]
+                )
+        else:
+            with self.subTest("авторизация"):
+                LoginPage(self.wts.drv).login(
+                    self.parent_suite.suite_params["tender_json"]["below"]["login"],
+                    self.parent_suite.suite_params["tender_json"]["below"]["password"]
+                )
 
         with self.subTest("меню создать"):
             waitFadeIn(self.wts.drv)
@@ -39,21 +46,34 @@ class Test_Below(ParamsTestCase):
                             (By.XPATH, "//button[@id='btn_create_purchase']/../ul/li/a")))
 
             self.assertIsNotNone(items, "Элемент items не найден ")
-            self.assertEqual(len(items), 10,
-                               "Количество типов сортировки !=10 : " + str(len(items)))
 
-            proc_list = {"План закупівлі", "Допорогова закупівля", "Відкриті торги","Відкриті торги з публікацією англійською мовою",
-                         "Звіт про укладені договори", "Переговорна процедура закупівлі","Переговорна процедура скорочена",
+            if self.parent_suite.suite_params['tender_json']['name'] == "below_and_bids":
+                self.assertEqual(len(items), 10,
+                               "Количество типов сортировки !=10 : " + str(len(items)))
+            elif self.parent_suite.suite_params['tender_json']['name']=="realto_below_and_bids":
+                self.assertEqual(len(items), 4,
+                                 "Количество типов сортировки !=4 : " + str(len(items)))
+
+
+            proc_list = {"План закупівлі", "Допорогова закупівля",
+                         "Відкриті торги","Відкриті торги з публікацією англійською мовою",
+                         "Звіт про укладені договори",
+                         "Переговорна процедура для потреб оборони",
+                         "Переговорна процедура закупівлі","Переговорна процедура скорочена",
                          "Конкурентний діалог", "Конкурентний діалог з публікацією англійською мовою",
                          "Відкриті торги для закупівлі енергосервісу"
                          }
 
+            if self.parent_suite.suite_params['tender_json']['name'] == "realto_below_and_bids":
+                proc_list.add('Простий тендер' )
+                proc_list.add( 'Двоетапний тендер')
+                proc_list.add( 'Запит цінових пропозицій')
             for value in items:
                 with self.subTest("создать процедуру - "+value.text):
                     self.assertIn(value.text, proc_list, "Невалидный текст меню создания тендера - "+value.text)
 
     def select_below_menu_F(self):
-        self.wts.drv.get(self.parent_suite.suite_params["tender_json"]["main"]["url"])
+        self.wts.drv.get(self.parent_suite.suite_params["start_url"])
         waitFadeIn(self.wts.drv)
         WebDriverWait(self.wts.drv, 10).until(
             expected_conditions.visibility_of_element_located(
@@ -108,12 +128,22 @@ class Test_Below(ParamsTestCase):
             expected_conditions.visibility_of_element_located(
                 (By.ID, "buttonAddNewLot")))
 
-        div = self.wts.drv.find_element_by_xpath("//div[@ng-controller='endEditPurchaseController']")
-        txt=div.get_attribute("data-ng-init")[15:-1]
-        model = json.loads(txt)
-        self.log(model["purchase"]["purchaseId"])
+        # потому что в прозорро EndPurchaseController, а в rialto editPurchaseController
+        div = self.wts.drv.find_element_by_xpath("//div[contains(@ng-controller,'ditPurchaseController')]")
+
+        purchaseId=0
+        if dic["name"] == "realto_below_and_bids":
+            txt = div.get_attribute("data-ng-init")[23:-1]
+            model = json.loads(txt)
+            purchaseId = model["model"]["purchase"]["purchaseId"]
+        else:
+            txt = div.get_attribute("data-ng-init")[15:-1]
+            model = json.loads(txt)
+            purchaseId = model["purchase"]["purchaseId"]
+
+        self.log(purchaseId)
         self.parent_suite.suite_params.update({"tender_new": tn})
-        self.parent_suite.suite_params.update({"tenderID": model["purchase"]["purchaseId"]})
+        self.parent_suite.suite_params.update({"tenderID": purchaseId})
 
     @add_res_to_DB(test_name="Допороговый - + лот")
     def add_lot(self):
@@ -151,16 +181,9 @@ class Test_Below(ParamsTestCase):
         self.parent_suite.suite_params.update({"tender_new": tn})
 
     def open_draft_by_url_F(self):
-        with self.subTest("авторизация"):
-            self.wts.drv.get('https://test-gov.ald.in.ua/Account/Login')
-            LoginPage(self.wts.drv).login(
-                self.parent_suite.suite_params["authorization"]["owner_login"],
-                self.parent_suite.suite_params["authorization"]["owner_password"]
-            )
-
         with self.subTest("открыть тендер"):
-            id = self.parent_suite.suite_params["tenderID"]
-            url = self.parent_suite.suite_params["tender_json"]["main"]["url"][:-1]
+            id = self.parent_suite.suite_params["tenderID" ]
+            url = self.parent_suite.suite_params["start_url"][:-1]
             url = url + "/" + str(id)
             self.wts.drv.get(url)
 
@@ -221,13 +244,18 @@ class Test_Below(ParamsTestCase):
 
     @add_res_to_DB(test_name="Допороговый полный опубликовать")
     def create_below_publish(self):
-
+        self.wts.drv.get(self.parent_suite.suite_params["login_url"])
         if "new_owner_login" in self.parent_suite.suite_params :
-            self.wts.drv.get(self.parent_suite.suite_params["login_url"])
             with self.subTest("авторизация"):
                 LoginPage(self.wts.drv).login(
                     self.parent_suite.suite_params["new_owner_login"],
                     self.parent_suite.suite_params["new_owner_password"]
+                )
+        else:
+            with self.subTest("авторизация"):
+                LoginPage(self.wts.drv).login(
+                    self.parent_suite.suite_params["tender_json"]["below"]["login"],
+                    self.parent_suite.suite_params["tender_json"]["below"]["password"]
                 )
 
         self.select_below_menu_F()

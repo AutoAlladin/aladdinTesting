@@ -44,10 +44,15 @@ class Load_main_page(ParamsTestCase):
             check((By.XPATH, ".//*[@id='headingOne']/div"), "Stages".upper())
             check((By.XPATH, ".//*[@id='headingThree']/div"), "Delivery region".upper())
             check((By.XPATH, ".//*[@id='dkHelpers']/div"), "Reference nomenclatures".upper())
-            check((By.XPATH, ".//*[@id='sumOfTenders']/div"), "Budget of the tender".upper())
+            check((By.XPATH, ".//*[@id='sumOfTenders']/div"), "CURRENCY AND BUDGET".upper())
             check((By.XPATH, ".//*[@id='filterblock']/li[6]/div[1]/div"), "Filter by dates".upper())
             check((By.XPATH, ".//*[@id='ownerOfTenders']/div"), "Organizer of the auction".upper())
-            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[1]/h2"), "Aladdin Government public procurement")
+
+            if self.parent_suite.suite_params['tender_json']['name']=="realto_below_and_bids":
+                check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[1]/h2"),"Aladdin Bidding комерційні закупівлі")
+            elif self.parent_suite.suite_params['tender_json']['name']=="below_and_bids":
+                check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[1]/h2"), "Aladdin Government public procurement")
+
             check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[1]/label"), "Active")
             check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[2]/label"), "Completed")
             check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[3]/label"), "Archive")
@@ -60,10 +65,15 @@ class Load_main_page(ParamsTestCase):
             check((By.XPATH, ".//*[@id='headingOne']/div"), "Этапы".upper())
             check((By.XPATH, ".//*[@id='headingThree']/div"), "Регион доставки".upper())
             check((By.XPATH, ".//*[@id='dkHelpers']/div"), "Справочник номенклатур".upper())
-            check((By.XPATH, ".//*[@id='sumOfTenders']/div"), "Бюджет тендера".upper())
+            check((By.XPATH, ".//*[@id='sumOfTenders']/div"), "ВАЛЮТА И БЮДЖЕТ".upper())
             check((By.XPATH, ".//*[@id='filterblock']/li[6]/div[1]/div"), "Фильтр по датам".upper())
             check((By.XPATH, ".//*[@id='ownerOfTenders']/div"), "Организатор торгов".upper())
-            check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[1]/h2"), "Aladdin Government закупки")
+
+            if self.parent_suite.suite_params['tender_json']['name']=="realto_below_and_bids":
+                check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[1]/h2"),"Aladdin Bidding комерційні закупівлі")
+            elif self.parent_suite.suite_params['tender_json']['name']=="below_and_bids":
+                check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[1]/h2"), "Aladdin Government закупки")
+
             check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[1]/label"), "Активные")
             check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[2]/label"), "Завершенные")
             check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[1]/div[2]/div/div/span[3]/label"), "Архивные")
@@ -77,10 +87,15 @@ class Load_main_page(ParamsTestCase):
             check((By.XPATH, ".//*[@id='headingOne']/div"), "Етапи".upper())
             check((By.XPATH, ".//*[@id='headingThree']/div"), "Регіон доставки".upper())
             check((By.XPATH, ".//*[@id='dkHelpers']/div"), "Довідник номенклатур".upper())
-            check((By.XPATH, ".//*[@id='sumOfTenders']/div"), "Бюджет тендера".upper())
+            check((By.XPATH, ".//*[@id='sumOfTenders']/div"), "ВАЛЮТА ТА БЮДЖЕТ".upper())
             check((By.XPATH, ".//*[@id='filterblock']/li[6]/div[1]/div"), "Фільтр по датам".upper())
             check((By.XPATH, ".//*[@id='ownerOfTenders']/div"), "Організатор торгів".upper())
-            check((By.XPATH, ".//*[@id='applicationNameTitle']"), "Aladdin Government закупівлі")
+
+            if self.parent_suite.suite_params['tender_json']['name']=="realto_below_and_bids":
+                check((By.XPATH, ".//*[@id='wrapper']/div/div/div/div[1]/h2"),"Aladdin Bidding комерційні закупівлі")
+            elif self.parent_suite.suite_params['tender_json']['name']=="below_and_bids":
+                check((By.XPATH, ".//*[@id='applicationNameTitle']"), "Aladdin Government закупівлі")
+
             check((By.XPATH, ".//*[@id='topActiveStatusLabel']"), "Активні")
             check((By.XPATH, ".//*[@id='topOverStatusLabel']"), "Завершені")
             check((By.XPATH, ".//*[@id='topArchiveStatusLabel']"), "Архівні")
@@ -281,7 +296,7 @@ class Tender_Tab(TabTest):
                 self.log("заголовок ОК - "+title.text)
 
             with self.subTest("название заказчика первого тендера в списке"):
-                owner_name = one_tender.find_element_by_xpath("//small[contains(@id,'companyName')]")
+                owner_name = one_tender.find_element_by_xpath("//small[contains(@class,'getpurchase-company')]")
                 self.assertIsNotNone(owner_name, "Элемент owner_name не найден")
                 self.log("название закупщика ОК - "+owner_name.text)
 
@@ -321,27 +336,27 @@ class Tender_Tab(TabTest):
         id_excell="IdExportExcelButton"
         xpath_page_total="//div[contains(@class,'pager-total')]/span"
 
-        try:
-            with self.subTest("типы поиска тедера"):
-                select_searchType = WebDriverWait(self.wts.drv, 5).until(
-                    expected_conditions.visibility_of_element_located((By.ID, id_searchType)))
-                self.assertIsNotNone(select_searchType, "Элемент select_searchType не найден  " + id_searchType)
-                self.log("Выбор типов поиска ОК - " + id_searchType)
-
-            searchType_text={"Шукати:","По назві","Системному номеру (у форматі UA-....)","По опису"}
-
-            with self.subTest("названия типов поиска"):
-                xpat = "//select[@id='searchType']/option"
-                searchType_option = self.wts.drv.find_elements_by_xpath(xpat)
-                self.assertIsNotNone(searchType_option, "Элемент searchType_option не найден  " + xpat)
-                self.assertGreater(len(searchType_option),0, "Количество типов поиска !=4 : "+str(len(searchType_option)))
-            for value in searchType_option:
-                with self.subTest("searchType_optionText"):
-                    self.assertIn(value.text, searchType_text, "Невалидный текст типа поиска - "+value.text)
-            self.log("Названия типов поиска ОК")
-
-        except Exception as e:
-            self.assertEqual(True, False, "select_searchType - " + e.__str__())
+        # try:
+        #     with self.subTest("типы поиска тедера"):
+        #         select_searchType = WebDriverWait(self.wts.drv, 5).until(
+        #             expected_conditions.visibility_of_element_located((By.ID, id_searchType)))
+        #         self.assertIsNotNone(select_searchType, "Элемент select_searchType не найден  " + id_searchType)
+        #         self.log("Выбор типов поиска ОК - " + id_searchType)
+        #
+        #     searchType_text={"Шукати:","По назві","Системному номеру (у форматі UA-....)","По опису"}
+        #
+        #     with self.subTest("названия типов поиска"):
+        #         xpat = "//select[@id='searchType']/option"
+        #         searchType_option = self.wts.drv.find_elements_by_xpath(xpat)
+        #         self.assertIsNotNone(searchType_option, "Элемент searchType_option не найден  " + xpat)
+        #         self.assertGreater(len(searchType_option),0, "Количество типов поиска !=4 : "+str(len(searchType_option)))
+        #     for value in searchType_option:
+        #         with self.subTest("searchType_optionText"):
+        #             self.assertIn(value.text, searchType_text, "Невалидный текст типа поиска - "+value.text)
+        #     self.log("Названия типов поиска ОК")
+        #
+        # except Exception as e:
+        #     self.assertEqual(True, False, "select_searchType - " + e.__str__())
 
         with self.subTest("поле ввода текста поиска") :
             findbykeywords = WebDriverWait(self.wts.drv, 5).until(
@@ -354,7 +369,7 @@ class Tender_Tab(TabTest):
 
         with self.subTest("кнопка поиска"):
             butSimpleSearch = WebDriverWait(self.wts.drv, 5).until(
-                expected_conditions.visibility_of_element_located((By.ID, id_butSimpleSearch)))
+                expected_conditions. visibility_of_element_located((By.ID, id_butSimpleSearch)))
             self.assertIsNotNone(butSimpleSearch, "Элемент butSimpleSearch не найден  " + id_butSimpleSearch)
             self.log("Кнопка поиска ОК - " + id_butSimpleSearch)
 
@@ -571,11 +586,12 @@ class Tender_Tab(TabTest):
             regions_label = WebDriverWait(self.wts.drv, 15).until(
                 expected_conditions.visibility_of_any_elements_located((By.XPATH, xpath_regions_label)))
             self.assertIsNotNone(regions_label, "Элемент regions_label  не найден  " + xpath_regions_label)
-            self.assertEqual(len(regions_label), 26, "Регионов !=26 : " + str(len(regions_label)))
-            self.log("Количесвто регионов ОК - " + str(len(regions_label)))
+            # self.assertEqual(len(regions_label), 26, "Регионов !=26 : " + str(len(regions_label)))
+            # self.log("Количесвто регионов ОК - " + str(len(regions_label)))
 
+            #'Відповідно до тендерної документації',
             regions_labels_text = {
-                'Відповідно до тендерної документації', 'Автономна Республіка Крим',
+                'Автономна Республіка Крим',
                 'Вінницька', 'Волинська', 'Дніпропетровська', 'Донецька',
                 'Житомирська', 'Закарпатська', 'Запорізька', 'Івано-Франківська',
                 'Київська','Кіровоградська','Луганська','Львівська','Миколаївська',
@@ -586,7 +602,19 @@ class Tender_Tab(TabTest):
 
             for value in regions_label:
                 with self.subTest("регион - "+value.text):
-                    self.assertIn(value.text, regions_labels_text, "Невалидное название региона - " + value.text)
+                    self.assertIn(value.text, regions_labels_text, "Добавилт название региона - " + value.text)
+
+            page_labels=list()
+            for value in regions_label:
+                page_labels.append(value.text)
+
+            page_labels=set(page_labels)
+
+
+            for text in regions_labels_text:
+                with self.subTest("регион - "+text):
+                    self.assertIn(text, page_labels, "Deleted название региона - " + text)
+
             self.log("Названия регионов ОК ")
 
             self.wts.drv.execute_script("$('#navigation').slimScroll({ scrollTo: '-100px' })")
