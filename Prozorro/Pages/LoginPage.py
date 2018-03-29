@@ -123,10 +123,13 @@ class LoginPage:
         return r
 
     def login(self, login, password):
-        self.txtLogin.send_keys(login)
-        self.txtPassword.send_keys(password)
-        waitFadeIn(self.drv)
-        self.btnLogin.click()
+        try:
+            self.txtLogin.send_keys(login)
+            self.txtPassword.send_keys(password)
+            waitFadeIn(self.drv)
+            self.btnLogin.click()
+        except Exception as e :
+            print(e.__str__())
 
     def set_ua(self):
         self.ua.click()

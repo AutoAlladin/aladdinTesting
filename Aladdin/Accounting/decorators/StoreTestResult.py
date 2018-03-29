@@ -82,21 +82,23 @@ def add_res_to_DB(test_name=None,
                 if screenshotERROR and self.wts.drv is not None:
                     pngERROR = self.wts.drv.get_screenshot_as_png()
                     test_method_result.update({"screen_id": self.wts.__mongo__.fs.put(pngERROR, file_name=test_method.__name__+"ERROR.png")})
-                e.test_method=tt
-                raise e
+
+                raise Exception(tt,
+                                os.path.dirname(os.path.abspath( prozorro.__file__ ))+"\\Aladdin\\output\\"+test_method.__name__+"ERROR.png"     )
             finally:
                 if test_method_result["status"]=="":
                     test_method_result["status"] = "NOT RUNED"
-                final_test_method = datetime.datetime.utcnow()
+                final_test_method = datetime.datetime.now()
                 test_method_result["timing"]["end"]= final_test_method #  .strftime("%Y-%m-%d %H:%M:%S.%f%z")
                 test_method_result["timing"]["duration"]= (final_test_method-start_test_method).total_seconds()
 
                 if len(self.tlog)>0 :
                     test_method_result.update({"logs":self.tlog});
 
-                if self.wts.drv is not None and test_method_result["screen_id"] != "":
-                    dir= os.path.dirname(os.path.abspath( prozorro.__file__ ))
-                    dir+= "\\Aladdin\\output\\"
+                if self.wts.drv is not None \
+                and "screen_id" in test_method_result \
+                and test_method_result["screen_id"] != "":
+                    dir= os.path.dirname(os.path.abspath( prozorro.__file__ ))+"\\Aladdin\\output\\"
                     self.wts.drv.get_screenshot_as_file(dir + test_method.__name__+"_"+str(test_method_result["screen_id"]) + ".png")
 
                 if parent is None:
@@ -124,7 +126,7 @@ def add_res_to_DB(test_name=None,
 def return_for_DB(test_name=None,
                   test_description=None,
                   screenshotOK=True,
-                  screenshotERROR=True):
+                  screenshotERROR=True,):
     def inner_decorator(test_method):
         def wrapper(self):
 
@@ -144,7 +146,7 @@ def return_for_DB(test_name=None,
 
             if test_description is not None: test_method_result.update({"description": test_description})
 
-            start_test_method = datetime.datetime.utcnow()
+            start_test_method = datetime.datetime.now()
             test_method_result["timing"]["start"]=start_test_method #.strftime("%Y-%m-%d %H:%M:%S.%f%z")
 
             try:
@@ -162,7 +164,10 @@ def return_for_DB(test_name=None,
                     pngERROR = self.wts.drv.get_screenshot_as_png()
                     test_method_result.update({"screen_id":pngERROR})
                 e.test_method=tt
-                raise e
+                raise  Exception(tt,
+                                os.path.dirname(os.path.abspath( prozorro.__file__ ))+"\\Aladdin\\output\\",
+
+                       )
             finally:
                 if "status" in test_method_result:
                     test_method_result["status"] = "NOT RUNED"

@@ -8,6 +8,7 @@ import prozorro
 run_guid = str(uuid.uuid1())
 roles={"owner", "provider", "viewer"}
 
+
 def get_root():
     return os.path.dirname(os.path.abspath( prozorro.__file__ ));
 
@@ -29,7 +30,6 @@ def waitFadeIn(drv):
     except:
         pass
 
-
 def waitNotifyToast(drv):
     try:
         if not WebDriverWait(drv, 2).until( EC.invisibility_of_element_located ((By.XPATH, "//div[@class='page-loader animated fadeIn']"))):
@@ -40,7 +40,6 @@ def waitNotifyToast(drv):
         pass #print("toast-close not found")
 
 def get_dic_val(dic, _key, default = None):
-
 
     key = _key.split(".")
 

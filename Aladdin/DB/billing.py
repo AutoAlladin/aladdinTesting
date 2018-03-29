@@ -85,3 +85,4 @@ def get_db_reserve(uuid):
             return 0.0
         else:
             return float(row.ReservedAmount)
+

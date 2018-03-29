@@ -338,11 +338,21 @@ def getCompanyBids(connection, cols=False):
 
 
 if __name__  =="__main__":
-    mssql_connection = get_connection(**conn_prod)
+    # mssql_connection = get_connection(**conn_prod)
     #getCompany(mssql_connection)
-    getUserCompany(mssql_connection)
+    # getUserCompany(mssql_connection)
     #getCompanyUser(mssql_connection,True)
     #getCompanyTenders(mssql_connection, cols=False )
     #getCompanyBids(mssql_connection,True)
+    # mssql_connection.close()
 
-    mssql_connection.close()
+    billing_test_conn= get_connection(**conn_billing_test)
+
+    crs = billing_test_conn.cursor()
+
+    crs.execute(" UPDATE [BillingTest].[dbo].[Accounts]"+
+                " SET Balance = 500000 "+
+                " WHERE CompanyEdrpo = '{0}' ".format("09000080"))
+
+    crs.commit()
+    billing_test_conn.close()

@@ -7,6 +7,7 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 
 from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
+from Aladdin.Accounting.decorators.StoreTestResult import add_res_to_DB
 from Prozorro.Pages.LoginPage import LoginPage
 from Prozorro.Pages.TenderView import TenderView
 from Prozorro.Utils import waitFadeIn
@@ -14,15 +15,22 @@ from Prozorro.Utils import waitFadeIn
 
 class Below_Bid(ParamsTestCase):
 
+    @add_res_to_DB(test_name='Авторизация провайдера')
     def login_provider(self):
 
-        self.wts.drv.get(self.parent_suite.suite_params["start_url"])
-
-        with self.subTest("авторизация"):
-            LoginPage(self.wts.drv).login(
-                self.parent_suite.suite_params["tender_json"]["authorization"]["provider_login"],
-                self.parent_suite.suite_params["tender_json"]["authorization"]["provider_password"]
-            )
+        self.wts.drv.get(self.parent_suite.suite_params["login_url"])
+        if "new_provider_login" in self.parent_suite.suite_params:
+            with self.subTest("авторизация"):
+                LoginPage(self.wts.drv).login(
+                    self.parent_suite.suite_params["new_provider_login"],
+                    self.parent_suite.suite_params["new_provider_password"]
+                )
+        else:
+            with self.subTest("авторизация"):
+                LoginPage(self.wts.drv).login(
+                    self.params["bid_json"]["login"],
+                    self.params["bid_json"]["password"]
+                )
 
         myTendersList = WebDriverWait(self.wts.drv, 10).until(
             expected_conditions.visibility_of_element_located((By.ID,"myTendersList")))
@@ -35,6 +43,10 @@ class Below_Bid(ParamsTestCase):
             ):
             myTenders.click()
 
+        self.log("login_provider OK - "+  self.params["bid_json"]["login"]+
+                 " - url: "+self.wts.drv.current_url)
+
+    @add_res_to_DB(test_name='Выбор допрогового тендера')
     def select_below_type(self):
         xpath_tender_type = "//ul[@id='filterblock']/li/div[@id='headingTwo']"
 
@@ -50,12 +62,12 @@ class Below_Bid(ParamsTestCase):
         self.assertIsNotNone(tender_period, "Элемент tender_type filter не найден  " + xpath_tender_type)
         tender_period.click()
 
-        sleep(1)
+        sleep(0.5)
         waitFadeIn(self.wts.drv)
         tender_type.click()
+        sleep(0.5)
 
-        sleep(1)
-
+    @add_res_to_DB(test_name='Выбор статуса торгов')
     def select_tender_period(self):
         xpath_tender_etap = "//ul[@id='filterblock']/li/div[@id='headingOne']"
 
@@ -72,16 +84,18 @@ class Below_Bid(ParamsTestCase):
         below.click()
         tender_etap.click()
 
-    def find_tender_for_bid(self):
+    @add_res_to_DB(test_name='Поиск тендера')
+    def find_tender(self):
         id_searchType='searchType'
         id_findbykeywords='findbykeywords'
         id_butSimpleSearch='butSimpleSearch'
 
         ProzorroId = self.parent_suite.suite_params["ProzorroId"]
 
-        select_searchType = WebDriverWait(self.wts.drv, 5).until(
-            expected_conditions.visibility_of_element_located((By.ID, id_searchType)))
-        Select(select_searchType).select_by_visible_text("Системному номеру (у форматі UA-....)")
+        # select_searchType = WebDriverWait(self.wts.drv, 5).until(
+        #     expected_conditions.visibility_of_element_located((By.ID, id_searchType)))
+        # Select(select_searchType).select_by_visible_text("Системному номеру (у форматі UA-....)")
+
         butSimpleSearch = WebDriverWait(self.wts.drv, 5).until(
             expected_conditions.visibility_of_element_located((By.ID, id_butSimpleSearch)))
         findbykeywords = WebDriverWait(self.wts.drv, 5).until(
@@ -93,14 +107,16 @@ class Below_Bid(ParamsTestCase):
 
         self.wts.drv.execute_script("window.scroll(0,1000)")
 
-        sleep(5)
+        sleep(2)
 
         tender_link = WebDriverWait(self.wts.drv, 10).until(
             expected_conditions.visibility_of_element_located((By.XPATH,
         "//div[@id='purchase-page']//a[contains(@id,'href-purchase')]/../span[text()='"+ProzorroId+"']/../a")))
 
         tender_link.click()
+        self.log("open tender - "+ProzorroId)
 
+    @add_res_to_DB(test_name='Ожидание периода подачи предложений')
     def wait_for_tender_period(self):
 
         with self.subTest("дата начала периода подачи предложений"):
@@ -122,9 +138,10 @@ class Below_Bid(ParamsTestCase):
 
         self.assertEquals(status,"3")
 
+    @add_res_to_DB(test_name='Подача предложения')
     def add_bid(self):
-        TenderView(self.wts.drv).\
-            open_bids().\
-            new(prepare=0)
+        bid_sum = self.params["bid_json"]["bidAmount"]
+        r=TenderView(self.wts.drv).open_bids().new(prepare=0, bidAm=bid_sum)
+        self.log("bid publish - "+r)
 
 

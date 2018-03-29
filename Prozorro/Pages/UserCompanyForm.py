@@ -4,6 +4,7 @@ from selenium.webdriver.chrome import webdriver
 from selenium import webdriver
 from selenium.webdriver.support.select import Select
 from Prozorro import  Utils
+from Prozorro.Utils import waitFadeIn
 
 
 class UserCompanyForm:
@@ -73,7 +74,7 @@ class UserCompanyForm:
                 select_by_visible_text("Одеська")
         else:
             Select(self.drv.find_element_by_id("select_regions")). \
-                select_by_visible_text("Автономна Республіка Крим")
+                select_by_visible_text(company["addr_region"].strip())
 
     def __init__(self,_drv):
         self.drv = _drv
@@ -106,6 +107,7 @@ class UserCompanyForm:
         self.full_name_en.send_keys(val)
 
     def set_subj_short_name(self, val):
+        if val is None : val = "коротка назва компанії"
         self.short_name.send_keys(val)
 
     def set_subj_short_name_eng(self, val):
@@ -124,12 +126,12 @@ class UserCompanyForm:
         if v == True:
             # self.drv.execute_script("$('#role0').click()")
             #self.role0.click()
-            if v == "general":
+            #if v == "general":
                 self.drv.find_element_by_xpath("//label[@for='customerRoleId1']").click()
-            elif v == "special":
-                self.drv.find_element_by_xpath("//label[@for='customerRoleId2']").click()
-            else:
-                print("NOT KNOW customer type")
+            # elif v == "special":
+            #     self.drv.find_element_by_xpath("//label[@for='customerRoleId2']").click()
+            # else:
+            #     print("NOT KNOW customer type")
         else:
             self.role1.click()
 
@@ -140,15 +142,17 @@ class UserCompanyForm:
         Select(self.select_countries).select_by_visible_text(v)
 
     def set_addr_region(self, v):
-        sleep(1)
+        sleep(2)
         Select(self.drv.find_element_by_id("select_regions")).select_by_visible_text(v.strip())
         Utils.waitFadeIn(self.drv)
 
     def set_addr_locality(self, v):
+        waitFadeIn(self.drv)
         self.drv.find_element_by_xpath("//input[@ng-click='changeModeEnterCity()']").click()
         self.drv.find_element_by_id("cityName").send_keys(v)
 
     def set_addr_street(self, v):
+        if v is None or v == "" : v = "street"
         self.drv.find_element_by_id("street").send_keys(v)
 
     def set_addr_post_code(self, v):
