@@ -29,11 +29,11 @@ class Edit(ParamsTestCase):
         #self.wts.drv.execute_script("window.scrollTo(0, 0);")
 
     def test_03_click_btn_edit(self):
-        self.wts.drv.execute_script("window.scrollTo(0, 0);")
-        WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_edit_no_active")))
-        btn_edit = self.wts.drv.find_element_by_id("btn_edit_no_active")
-        time.sleep(2)
-        btn_edit.click()
+        # self.wts.drv.execute_script("window.scrollTo(0, 0);")
+        # WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_edit_no_active")))
+        # btn_edit = self.wts.drv.find_element_by_id("btn_edit_no_active")
+        # time.sleep(2)
+        # btn_edit.click()
         time.sleep(5)
 
     def test_04_clear_field_comp_name(self):
