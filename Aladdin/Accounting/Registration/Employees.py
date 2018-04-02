@@ -25,6 +25,7 @@ class Employees(ParamsTestCase):
 
     def test_03_add_user(self):
         btn_add_user = self.wts.drv.find_element_by_id("butAddNewUser")
+        time.sleep(5)
         btn_add_user.click()
 
     def test_04_name(self):
