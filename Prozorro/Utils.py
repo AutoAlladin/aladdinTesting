@@ -26,7 +26,7 @@ def set_datepicker(drv, ID, value):
 
 def waitFadeIn(drv):
     try:
-        WebDriverWait(drv, 20).until( EC.invisibility_of_element_located ((By.XPATH, "//div[@class='page-loader animated fadeIn']")))
+        WebDriverWait(drv, 20).until(EC.invisibility_of_element_located ((By.XPATH, "//div[@class='page-loader animated fadeIn']")))
     except:
         pass
 

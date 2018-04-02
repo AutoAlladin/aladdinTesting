@@ -9,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 from Aladdin.Accounting.decorators.StoreTestResult import add_res_to_DB
-from Prozorro.Utils import waitFadeIn
+from Prozorro.Utils import waitFadeIn, scroll_to_element
 
 
 class TabTest(ParamsTestCase):
@@ -31,15 +31,20 @@ class Load_main_page(ParamsTestCase):
     def check_labels(self, lang):
         def check(locator, wait_text):
             with self.subTest("проверка " + wait_text):
-                element = WebDriverWait(self.wts.drv, 20).until(
-                    expected_conditions.visibility_of_element_located(locator))
+                element = None
+                try:
+                    element = WebDriverWait(self.wts.drv, 20).until(
+                        expected_conditions.visibility_of_element_located(locator))
+                    self.assertEqual(element.text, wait_text, "не совпадают значение в интерфейсе и ожидаемое")
+                except:
+                    pass
+
                 self.assertIsNotNone(element, "Проверка надписей, элемент  не найден  "+str(locator))
-                self.assertEqual(element.text, wait_text,"не совпадают значение в интерфейсе и ожидаемое")
                 self.log("element.text = "+wait_text)
 
         if lang=='en':
             check((By.ID, 'hrefPurchases'), "Tenders")
-            check((By.XPATH, ".//*[@id='navigation']/div/button[1]"), "Clear")
+            check((By.XPATH, ".//*[@id='clear_all']"), "Clear")
             check((By.XPATH, ".//*[@id='headingTwo']/div/span"), "Type of procedure".upper())
             check((By.XPATH, ".//*[@id='headingOne']/div"), "Stages".upper())
             check((By.XPATH, ".//*[@id='headingThree']/div"), "Delivery region".upper())
@@ -60,7 +65,7 @@ class Load_main_page(ParamsTestCase):
 
         elif lang=='ru':
             check((By.ID, 'hrefPurchases'), "Тендеры")
-            check((By.XPATH, ".//*[@id='navigation']/div/button[1]"), "Очистить")
+            check((By.XPATH, ".//*[@id='clear_all']"), "Очистить")
             check((By.XPATH, ".//*[@id='headingTwo']/div/span"), "Тип процедуры".upper())
             check((By.XPATH, ".//*[@id='headingOne']/div"), "Этапы".upper())
             check((By.XPATH, ".//*[@id='headingThree']/div"), "Регион доставки".upper())
@@ -82,7 +87,7 @@ class Load_main_page(ParamsTestCase):
 
         elif lang == 'ua':
             check((By.ID, 'hrefPurchases'), "Тендери")
-            check((By.XPATH, ".//*[@id='navigation']/div/button[1]"), "Очистити")
+            check((By.XPATH, ".//*[@id='clear_all']"), "Очистити")
             check((By.XPATH, ".//*[@id='headingTwo']/div/span"), "Тип процедури".upper())
             check((By.XPATH, ".//*[@id='headingOne']/div"), "Етапи".upper())
             check((By.XPATH, ".//*[@id='headingThree']/div"), "Регіон доставки".upper())
@@ -385,9 +390,9 @@ class Tender_Tab(TabTest):
                     (By.XPATH, "//div[@id='purchase-page']/div/div[@class='col-md-12'][2]")))
 
             id = one_tender.find_element_by_xpath("//span[@class='spanProzorroId']")
-            select_searchType = WebDriverWait(self.wts.drv, 5).until(
-                expected_conditions.visibility_of_element_located((By.ID, id_searchType)))
-            Select(select_searchType).select_by_visible_text("Системному номеру (у форматі UA-....)")
+            # select_searchType = WebDriverWait(self.wts.drv, 5).until(
+            #     expected_conditions.visibility_of_element_located((By.ID, id_searchType)))
+            # Select(select_searchType).select_by_visible_text("Системному номеру (у форматі UA-....)")
             butSimpleSearch = WebDriverWait(self.wts.drv, 5).until(
                 expected_conditions.visibility_of_element_located((By.ID, id_butSimpleSearch)))
             findbykeywords = WebDriverWait(self.wts.drv, 5).until(
@@ -421,13 +426,13 @@ class Tender_Tab(TabTest):
             self.assertIsNotNone(label, "Элемент label_archive не найден  " + xpath_archive)
             self.log("Чекбокс архивные ОК - " + xpath_archive)
 
-        with self.subTest("кнопка занрузки в ексель"):
-            button = WebDriverWait(self.wts.drv, 5).until(
-                expected_conditions.visibility_of_element_located((By.ID, id_excell)))
-            self.assertIsNotNone(button, "Элемент id_excell не найден  " + id_excell)
-            waitFadeIn(self.wts.drv)
-            button.click()
-            self.log("Кнопка сохранения в ексель ОК - " + id_excell)
+        # with self.subTest("кнопка занрузки в ексель"):
+        #     button = WebDriverWait(self.wts.drv, 5).until(
+        #         expected_conditions.visibility_of_element_located((By.ID, id_excell)))
+        #     self.assertIsNotNone(button, "Элемент id_excell не найден  " + id_excell)
+        #     waitFadeIn(self.wts.drv)
+        #     button.click()
+        #     self.log("Кнопка сохранения в ексель ОК - " + id_excell)
 
         # with self.subTest("page_total"):
         #     page_total = WebDriverWait(self.wts.drv, 5).until(
@@ -467,6 +472,7 @@ class Tender_Tab(TabTest):
             proc_type = WebDriverWait(self.wts.drv, 5).until(
                 expected_conditions.visibility_of_element_located((By.XPATH, xpath_proc_type)))
             self.assertIsNotNone(proc_type, "Элемент proc_type filter не найден  " + xpath_proc_type)
+            waitFadeIn(self.wts.drv)
             proc_type.click()
 
             with self.subTest("кнопка выбрать все"):
@@ -512,45 +518,52 @@ class Tender_Tab(TabTest):
             tenderEtap = WebDriverWait(self.wts.drv, 5).until(
                 expected_conditions.visibility_of_element_located((By.ID, id_tenderEtap)))
             self.assertIsNotNone(tenderEtap, "Элемент tenderEtap filter не найден  " + id_tenderEtap)
+
+            scroll_to_element(self.wts.drv, tenderEtap)
             tenderEtap.click()
 
-            with self.subTest("кнопка выбрать все"):
-                id_button_all = "//div[@id='tenderEtap']//button[@id='butSelectFilterGeo']"
-                button_all = WebDriverWait(self.wts.drv, 10).until(
-                    expected_conditions.visibility_of_element_located((By.XPATH, id_button_all)))
-                self.assertIsNotNone(button_all, "Элемент button_all filter не найден  " + id_button_all)
-                button_all.click()
-                self.log("Кнопка выбрать все типов тендеров ОК - " + id_button_all)
+            try:
+                with self.subTest("кнопка выбрать все"):
+                    id_button_all = "//div[@id='tenderEtap']//button[@id='butSelectFilterGeo']"
+                    button_all = WebDriverWait(self.wts.drv, 10).until(
+                        expected_conditions.visibility_of_element_located((By.XPATH, id_button_all)))
+                    self.assertIsNotNone(button_all, "Элемент button_all filter не найден  " + id_button_all)
+                    button_all.click()
+                    self.log("Кнопка выбрать все типов тендеров ОК - " + id_button_all)
 
-            with self.subTest("кнопка очистить все"):
-                id_button_clear ="//div[@id='tenderEtap']//button[@id='butClearFilterGeo']"
-                button_clear = WebDriverWait(self.wts.drv, 10).until(
-                    expected_conditions.visibility_of_element_located((By.XPATH, id_button_clear)))
-                self.assertIsNotNone(button_clear, "Элемент button_clear filter не найден  " + id_button_clear)
-                button_clear.click()
-                self.log("Кнопка очистить все типов тендеров ОК - " + id_button_clear)
+                with self.subTest("кнопка очистить все"):
+                    id_button_clear ="//div[@id='tenderEtap']//button[@id='butClearFilterGeo']"
+                    button_clear = WebDriverWait(self.wts.drv, 10).until(
+                        expected_conditions.visibility_of_element_located((By.XPATH, id_button_clear)))
+                    self.assertIsNotNone(button_clear, "Элемент button_clear filter не найден  " + id_button_clear)
+                    button_clear.click()
+                    self.log("Кнопка очистить все типов тендеров ОК - " + id_button_clear)
 
-            tenderEtap_labels = WebDriverWait(self.wts.drv, 15).until(
-                expected_conditions.visibility_of_any_elements_located((By.XPATH, xpath_tenderEtap_label)))
-            self.assertIsNotNone(tenderEtap_labels, "Элемент tenderEtap_labels  не найден  " + xpath_tenderEtap_label)
-            self.assertEqual(len(tenderEtap_labels), 16, "Этапов тендера !=16 : " + str(len(tenderEtap_labels)))
+                tenderEtap_labels = WebDriverWait(self.wts.drv, 15).until(
+                    expected_conditions.visibility_of_any_elements_located((By.XPATH, xpath_tenderEtap_label)))
+                self.assertIsNotNone(tenderEtap_labels, "Элемент tenderEtap_labels  не найден  " + xpath_tenderEtap_label)
+                self.assertEqual(len(tenderEtap_labels), 16, "Этапов тендера !=16 : " + str(len(tenderEtap_labels)))
 
-            tenderEtap_labels_text = {'Чернетка', 'Публікація торгів/планів',
-                                'Період уточнень','Подача пропозицій',
-                                'Період аукціону','Кваліфікація',
-                                'Намір укласти договір','Торги відмінено',
-                                'Завершено','Відмінена',
-                                'Прекваліфікація','Оприлюднення укладеного договору',
-                                'Чернетка 2-го етапу (конкурентний діалог)',
-                                'Опубліковано протокол розгляду',
-                                'Очікування початку 2-го етапу (технічний етап)',
-                                'Проміжок між прийняттям рішення і появою тендеру 2'
-                                }
+                tenderEtap_labels_text = {'Чернетка', 'Публікація торгів/планів',
+                                    'Період уточнень','Подача пропозицій',
+                                    'Період аукціону','Кваліфікація',
+                                    'Намір укласти договір','Торги відмінено',
+                                    'Завершено','Відмінена',
+                                    'Прекваліфікація','Оприлюднення укладеного договору',
+                                    'Чернетка 2-го етапу (конкурентний діалог)',
+                                    'Опубліковано протокол розгляду',
+                                    'Очікування початку 2-го етапу (технічний етап)',
+                                    'Проміжок між прийняттям рішення і появою тендеру 2'
+                                    }
 
-            for value in tenderEtap_labels:
-                with self.subTest("этап тендера - "+value.text):
-                    self.assertIn(value.text, tenderEtap_labels_text, "Невалидный текст этапа тендера - "+value.text)
-            self.log("Названия этапов тендера ОК ")
+                for value in tenderEtap_labels:
+                    with self.subTest("этап тендера - "+value.text):
+                        self.assertIn(value.text, tenderEtap_labels_text, "Невалидный текст этапа тендера - "+value.text)
+                self.log("Названия этапов тендера ОК ")
+            except:
+                pass
+
+            scroll_to_element(self.wts.drv, tenderEtap)
             tenderEtap.click()
 
             self.log("Фильтр этапов тендеров ОК - " + id_tenderEtap)
@@ -562,62 +575,68 @@ class Tender_Tab(TabTest):
             regions = WebDriverWait(self.wts.drv, 5).until(
                 expected_conditions.visibility_of_element_located((By.ID, id_regions)))
             self.assertIsNotNone(tenderEtap, "Элемент regions filter не найден  " + id_regions)
+
+            scroll_to_element(self.wts.drv, regions)
             regions.click()
-            self.log("Фильтр регионов visible ОК - " + id_regions)
 
-            self.wts.drv.execute_script("$('#navigation').slimScroll({ scrollTo: '100px' })")
+            try:
+                self.log("Фильтр регионов visible ОК - " + id_regions)
 
-            with self.subTest("кнопка выбрать все"):
-                id_button_all = "//div[@id='collapseFour']//button[@id='butSelectFilterGeo']"
-                button_all = WebDriverWait(self.wts.drv, 10).until(
-                    expected_conditions.visibility_of_element_located((By.XPATH, id_button_all)))
-                self.assertIsNotNone(button_all, "Элемент button_all filter не найден  " + id_button_all)
-                button_all.click()
-                self.log("Кнопка выбрать все регионы ОК - " + id_button_all)
+                self.wts.drv.execute_script("$('#navigation').slimScroll({ scrollTo: '100px' })")
 
-            with self.subTest("кнопка очистить все"):
-                id_button_clear ="//div[@id='collapseFour']//button[@id='butClearFilterGeo']"
-                button_clear = WebDriverWait(self.wts.drv, 10).until(
-                    expected_conditions.visibility_of_element_located((By.XPATH, id_button_clear)))
-                self.assertIsNotNone(button_clear, "Элемент button_clear filter не найден  " + id_button_clear)
-                button_clear.click()
-                self.log("Кнопка очистить все регионы ОК - " + id_button_clear)
+                with self.subTest("кнопка выбрать все"):
+                    id_button_all = "//div[@id='collapseFour']//button[@id='butSelectFilterGeo']"
+                    button_all = WebDriverWait(self.wts.drv, 10).until(
+                        expected_conditions.visibility_of_element_located((By.XPATH, id_button_all)))
+                    self.assertIsNotNone(button_all, "Элемент button_all filter не найден  " + id_button_all)
+                    button_all.click()
+                    self.log("Кнопка выбрать все регионы ОК - " + id_button_all)
 
-            regions_label = WebDriverWait(self.wts.drv, 15).until(
-                expected_conditions.visibility_of_any_elements_located((By.XPATH, xpath_regions_label)))
-            self.assertIsNotNone(regions_label, "Элемент regions_label  не найден  " + xpath_regions_label)
-            # self.assertEqual(len(regions_label), 26, "Регионов !=26 : " + str(len(regions_label)))
-            # self.log("Количесвто регионов ОК - " + str(len(regions_label)))
+                with self.subTest("кнопка очистить все"):
+                    id_button_clear ="//div[@id='collapseFour']//button[@id='butClearFilterGeo']"
+                    button_clear = WebDriverWait(self.wts.drv, 10).until(
+                        expected_conditions.visibility_of_element_located((By.XPATH, id_button_clear)))
+                    self.assertIsNotNone(button_clear, "Элемент button_clear filter не найден  " + id_button_clear)
+                    button_clear.click()
+                    self.log("Кнопка очистить все регионы ОК - " + id_button_clear)
 
-            #'Відповідно до тендерної документації',
-            regions_labels_text = {
-                'Автономна Республіка Крим',
-                'Вінницька', 'Волинська', 'Дніпропетровська', 'Донецька',
-                'Житомирська', 'Закарпатська', 'Запорізька', 'Івано-Франківська',
-                'Київська','Кіровоградська','Луганська','Львівська','Миколаївська',
-                'Одеська','Полтавська','Рівненська','Сумська','Тернопільська',
-                'Харківська','Херсонська','Хмельницька','Черкаська','Чернівецька',
-                'Чернігівська'
-            }
+                regions_label = WebDriverWait(self.wts.drv, 15).until(
+                    expected_conditions.visibility_of_any_elements_located((By.XPATH, xpath_regions_label)))
+                self.assertIsNotNone(regions_label, "Элемент regions_label  не найден  " + xpath_regions_label)
+                # self.assertEqual(len(regions_label), 26, "Регионов !=26 : " + str(len(regions_label)))
+                # self.log("Количесвто регионов ОК - " + str(len(regions_label)))
 
-            for value in regions_label:
-                with self.subTest("регион - "+value.text):
-                    self.assertIn(value.text, regions_labels_text, "Добавилт название региона - " + value.text)
+                #'Відповідно до тендерної документації',
+                regions_labels_text = {
+                    'Автономна Республіка Крим',
+                    'Вінницька', 'Волинська', 'Дніпропетровська', 'Донецька',
+                    'Житомирська', 'Закарпатська', 'Запорізька', 'Івано-Франківська',
+                    'Київська','Кіровоградська','Луганська','Львівська','Миколаївська',
+                    'Одеська','Полтавська','Рівненська','Сумська','Тернопільська',
+                    'Харківська','Херсонська','Хмельницька','Черкаська','Чернівецька',
+                    'Чернігівська', 'Київ','Севастополь'
+                }
 
-            page_labels=list()
-            for value in regions_label:
-                page_labels.append(value.text)
+                for value in regions_label:
+                    with self.subTest("регион - "+value.text):
+                        self.assertIn(value.text, regions_labels_text, "Добавилт название региона - " + value.text)
 
-            page_labels=set(page_labels)
+                page_labels=list()
+                for value in regions_label:
+                    page_labels.append(value.text)
+
+                page_labels=set(page_labels)
 
 
-            for text in regions_labels_text:
-                with self.subTest("регион - "+text):
-                    self.assertIn(text, page_labels, "Deleted название региона - " + text)
+                for text in regions_labels_text:
+                    with self.subTest("регион - "+text):
+                        self.assertIn(text, page_labels, "Deleted название региона - " + text)
 
-            self.log("Названия регионов ОК ")
+                self.log("Названия регионов ОК ")
+            except:
+                pass
 
-            self.wts.drv.execute_script("$('#navigation').slimScroll({ scrollTo: '-100px' })")
+            scroll_to_element(self.wts.drv, regions)
             regions.click()
 
             self.log("Фильтр регионов ОК - " + id_regions)
@@ -668,7 +687,7 @@ class Tender_Tab(TabTest):
                     self.log("Строка поиска dialogCPV visible ОК - " + id_dk_search )
 
                 with self.subTest("выбор номенклатуры CPV"):
-                    sleep(5)
+                    sleep(2)
                     dialog_items = WebDriverWait(self.wts.drv, 10).until(
                            expected_conditions.visibility_of_any_elements_located((By.XPATH, xpath_dialog_items)))
                     self.assertIsNotNone(dialog_items, "Элемент dialog_items  не найден  " + xpath_dialog_items)

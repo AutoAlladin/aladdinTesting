@@ -28,7 +28,9 @@ class Registartion(ParamsTestCase):
                     (By.ID, "error")))
             error = self.wts.drv.find_element_by_id("error")
 
-        self.assertEqual(error.text,"Невірна спроба входу в систему")
+        self.assertIn(error.text,["Невірна спроба входу в систему",
+                                  "Invalid login attempt."]
+                      )
         self.log("Текст о неверном логине/пароле ОК")
 
     @add_res_to_DB(test_name="Открыть форму регистрации")
@@ -321,18 +323,18 @@ class Registartion(ParamsTestCase):
             self.assertTrue(onTestCheck.get_attribute('checked'))
             self.log("обучающий режим - OK")
 
-        with self.subTest("получение уведомлений"):
-            infoStatusEmail_caption = self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='infoStatusEmail']/../h4")
-            infoStatusEmail_label = self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='infoStatusEmail']/../label")
-            infoStatusEmail = self.wts.w_id("infoStatusEmail")
-
-            self.assertEqual('Повідомлення',infoStatusEmail_caption.text)
-            self.assertEqual('Отримувати інформацію про зміну статусу закупівлі на вашу електронну адресу', infoStatusEmail_label.text)
-
-            infoStatusEmail_label.click()
-            sleep(0.1)
-            self.assertTrue(infoStatusEmail.get_attribute('checked'))
-            self.log("получение уведомлений - OK")
+        # with self.subTest("получение уведомлений"):
+        #     infoStatusEmail_caption = self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='infoStatusEmail']/../h4")
+        #     infoStatusEmail_label = self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='infoStatusEmail']/../label")
+        #     infoStatusEmail = self.wts.w_id("infoStatusEmail")
+        #
+        #     self.assertEqual('Повідомлення',infoStatusEmail_caption.text)
+        #     self.assertEqual('Отримувати інформацію про зміну статусу закупівлі на вашу електронну адресу', infoStatusEmail_label.text)
+        #
+        #     infoStatusEmail_label.click()
+        #     sleep(0.1)
+        #     self.assertTrue(infoStatusEmail.get_attribute('checked'))
+        #     self.log("получение уведомлений - OK")
 
         # with self.subTest("турбо режим"):
         #     onTurboCheck_caption = self.wts.w_xpath("//form[@id='frmUserInfoSettings']//input[@id='onTurboCheck']/../h4")

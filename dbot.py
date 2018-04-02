@@ -11,6 +11,14 @@ conn_billing_test = {
     '_driver': '{ODBC Driver 13 for SQL Server}'
 }
 
+conn_prozorro_api = {
+    '_server': '192.168.95.142',
+    '_database': 'AladdinProzorro',
+    '_username': 'sergey',
+    '_password': 'SEGAmega2205',
+    '_driver': '{ODBC Driver 13 for SQL Server}'
+}
+
 conn_prod = {
     '_server': '192.168.95.132',
     '_database': 'AladdinProzorro',
@@ -346,13 +354,43 @@ if __name__  =="__main__":
     #getCompanyBids(mssql_connection,True)
     # mssql_connection.close()
 
-    billing_test_conn= get_connection(**conn_billing_test)
+    conn= get_connection(**conn_prozorro_api)
 
-    crs = billing_test_conn.cursor()
+    crs = conn.cursor()
+    # for row in crs.columns(table="SyncLogs"):
+    #      print(row.column_name)
 
-    crs.execute(" UPDATE [BillingTest].[dbo].[Accounts]"+
-                " SET Balance = 500000 "+
-                " WHERE CompanyEdrpo = '{0}' ".format("09000080"))
+    res = crs.execute("""select top 500 * 
+                        from ProzorroApi.SyncLogs sl 
+                        order by sl.DateStart desc
+                      """
+                      ).fetchall()
 
-    crs.commit()
-    billing_test_conn.close()
+
+    # crs.execute(" UPDATE [BillingTest].[dbo].[Accounts]"+
+    #             " SET Balance = 500000 "+
+    #             " WHERE CompanyEdrpo = '{0}' ".format("09000080"))
+
+
+    for row in res:
+        # print(str(row.JournalType).ljust(2), end="\t")
+        print(str(row.SyncType).ljust(1), end="\t")
+        print(str(row.Url).ljust(60), end="\t")
+        # print(str(row.Offset).ljust(15), end="\t")
+        # print(str(row.PackCount).ljust(3), end="\t")
+        print(str(row.CompleteCount).ljust(3), end="\t")
+        print(str(row.DateStart).ljust(15), end="\t")
+        print(str(row.DateComplete).ljust(15), end="\t")
+        # print(str(row.Parameters).ljust(15), end="\t")
+        # print(str(row.NextDatePackage).ljust(15), end="\t")
+        # print(str(row.ObjectGuids).ljust(15), end="\t")
+        # print(str(row.LossObjectGuids).ljust(15), end="\t")
+        print(str(row.Completed).ljust(15), end="\t")
+        # print(str(row.IsRetry).ljust(15), end="\t")
+        print(str(row.TestMode).ljust(15), end="\t")
+        # print(str(row.Archive).ljust(15), end="\t")
+        # print(str(row.SID).ljust(15), end="\t")
+        print("\n")
+
+
+    conn.close()
