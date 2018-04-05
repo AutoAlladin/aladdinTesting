@@ -46,11 +46,15 @@ class bid:
                 submitBid.click()
                 Utils.waitFadeIn(self.drv)
 
-                WebDriverWait(self.drv, 5).until(
-                    EC.visibility_of_element_located(
-                        (By.XPATH,
-                         "//div[contains(@class,'jconfirm-box')]/div[contains(@class,'jconfirm-buttons')]/button[1]"))). \
-                    click()
+                b = WebDriverWait(self.drv, 5).until(
+                    EC.presence_of_element_located((By.XPATH,
+                         "//div[contains(@class,'jconfirm-buttons')]/button[1]")))
+                b.click()
+
+                b = WebDriverWait(self.drv, 5).until(
+                    EC.presence_of_element_located((By.XPATH,
+                        "//div[contains(@class,'jconfirm-buttons')]/button[1]")))
+                b.click()
 
                 Utils.waitFadeIn(self.drv)
                 bidGUID =WebDriverWait(self.drv, 30).until(
