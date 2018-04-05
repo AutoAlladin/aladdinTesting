@@ -127,12 +127,15 @@ class UserCompanyForm:
             # self.drv.execute_script("$('#role0').click()")
             #self.role0.click()
             #if v == "general":
-                self.drv.find_element_by_xpath("//label[@for='customerRoleId1']").click()
+                b = self.drv.find_element_by_xpath("//label[@for='customerRoleId1']")
+                Utils.scroll_to_element(self.drv,  b)
+                b.click()
             # elif v == "special":
             #     self.drv.find_element_by_xpath("//label[@for='customerRoleId2']").click()
             # else:
             #     print("NOT KNOW customer type")
         else:
+            Utils.scroll_to_element(self.drv, self.role1)
             self.role1.click()
 
     def set_subj_ident_scheme(self, v):

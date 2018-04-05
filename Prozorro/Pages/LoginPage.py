@@ -121,13 +121,17 @@ class LoginPage:
         r = UserRegForm(self.drv)
 
         return r
-
+# https://test-gov.ald.in.ua/Account/Login
     def login(self, login, password):
         try:
             self.txtLogin.send_keys(login)
             self.txtPassword.send_keys(password)
+            btn = WebDriverWait(self.drv, 10).until(
+                expected_conditions.visibility_of_element_located(
+                    (By.ID,"submitLogin")))
             waitFadeIn(self.drv)
-            self.btnLogin.click()
+            btn.click()
+
         except Exception as e :
             print(e.__str__())
 

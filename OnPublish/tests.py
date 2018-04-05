@@ -9,7 +9,6 @@ from bson import ObjectId
 from Aladdin.Accounting.AladdinUtils import WebTestSession, AvaliableBrowsers
 from Aladdin.Accounting.decorators.StoreTestResult import create_result_DB
 from Aladdin.Billing.CreateAccount import *
-from Auction.run import RegistrationAuction
 from BillingMethods.UnitTestByBilling import TestByBilling
 from BillingMethods.aladdin_like_prozzoro import TestAladdinLikeProzorro
 from BillingMethods.prozorro import TestProzorro
@@ -34,16 +33,16 @@ def s_aladdin_like_prozorro(pure_json, t, cmbro):
                 },
               'test_name': t,
               'wts': WebTestSession(useBrowser=False),
-              'par': qqq["wts"].__mongo__.get_params(25)["par"]
+              'auction_par.json': qqq["wts"].__mongo__.get_params(25)["auction_par.json"]
               }
         return qa
 
     #dbid = 19
     qqq = s_aladdin_like_prozorro_init(cmbro)
 
-    par = qqq["par"]
+    par = qqq["auction_par.json"]
     suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id,
-                                     "DB": qqq["wts"].__mongo__
+                                     "DB": qqq["wts"].__mongo__                                
                                      })
 
     pre_par_alddin_like_prozorro(par, qqq["wts"].__mongo__.test_params )
@@ -82,69 +81,69 @@ def pre_par_alddin_like_prozorro(par, db_test_params):
     tenderId_04 = par["test_04"]["tenderId"]
     tenderId_04 += 1
     par["tenderId"] = tenderId_04
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_04.tenderId": tenderId_04}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_04.tenderId": tenderId_04}})
     tenderId_06 = par["test_06"]["tenderId"]
     tenderId_06 += 1
     par["tenderId"] = tenderId_06
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_06.tenderId": tenderId_06}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_06.tenderId": tenderId_06}})
     tenderId_07 = par["test_07"]["tenderId"]
     tenderId_07 += 1
     par["tenderId"] = tenderId_07
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_07.tenderId": tenderId_07}})
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_07_1.tenderId": tenderId_07}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_07.tenderId": tenderId_07}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_07_1.tenderId": tenderId_07}})
     tenderId_08 = par["test_08"]["tenderId"]
     tenderId_08 += 1
     par["tenderId"] = tenderId_08
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_08.tenderId": tenderId_08}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_08.tenderId": tenderId_08}})
     tenderId_09 = par["test_09_1"]["tenderId"]
     tenderId_09 += 1
     par["tenderId"] = tenderId_09
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_09_1.tenderId": tenderId_09}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_09_1.tenderId": tenderId_09}})
     tenderId_10 = par["test_10_1"]["tenderId"]
     tenderId_10 += 1
     par["tenderId"] = tenderId_10
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_10_1.tenderId": tenderId_10}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_10_1.tenderId": tenderId_10}})
     tenderId_11 = par["test_11"]["tenderId"]
     tenderId_11 += 1
     par["tenderId"] = tenderId_11
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_11.tenderId": tenderId_11}})
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_11_1.tenderId": tenderId_11}})
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_11_2.tenderId": tenderId_11}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_11.tenderId": tenderId_11}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_11_1.tenderId": tenderId_11}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_11_2.tenderId": tenderId_11}})
     tenderId_12 = par["test_12_1"]["tenderId"]
     tenderId_12 += 1
     par["tenderId"] = tenderId_12
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_12_1.tenderId": tenderId_12}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_12_1.tenderId": tenderId_12}})
     tenderId_14 = par["test_14_1"]["tenderId"]
     tenderId_14 += 1
     par["tenderId"] = tenderId_14
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_14.tenderId": tenderId_14}})
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_14_1.tenderId": tenderId_14}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_14.tenderId": tenderId_14}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_14_1.tenderId": tenderId_14}})
     tenderId_15 = par["test_15_1"]["tenderId"]
     tenderId_15 += 1
     par["tenderId"] = tenderId_15
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_15_1.tenderId": tenderId_15}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_15_1.tenderId": tenderId_15}})
     tenderId_16 = par["test_16_1"]["tenderId"]
     tenderId_16 += 1
     par["tenderId"] = tenderId_16
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_16_1.tenderId": tenderId_16}})
-    db_test_params.update_one({"_id": 26}, {"$set": {"par.test_16.tenderId": tenderId_16}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_16_1.tenderId": tenderId_16}})
+    db_test_params.update_one({"_id": 26}, {"$set": {"auction_par.json.test_16.tenderId": tenderId_16}})
     tenderId_17 = par["test_17_1"]["tenderId"]
     tenderId_17 += 1
     par["tenderId"] = tenderId_17
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_17_1.tenderId": tenderId_17}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_17_1.tenderId": tenderId_17}})
     tenderId_18 = par["test_18_1"]["tenderId"]
     tenderId_18 += 1
     par["tenderId"] = tenderId_18
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_18.tenderId": tenderId_18}})
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_18_1.tenderId": tenderId_18}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_18.tenderId": tenderId_18}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_18_1.tenderId": tenderId_18}})
     tenderId_19_1 = par["test_19_1"]["tenderId"]
     tenderId_19_1 += 1
     par["tenderId"] = tenderId_19_1
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_19_1.tenderId": tenderId_19_1}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_19_1.tenderId": tenderId_19_1}})
     tenderId_20_1 = par["test_20_1"]["tenderId"]
     tenderId_20_1 += 1
     par["tenderId"] = tenderId_20_1
-    db_test_params.update_one({"_id": 25}, {"$set": {"par.test_20_1.tenderId": tenderId_20_1}})
+    db_test_params.update_one({"_id": 25}, {"$set": {"auction_par.json.test_20_1.tenderId": tenderId_20_1}})
 
 def s_prozorro(pure_json, t, cmbro):
     @create_result_DB
@@ -156,13 +155,13 @@ def s_prozorro(pure_json, t, cmbro):
                 },
               'test_name': t,
               'wts': WebTestSession(useBrowser=False),
-              "par": qqq["wts"].__mongo__.get_params(27)["par"]
+              "auction_par.json": qqq["wts"].__mongo__.get_params(27)["auction_par.json"]
               }
         return qa
 
     qqq = s_prozorro_init(cmbro)
 
-    par = qqq["par"]
+    par = qqq["auction_par.json"]
     suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id,
                                      "DB": qqq["wts"].__mongo__
                                      })
@@ -196,70 +195,70 @@ def pre_par_prozorro(par, db_test_params):
     tenderId_04 = par["test_04"]["tenderId"]
     tenderId_04 += 1
     par["tenderId"] = tenderId_04
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_04.tenderId": tenderId_04}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_04.tenderId": tenderId_04}})
     tenderId_06 = par["test_06"]["tenderId"]
     tenderId_06 += 1
     par["tenderId"] = tenderId_06
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_06.tenderId": tenderId_06}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_06.tenderId": tenderId_06}})
     tenderId_07 = par["test_07"]["tenderId"]
     tenderId_07 += 1
     par["tenderId"] = tenderId_07
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_07.tenderId": tenderId_07}})
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_07_1.tenderId": tenderId_07}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_07.tenderId": tenderId_07}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_07_1.tenderId": tenderId_07}})
     tenderId_08 = par["test_08"]["tenderId"]
     tenderId_08 += 1
     par["tenderId"] = tenderId_08
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_08.tenderId": tenderId_08}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_08.tenderId": tenderId_08}})
     tenderId_09 = par["test_09_1"]["tenderId"]
     tenderId_09 += 1
     par["tenderId"] = tenderId_09
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_09_1.tenderId": tenderId_09}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_09_1.tenderId": tenderId_09}})
     tenderId_10 = par["test_10_1"]["tenderId"]
     tenderId_10 += 1
     par["tenderId"] = tenderId_10
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_10_1.tenderId": tenderId_10}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_10_1.tenderId": tenderId_10}})
     tenderId_11 = par["test_11"]["tenderId"]
     tenderId_11 += 1
     par["tenderId"] = tenderId_11
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_11.tenderId": tenderId_11}})
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_11_1.tenderId": tenderId_11}})
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_11_2.tenderId": tenderId_11}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_11.tenderId": tenderId_11}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_11_1.tenderId": tenderId_11}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_11_2.tenderId": tenderId_11}})
     tenderId_12 = par["test_12"]["tenderId"]
     tenderId_12 += 1
     par["tenderId"] = tenderId_12
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_12_1.tenderId": tenderId_12}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_12_1.tenderId": tenderId_12}})
     tenderId_14 = par["test_14_1"]["tenderId"]
     tenderId_14 += 1
     par["tenderId"] = tenderId_14
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_14.tenderId": tenderId_14}})
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_14_1.tenderId": tenderId_14}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_14.tenderId": tenderId_14}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_14_1.tenderId": tenderId_14}})
     tenderId_15 = par["test_15_1"]["tenderId"]
     tenderId_15 += 1
     par["tenderId"] = tenderId_15
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_15_1.tenderId": tenderId_15}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_15_1.tenderId": tenderId_15}})
     tenderId_16 = par["test_16_1"]["tenderId"]
     tenderId_16 += 1
     par["tenderId"] = tenderId_16
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_16_1.tenderId": tenderId_16}})
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_16.tenderId": tenderId_16}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_16_1.tenderId": tenderId_16}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_16.tenderId": tenderId_16}})
     tenderId_17 = par["test_17_1"]["tenderId"]
     tenderId_17 += 1
     par["tenderId"] = tenderId_17
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_17_1.tenderId": tenderId_17}})
-    # db_test_params.update_one({"_id": 27}, {"$set": {"par.test_17.tenderId": tenderId_17}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_17_1.tenderId": tenderId_17}})
+    # db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_17.tenderId": tenderId_17}})
     tenderId_18 = par["test_18_1"]["tenderId"]
     tenderId_18 += 1
     par["tenderId"] = tenderId_18
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_18.tenderId": tenderId_18}})
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_18_1.tenderId": tenderId_18}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_18.tenderId": tenderId_18}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_18_1.tenderId": tenderId_18}})
     tenderId_19_1 = par["test_19_1"]["tenderId"]
     tenderId_19_1 += 1
     par["tenderId"] = tenderId_19_1
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_19_1.tenderId": tenderId_19_1}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_19_1.tenderId": tenderId_19_1}})
     tenderId_20_1 = par["test_20_1"]["tenderId"]
     tenderId_20_1 += 1
     par["tenderId"] = tenderId_20_1
-    db_test_params.update_one({"_id": 27}, {"$set": {"par.test_20_1.tenderId": tenderId_20_1}})
+    db_test_params.update_one({"_id": 27}, {"$set": {"auction_par.json.test_20_1.tenderId": tenderId_20_1}})
 
 def s_aladdin_pure(pure_json, t, cmbro):
     @create_result_DB
@@ -277,10 +276,10 @@ def s_aladdin_pure(pure_json, t, cmbro):
     #dbid = 19
     qqq = s_aladdin_pure_init(cmbro)
 
-    par = qqq["wts"].__mongo__.get_params(26)["par"]
+    par = qqq["wts"].__mongo__.get_params(26)["auction_par.json"]
     suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id,
                                      "DB": qqq["wts"].__mongo__,
-                                     "par": par
+                                     "auction_par.json": par
                                      })
     pre_par_AlladinPure(par, qqq["wts"].__mongo__.test_params)
     atos_AlladinPure(qqq, suite)
@@ -298,34 +297,33 @@ def pre_par_AlladinPure(par, db_test_params):
     tenderId_14 = par["test_14"]["tenderId"]
     tenderId_14 += 1
     par["tenderId"] = tenderId_14
-    db_test_params.update_one({"_id": 26}, {"$set": {"par.test_14.tenderId": tenderId_14}})
+    db_test_params.update_one({"_id": 26}, {"$set": {"auction_par.json.test_14.tenderId": tenderId_14}})
     tenderId_15 = par["test_15_1"]["tenderId"]
     tenderId_15 += 1
     par["tenderId"] = tenderId_15
-    db_test_params.update_one({"_id": 26}, {"$set": {"par.test_15_1.tenderId": tenderId_15}})
+    db_test_params.update_one({"_id": 26}, {"$set": {"auction_par.json.test_15_1.tenderId": tenderId_15}})
     tenderId_16 = par["test_16_1"]["tenderId"]
     tenderId_16 += 1
     par["tenderId"] = tenderId_16
-    db_test_params.update_one({"_id": 26}, {"$set": {"par.test_16_1.tenderId": tenderId_16}})
-    db_test_params.update_one({"_id": 26}, {"$set": {"par.test_16.tenderId": tenderId_16}})
+    db_test_params.update_one({"_id": 26}, {"$set": {"auction_par.json.test_16_1.tenderId": tenderId_16}})
+    db_test_params.update_one({"_id": 26}, {"$set": {"auction_par.json.test_16.tenderId": tenderId_16}})
     tenderId_17 = par["test_17_1"]["tenderId"]
     tenderId_17 += 1
     par["tenderId"] = tenderId_17
-    db_test_params.update_one({"_id": 26}, {"$set": {"par.test_17_1.tenderId": tenderId_17}})
+    db_test_params.update_one({"_id": 26}, {"$set": {"auction_par.json.test_17_1.tenderId": tenderId_17}})
     tenderId_18 = par["test_18_1"]["tenderId"]
     tenderId_18 += 1
     par["tenderId"] = tenderId_18
-    db_test_params.update_one({"_id": 26}, {"$set": {"par.test_18.tenderId": tenderId_18}})
-    db_test_params.update_one({"_id": 26}, {"$set": {"par.test_18_1.tenderId": tenderId_18}})
+    db_test_params.update_one({"_id": 26}, {"$set": {"auction_par.json.test_18.tenderId": tenderId_18}})
+    db_test_params.update_one({"_id": 26}, {"$set": {"auction_par.json.test_18_1.tenderId": tenderId_18}})
     tenderId_19_1 = par["test_19_1"]["tenderId"]
     tenderId_19_1 += 1
     par["tenderId"] = tenderId_19_1
-    db_test_params.update_one({"_id": 26}, {"$set": {"par.test_19_1.tenderId": tenderId_19_1}})
+    db_test_params.update_one({"_id": 26}, {"$set": {"auction_par.json.test_19_1.tenderId": tenderId_19_1}})
     tenderId_20_1 = par["test_20_1"]["tenderId"]
     tenderId_20_1 += 1
     par["tenderId"] = tenderId_20_1
-    db_test_params.update_one({"_id": 26}, {"$set": {"par.test_20_1.tenderId": tenderId_20_1}})
-
+    db_test_params.update_one({"_id": 26}, {"$set": {"auction_par.json.test_20_1.tenderId": tenderId_20_1}})
 
 def s_load_main_page(g, t, cmbro):
     @create_result_DB
@@ -417,10 +415,10 @@ def s_billing_metods(g, t, cmbro):
     #dbid = 18
     qqq = s_load_main_page_init(cmbro)
 
-    par = qqq["wts"].__mongo__.get_params(24)["par"]
-    # tenderId = par["tenderId"]
+    par = qqq["wts"].__mongo__.get_params(24)["auction_par.json"]
+    # tenderId = auction_par.json["tenderId"]
     # tenderId += 1
-    # par["tenderId"] = tenderId
+    # auction_par.json["tenderId"] = tenderId
 
     tenderId_04 = par["test_04"]["tenderId"]
     tenderId_04 += 1
@@ -430,12 +428,12 @@ def s_billing_metods(g, t, cmbro):
     qqq["wts"].__mongo__.\
         test_params.\
         update_one({"_id": 24},
-                   {"$set": {"par.test_04.tenderId": tenderId_04}})
+                   {"$set": {"auction_par.json.test_04.tenderId": tenderId_04}})
 
     tenderId_04_st_2 = par["test_04_siteType_2"]["tenderId"]
     tenderId_04_st_2 +=1
     par["tenderId"] = tenderId_04_st_2
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_04_siteType_2.tenderId": tenderId_04_st_2}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_04_siteType_2.tenderId": tenderId_04_st_2}})
 
 
 
@@ -443,13 +441,13 @@ def s_billing_metods(g, t, cmbro):
     tenderId_06 = par["test_06"]["tenderId"]
     tenderId_06 +=1
     par["tenderId"] = tenderId_06
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_06.tenderId": tenderId_06}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_06.tenderId": tenderId_06}})
 
 
     tenderId_06_siteType_2 = par["test_06_siteType_2"]["tenderId"]
     tenderId_06_siteType_2 += 1
     par["tenderId"] = tenderId_06_siteType_2
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_06_siteType_2.tenderId": tenderId_06_siteType_2}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_06_siteType_2.tenderId": tenderId_06_siteType_2}})
 
 
 
@@ -457,8 +455,8 @@ def s_billing_metods(g, t, cmbro):
     tenderId_07 += 1
     par["tenderId"] = tenderId_07
 
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_07.tenderId": tenderId_07}})
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_07_1.tenderId": tenderId_07}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_07.tenderId": tenderId_07}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_07_1.tenderId": tenderId_07}})
 
 
 
@@ -466,15 +464,15 @@ def s_billing_metods(g, t, cmbro):
     tenderId_07_sitetype_2_suite_2 += 1
     par["tenderId"] = tenderId_07_sitetype_2_suite_2
 
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_07_siteType_2.tenderId": tenderId_07_sitetype_2_suite_2}})
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_07_1_siteType_2.tenderId": tenderId_07_sitetype_2_suite_2}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_07_siteType_2.tenderId": tenderId_07_sitetype_2_suite_2}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_07_1_siteType_2.tenderId": tenderId_07_sitetype_2_suite_2}})
 
 
     tenderId_08 = par["test_08"]["tenderId"]
     tenderId_08 += 1
     par["tenderId"] = tenderId_08
 
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_08.tenderId": tenderId_08}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_08.tenderId": tenderId_08}})
 
 
 
@@ -484,21 +482,21 @@ def s_billing_metods(g, t, cmbro):
     tenderId_08_sitetype_2_suite_2 += 1
     par["tenderId"] = tenderId_08_sitetype_2_suite_2
 
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_08_siteType_2.tenderId": tenderId_08_sitetype_2_suite_2}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_08_siteType_2.tenderId": tenderId_08_sitetype_2_suite_2}})
 
 
     tenderId_09 = par["test_09_1"]["tenderId"]
     tenderId_09 += 1
     par["tenderId"] = tenderId_09
 
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_09_1.tenderId": tenderId_09}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_09_1.tenderId": tenderId_09}})
 
 
     tenderId_09_sitetype_2_suite_2 = par["test_09_siteType_2"]["tenderId"]
     tenderId_09_sitetype_2_suite_2 += 1
     par["tenderId"] = tenderId_09_sitetype_2_suite_2
 
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_09_1_siteType_2.tenderId": tenderId_09_sitetype_2_suite_2}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_09_1_siteType_2.tenderId": tenderId_09_sitetype_2_suite_2}})
 
 
 
@@ -506,37 +504,37 @@ def s_billing_metods(g, t, cmbro):
     tenderId_10 +=1
     par["tenderId"] = tenderId_10
 
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_10_1.tenderId": tenderId_10}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_10_1.tenderId": tenderId_10}})
 
 
     tenderId_10_1_siteType_2 = par["test_10_1_siteType_2"]["tenderId"]
     tenderId_10_1_siteType_2 += 1
     par["tenderId"] = tenderId_10_1_siteType_2
 
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_10_1_siteType_2.tenderId": tenderId_10_1_siteType_2}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_10_1_siteType_2.tenderId": tenderId_10_1_siteType_2}})
 
 
     tenderId_11 = par["test_11"]["tenderId"]
     tenderId_11 += 1
     par["tenderId"] = tenderId_11
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_11.tenderId": tenderId_11}})
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_11_1.tenderId": tenderId_11}})
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_11_2.tenderId": tenderId_11}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_11.tenderId": tenderId_11}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_11_1.tenderId": tenderId_11}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_11_2.tenderId": tenderId_11}})
 
 
 
     tenderId_12_1 = par["test_12_1"]["tenderId"]
     tenderId_12_1 += 1
     par["tenderId"] = tenderId_12_1
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_12_1.tenderId": tenderId_12_1}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_12_1.tenderId": tenderId_12_1}})
 
 
     #создание уникального tenderId для test_14
     tenderId_14 = par["test_14_1"]["tenderId"]
     tenderId_14 += 1
     par["tenderId"] = tenderId_14
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_14.tenderId": tenderId_14}})
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_14_1.tenderId": tenderId_14}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_14.tenderId": tenderId_14}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_14_1.tenderId": tenderId_14}})
 
 
 
@@ -545,8 +543,8 @@ def s_billing_metods(g, t, cmbro):
     tenderId_18 += 1
     par["tenderId"] = tenderId_18
 
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_18.tenderId": tenderId_18}})
-    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"par.test_18_1.tenderId": tenderId_18}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_18.tenderId": tenderId_18}})
+    qqq["wts"].__mongo__.test_params.update_one({"_id": 24}, {"$set": {"auction_par.json.test_18_1.tenderId": tenderId_18}})
 
 
 
@@ -555,7 +553,7 @@ def s_billing_metods(g, t, cmbro):
     suite = ParamsTestSuite(
                 _params={"result_id": qqq["wts"].result_id,
                          "DB": qqq["wts"].__mongo__,
-                         "par":par
+                         "auction_par.json":par
                          }
     )
 
@@ -654,14 +652,14 @@ def s_publish_test(g, t, cmbro):
     #dbid = 20
     qqq = s_publish_test_init(cmbro)
 
-    par = qqq["wts"].__mongo__.get_params(26)["par"]
-    par1 = qqq["wts"].__mongo__.get_params(27)["par"]
-    par2 = qqq["wts"].__mongo__.get_params(25)["par"]
+    par = qqq["wts"].__mongo__.get_params(26)["auction_par.json"]
+    par1 = qqq["wts"].__mongo__.get_params(27)["auction_par.json"]
+    par2 = qqq["wts"].__mongo__.get_params(25)["auction_par.json"]
 
     pre_par_AlladinPure(par, qqq["wts"].__mongo__.test_params)
     pre_par_prozorro(par1, qqq["wts"].__mongo__.test_params)
     pre_par_alddin_like_prozorro(par2, qqq["wts"].__mongo__.test_params)
-
+    
     t = qqq["wts"].__mongo__.get_params(21)
 
     suite = ParamsTestSuite(_params={
@@ -672,108 +670,108 @@ def s_publish_test(g, t, cmbro):
                 "login_url": t["login_url"],
                 "authorization": t["authorization"],
                 "lang": t["lang"],
-                "par":par
+                "auction_par.json":par
     })
-
+    
     #billing metods
     # atos_AlladinPure(qqq, suite)
     #
     # qqq_prozorro={"query": qqq["query"],
     #       'test_name': t,
     #       'wts': qqq["wts"],
-    #       "par":par1
+    #       "auction_par.json":par1
     #       }
     # atos_prozorro(qqq_prozorro, suite)
     #
     # qqq_alddin_like_prozorro = {"query": qqq["query"],
     #                 'test_name': t,
     #                 'wts': qqq["wts"],
-    #                 "par": par2
+    #                 "auction_par.json": par2
     #                 }
     # atos_aladin_like_prozorro(qqq_alddin_like_prozorro, suite)
     #
     # # main page interface not authorization
     suite.addTest(Load_main_page("page_loaded", _params=qqq))
-    # suite.addTest(Load_main_page("menu_presented", _params=qqq))
-    # suite.addTest(Load_main_page("set_lang", _params=qqq))
-    # suite.addTest(Tender_Tab("tab_visible", _params=qqq))
-    # suite.addTest(Tender_Tab("tab_list", _params=qqq))
-    # suite.addTest(Tender_Tab("tab_search", _params=qqq))
+    suite.addTest(Load_main_page("menu_presented", _params=qqq))
+    suite.addTest(Load_main_page("set_lang", _params=qqq))
+    suite.addTest(Tender_Tab("tab_visible", _params=qqq))
+    suite.addTest(Tender_Tab("tab_list", _params=qqq))
+    suite.addTest(Tender_Tab("tab_search", _params=qqq))
     suite.addTest(Tender_Tab("tab_filters", _params=qqq))
-    #
-    # # login page inteface
-    # suite.addTest(Login_page("login_menu", _params=qqq))
-    # suite.addTest(Login_page("open_login", _params=qqq))
-    # suite.addTest(Login_page("check_lang", _params=qqq))
-    # suite.addTest(Login_page("login_owner", _params=qqq))
-    # suite.addTest(Login_page("login_provider", _params=qqq))
-    # suite.addTest(Login_page("open_register_form", _params=qqq))
-    # suite.addTest(Login_page("open_restore_password", _params=qqq))
-    #
-    #
-    # #tender owner registartion
-    # suite.addTest(Registartion("try_login", _params=qqq))
-    # suite.addTest(Registartion("open_register_form", _params=qqq))
-    # suite.addTest(Registartion("reg_company", _params=qqq))
-    # suite.addTest(Registartion("profile_settings", _params=qqq))
 
-    # #provider registration
-    # q_provider={"query": qqq["query"],
-    #       'test_name': t,
-    #       'wts': qqq["wts"],
-    #       "registartion_data":qqq["wts"].__mongo__.get_params(23)["company"][1]
-    #       }
-    #+380639552988
-    # suite.addTest(Registartion("try_login", _params=q_provider))
-    # suite.addTest(Registartion("open_register_form", _params=q_provider))
-    # suite.addTest(Registartion("reg_company", _params=q_provider))
-    # suite.addTest(Registartion("profile_settings", _params=qqq))
+    # login page inteface
+    suite.addTest(Login_page("login_menu", _params=qqq))
+    suite.addTest(Login_page("open_login", _params=qqq))
+    suite.addTest(Login_page("check_lang", _params=qqq))
+    suite.addTest(Login_page("login_owner", _params=qqq))
+    suite.addTest(Login_page("login_provider", _params=qqq))
+    suite.addTest(Login_page("open_register_form", _params=qqq))
+    #suite.addTest(Login_page("open_restore_password", _params=qqq))
 
-    # suite.addTest(Test_Below("create_menu", _params=qqq))
-    # suite.addTest(Test_Below("select_below_menu", _params=qqq))
-    # suite.addTest(Test_Below("set_description", _params=qqq))
-    # suite.addTest(Test_Below("set_curr", _params=qqq))
-    # suite.addTest(Test_Below("set_multilot", _params=qqq))
-    # suite.addTest(Test_Below("set_dates", _params=qqq))
-    # suite.addTest(Test_Below("add_lot", _params=qqq))
-    # suite.addTest(Test_Below("add_item", _params=qqq))
-    # suite.addTest(Test_Below("add_features", _params=qqq))
-    # suite.addTest(Test_Below("add_doc", _params=qqq))
-    # suite.addTest(Test_Below("open_draft_by_url", _params=qqq))
-    # suite.addTest(Test_Below("open_draft_by_url_edit", _params=qqq))
-    # suite.addTest(Test_Below("open_draft_by_url_delete", _params=qqq))
 
-    # suite.addTest(Test_Below("create_below_publish", _params=qqq))
-    #
-    #
-    # q_provider1={"query": qqq["query"],'test_name': t,'wts': qqq["wts"],
-    #       "bid_json": qqq["wts"].__mongo__.get_params(22)["bids"][0]
-    #       }
-    # suite.addTest(Below_Bid("login_provider", _params=q_provider1))
-    # suite.addTest(Below_Bid("select_below_type", _params=q_provider1))
-    # suite.addTest(Below_Bid("select_tender_period", _params=q_provider1))
-    # suite.addTest(Below_Bid("find_tender", _params=q_provider1))
-    # suite.addTest(Below_Bid("wait_for_tender_period", _params=q_provider1))
-    # suite.addTest(Below_Bid("add_bid", _params=q_provider1))
-    #
-    #
-    # q_provider2 = {"query": qqq["query"], 'test_name': t,  'wts': qqq["wts"],
-    #                "bid_json": qqq["wts"].__mongo__.get_params(22)["bids"][1]
-    #                }
-    # suite.addTest(Below_Bid("login_provider", _params=q_provider2))
-    # suite.addTest(Below_Bid("find_tender", _params=q_provider2))
-    # suite.addTest(Below_Bid("add_bid", _params=q_provider2))
-    #
-    # #suite.suite_params.update({"ProzorroId":"UA-2018-03-26-000076-a"})
-    #
-    # suite.addTest(Qualification("login_owner", _params=qqq))
-    # suite.addTest(Below_Bid("find_tender", _params=qqq))
-    # suite.addTest(Qualification("wait_for_status",
-    #                             _params={"query": qqq["query"], 'test_name': t,  'wts': qqq["wts"],
-    #                             "wait_status": 5}))
-    #
-    # suite.addTest(Qualification("q_tabs", _params=q_provider1))
-    # suite.addTest(Qualification("q_tab_result_award_1", _params=q_provider1))
+    #tender owner registartion
+    suite.addTest(Registartion("try_login", _params=qqq))
+    suite.addTest(Registartion("open_register_form", _params=qqq))
+    suite.addTest(Registartion("reg_company", _params=qqq))
+    suite.addTest(Registartion("profile_settings", _params=qqq))
+
+    #provider registration
+    q_provider={"query": qqq["query"],
+          'test_name': t,
+          'wts': qqq["wts"],
+          "registartion_data":qqq["wts"].__mongo__.get_params(23)["company"][1]
+          }
+
+    suite.addTest(Registartion("try_login", _params=q_provider))
+    suite.addTest(Registartion("open_register_form", _params=q_provider))
+    suite.addTest(Registartion("reg_company", _params=q_provider))
+    suite.addTest(Registartion("profile_settings", _params=qqq))
+
+    suite.addTest(Test_Below("create_menu", _params=qqq))
+    suite.addTest(Test_Below("select_below_menu", _params=qqq))
+    suite.addTest(Test_Below("set_description", _params=qqq))
+    suite.addTest(Test_Below("set_curr", _params=qqq))
+    suite.addTest(Test_Below("set_multilot", _params=qqq))
+    suite.addTest(Test_Below("set_dates", _params=qqq))
+    suite.addTest(Test_Below("add_lot", _params=qqq))
+    suite.addTest(Test_Below("add_item", _params=qqq))
+    suite.addTest(Test_Below("add_features", _params=qqq))
+    suite.addTest(Test_Below("add_doc", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url_edit", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url_delete", _params=qqq))
+
+    suite.addTest(Test_Below("create_below_publish", _params=qqq))
+
+
+    q_provider1={"query": qqq["query"],'test_name': t,'wts': qqq["wts"],
+          "bid_json": qqq["wts"].__mongo__.get_params(22)["bids"][0]
+          }
+    suite.addTest(Below_Bid("login_provider", _params=q_provider1))
+    suite.addTest(Below_Bid("select_below_type", _params=q_provider1))
+    suite.addTest(Below_Bid("select_tender_period", _params=q_provider1))
+    suite.addTest(Below_Bid("find_tender", _params=q_provider1))
+    suite.addTest(Below_Bid("wait_for_tender_period", _params=q_provider1))
+    suite.addTest(Below_Bid("add_bid", _params=q_provider1))
+
+
+    q_provider2 = {"query": qqq["query"], 'test_name': t,  'wts': qqq["wts"],
+                   "bid_json": qqq["wts"].__mongo__.get_params(22)["bids"][1]
+                   }
+    suite.addTest(Below_Bid("login_provider", _params=q_provider2))
+    suite.addTest(Below_Bid("find_tender", _params=q_provider2))
+    suite.addTest(Below_Bid("add_bid", _params=q_provider2))
+
+    #suite.suite_params.update({"ProzorroId":"UA-2018-03-26-000076-a"})
+
+    suite.addTest(Qualification("login_owner", _params=qqq))
+    suite.addTest(Below_Bid("find_tender", _params=qqq))
+    suite.addTest(Qualification("wait_for_status",
+                                _params={"query": qqq["query"], 'test_name': t,  'wts': qqq["wts"],
+                                "wait_status": 5}))
+
+    suite.addTest(Qualification("q_tabs", _params=q_provider1))
+    suite.addTest(Qualification("q_tab_result_award_1", _params=q_provider1))
 
     return suite
 
@@ -813,17 +811,17 @@ def s_publish_prod(g, t, cmbro, registartion=0):
     suite.addTest(Load_main_page("set_lang", _params=qqq))
     suite.addTest(Tender_Tab("tab_visible", _params=qqq))
     suite.addTest(Tender_Tab("tab_list", _params=qqq))
-    # # suite.addTest(Tender_Tab("tab_search", _params=qqq))
-    # suite.addTest(Tender_Tab("tab_filters", _params=qqq))
-    #
-    # # login page inteface
-    # suite.addTest(Login_page("login_menu", _params=qqq))
-    # suite.addTest(Login_page("open_login", _params=qqq))
-    # suite.addTest(Login_page("check_lang", _params=qqq))
-    # suite.addTest(Login_page("login_owner", _params=qqq))
-    # suite.addTest(Login_page("login_provider", _params=qqq))
-    # suite.addTest(Login_page("open_register_form", _params=qqq))
-    # suite.addTest(Login_page("open_restore_password", _params=qqq))
+    # suite.addTest(Tender_Tab("tab_search", _params=qqq))
+    suite.addTest(Tender_Tab("tab_filters", _params=qqq))
+
+    # login page inteface
+    suite.addTest(Login_page("login_menu", _params=qqq))
+    suite.addTest(Login_page("open_login", _params=qqq))
+    suite.addTest(Login_page("check_lang", _params=qqq))
+    suite.addTest(Login_page("login_owner", _params=qqq))
+    suite.addTest(Login_page("login_provider", _params=qqq))
+    suite.addTest(Login_page("open_register_form", _params=qqq))
+    suite.addTest(Login_page("open_restore_password", _params=qqq))
 
     if registartion>0:
         # tender owner registartion
@@ -843,43 +841,38 @@ def s_publish_prod(g, t, cmbro, registartion=0):
         suite.addTest(Registartion("reg_company", _params=q_provider))
         suite.addTest(Registartion("profile_settings", _params=q_provider))
 
-    # tender draft
-    suite.addTest(Test_Below("create_menu", _params=qqq))
-    suite.addTest(Test_Below("select_below_menu", _params=qqq))
-    suite.addTest(Test_Below("set_description", _params=qqq))
-    suite.addTest(Test_Below("set_curr", _params=qqq))
-    suite.addTest(Test_Below("set_multilot", _params=qqq))
-    suite.addTest(Test_Below("set_dates", _params=qqq))
-    suite.addTest(Test_Below("add_lot", _params=qqq))
-    suite.addTest(Test_Below("add_item", _params=qqq))
-    suite.addTest(Test_Below("add_features", _params=qqq))
-    suite.addTest(Test_Below("add_doc", _params=qqq))
-    suite.addTest(Test_Below("open_draft_by_url", _params=qqq))
-    suite.addTest(Test_Below("open_draft_by_url_edit", _params=qqq))
-    suite.addTest(Test_Below("open_draft_by_url_delete", _params=qqq))
+    # # tender draft
+    # suite.addTest(Test_Below("create_menu", _params=qqq))
+    # suite.addTest(Test_Below("select_below_menu", _params=qqq))
+    # suite.addTest(Test_Below("set_description", _params=qqq))
+    # suite.addTest(Test_Below("set_curr", _params=qqq))
+    # suite.addTest(Test_Below("set_multilot", _params=qqq))
+    # suite.addTest(Test_Below("set_dates", _params=qqq))
+    # suite.addTest(Test_Below("add_lot", _params=qqq))
+    # suite.addTest(Test_Below("add_item", _params=qqq))
+    # suite.addTest(Test_Below("add_features", _params=qqq))
+    # suite.addTest(Test_Below("add_doc", _params=qqq))
+    # suite.addTest(Test_Below("open_draft_by_url", _params=qqq))
+    # suite.addTest(Test_Below("open_draft_by_url_edit", _params=qqq))
+    # suite.addTest(Test_Below("open_draft_by_url_delete", _params=qqq))
+    #
+    # # tender publish
+    # suite.addTest(Test_Below("create_below_publish", _params=qqq))
+    #
+    # #add bid
+    # qqq.update({"bid_json": qqq["wts"].__mongo__.get_params(22)["bids"][0]})
+    # suite.addTest(Below_Bid("login_provider", _params=qqq))
+    # suite.addTest(Below_Bid("select_below_type", _params=qqq))
+    # suite.addTest(Below_Bid("select_tender_period", _params=qqq))
+    # suite.addTest(Below_Bid("find_tender", _params=qqq))
+    # suite.addTest(Below_Bid("wait_for_tender_period", _params=qqq))
+    # suite.addTest(Below_Bid("add_bid", _params=qqq))
+    #
+    # qqq.update({"bid_json": qqq["wts"].__mongo__.get_params(22)["bids"][1]})
+    # suite.addTest(Below_Bid("login_provider", _params=qqq))
+    # suite.addTest(Below_Bid("find_tender", _params=qqq))
+    # suite.addTest(Below_Bid("add_bid", _params=qqq))
 
-    # tender publish
-    suite.addTest(Test_Below("create_below_publish", _params=qqq))
-
-    #add bid
-    qqq.update({"bid_json": qqq["wts"].__mongo__.get_params(22)["bids"][0]})
-    suite.addTest(Below_Bid("login_provider", _params=qqq))
-    suite.addTest(Below_Bid("select_below_type", _params=qqq))
-    suite.addTest(Below_Bid("select_tender_period", _params=qqq))
-    suite.addTest(Below_Bid("find_tender_for_bid", _params=qqq))
-    suite.addTest(Below_Bid("wait_for_tender_period", _params=qqq))
-    suite.addTest(Below_Bid("add_bid", _params=qqq))
-
-    qqq.update({"bid_json": qqq["wts"].__mongo__.get_params(22)["bids"][1]})
-    suite.addTest(Below_Bid("login_provider", _params=qqq))
-    suite.addTest(Below_Bid("find_tender_for_bid", _params=qqq))
-    suite.addTest(Below_Bid("add_bid", _params=qqq))
-
-    return suite
-
-def s_auction(g, t, cmbro):
-    suite = ParamsTestSuite()
-    suite.addTest(RegistrationAuction("test_01_Registration_auction"))
     return suite
 
 
@@ -918,8 +911,6 @@ def runner(arg):
                         bro)    # browser? default - Chrome
     elif opt == 'billing_metods':
         ttt = s_billing_metods(options.g,tname,  bro)
-    elif opt == 'publish_test':
-        ttt = s_publish_test(options.g,tname,  bro)
     elif opt == 'aladdin_like_prozorro':
         ttt = s_aladdin_like_prozorro(options.g, tname,  bro)
     elif opt == 'aladdin_pure':

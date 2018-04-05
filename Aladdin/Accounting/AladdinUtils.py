@@ -58,6 +58,7 @@ class MdbUtils():
         self.db = self.client['aladdin_tests']
         self.test_params = self.db["test_params"]
         self.test_result = self.db["test_results"]
+        self.test_auction = self.db["test_auction"]
         self.fs = gridfs.GridFS(self.db)
 
     def create_result(self):

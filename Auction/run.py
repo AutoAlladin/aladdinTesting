@@ -1,164 +1,113 @@
-import json
-import requests
+import sys
+
+import os
+from datetime import datetime
+
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
+
+from Auction.run_prepare import prepare_data
+
+fo ="C:\\Users\\dev2\\PycharmProjects\\AladdinTesting"
+sys.path.append(fo)
+subdirs = [x[0] for x in os.walk(fo)
+           if not x[0].startswith("_")
+           and not x[0].startswith(".")
+           and x[0].find(".git") == -1
+           ]
+sys.path.extend(subdirs)
+
 from selenium import webdriver
-import webbrowser
-from selenium.webdriver.common.keys import Keys
-import unittest
+from Aladdin.Accounting.AladdinUtils import MdbUtils
 
-#from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
-from Auction.AuctionRegistration import *
-from Auction.add_participant import *
+mdb = MdbUtils()
+url = ""
 
-class RegistrationAuction(unittest.TestCase):
+count = 2
+id = prepare_data(count)
 
-    def __init__(self):
-        tp = None
-        with open("par", 'r', encoding="UTF-8") as params_file:
-            tp = json.load(params_file)
-            # print(tp)
-
-    def get_ar(self, tp):
+#id = sys.argv[1]
 
 
-        #print(tp)
+test_a = mdb.test_auction.find_one({"_id":id})
+parts = test_a["parts"]
+for p in parts:
+    if p["used"] == False:
+        try:
+            p["used"] = True
+            url = p["url"]
+            mdb.test_auction.update({"_id":id, "parts.url": url},
+                                    {"$set": {"parts.$.used": True}})
+            break
+        except Exception as e:
+            url = ""
+            print(e.__str__())
+            continue
 
-        au_labels = [Label_UA_Title("auction ua title"),
-                     Label_UA_Description("auction ua label description"),
-                     Label_EN_Title("auction en label title"),
-                     Label_EN_Description("auction en label description"),
-                     ]
+if url == "": exit()
+try:
+    drv = webdriver.Remote(
+                command_executor = 'http://192.168.56.1:4444/wd/hub',
+                desired_capabilities = {
+                    'browserName': 'chrome',
+                    'javascriptEnabled': True
+                    })
+    drv.maximize_window()
+    drv.implicitly_wait(5)
 
-        pos_labels = [Label_UA_Title("position ua title"),
-                      Label_UA_Description("position ua label description"),
-                      Label_EN_Title("position en label title"),
-                      Label_EN_Description("position en label description"),
-                      ]
+    drv.get(url)
+    print("open", url)
 
-        ar = AuctionRegistration(
-            type="SmartClose",
-            reverse=True,
-            budget=10000,
-            currency="UAH",
-            dateStart=datetime.strptime(tp["dateStart"], '%Y-%m-%dT%H:%M:%S%z'),
-            dateEnd=datetime.strptime(tp["dateEnd"], '%Y-%m-%dT%H:%M:%S%z'),
-            additionalStepTime=tp["additionalStepTime"],
-            additionalStepLimit=tp["additionalStepLimit"],
-            labels=au_labels,
-            positions=[],
-            ownerEmail="owner@mail.com"
-
-        )
-
-        for pos in tp["positions"]:
-            ar.add_position(pos["minimalStep"], pos["maximalStep"], pos_labels, idd=None)
-
-        return ar
-
-
-    def test_01_Registration_auction(self):
-        data_reg = jsonpickle.encode(self.get_ar(), unpicklable=False)
-        req_reg = requests.post("http://192.168."
-                                "95.153:27177/api/manager/register", data=data_reg, headers={"content-type": "application/json"})
-        print(req_reg.status_code)
-
-        #id аукциона
-        resp = req_reg.json()
-        ID = resp['id']
-        self.assertEqual(req_reg.status_code, 200)
-# #id позиции
-# id_item_1 = resp['positions'][0]['id']
-# id_item_2 = resp['positions'][1]['id']
-# id_item_3 = resp['positions'][2]['id']
+    WebDriverWait(drv, 120).until(
+        expected_conditions.text_to_be_present_in_element(
+            (By.TAG_NAME, "body"),"Активний"))
 
 
+    positions =  WebDriverWait(drv, 5).until(
+                    expected_conditions.visibility_of_all_elements_located(
+                        (By.XPATH, "//tr[contains(@id,'positionTr')]")))
 
-    def test_02_Registration_participants(self, resp, tp, ID):
-        i = 0
-        arates=[]
-        for pos in resp["positions"]:
-            item_id = pos['id']
-            r = AuctionRate(item_id, tp["positions"][i]["rate"])
-            arates.append(r)
-            i += 1
+    print("positions count - ",len(positions))
 
+    for i in range(1,len(positions)):
+        offerMinimalStep = WebDriverWait(drv, 5).until(
+                    expected_conditions.visibility_of_element_located((By.ID,"offerMinimalStep"+str(i))))
+        offerEditInput = WebDriverWait(drv, 5).until(
+                    expected_conditions.visibility_of_element_located((By.ID,"offerEditInput"+str(i))))
+        changeRate = WebDriverWait(drv, 5).until(
+                    expected_conditions.visibility_of_element_located((By.ID,"changeRate"+str(i))))
 
-        get_token = resp["token"]
+        offerMaximalStep = None
+        try:
+            offerMaximalStep = WebDriverWait(drv, 5).until(
+                    expected_conditions.visibility_of_element_located((By.ID,"offerMaximalStep"+str(i))))
+        except:
+            pass
 
-        ap = [AuctionParticipent(
-                name="Jack Sparrow",
-                email="jack@mail.com",
-                rates=arates),
-              AuctionParticipent(
-                name="Тест Тестович",
-                email="testyaka@mail.ru",
-                rates=arates),
-              AuctionParticipent(
-                name="Ozzy Osborn",
-                email="ozzyos@mail.com",
-                rates=arates)
-            ]
+        sm=0
+        if offerMaximalStep is not None:
+            sm=round(float(offerMaximalStep.text.replace(",","").replace(" ","")))
+            print("max step - "+str(sm))
 
-        data_reg = jsonpickle.encode(ap, unpicklable=False)
+        sm= round((sm + float(offerMinimalStep.text.replace(",","").replace(" ","")).is_integer())/2 )+10
+        print("middle step - "+str(sm))
 
+        offerEditInput.send_keys(str(sm))
+        print("send "+str(sm))
 
+        changeRate.click()
+        print("changeRate  "+str(i))
 
-        req_add_part = requests.post("http://192.168.95.153:27177/api/manager/auction/"+ID+"/participants",
-                                     data=data_reg, headers={"content-type": "application/json"})
+    # for m in range(1, secondsDiff + 10):
+    #     #getstatusfrompage
+    #     #is ready - go
+    #     time.sleep(1)
+    #     pass
+    print("finish")
+finally:
+    drv.quit()
 
-        print(req_add_part.status_code)
-
-        resp_partic = req_add_part.json()
-
-        #key_particioant = str(resp_partic[0]["key"])
-
-
-
-
-    def test_03_Open_page(self, ID, resp_partic, get_token):
-        dom = "http://192.168.95.153:27178/#/auction/"
-        dr = webdriver.Chrome()
-
-        url_owner = dom+ID+"?key="+get_token
-        dr.get(url_owner)
-
-
-
-        for k in resp_partic:
-            key = k["key"]
-            print(key)
-            prov = dom + ID + "?key=" + key
-            print(prov)
-            op_window = "window.open('{0}', '_blank');".format(prov)
-            dr.execute_script(op_window)
-
-
-
-    #if __name__ == "__main__":
-
-
-
-
-
-
-
-#dr.get(dom+ID)
-
-
-
-# body = dr.find_element_by_tag_name("html")
-# body.send_keys(Keys.CONTROL+'T')
-
-# dr.get(dom+ID+"?key="+get_token)
-#print(dr.window_handles[0])
-
-# body = dr.find_element_by_tag_name("body")
-# body.send_keys(Keys.CONTROL, 't')
-
-
-
-
-
-#dr.close()
 
 
 

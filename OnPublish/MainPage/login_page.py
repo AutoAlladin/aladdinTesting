@@ -12,12 +12,12 @@ class Login_page(ParamsTestCase):
 
     @add_res_to_DB(test_name="Меню авторизации")
     def login_menu(self):
-        with self.subTest("меню авторизации"):
-            liLoginNoAuthenticated= WebDriverWait(self.wts.drv, 10).until(
-                      expected_conditions.visibility_of_element_located((By.ID, "liLoginNoAuthenticated")))
-            self.assertIsNotNone(liLoginNoAuthenticated, "Пункт меню  liLoginNoAuthenticated не найден")
-            liLoginNoAuthenticated.click()
-            self.log_subtest_res("login_menu_click OK")
+        # with self.subTest("меню авторизации"):
+        #     liLoginNoAuthenticated= WebDriverWait(self.wts.drv, 10).until(
+        #               expected_conditions.visibility_of_element_located((By.ID, "liLoginNoAuthenticated")))
+        #     self.assertIsNotNone(liLoginNoAuthenticated, "Пункт меню  liLoginNoAuthenticated не найден")
+        #     liLoginNoAuthenticated.click()
+        #     self.log_subtest_res("login_menu_click OK")
 
         with self.subTest("подпункт вход"):
             butLoginPartial= WebDriverWait(self.wts.drv, 10).until(
@@ -31,11 +31,11 @@ class Login_page(ParamsTestCase):
             self.assertIsNotNone(butRegisterPartial, "Пункт меню butRegisterPartial не найден")
             self.log_subtest_res("Реистрация visible OK")
 
-        with self.subTest("подпункт переключения режима экрана"):
-            bodyBoxToggle= WebDriverWait(self.wts.drv, 10).until(
-                      expected_conditions.visibility_of_element_located((By.ID, "bodyBoxToggle")))
-            self.assertIsNotNone(bodyBoxToggle, "Пункт меню bodyBoxToggle не найден")
-            self.log_subtest_res("Змінити режим єкрану OK")
+        # with self.subTest("подпункт переключения режима экрана"):
+        #     bodyBoxToggle= WebDriverWait(self.wts.drv, 10).until(
+        #               expected_conditions.visibility_of_element_located((By.ID, "bodyBoxToggle")))
+        #     self.assertIsNotNone(bodyBoxToggle, "Пункт меню bodyBoxToggle не найден")
+        #     self.log_subtest_res("Змінити режим єкрану OK")
 
     @add_res_to_DB(test_name="Форма авторизации - тексты")
     def check_lang(self):
@@ -91,12 +91,12 @@ class Login_page(ParamsTestCase):
     @add_res_to_DB(test_name="Авторизация заказчиком")
     def login_owner(self):
 
-        lform =  self.parent_suite.suite_params["login_form"]
         login = self.parent_suite.suite_params["authorization"]["owner_login"]
         password = self.parent_suite.suite_params["authorization"]["owner_password"]
 
         with self.subTest("авторизация"):
-            lform.login(login, password)
+             self.wts.drv.get(self.parent_suite.suite_params["login_url"])
+             LoginPage(self.wts.drv).login(login, password)
 
         with self.subTest("повторный вход в форму авторизации"):
 
@@ -105,9 +105,6 @@ class Login_page(ParamsTestCase):
                     expected_conditions.visibility_of_element_located((By.ID, "butLogoutPartial")))\
             .click()
 
-            liLoginNoAuthenticated = WebDriverWait(self.wts.drv, 10).until(
-                expected_conditions.visibility_of_element_located((By.ID, "liLoginNoAuthenticated")))
-            liLoginNoAuthenticated.click()
             butLoginPartial = WebDriverWait(self.wts.drv, 10).until(
                 expected_conditions.visibility_of_element_located((By.ID, "butLoginPartial")))
             waitFadeIn(self.wts.drv)
@@ -132,10 +129,6 @@ class Login_page(ParamsTestCase):
                     expected_conditions.visibility_of_element_located((By.ID, "butLogoutPartial")))\
             .click()
 
-            liLoginNoAuthenticated = WebDriverWait(self.wts.drv, 10).until(
-                expected_conditions.visibility_of_element_located((By.ID, "liLoginNoAuthenticated")))
-            waitFadeIn(self.wts.drv)
-            liLoginNoAuthenticated.click()
             butLoginPartial = WebDriverWait(self.wts.drv, 10).until(
                     expected_conditions.visibility_of_element_located((By.ID, "butLoginPartial")))
             waitFadeIn(self.wts.drv)
