@@ -21,6 +21,7 @@ class bid:
                         (By.ID,"bidAmount")))
 
                 bidAmount.send_keys(str(bidAm));
+                time.sleep(0.2)
                 Utils.waitFadeIn(self.drv)
             except Exception as r:
                 raise Exception("bidAmount - "+r)
@@ -32,6 +33,7 @@ class bid:
 
             Utils.waitFadeIn(self.drv)
             openDocuments_biddingDocuments.click()
+            time.sleep(0.2)
 
             Utils.waitFadeIn(self.drv)
             bidDocInput_biddingDocuments =self.drv.find_element_by_id("bidDocInput_biddingDocuments")
@@ -40,24 +42,30 @@ class bid:
             bidDocInput_biddingDocuments.send_keys(os.path.dirname(os.path.abspath(__file__))+"\\forbid.txt")
 
             Utils.scroll_to_element(self.drv,submitBid)
+            time.sleep(0.2)
             Utils.waitFadeIn(self.drv)
 
             if prepare == 0:
                 submitBid.click()
+                time.sleep(0.2)
                 Utils.waitFadeIn(self.drv)
 
                 b = WebDriverWait(self.drv, 5).until(
                     EC.presence_of_element_located((By.XPATH,
                          "//div[contains(@class,'jconfirm-buttons')]/button[1]")))
+                Utils.waitFadeIn(self.drv)
                 b.click()
+                time.sleep(0.2)
 
                 b = WebDriverWait(self.drv, 5).until(
                     EC.presence_of_element_located((By.XPATH,
                         "//div[contains(@class,'jconfirm-buttons')]/button[1]")))
+                Utils.waitFadeIn(self.drv)
                 b.click()
+                time.sleep(0.2)
 
                 Utils.waitFadeIn(self.drv)
-                bidGUID =WebDriverWait(self.drv, 30).until(
+                bidGUID =WebDriverWait(self.drv, 60).until(
                     EC.visibility_of_element_located((By.XPATH,"//span[@ng-show='bid.guid']")))
 
                 print("bid guid: " +bidGUID.text.strip())

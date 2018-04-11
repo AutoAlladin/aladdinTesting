@@ -360,37 +360,38 @@ if __name__  =="__main__":
     # for row in crs.columns(table="SyncLogs"):
     #      print(row.column_name)
 
-    res = crs.execute("""select top 500 * 
-                        from ProzorroApi.SyncLogs sl 
-                        order by sl.DateStart desc
-                      """
-                      ).fetchall()
+    # res = crs.execute("""select top 500 *
+    #                     from ProzorroApi.SyncLogs sl
+    #                     order by sl.DateStart desc
+    #                   """
+    #                   ).fetchall()
+
+    # 09000074
+    # 09000094
+    crs.execute(" UPDATE [BillingTest].[dbo].[Accounts]"+
+                " SET Balance = 5000000 "+
+                " WHERE CompanyEdrpo = '{0}' ".format("09000074"))
 
 
-    # crs.execute(" UPDATE [BillingTest].[dbo].[Accounts]"+
-    #             " SET Balance = 500000 "+
-    #             " WHERE CompanyEdrpo = '{0}' ".format("09000080"))
-
-
-    for row in res:
-        # print(str(row.JournalType).ljust(2), end="\t")
-        print(str(row.SyncType).ljust(1), end="\t")
-        print(str(row.Url).ljust(60), end="\t")
-        # print(str(row.Offset).ljust(15), end="\t")
-        # print(str(row.PackCount).ljust(3), end="\t")
-        print(str(row.CompleteCount).ljust(3), end="\t")
-        print(str(row.DateStart).ljust(15), end="\t")
-        print(str(row.DateComplete).ljust(15), end="\t")
-        # print(str(row.Parameters).ljust(15), end="\t")
-        # print(str(row.NextDatePackage).ljust(15), end="\t")
-        # print(str(row.ObjectGuids).ljust(15), end="\t")
-        # print(str(row.LossObjectGuids).ljust(15), end="\t")
-        print(str(row.Completed).ljust(15), end="\t")
-        # print(str(row.IsRetry).ljust(15), end="\t")
-        print(str(row.TestMode).ljust(15), end="\t")
-        # print(str(row.Archive).ljust(15), end="\t")
-        # print(str(row.SID).ljust(15), end="\t")
-        print("\n")
+    # for row in res:
+    #     # print(str(row.JournalType).ljust(2), end="\t")
+    #     print(str(row.SyncType).ljust(1), end="\t")
+    #     print(str(row.Url).ljust(60), end="\t")
+    #     # print(str(row.Offset).ljust(15), end="\t")
+    #     # print(str(row.PackCount).ljust(3), end="\t")
+    #     print(str(row.CompleteCount).ljust(3), end="\t")
+    #     print(str(row.DateStart).ljust(15), end="\t")
+    #     print(str(row.DateComplete).ljust(15), end="\t")
+    #     # print(str(row.Parameters).ljust(15), end="\t")
+    #     # print(str(row.NextDatePackage).ljust(15), end="\t")
+    #     # print(str(row.ObjectGuids).ljust(15), end="\t")
+    #     # print(str(row.LossObjectGuids).ljust(15), end="\t")
+    #     print(str(row.Completed).ljust(15), end="\t")
+    #     # print(str(row.IsRetry).ljust(15), end="\t")
+    #     print(str(row.TestMode).ljust(15), end="\t")
+    #     # print(str(row.Archive).ljust(15), end="\t")
+    #     # print(str(row.SID).ljust(15), end="\t")
+    #     print("\n")
 
 
     conn.close()

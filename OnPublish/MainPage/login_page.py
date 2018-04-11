@@ -83,6 +83,9 @@ class Login_page(ParamsTestCase):
             self.assertIsNotNone(butLoginPartial, "Пункт меню butLoginPartial не найден")
             self.log_subtest_res("Вхід visible OK")
 
+        WebDriverWait(self.wts.drv, 10).until(
+            expected_conditions.invisibility_of_element_located((By.ID, "modDialog")))
+
         butLoginPartial.click()
         login_form = LoginPage(self.wts.drv)
         self.assertIsNotNone(login_form, "Форма авторизации не загрузилась")

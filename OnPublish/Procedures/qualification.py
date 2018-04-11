@@ -36,7 +36,7 @@ class Qualification(ParamsTestCase):
             or self.wts.drv.find_element_by_xpath("//div[@id='myTenders']/div"). \
                     get_attribute("class") == "filter-title"
             ):
-            waitFadeIn(self.drv)
+            waitFadeIn(self.wts.drv)
             myTenders.click()
 
         self.log("login_owner OK - " + self.parent_suite.suite_params["tender_json"]["below"]["login"] +
