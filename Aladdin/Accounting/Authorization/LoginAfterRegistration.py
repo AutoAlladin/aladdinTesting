@@ -1,5 +1,6 @@
 import time
 
+from Aladdin.Accounting import AladdinUtils
 from Aladdin.Accounting.AladdinUtils import *
 from Aladdin.Accounting.Docs.Docs import Docs
 from Aladdin.Accounting.Edit.Edit import Edit
@@ -7,6 +8,7 @@ from Aladdin.Accounting.Registration.Employees import Employees
 from Aladdin.Accounting.Registration.RegistrationCompanyEDRPOU import RegistrationCompany
 from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 from Aladdin.Accounting.decorators.StoreTestResult import add_res_to_DB
+from Prozorro.Utils import waitFadeIn
 
 
 class LoginAfterRegistrationCompany(ParamsTestCase):
@@ -24,6 +26,14 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         full_reg = RegistrationCompany(_params=w, _parent_suite= self.parent_suite)
 
         full_reg.test_01_registration_user()
+
+        self.test_03_login()
+
+        company_tab =  self.wts.w_id("profile_tab_company",20)
+        waitFadeIn(self.wts.drv)
+        company_tab.click()
+        waitFadeIn(self.wts.drv)
+
         full_reg.test_02_tax_system()
         full_reg.test_03_phone_company()
         full_reg.test_04_email_company()
@@ -32,9 +42,13 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         full_reg.test_07_city_legal()
         full_reg.test_08_legal_address()
         full_reg.test_09_legal_index()
+
         full_reg.test_10_real_country()
+        time.sleep(0.5)
         full_reg.test_11_real_region()
+        time.sleep(1)
         full_reg.test_12_real_city()
+
         full_reg.test_13_real_address()
         full_reg.test_14_real_index()
         full_reg.test_15_bank_name()
@@ -75,8 +89,8 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
                                            "group": self.params['query']['q']['group']}}
         w = {"query": query, 'wts': self.wts }
         ed = Edit(_params=w)
-        ed.test_02_click_tab_company()
-        self.wts.drv.execute_script("window.scrollBy(0, 1500);")
+        #ed.test_02_click_tab_company()
+        self.wts.drv.execute_script("window.scrollBy(0, -1500);")
         ed.test_03_click_btn_edit()
         ed.test_04_clear_field_comp_name()
         ed.test_05_update_comp_name()

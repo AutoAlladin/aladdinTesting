@@ -1,4 +1,5 @@
 from datetime import time
+from time import sleep
 
 from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 
@@ -73,11 +74,9 @@ class UserRegistrationEDRPOU(ParamsTestCase):
 
     def test_13_confirm_password(self):
         test_input(self, "confirm_password", **self.params['query'])
-        policy_chb = self.wts.drv.find_element_by_css_selector("#content > div > div > div > div > div > div > form > div.personal-data > div:nth-child(7) > div > div > label")
-        WebDriverWait(self.wts.drv, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#content > div > div > div > div > div > div > form > div.personal-data > div:nth-child(7) > div > div > label")))
-        #policy_chb = self.wts.drv.find_element_by_xpath("//input[@id='user_agreementPolicy']/../label")
-        #policy_chb = self.wts.drv.find_element_by_id("user_agreementPolicy")
-        #time.sleep(10)
+        sleep(0.5)
+        policy_chb = self.wts.w_xpath("//input[@id='user_agreementPolicy']/../label")
+        sleep(0.5)
         policy_chb.click()
 
     def test_14_click_next_step_btn(self):
@@ -87,13 +86,8 @@ class UserRegistrationEDRPOU(ParamsTestCase):
             WebDriverWait(self.wts.drv, 20).until(EC.element_to_be_clickable((By.ID, "btn_next_step")))
             next_step_btn.click()
 
-            #self.wts.drv.execute_script("window.scroll(0, 2000)")
-
-            WebDriverWait(self.wts.drv, 30).until(
-                EC.element_to_be_clickable((By.ID, "btn_save_changes")))
-
-
-            btn_edit = self.wts.drv.find_element_by_id("btn_save_changes")
+            btn_edit =  WebDriverWait(self.wts.drv, 30).until(
+                EC.element_to_be_clickable((By.ID, "submitLogin")))
 
             self.assertIsNotNone(btn_edit)
         except Exception as e:

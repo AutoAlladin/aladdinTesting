@@ -7,6 +7,7 @@ import xmlrunner
 from bson import ObjectId
 
 from Aladdin.Accounting.AladdinUtils import WebTestSession, AvaliableBrowsers
+from Aladdin.Accounting.Authorization.LoginAfterRegistration import LoginAfterRegistrationCompany
 from Aladdin.Accounting.decorators.StoreTestResult import create_result_DB
 from Aladdin.Billing.CreateAccount import *
 from BillingMethods.UnitTestByBilling import TestByBilling
@@ -881,6 +882,32 @@ def s_publish_prod(g, t, cmbro, registartion=0):
 
     return suite
 
+def s_login_after_full_registration(g, cmd_bro):
+    @create_result_DB
+    def s_login_after_full_registration_init(bro):
+        qa = {"query": {"q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}},
+              'test_name': 'UserRegistrationFormTest',
+              'login_url': 'https://win-net-core:44320/account/login',
+              'wts': WebTestSession(browser=bro)
+              }
+        if g is not None:
+            qa["query"]["q"].update({'group': g})
+        qa['wts'].set_main_page(qa['query'])
+        return qa
+
+    qqq = s_login_after_full_registration_init(cmd_bro)
+    suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id, "DB": qqq["wts"].__mongo__})
+    suite.addTest(LoginAfterRegistrationCompany("test_01", _params=qqq, _parent_suite= suite))
+    #suite.addTest(LoginAfterRegistrationCompany("test_02_exit", _params=qqq, _parent_suite= suite))
+    #suite.addTest(LoginAfterRegistrationCompany("test_03_login", _params=qqq, _parent_suite= suite))
+    suite.addTest(LoginAfterRegistrationCompany("test_04_edit", _params=qqq, _parent_suite= suite))
+    suite.addTest(LoginAfterRegistrationCompany("test_05_add_view_delete_docs", _params=qqq, _parent_suite= suite))
+    suite.addTest(LoginAfterRegistrationCompany("test_06_add_employees", _params=qqq, _parent_suite= suite))
+    # suite.addTest(LoginAfterRegistrationCompany("test_07_edit_employees"))
+
+    return suite
+
+
 
 def runner(arg):
     parser = OptionParser()
@@ -929,7 +956,8 @@ def runner(arg):
         ttt = s_publish_prod(options.g,tname,  bro, options.r)
     elif opt == 'rialto_publish_prod':
         ttt = s_rialto_publish_prod(options.g,tname,  bro, options.r)
-
+    elif opt == 'Login_after_full_registration':
+        ttt = s_login_after_full_registration(options.g, bro)
 
     if ttt is not None:
         try:

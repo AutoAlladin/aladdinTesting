@@ -466,6 +466,8 @@ if __name__ == '__main__':
         bro = AvaliableBrowsers.Chrome
     elif bro == "f":
         bro = AvaliableBrowsers.Firefox
+    else:
+        bro = AvaliableBrowsers.Chrome
 
     ttt = None
 
