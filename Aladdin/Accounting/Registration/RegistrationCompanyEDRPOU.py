@@ -31,7 +31,7 @@ class RegistrationCompany(ParamsTestCase):
         self.wts.close_toast()
 
     def test_02_tax_system(self):
-        test_select(self, "company_taxSystem", "5")
+        test_select(self, "company_taxSystem", **self.params['query'])
 
     def test_03_phone_company(self):
         test_input(self, "resident_phone", **self.params['query'])
