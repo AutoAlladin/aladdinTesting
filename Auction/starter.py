@@ -4,7 +4,7 @@ from time import sleep
 
 from Auction.run_prepare import prepare_data
 
-count = 10
+count = 15
 id = prepare_data(count)
 
 completed =[]

@@ -41,6 +41,7 @@ class Below_Bid(ParamsTestCase):
             or self.wts.drv.find_element_by_xpath("//div[@id='myTenders']/div").\
                 get_attribute("class") =="filter-title"
             ):
+            waitFadeIn(self.wts.drv)
             myTenders.click()
 
         self.log("login_provider OK - "+  self.params["bid_json"]["login"]+
