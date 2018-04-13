@@ -29,10 +29,10 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
 
         self.test_03_login()
 
-        company_tab =  self.wts.w_id("profile_tab_company",20)
-        waitFadeIn(self.wts.drv)
-        company_tab.click()
-        waitFadeIn(self.wts.drv)
+        # company_tab =  self.wts.w_id("profile_tab_company",20)
+        # waitFadeIn(self.wts.drv)
+        # company_tab.click()
+        # waitFadeIn(self.wts.drv)
 
         full_reg.test_02_tax_system()
         full_reg.test_03_phone_company()
