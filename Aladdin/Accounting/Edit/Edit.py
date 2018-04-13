@@ -240,7 +240,6 @@ class Edit(ParamsTestCase):
 
     @add_res_to_DB()
     def test_39_click_btn_save_changes(self):
-    #self.wts.drv.execute_script("window.scrollTo(0, 2500);")
         contract_offer_s = self.wts.drv.find_element_by_xpath("//*[@id='contract_offer_container']/label")
         contract_offer_s.click()
 
