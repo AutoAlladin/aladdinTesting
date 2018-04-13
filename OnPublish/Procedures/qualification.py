@@ -45,40 +45,40 @@ class Qualification(ParamsTestCase):
     @add_res_to_DB(test_name='Ожидание статуса')
     def wait_for_status(self):
         # 5 - Кваліфікація
-        if "wait_status" in self.parent_suite.suite_params:
-            wst = self.parent_suite.suite_params["wait_status"]
+        #if "wait_status" in self.parent_suite.suite_params:
+            wst = '5' #self.parent_suite.suite_params["wait_status"]
             url = self.wts.drv.current_url
             for m in range(1, 100 ):
                 status =self.wts.drv.execute_script("return $('#purchaseStatus').text()")
                 if status !=wst :
-                    sleep(5)
+                    sleep(30)
                     self.wts.drv.get(url)
                 else:
                     break
 
     @add_res_to_DB(test_name='Вкладки квалификации')
     def q_tabs(self):
-        with("results-award-tab"):
+        with self.subTest("results-award-tab"):
             results_award_tab = WebDriverWait(self.wts.drv, 10).until(
                 expected_conditions.visibility_of_element_located((By.ID, "results-award-tab")))
-            self.assertEqual(results_award_tab, "ПРОТОКОЛ РОЗКРИТТЯ")
+            self.assertEqual(results_award_tab.text, "ПРОТОКОЛ РОЗКРИТТЯ")
             self.log("Вкладка ПРОТОКОЛ РОЗКРИТТЯ ОК")
 
-        with("results-bids-tab"):
+        with self.subTest("results-bids-tab"):
             results_bids_tab = WebDriverWait(self.wts.drv, 10).until(
                 expected_conditions.visibility_of_element_located((By.ID, "results-bids-tab")))
-            self.assertEqual(results_bids_tab, "ПРОПОЗИЦІЇ")
+            self.assertEqual(results_bids_tab.text, "ПРОПОЗИЦІЇ")
             self.log("Вкладка ПРОПОЗИЦІЇ ОК")
 
-        with("processing-tab"):
+        with self.subTest("processing-tab"):
             processing_tab = WebDriverWait(self.wts.drv, 10).until(
                 expected_conditions.visibility_of_element_located((By.ID, "processing-tab")))
-            self.assertEqual(processing_tab, "ОБРОБКА")
+            self.assertEqual(processing_tab.text, "ОБРОБКА")
             self.log("Вкладка ОБРОБКА ОК")
 
     @add_res_to_DB(test_name='Вкладка 1 кандидат ПРОТОКОЛ РОЗКРИТТЯ')
     def q_tab_result_award_1(self):
-        with("results-award"):
+        with self.subTest("results-award"):
             parti = WebDriverWait(self.wts.drv, 10).until(
                 expected_conditions.visibility_of_element_located((By.XPATH, "//div[@id='results-award']//table")))
 

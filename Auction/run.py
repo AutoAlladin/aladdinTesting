@@ -92,7 +92,7 @@ try:
 
         if offerMaximalStep is not None:
             smmax=round(float(offerMaximalStep.text.replace(",","").replace(" ","")))
-            sm = round(smmin+(smmax-smmin) / 2  + random.randint(1, 10))
+            sm = smmin # round(smmin+(smmax-smmin) / 2  + random.randint(1, 10))
             offerEditInput.send_keys(str(sm).replace(",", "").replace(" ", ""))
         else:
             sm= smmin
