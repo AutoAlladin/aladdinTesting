@@ -671,7 +671,7 @@ def s_publish_test(g, t, cmbro):
                 "login_url": t["login_url"],
                 "authorization": t["authorization"],
                 "lang": t["lang"],
-                "auction_par.json":par
+                "par":par
     })
     
     #billing metods
@@ -693,21 +693,21 @@ def s_publish_test(g, t, cmbro):
     #
     # # main page interface not authorization
     suite.addTest(Load_main_page("page_loaded", _params=qqq))
-    # suite.addTest(Load_main_page("menu_presented", _params=qqq))
-    # suite.addTest(Load_main_page("set_lang", _params=qqq))
-    # suite.addTest(Tender_Tab("tab_visible", _params=qqq))
-    # suite.addTest(Tender_Tab("tab_list", _params=qqq))
-    # suite.addTest(Tender_Tab("tab_search", _params=qqq))
-    # suite.addTest(Tender_Tab("tab_filters", _params=qqq))
-    #
-    # # login page inteface
-    # suite.addTest(Login_page("login_menu", _params=qqq))
-    # suite.addTest(Login_page("open_login", _params=qqq))
-    # suite.addTest(Login_page("check_lang", _params=qqq))
-    # suite.addTest(Login_page("login_owner", _params=qqq))
-    # suite.addTest(Login_page("login_provider", _params=qqq))
-    # suite.addTest(Login_page("open_register_form", _params=qqq))
-    # #suite.addTest(Login_page("open_restore_password", _params=qqq))
+    suite.addTest(Load_main_page("menu_presented", _params=qqq))
+    suite.addTest(Load_main_page("set_lang", _params=qqq))
+    suite.addTest(Tender_Tab("tab_visible", _params=qqq))
+    suite.addTest(Tender_Tab("tab_list", _params=qqq))
+    suite.addTest(Tender_Tab("tab_search", _params=qqq))
+    suite.addTest(Tender_Tab("tab_filters", _params=qqq))
+
+    # login page inteface
+    suite.addTest(Login_page("login_menu", _params=qqq))
+    suite.addTest(Login_page("open_login", _params=qqq))
+    suite.addTest(Login_page("check_lang", _params=qqq))
+    suite.addTest(Login_page("login_owner", _params=qqq))
+    suite.addTest(Login_page("login_provider", _params=qqq))
+    suite.addTest(Login_page("open_register_form", _params=qqq))
+    #suite.addTest(Login_page("open_restore_password", _params=qqq))
 
 
     # #tender owner registartion
@@ -723,24 +723,24 @@ def s_publish_test(g, t, cmbro):
     #       "registartion_data":qqq["wts"].__mongo__.get_params(23)["company"][1]
     #       }
     #
-    # suite.addTest(Registartion("try_login", _params=q_provider))
+    # suite.addTest(Registartion("try_login961891", _params=q_provider))
     # suite.addTest(Registartion("open_register_form", _params=q_provider))
     # suite.addTest(Registartion("reg_company", _params=q_provider))
     # suite.addTest(Registartion("profile_settings", _params=qqq))
 
-    # suite.addTest(Test_Below("create_menu", _params=qqq))
-    # suite.addTest(Test_Below("select_below_menu", _params=qqq))
-    # suite.addTest(Test_Below("set_description", _params=qqq))
-    # suite.addTest(Test_Below("set_curr", _params=qqq))
-    # suite.addTest(Test_Below("set_multilot", _params=qqq))
-    # suite.addTest(Test_Below("set_dates", _params=qqq))
-    # suite.addTest(Test_Below("add_lot", _params=qqq))
-    # suite.addTest(Test_Below("add_item", _params=qqq))
-    # suite.addTest(Test_Below("add_features", _params=qqq))
-    # suite.addTest(Test_Below("add_doc", _params=qqq))
-    # suite.addTest(Test_Below("open_draft_by_url", _params=qqq))
-    # suite.addTest(Test_Below("open_draft_by_url_edit", _params=qqq))
-    # suite.addTest(Test_Below("open_draft_by_url_delete", _params=qqq))
+    suite.addTest(Test_Below("create_menu", _params=qqq))
+    suite.addTest(Test_Below("select_below_menu", _params=qqq))
+    suite.addTest(Test_Below("set_description", _params=qqq))
+    suite.addTest(Test_Below("set_curr", _params=qqq))
+    suite.addTest(Test_Below("set_multilot", _params=qqq))
+    suite.addTest(Test_Below("set_dates", _params=qqq))
+    suite.addTest(Test_Below("add_lot", _params=qqq))
+    suite.addTest(Test_Below("add_item", _params=qqq))
+    suite.addTest(Test_Below("add_features", _params=qqq))
+    suite.addTest(Test_Below("add_doc", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url_edit", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url_delete", _params=qqq))
 
     suite.addTest(Test_Below("create_below_publish", _params=qqq))
 
