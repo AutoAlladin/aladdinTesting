@@ -928,6 +928,15 @@ def s_login_after_full_registration_neresident(g, cmd_bro):
 
     suite.addTest(UserRegistrationEDRPOU("test_01_company_name", _params=qqq, _parent_suite= suite))
     suite.addTest(UserRegistrationEDRPOU("test_02_company_name_en", _params=qqq, _parent_suite= suite))
+    suite.addTest(UserRegistrationEDRPOU("test_05_name", _params=qqq, _parent_suite= suite))
+    suite.addTest(UserRegistrationEDRPOU("test_06_name_en", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_07_last_name", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_08_last_name_en", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_09_position", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_11_email", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_12_password", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_13_confirm_password", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_14_click_next_step_btn", _params=qqq, _parent_suite=suite))
 
     return suite
 

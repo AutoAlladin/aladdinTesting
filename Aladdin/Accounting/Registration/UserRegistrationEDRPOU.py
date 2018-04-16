@@ -18,9 +18,9 @@ class UserRegistrationEDRPOU(ParamsTestCase):
         test_select(self, "ownership_type", "6a80945d-ff2d-4e9c-8d3f-8718b885bb21")
         test_input(self, "comapny_code_USREOUNotResident", "123456789987654")
         sleep(0.5)
-        no_res = self.wts.w_xpath("// label[@for ='resident']")
-        sleep(0.5)
         no_res.click()
+        sleep(0.5)
+        test_input(self, "no_resident_phone", "+1234567890245")
 
     @add_res_to_DB()
     def test_01_company_name(self):
