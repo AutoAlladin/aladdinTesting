@@ -12,9 +12,13 @@ test_auction = {"_id":"",
                 }
 
 def prepare_data(part_count=3):
-    response = requests.get("http://192.168.95.153:27050/api/Auction/test",
+    response = requests.get("http://192.168.95.164:27010/api/Auction/test",
                             params={"participantCount":part_count,
-                                    "startSeconds":30},
+                                    "startSeconds":15,
+                                    "auctionTime":2,
+                                    "additionalStepLimit":2,
+                                    "additionalStepTime":2
+                                    },
                             headers ={"Authorization":"Basic U21hcnRGb3Jlc3RTeW5jOjhCMzk0RDkwLTRGNTAtNEY1Ri1BQTg4LTJFNjUyOTk5QUYzMA=="})
     test_a = response.json()
     parts = test_a["invitedCompanies"]

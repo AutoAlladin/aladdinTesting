@@ -24,11 +24,15 @@ from Aladdin.Accounting.AladdinUtils import MdbUtils
 
 mdb = MdbUtils()
 url = ""
+id = ""
 
-# count = 2
-# id = prepare_data(count)
+if len(sys.argv) == 2:
+    id = sys.argv[1]
+else:
+    count = 2
+    id = prepare_data(count)
 
-id = sys.argv[1]
+
 
 
 test_a = mdb.test_auction.find_one({"_id":id})
@@ -49,7 +53,7 @@ for p in parts:
 if url == "": exit()
 try:
     drv = webdriver.Remote(
-                command_executor = 'http://192.168.56.1:4444/wd/hub',
+                command_executor = 'http://192.168.80.121:4444/wd/hub',
                 desired_capabilities = {
                     'browserName': 'chrome',
                     'javascriptEnabled': True
@@ -72,49 +76,76 @@ try:
 
     print("positions count - ",len(positions))
 
-    for i in range(1,len(positions)+1):
-        offerMinimalStep = WebDriverWait(drv, 5).until(
-                    expected_conditions.visibility_of_element_located((By.ID,"offerMinimalStep"+str(i))))
-        offerEditInput = WebDriverWait(drv, 5).until(
-                    expected_conditions.visibility_of_element_located((By.ID,"offerEditInput"+str(i))))
-        changeRate = WebDriverWait(drv, 5).until(
-                    expected_conditions.visibility_of_element_located((By.ID,"changeRate"+str(i))))
-
-        offerMaximalStep = None
+    ready = None
+    sleep(random.randint(1, 15))
+    speed =  random.randint(1, 15)
+    while ready is None:
         try:
-            offerMaximalStep = WebDriverWait(drv, 0.5).until(
-                    expected_conditions.visibility_of_element_located((By.ID,"offerMaximalStep"+str(i))))
+            ready = WebDriverWait(drv, 1).until(
+                expected_conditions.text_to_be_present_in_element(
+                    (By.TAG_NAME, "body"), "Завершено"))
         except:
             pass
+        for i in range(1,len(positions)+1):
+            try:
+                sleep(random.randint(1, 5))
+                sleep(speed)
 
-        sm=0
-        smmin = float(offerMinimalStep.text.replace(",", "").replace(" ", ""))
+                offerEditInput = None
+                try:
+                    offerEditInput = WebDriverWait(drv, 5).until(
+                        expected_conditions.visibility_of_element_located((By.ID, "offerEditInput" + str(i))))
+                except:
+                    pass
 
-        if offerMaximalStep is not None:
-            smmax=round(float(offerMaximalStep.text.replace(",","").replace(" ","")))
-            sm = smmin # round(smmin+(smmax-smmin) / 2  + random.randint(1, 10))
-            offerEditInput.send_keys(str(sm).replace(",", "").replace(" ", ""))
-        else:
-            sm= smmin
-            offerMinimalStep.click()
+                if offerEditInput is not None:
+                    offerMinimalStep = WebDriverWait(drv, 5).until(
+                                expected_conditions.visibility_of_element_located((By.ID,"offerMinimalStep"+str(i))))
+                    changeRate = WebDriverWait(drv, 5).until(
+                                expected_conditions.visibility_of_element_located((By.ID,"changeRate"+str(i))))
 
-        changeRate.click()
+                    offerMaximalStep = None
+                    try:
+                        offerMaximalStep = WebDriverWait(drv, 0.5).until(
+                                expected_conditions.visibility_of_element_located((By.ID,"offerMaximalStep"+str(i))))
+                    except:
+                        pass
 
-        try:
-            WebDriverWait(drv, 0.1).until(
-                expected_conditions.visibility_of_element_located((By.ID, "toast-container")))
+                    sm=0
+                    smmin = float(offerMinimalStep.text.replace(",", "").replace(" ", ""))
 
-            toast_close_button = WebDriverWait(drv, 0.1).until(
-                expected_conditions.visibility_of_element_located((By.CLASS_NAME, "toast-close-button")))
+                    if offerMaximalStep is not None:
+                        smmax=round(float(offerMaximalStep.text.replace(",","").replace(" ","")))
+                        if smmin == smmax:
+                            sm = smmin
+                        else:
+                            sm = smmin + round(smmax-smmin)-1
+                            if sm < smmin : sm = smmin
 
-            toast_close_button.click()
+                        offerEditInput.send_keys(str(sm).replace(",", "").replace(" ", ""))
+                    else:
+                        sm= smmin
+                        offerMinimalStep.click()
 
-            WebDriverWait(drv, 0.1).until(
-                expected_conditions.invisibility_of_element_located((By.ID, "toast-container")))
-        except:
-            pass
+                    changeRate.click()
 
-        print("changeRate  "+str(i))
+                    try:
+                        WebDriverWait(drv, 0.1).until(
+                            expected_conditions.visibility_of_element_located((By.ID, "toast-container")))
+
+                        toast_close_button = WebDriverWait(drv, 0.1).until(
+                            expected_conditions.visibility_of_element_located((By.CLASS_NAME, "toast-close-button")))
+
+                        toast_close_button.click()
+
+                        WebDriverWait(drv, 0.1).until(
+                            expected_conditions.invisibility_of_element_located((By.ID, "toast-container")))
+                    except:
+                        pass
+
+                    print("changeRate  "+str(i))
+            except Exception as e:
+                    print(e.__str__())
 
     # for m in range(1, secondsDiff + 10):
     #     #getstatusfrompage
