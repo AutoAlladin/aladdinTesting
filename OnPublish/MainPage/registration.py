@@ -318,7 +318,11 @@ class Registartion(ParamsTestCase):
             self.assertEqual('Працювати в режимі навчання', onTestCheck_label.text)
 
             waitFadeIn(self.wts.drv)
-            onTestCheck_label.click()
+
+            check =self.wts.w_id("onTestCheck")
+            if not check.get_attribute('checked'):
+                onTestCheck_label.click()
+
             sleep(0.1)
             self.assertTrue(onTestCheck.get_attribute('checked'))
             self.log("обучающий режим - OK")

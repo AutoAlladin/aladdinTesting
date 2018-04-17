@@ -202,6 +202,9 @@ def s_Employees():
     return suite
 
 
+
+
+
 def s_login_after_full_registration(g, cmd_bro):
     @create_result_DB
     def s_login_after_full_registration_init(bro):
@@ -466,6 +469,8 @@ if __name__ == '__main__':
         bro = AvaliableBrowsers.Chrome
     elif bro == "f":
         bro = AvaliableBrowsers.Firefox
+    else:
+        bro = AvaliableBrowsers.Chrome
 
     ttt = None
 
@@ -495,6 +500,7 @@ if __name__ == '__main__':
         ttt = s_checkBalance()
     elif opt == 'full_billinig':
         ttt = s_full_billinig()
+
 
     if ttt is not None:
         try:

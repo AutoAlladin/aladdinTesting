@@ -178,3 +178,18 @@ class WebTestSession:
         self.drv.close()
         self.__mongo__.client.close()
         pass
+
+    def close_toast(self):
+        try:
+            WebDriverWait(self.drv, 0.1).until(
+                expected_conditions.visibility_of_element_located((By.ID, "toast-container")))
+
+            toast_close_button = WebDriverWait(self.drv, 0.1).until(
+                expected_conditions.visibility_of_element_located((By.CLASS_NAME, "toast-close-button")))
+
+            toast_close_button.click()
+
+            WebDriverWait(self.drv, 0.1).until(
+                expected_conditions.invisibility_of_element_located((By.ID, "toast-container")))
+        except:
+            pass

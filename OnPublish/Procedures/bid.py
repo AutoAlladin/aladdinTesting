@@ -41,6 +41,7 @@ class Below_Bid(ParamsTestCase):
             or self.wts.drv.find_element_by_xpath("//div[@id='myTenders']/div").\
                 get_attribute("class") =="filter-title"
             ):
+            waitFadeIn(self.wts.drv)
             myTenders.click()
 
         self.log("login_provider OK - "+  self.params["bid_json"]["login"]+
@@ -95,26 +96,31 @@ class Below_Bid(ParamsTestCase):
         # select_searchType = WebDriverWait(self.wts.drv, 5).until(
         #     expected_conditions.visibility_of_element_located((By.ID, id_searchType)))
         # Select(select_searchType).select_by_visible_text("Системному номеру (у форматі UA-....)")
+        try:
+            for i in range(10):
+                butSimpleSearch = WebDriverWait(self.wts.drv, 5).until(
+                    expected_conditions.visibility_of_element_located((By.ID, id_butSimpleSearch)))
+                findbykeywords = WebDriverWait(self.wts.drv, 5).until(
+                    expected_conditions.visibility_of_element_located((By.ID, id_findbykeywords)))
+                findbykeywords.clear()
 
-        butSimpleSearch = WebDriverWait(self.wts.drv, 5).until(
-            expected_conditions.visibility_of_element_located((By.ID, id_butSimpleSearch)))
-        findbykeywords = WebDriverWait(self.wts.drv, 5).until(
-            expected_conditions.visibility_of_element_located((By.ID, id_findbykeywords)))
-        findbykeywords.clear()
+                findbykeywords.send_keys(ProzorroId)
+                butSimpleSearch.click()
 
-        findbykeywords.send_keys(ProzorroId)
-        butSimpleSearch.click()
+                self.wts.drv.execute_script("window.scroll(0,1000)")
+                sleep(1)
 
-        self.wts.drv.execute_script("window.scroll(0,1000)")
-
-        sleep(2)
-
-        tender_link = WebDriverWait(self.wts.drv, 10).until(
-            expected_conditions.visibility_of_element_located((By.XPATH,
-        "//div[@id='purchase-page']//a[contains(@id,'href-purchase')]/../span[text()='"+ProzorroId+"']/../a")))
-
-        tender_link.click()
-        self.log("open tender - "+ProzorroId)
+                try:
+                    tender_link = WebDriverWait(self.wts.drv, 10).until(
+                        expected_conditions.visibility_of_element_located((By.XPATH,
+                    "//div[@id='purchase-page']//a[contains(@id,'href-purchase')]/../span[text()='"+ProzorroId+"']/../a")))
+                    tender_link.click()
+                    self.log("open tender - "+ProzorroId)
+                    break
+                except:
+                    pass
+        except:
+            raise  Exception("Tender {} not found ".format(ProzorroId))
 
     @add_res_to_DB(test_name='Ожидание периода подачи предложений')
     def wait_for_tender_period(self):

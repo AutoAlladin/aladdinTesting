@@ -7,6 +7,8 @@ import xmlrunner
 from bson import ObjectId
 
 from Aladdin.Accounting.AladdinUtils import WebTestSession, AvaliableBrowsers
+from Aladdin.Accounting.Authorization.LoginAfterRegistration import LoginAfterRegistrationCompany
+from Aladdin.Accounting.Registration.UserRegistrationEDRPOU import UserRegistrationEDRPOU
 from Aladdin.Accounting.decorators.StoreTestResult import create_result_DB
 from Aladdin.Billing.CreateAccount import *
 from BillingMethods.UnitTestByBilling import TestByBilling
@@ -813,21 +815,21 @@ def s_publish_prod(g, t, cmbro, registartion=0):
 
     # # main page interface not authorization
     suite.addTest(Load_main_page("page_loaded", _params=qqq))
-    suite.addTest(Load_main_page("menu_presented", _params=qqq))
-    suite.addTest(Load_main_page("set_lang", _params=qqq))
-    suite.addTest(Tender_Tab("tab_visible", _params=qqq))
-    suite.addTest(Tender_Tab("tab_list", _params=qqq))
-    # suite.addTest(Tender_Tab("tab_search", _params=qqq))
-    suite.addTest(Tender_Tab("tab_filters", _params=qqq))
-
-    # login page inteface
-    suite.addTest(Login_page("login_menu", _params=qqq))
-    suite.addTest(Login_page("open_login", _params=qqq))
-    suite.addTest(Login_page("check_lang", _params=qqq))
-    suite.addTest(Login_page("login_owner", _params=qqq))
-    suite.addTest(Login_page("login_provider", _params=qqq))
-    suite.addTest(Login_page("open_register_form", _params=qqq))
-    suite.addTest(Login_page("open_restore_password", _params=qqq))
+    # suite.addTest(Load_main_page("menu_presented", _params=qqq))
+    # suite.addTest(Load_main_page("set_lang", _params=qqq))
+    # suite.addTest(Tender_Tab("tab_visible", _params=qqq))
+    # suite.addTest(Tender_Tab("tab_list", _params=qqq))
+    # # suite.addTest(Tender_Tab("tab_search", _params=qqq))
+    # suite.addTest(Tender_Tab("tab_filters", _params=qqq))
+    #
+    # # login page inteface
+    # suite.addTest(Login_page("login_menu", _params=qqq))
+    # suite.addTest(Login_page("open_login", _params=qqq))
+    # suite.addTest(Login_page("check_lang", _params=qqq))
+    # suite.addTest(Login_page("login_owner", _params=qqq))
+    # suite.addTest(Login_page("login_provider", _params=qqq))
+    # suite.addTest(Login_page("open_register_form", _params=qqq))
+    # suite.addTest(Login_page("open_restore_password", _params=qqq))
 
     if registartion>0:
         # tender owner registartion
@@ -836,7 +838,7 @@ def s_publish_prod(g, t, cmbro, registartion=0):
         suite.addTest(Registartion("reg_company", _params=qqq))
         suite.addTest(Registartion("profile_settings", _params=qqq))
 
-        #provider registration
+        #provider registration test00134
         q_provider={"query": qqq["query"],
               'test_name': t,
               'wts': qqq["wts"],
@@ -847,41 +849,102 @@ def s_publish_prod(g, t, cmbro, registartion=0):
         suite.addTest(Registartion("reg_company", _params=q_provider))
         suite.addTest(Registartion("profile_settings", _params=q_provider))
 
-    # # tender draft
-    # suite.addTest(Test_Below("create_menu", _params=qqq))
-    # suite.addTest(Test_Below("select_below_menu", _params=qqq))
-    # suite.addTest(Test_Below("set_description", _params=qqq))
-    # suite.addTest(Test_Below("set_curr", _params=qqq))
-    # suite.addTest(Test_Below("set_multilot", _params=qqq))
-    # suite.addTest(Test_Below("set_dates", _params=qqq))
-    # suite.addTest(Test_Below("add_lot", _params=qqq))
-    # suite.addTest(Test_Below("add_item", _params=qqq))
-    # suite.addTest(Test_Below("add_features", _params=qqq))
-    # suite.addTest(Test_Below("add_doc", _params=qqq))
-    # suite.addTest(Test_Below("open_draft_by_url", _params=qqq))
-    # suite.addTest(Test_Below("open_draft_by_url_edit", _params=qqq))
-    # suite.addTest(Test_Below("open_draft_by_url_delete", _params=qqq))
-    #
-    # # tender publish
-    # suite.addTest(Test_Below("create_below_publish", _params=qqq))
-    #
-    # #add bid
-    # qqq.update({"bid_json": qqq["wts"].__mongo__.get_params(22)["bids"][0]})
-    # suite.addTest(Below_Bid("login_provider", _params=qqq))
-    # suite.addTest(Below_Bid("select_below_type", _params=qqq))
-    # suite.addTest(Below_Bid("select_tender_period", _params=qqq))
-    # suite.addTest(Below_Bid("find_tender", _params=qqq))
-    # suite.addTest(Below_Bid("wait_for_tender_period", _params=qqq))
-    # suite.addTest(Below_Bid("add_bid", _params=qqq))
-    #
-    # qqq.update({"bid_json": qqq["wts"].__mongo__.get_params(22)["bids"][1]})
-    # suite.addTest(Below_Bid("login_provider", _params=qqq))
-    # suite.addTest(Below_Bid("find_tender", _params=qqq))
-    # suite.addTest(Below_Bid("add_bid", _params=qqq))
+    # tender draft
+    suite.addTest(Test_Below("create_menu", _params=qqq))
+    suite.addTest(Test_Below("select_below_menu", _params=qqq))
+    suite.addTest(Test_Below("set_description", _params=qqq))
+    suite.addTest(Test_Below("set_curr", _params=qqq))
+    suite.addTest(Test_Below("set_multilot", _params=qqq))
+    suite.addTest(Test_Below("set_dates", _params=qqq))
+    suite.addTest(Test_Below("add_lot", _params=qqq))
+    suite.addTest(Test_Below("add_item", _params=qqq))
+    suite.addTest(Test_Below("add_features", _params=qqq))
+    suite.addTest(Test_Below("add_doc", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url_edit", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url_delete", _params=qqq))
+
+    # tender publish
+    suite.addTest(Test_Below("create_below_publish", _params=qqq))
+
+    #add bid
+    qqq.update({"bid_json": qqq["wts"].__mongo__.get_params(29)["bids"][0]})
+    suite.addTest(Below_Bid("login_provider", _params=qqq))
+    suite.addTest(Below_Bid("select_below_type", _params=qqq))
+    suite.addTest(Below_Bid("select_tender_period", _params=qqq))
+    suite.addTest(Below_Bid("find_tender", _params=qqq))
+    suite.addTest(Below_Bid("wait_for_tender_period", _params=qqq))
+    suite.addTest(Below_Bid("add_bid", _params=qqq))
+
+    # provider registration test00134
+    qqq2 = {"query": qqq["query"],
+                  'test_name': t,
+                  'wts': qqq["wts"],
+                  "bid_json":  qqq["wts"].__mongo__.get_params(29)["bids"][1]
+                  }
+
+    suite.addTest(Below_Bid("login_provider", _params=qqq2))
+    suite.addTest(Below_Bid("find_tender", _params=qqq2))
+    suite.addTest(Below_Bid("add_bid", _params=qqq2))
+
+    return suite
+
+def s_login_after_full_registration(g, cmd_bro):
+    @create_result_DB
+    def s_login_after_full_registration_init(bro):
+        qa = {"query": {"q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}},
+              'test_name': 'UserRegistrationFormTest',
+              'login_url': 'https://win-net-core:44320/account/login',
+              'wts': WebTestSession(browser=bro)
+              }
+        if g is not None:
+            qa["query"]["q"].update({'group': g})
+        qa['wts'].set_main_page(qa['query'])
+        return qa
+
+    qqq = s_login_after_full_registration_init(cmd_bro)
+    suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id, "DB": qqq["wts"].__mongo__})
+    suite.addTest(LoginAfterRegistrationCompany("test_01", _params=qqq, _parent_suite= suite))
+    #suite.addTest(LoginAfterRegistrationCompany("test_02_exit", _params=qqq, _parent_suite= suite))
+    #suite.addTest(LoginAfterRegistrationCompany("test_03_login", _params=qqq, _parent_suite= suite))
+    suite.addTest(LoginAfterRegistrationCompany("test_04_edit", _params=qqq, _parent_suite= suite))
+    suite.addTest(LoginAfterRegistrationCompany("test_05_add_view_delete_docs", _params=qqq, _parent_suite= suite))
+    suite.addTest(LoginAfterRegistrationCompany("test_06_add_employees", _params=qqq, _parent_suite= suite))
+    # suite.addTest(LoginAfterRegistrationCompany("test_07_edit_employees"))
 
     return suite
 
 
+def s_login_after_full_registration_neresident(g, cmd_bro):
+    @create_result_DB
+    def s_login_after_full_registration_neresident_init(bro):
+        qa = {"query": {"q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}},
+              'test_name': 'UserRegistrationFormTest',
+              'login_url': 'https://win-net-core:44320/account/login',
+              'wts': WebTestSession(browser=bro)
+              }
+        if g is not None:
+            qa["query"]["q"].update({'group': g})
+        qa['wts'].set_main_page(qa['query'])
+        return qa
+
+    qqq = s_login_after_full_registration_neresident_init(cmd_bro)
+    suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id, "DB": qqq["wts"].__mongo__})
+    suite.addTest(LoginAfterRegistrationCompany("test_00_registration_nerez", _params=qqq, _parent_suite= suite))
+
+    suite.addTest(UserRegistrationEDRPOU("test_01_company_name", _params=qqq, _parent_suite= suite))
+    suite.addTest(UserRegistrationEDRPOU("test_02_company_name_en", _params=qqq, _parent_suite= suite))
+    suite.addTest(UserRegistrationEDRPOU("test_05_name", _params=qqq, _parent_suite= suite))
+    suite.addTest(UserRegistrationEDRPOU("test_06_name_en", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_07_last_name", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_08_last_name_en", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_09_position", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_11_email", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_12_password", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_13_confirm_password", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_14_click_next_step_btn", _params=qqq, _parent_suite=suite))
+
+    return suite
 
 
 def runner(arg):
@@ -931,7 +994,10 @@ def runner(arg):
         ttt = s_publish_prod(options.g,tname,  bro, options.r)
     elif opt == 'rialto_publish_prod':
         ttt = s_rialto_publish_prod(options.g,tname,  bro, options.r)
-
+    elif opt == 'Login_after_full_registration':
+        ttt = s_login_after_full_registration(options.g, bro)
+    elif opt == 'login_after_full_registration_neresident':
+        ttt = s_login_after_full_registration_neresident(options.g, bro)
 
     if ttt is not None:
         try:
