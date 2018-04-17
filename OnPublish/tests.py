@@ -8,6 +8,7 @@ from bson import ObjectId
 
 from Aladdin.Accounting.AladdinUtils import WebTestSession, AvaliableBrowsers
 from Aladdin.Accounting.Authorization.LoginAfterRegistration import LoginAfterRegistrationCompany
+from Aladdin.Accounting.Registration.UserRegistrationEDRPOU import UserRegistrationEDRPOU
 from Aladdin.Accounting.decorators.StoreTestResult import create_result_DB
 from Aladdin.Billing.CreateAccount import *
 from BillingMethods.UnitTestByBilling import TestByBilling
@@ -908,6 +909,37 @@ def s_login_after_full_registration(g, cmd_bro):
     return suite
 
 
+def s_login_after_full_registration_neresident(g, cmd_bro):
+    @create_result_DB
+    def s_login_after_full_registration_neresident_init(bro):
+        qa = {"query": {"q": {"name": "UserRegistrationForm", "version": "0.0.0.3"}},
+              'test_name': 'UserRegistrationFormTest',
+              'login_url': 'https://win-net-core:44320/account/login',
+              'wts': WebTestSession(browser=bro)
+              }
+        if g is not None:
+            qa["query"]["q"].update({'group': g})
+        qa['wts'].set_main_page(qa['query'])
+        return qa
+
+    qqq = s_login_after_full_registration_neresident_init(cmd_bro)
+    suite = ParamsTestSuite(_params={"result_id": qqq["wts"].result_id, "DB": qqq["wts"].__mongo__})
+    suite.addTest(LoginAfterRegistrationCompany("test_00_registration_nerez", _params=qqq, _parent_suite= suite))
+
+    suite.addTest(UserRegistrationEDRPOU("test_01_company_name", _params=qqq, _parent_suite= suite))
+    suite.addTest(UserRegistrationEDRPOU("test_02_company_name_en", _params=qqq, _parent_suite= suite))
+    suite.addTest(UserRegistrationEDRPOU("test_05_name", _params=qqq, _parent_suite= suite))
+    suite.addTest(UserRegistrationEDRPOU("test_06_name_en", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_07_last_name", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_08_last_name_en", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_09_position", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_11_email", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_12_password", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_13_confirm_password", _params=qqq, _parent_suite=suite))
+    suite.addTest(UserRegistrationEDRPOU("test_14_click_next_step_btn", _params=qqq, _parent_suite=suite))
+
+    return suite
+
 
 def runner(arg):
     parser = OptionParser()
@@ -958,6 +990,8 @@ def runner(arg):
         ttt = s_rialto_publish_prod(options.g,tname,  bro, options.r)
     elif opt == 'Login_after_full_registration':
         ttt = s_login_after_full_registration(options.g, bro)
+    elif opt == 'login_after_full_registration_neresident':
+        ttt = s_login_after_full_registration_neresident(options.g, bro)
 
     if ttt is not None:
         try:

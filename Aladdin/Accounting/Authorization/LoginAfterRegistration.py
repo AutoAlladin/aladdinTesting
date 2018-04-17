@@ -6,12 +6,30 @@ from Aladdin.Accounting.Docs.Docs import Docs
 from Aladdin.Accounting.Edit.Edit import Edit
 from Aladdin.Accounting.Registration.Employees import Employees
 from Aladdin.Accounting.Registration.RegistrationCompanyEDRPOU import RegistrationCompany
+from Aladdin.Accounting.Registration.UserRegistrationEDRPOU import UserRegistrationEDRPOU
 from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 from Aladdin.Accounting.decorators.StoreTestResult import add_res_to_DB
+
 from Prozorro.Utils import waitFadeIn
 
 
 class LoginAfterRegistrationCompany(ParamsTestCase):
+    @add_res_to_DB()
+    def test_00_registration_nerez(self):
+        w = {"query": {"q": {"name": "UserCompanyRegistrationForm", "version": "0.0.0.3",
+                             'group': self.params['query']['q']['group']}
+                       },
+             'wts': self.wts
+             }
+
+        #  RegistrationCompany -> UserRegistrationEDRPOU ->
+        # получаем и сохраняем в параметрах сьюита логин и пароль при первой  регистрации
+        full_reg = UserRegistrationEDRPOU(_params=w, _parent_suite=self.parent_suite)
+        full_reg.test_00_no_resident()
+
+
+
+
     @add_res_to_DB()
     def test_01(self):
         w={"query": {"q": {"name": "UserCompanyRegistrationForm", "version": "0.0.0.3",
@@ -24,6 +42,7 @@ class LoginAfterRegistrationCompany(ParamsTestCase):
         #  RegistrationCompany -> UserRegistrationEDRPOU ->
         # получаем и сохраняем в параметрах сьюита логин и пароль при первой  регистрации
         full_reg = RegistrationCompany(_params=w, _parent_suite= self.parent_suite)
+
 
         full_reg.test_01_registration_user()
 
