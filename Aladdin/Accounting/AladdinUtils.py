@@ -117,7 +117,7 @@ class WebTestSession:
             else:
                 self.drv = webdriver.Firefox()
 
-            self.drv.set_window_size(1000, 1900)
+            self.drv.set_window_size(1200, 1900)
             self.drv.set_window_position(1900, 0)
             self.drv.implicitly_wait(5)
 

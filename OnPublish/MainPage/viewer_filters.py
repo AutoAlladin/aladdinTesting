@@ -6,6 +6,7 @@ from selenium.common.exceptions import NoSuchElementException
 from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 
 
+
 class ViewerFilters(ParamsTestCase):
 
     def test_01_check_open(self):
@@ -22,7 +23,7 @@ class ViewerFilters(ParamsTestCase):
         sleep(5)
         self.search_button.click()
 
-        self.q = self.wts.execute_script("window.scrollTo(0, 1000)")
+        #self.q = self.wts.execute_script("window.scrollTo(0, 1000)")
         sleep(5)
         #выбираем найденый тендер
         self.el = self.wts.w_css(
@@ -60,7 +61,7 @@ class ViewerFilters(ParamsTestCase):
         sleep(3)
         self.search_button.click()
 
-        self.q = self.wts.execute_script("window.scrollTo(0, 1000)")
+        #self.q = self.wts.execute_script("window.scrollTo(0, 1000)")
         sleep(3)
         #тип найденой процедуры
         self.viewer1 = self.wts.w_css("#purchase-page > div > div:nth-child(3) > div > div.panel-footer.text-muted > div > div.col-md-6 > span > span:nth-child(3)")
@@ -68,11 +69,11 @@ class ViewerFilters(ParamsTestCase):
         #отображение кнопки "Відкриті торги"
         self.but_op = self.wts.w_css("#wrapper > div > div > div > div.row > div > div > div > div:nth-child(4) > div > div:nth-child(1) > button")
         self.but_op_text = self.but_op.text
-        print(self.but_op_text)
+        #print(self.but_op_text)
         #отображение кнопки "Відкриті торги для закупівлі енергосервісу"
         self.but_op_energo = self.wts.w_css("#wrapper > div > div > div > div.row > div > div > div > div:nth-child(4) > div > div:nth-child(2) > button")
         self.but_op_energo_text = self.but_op_energo.text
-        print(self.but_op_energo_text)
+        #print(self.but_op_energo_text)
 
         #проверяем, что тип найденой процедуры равен одному из типов выбранной
         self.assertTrue(
@@ -83,7 +84,7 @@ class ViewerFilters(ParamsTestCase):
         self.assertTrue(self.el_op_energo_text, self.but_op_energo_text)
 
         sleep(3)
-    def test_03_choose_all(self):
+    def test_03_choose_all_procedures(self):
         #кликаем на кнопку "Очистити"
         self.clear_button = self.wts.w_css("#butClearFilterGeo")
         self.clear_button.click()
@@ -91,7 +92,7 @@ class ViewerFilters(ParamsTestCase):
         self.choose_all_but = self.wts.w_css("#butSelectFilterGeo")
         self.choose_all_but.click()
 
-        br.execute_script("window.scrollTo(1000, 0)")
+        #br.execute_script("window.scrollTo(1000, 0)")
         #кликаем на кнопку "Шукати"
         self.search_button = self.wts.w_css("#butSimpleSearch")
         sleep(3)
@@ -99,7 +100,7 @@ class ViewerFilters(ParamsTestCase):
         self.all_but = self.wts.w_css("#wrapper > div > div > div > div.row > div > div > div > div:nth-child(4) > div > div > button")
         self.all_but_text = self.all_but.text
         self.up = str(self.all_but_text).upper()
-        print(self.up)
+        #print(self.up)
         self.all_label = self.wts.w_css("#headingTwo > div > span.label.label-success-outline.pull-right.ng-scope")
         self.all_label_text = self.all_label.text
         #проверяем, что текст кнопки и лейбла совпадает
@@ -119,10 +120,10 @@ class ViewerFilters(ParamsTestCase):
         open_energo_text = self.wts.w_css("#tender > div > div > div:nth-child(3) > label").text
         open_text = self.wts.w_css("#tender > div > div > div:nth-child(3) > label").text
 
-        #найденый тендер
+        #найденые тендера
         tender_random_1_text = self.wts.w_css("#purchase-page > div > div:nth-child(3) > div > div.panel-footer.text-muted > div > div.col-md-6 > span > span:nth-child(3)").text
         tender_random_2_text = self.wts.w_css("#purchase-page > div > div:nth-child(4) > div > div.panel-footer.text-muted > div > div.col-md-6 > span > span:nth-child(3)").text
-        br.execute_script("window.scrollTo(0, 1000)")
+        #br.execute_script("window.scrollTo(0, 1000)")
         tender_random_3_text = self.wts.w_css("#purchase-page > div > div:nth-child(5) > div > div.panel-footer.text-muted > div > div.col-md-6 > span > span:nth-child(3)").text
 
         rand = [tender_random_1_text,
@@ -145,14 +146,70 @@ class ViewerFilters(ParamsTestCase):
 
         if tender_random_1_text in proced and \
            tender_random_2_text in proced and  \
-           tender_random_3_text in proced :
+           tender_random_3_text in proced:
             return True
 
-        res = list(set(proced) - set(rand))
-        print(res)
+        # res = list(set(proced) - set(rand))
+        # print(res)
 
-    def test_04_viewer_region(self):
-        pass
+        #кликаем на кнокпу "Очистити"
+        # self.clear_button = self.wts.w_css("#butClearFilterGeo")
+        # sleep(10)
+        # self.clear_button.click()
+
+
+        self.but_for_clear = self.wts.w_id("butClearFilterGeo")
+        sleep(10)
+        self.but_for_clear.click()
+        sleep(10)
+        #сворачиваем тип процедуры
+
+        self.el = self.wts.w_css(".filter-title.clearfix")
+        self.el.click()
+
+    #     # if self.el.click():
+    #     #     return True
+    #
+    def test_04_viewer_stage(self):
+        #разворачиваем этапы
+
+        self.stage_down = self.wts.w_css("#filterblock > li:nth-child(2)")
+        sleep(10)
+        self.stage_down.click()
+
+        #выбор этапа
+        self.stage = self.wts.w_css("#tenderEtap > div > div:nth-child(3) > div > label")
+        sleep(10)
+        self.stage.click()
+        sleep(10)
+        self.stage_text = self.stage.text
+
+        #кликаем на кнопку "Шукати"
+        self.search_button = self.wts.w_css("#butSimpleSearch")
+        sleep(3)
+        self.search_button.click()
+
+        # self.refinement_period = self.wts.w_css(".getpurchase-times.more-arr")
+        # self.refinement_period_text = self.refinement_period.text
+        # print(self.refinement_period_text)
+
+        sleep(10)
+        self.but_refinement_period = self.wts.w_css(".btn.btn-default.btn-xs")
+        self.but_refinement_period_text = self.but_refinement_period.text
+        print(self.but_refinement_period_text)
+        print(self.stage_text)
+
+        # try:
+        #     self.but_refinement_period = self.wts.w_css(".btn.btn-default.btn-xs")
+        #     self.but_refinement_period_text = self.but_refinement_period.text
+        #     self.wts.w_xpath(".//*[@id='wrapper']/div/div/div/div[2]/div/div/div/div[5]/div/div[1]/button//*[contains(text{self.but_refinement_period_text},"")]")
+        # except NoSuchElementException:
+        #     return False
+        # return True
+
+        self.assertEqual(self.but_refinement_period_text, self.stage_text)
+
+
 
     def test_05_viewer_list_CPV(self):
         pass

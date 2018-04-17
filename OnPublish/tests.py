@@ -776,7 +776,8 @@ def s_publish_test(g, t, cmbro):
 
     suite.addTest(ViewerFilters("test_01_check_open", _params=qqq))
     suite.addTest(ViewerFilters("test_02_check_open_with_open_energo", _params=qqq))
-    suite.addTest(ViewerFilters("test_03_choose_all",  _params=qqq))
+    suite.addTest(ViewerFilters("test_03_choose_all_procedures",  _params=qqq))
+    suite.addTest(ViewerFilters("test_04_viewer_stage", _params=qqq))
 
     return suite
 
