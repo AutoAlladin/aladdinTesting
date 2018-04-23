@@ -109,7 +109,6 @@ class WebTestSession:
         self.__mongo__ = MdbUtils()
 
         if useBrowser:
-
             if browser is None:
                 browser = AvaliableBrowsers.Chrome
 
@@ -118,8 +117,8 @@ class WebTestSession:
             else:
                 self.drv = webdriver.Firefox()
 
-            self.drv.set_window_size(1900, 1050)
-            self.drv.set_window_position(0, 0)
+            self.drv.set_window_size(1200, 1900)
+            self.drv.set_window_position(1900, 0)
             self.drv.implicitly_wait(5)
 
     def set_main_page(self,q):
@@ -167,6 +166,13 @@ class WebTestSession:
             expected_conditions.presence_of_element_located(
                 (By.ID, id)))
         return element
+
+    def w_css(self, css, timeout=5):
+        element = WebDriverWait(self.drv, timeout).until(
+            expected_conditions.presence_of_element_located(
+                (By.CSS_SELECTOR, css)))
+        return element
+
 
     def close(self):
         self.drv.close()

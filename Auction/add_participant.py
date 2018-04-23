@@ -11,3 +11,4 @@ class AuctionParticipent:
         self.email = email
         if rates is not None:
             self.rates = rates
+

@@ -96,8 +96,8 @@ class AuctionRegistration:
         self.positions = positions
         self.ownerEmail = ownerEmail
 
-    def add_position(self,  minimalStep, maximalStep, labels, idd):
-        self.positions.append(Position( minimalStep, maximalStep, labels, idd))
+    def add_position(self,  minimalStep, maximalStep, labels, idd=None):
+        self.positions.append(Position( minimalStep, maximalStep, labels, idd=None))
 
 if __name__ == "__main__":
 
