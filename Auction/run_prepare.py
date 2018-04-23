@@ -26,6 +26,7 @@ def prepare_data(part_count=3):
     parts = test_a["invitedCompanies"]
 
     for p in parts:
+        print("PARTI - "+ p["suppUrl"])
         test_auction["parts"].append({"used":False, "url":p["suppUrl"]})
 
     test_auction["_id"] = uuid.uuid4().__str__()

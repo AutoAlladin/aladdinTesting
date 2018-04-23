@@ -83,7 +83,7 @@ def run_remote(_id = ""):
         drv.implicitly_wait(5)
 
         drv.get(url)
-        print("open", url)
+        print("open URL", nodeId)
 
         WebDriverWait(drv, 200).until(
             expected_conditions.text_to_be_present_in_element(
