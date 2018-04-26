@@ -77,7 +77,7 @@ def run_remote(_id = ""):
         ss_id = drv.session_id
         ss_info = requests.get("http://192.168.80.121:4444/grid/api/testsession?session="+ss_id)
 
-        nodeId = ss_info.json()["proxyId"]
+        nodeId = ss_info.json()["proxyId"][7:]
 
         drv.maximize_window()
         drv.implicitly_wait(5)
@@ -95,10 +95,10 @@ def run_remote(_id = ""):
                         expected_conditions.presence_of_all_elements_located(
                             (By.XPATH, "//tr[contains(@id,'positionTr')]")))
 
-        print("positions count - ",len(positions))
+        #print("positions count - ",len(positions))
 
         ready = None
-        sleep(random.randint(1, 3))
+        #sleep(random.randint(1, 3))
 
         click_order_positions = [x for x in range(1,len(positions)+1)]
 
@@ -122,63 +122,63 @@ def run_remote(_id = ""):
             #shuffle(click_order_lots)
             #
             for i in click_order_positions:
+                try:
+                    #sleep(random.randint(1, ))
+                    offerEditInput = None
                     try:
-                        #sleep(random.randint(1, 5))
-                        offerEditInput = None
+                        offerEditInput = WebDriverWait(drv, 5).until(
+                            expected_conditions.visibility_of_element_located((By.ID, "offerEditInput" + str(i))))
+                    except:
+                        pass
+
+                    if offerEditInput is not None:
+                        offerMinimalStep = WebDriverWait(drv, 5).until(
+                                    expected_conditions.visibility_of_element_located((By.ID,"offerMinimalStep"+str(i))))
+                        changeRate = WebDriverWait(drv, 5).until(
+                                    expected_conditions.visibility_of_element_located((By.ID,"changeRate"+str(i))))
+
+                        offerMaximalStep = None
                         try:
-                            offerEditInput = WebDriverWait(drv, 5).until(
-                                expected_conditions.visibility_of_element_located((By.ID, "offerEditInput" + str(i))))
+                            offerMaximalStep = WebDriverWait(drv, 0.5).until(
+                                    expected_conditions.visibility_of_element_located((By.ID,"offerMaximalStep"+str(i))))
                         except:
                             pass
 
-                        if offerEditInput is not None:
-                            offerMinimalStep = WebDriverWait(drv, 5).until(
-                                        expected_conditions.visibility_of_element_located((By.ID,"offerMinimalStep"+str(i))))
-                            changeRate = WebDriverWait(drv, 5).until(
-                                        expected_conditions.visibility_of_element_located((By.ID,"changeRate"+str(i))))
+                        sm=0
+                        smmin = float(offerMinimalStep.text.replace(",", "").replace(" ", ""))
 
-                            offerMaximalStep = None
-                            try:
-                                offerMaximalStep = WebDriverWait(drv, 0.5).until(
-                                        expected_conditions.visibility_of_element_located((By.ID,"offerMaximalStep"+str(i))))
-                            except:
-                                pass
-
-                            sm=0
-                            smmin = float(offerMinimalStep.text.replace(",", "").replace(" ", ""))
-
-                            if offerMaximalStep is not None:
-                                smmax=round(float(offerMaximalStep.text.replace(",","").replace(" ","")))
-                                if smmin == smmax:
-                                    sm = smmin
-                                else:
-                                    sm = smmin + round(smmax-smmin)-1
-                                    if sm < smmin : sm = smmin
-
-                                offerEditInput.send_keys(str(sm).replace(",", "").replace(" ", ""))
+                        if offerMaximalStep is not None:
+                            smmax=round(float(offerMaximalStep.text.replace(",","").replace(" ","")))
+                            if smmin == smmax:
+                                sm = smmin
                             else:
-                                sm= smmin
-                                offerMinimalStep.click()
+                                sm = smmin + round(smmax-smmin)-1
+                                if sm < smmin : sm = smmin
 
-                            changeRate.click()
+                            offerEditInput.send_keys(str(sm).replace(",", "").replace(" ", ""))
+                        else:
+                            sm= smmin
+                            offerMinimalStep.click()
 
-                            try:
-                                WebDriverWait(drv, 0.1).until(
-                                    expected_conditions.visibility_of_element_located((By.ID, "toast-container")))
+                        changeRate.click()
 
-                                toast_close_button = WebDriverWait(drv, 0.1).until(
-                                    expected_conditions.visibility_of_element_located((By.CLASS_NAME, "toast-close-button")))
+                        try:
+                            WebDriverWait(drv, 0.1).until(
+                                expected_conditions.visibility_of_element_located((By.ID, "toast-container")))
 
-                                toast_close_button.click()
+                            toast_close_button = WebDriverWait(drv, 0.1).until(
+                                expected_conditions.visibility_of_element_located((By.CLASS_NAME, "toast-close-button")))
 
-                                WebDriverWait(drv, 0.1).until(
-                                    expected_conditions.invisibility_of_element_located((By.ID, "toast-container")))
-                            except:
-                                pass
+                            toast_close_button.click()
 
-                            print(nodeId+": changeRate  "+str(i))
-                    except Exception as e:
-                            print(nodeId+": "+e.__str__())
+                            WebDriverWait(drv, 0.1).until(
+                                expected_conditions.invisibility_of_element_located((By.ID, "toast-container")))
+                        except:
+                            pass
+
+                        print(nodeId+": changeRate  "+str(i))
+                except Exception as e:
+                        print(nodeId+": "+e.__str__())
 
         # for m in range(1, secondsDiff + 10):
         #     #getstatusfrompage

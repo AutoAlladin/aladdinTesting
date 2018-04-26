@@ -4,7 +4,7 @@ from Auction.run import run_remote
 
 from Auction.run_prepare import prepare_data
 
-count = 62
+count = 19
 id = prepare_data(count)
 auction_futures =[]
 

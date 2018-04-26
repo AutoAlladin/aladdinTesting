@@ -13,13 +13,15 @@ test_auction = {"_id":"",
                 }
 
 def prepare_data(part_count=3):
-    response = requests.get("http://192.168.95.164:27010/api/Auction/test",
-                            params={"participantCount":part_count,
+    response = requests.get("http://192.168.95.153:27050/api/Auction/test",
+    #response = requests.get("https://auctionforestsmartservice.ald.in.ua/api/Auction/test",
+                            params={
+                                    "participantCount":part_count,
                                     "startSeconds":20,
-                                    "auctionTime":2,
-                                    "additionalStepLimit":3,
-                                    "additionalStepTime":2
-                                     #,"prodJson":"true" ns.antitheft.module
+                                    "auctionTime":5,
+                                    "additionalStepLimit":1,
+                                    "additionalStepTime":1
+                                     #,"prodJson":"true"
                                     },
                             headers ={"Authorization":"Basic U21hcnRGb3Jlc3RTeW5jOjhCMzk0RDkwLTRGNTAtNEY1Ri1BQTg4LTJFNjUyOTk5QUYzMA=="})
     test_a = response.json()
@@ -42,3 +44,4 @@ def prepare_data(part_count=3):
 
 if __name__ == "__main__":
     prepare_data()
+    #http://192.168.95.153:27050
