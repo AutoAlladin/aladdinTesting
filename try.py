@@ -1,6 +1,8 @@
 import logging
 
 # create logger
+from operator import itemgetter
+
 logger = logging.getLogger('try')
 logger.setLevel(logging.DEBUG)
 
@@ -39,19 +41,20 @@ logger.addHandler(ch)
 # LoginPage(drv).login("mm@mm.mm", "123123")
 # time.sleep(2000)
 # drv.close()
-import random
 
+import random
 
 
 def r(x):
     w = ""
-    for i in range(random.randint(3, 7)):
+    for i in range(random.randint(3, 9)):
         w = w + x
     return {"id":x, "tree":w}
 
 #tree = [ r(li) for li in "abcde" ]
 
 
-tree = map(r,"sdfsdfs")
-print(list(tree))
+tree = sorted(map(r,"sdf4iou9gsdfs"), key=itemgetter('id'))
+for r in tree:
+    print(r)
 

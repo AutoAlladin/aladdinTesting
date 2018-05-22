@@ -4,8 +4,10 @@ from Auction.run import run_remote
 
 from Auction.run_prepare import prepare_data
 
-count = 19
-id = prepare_data(count)
+count = 1
+# если указать ИД то даные берутся сразу из БД - сейчас это логика - 1 участник по всем позициям одновременно
+#id = prepare_data(count)
+id = "580"
 auction_futures =[]
 
 def run_remote_test():

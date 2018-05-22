@@ -6,7 +6,7 @@ from random import shuffle
 from time import sleep
 
 import requests
-from selenium.webdriver import DesiredCapabilities
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
@@ -41,15 +41,20 @@ def run_remote(_id = ""):
     else:
         id = _id
 
+    #  только указаннуб позицию в момент укзанный на сервере
+    #logic2 =
+    # по порядку по ссылке в БД
+    logic2 = _id ==""
 
     test_a = mdb.test_auction.find_one({"_id":id})
     parts = test_a["parts"]
     for p in parts:
         if p["used"] == False:
             try:
-                p["used"] = True
                 url = p["url"]
-                mdb.test_auction.update({"_id":id, "parts.url": url},
+                if logic2:
+                    p["used"] = True
+                    mdb.test_auction.update({"_id":id, "parts.url": url},
                                         {"$set": {"parts.$.used": True}})
                 break
             except Exception as e:
@@ -63,19 +68,19 @@ def run_remote(_id = ""):
     drv = None
     try:
         drv = webdriver.Remote(
-                    command_executor = 'http://192.168.80.121:4444/wd/hub',
+                    command_executor = 'http://192.168.80.139:4444/wd/hub',
                     desired_capabilities = {
                         'browserName': 'chrome',
                         'javascriptEnabled': True
-                        #'chromeOptions': {
-                        #        "args": ["-start_minimazed"]
-                        #    }
+                        # 'chromeOptions': {
+                        #         "args": ["headless"]
+                        #     }
                     }
 
         )
 
         ss_id = drv.session_id
-        ss_info = requests.get("http://192.168.80.121:4444/grid/api/testsession?session="+ss_id)
+        ss_info = requests.get("http://192.168.80.139:4444/grid/api/testsession?session="+ss_id)
 
         nodeId = ss_info.json()["proxyId"][7:]
 
@@ -84,23 +89,19 @@ def run_remote(_id = ""):
 
         drv.get(url)
         print("open URL", nodeId)
+        #todo показвать браузер с указанным в  БД ИД
 
+        drv.refresh()
         WebDriverWait(drv, 200).until(
             expected_conditions.text_to_be_present_in_element(
                 (By.TAG_NAME, "body"),"Активний"))
 
 
-        drv.refresh()
         positions =  WebDriverWait(drv, 10).until(
                         expected_conditions.presence_of_all_elements_located(
                             (By.XPATH, "//tr[contains(@id,'positionTr')]")))
 
-        #print("positions count - ",len(positions))
-
         ready = None
-        #sleep(random.randint(1, 3))
-
-        click_order_positions = [x for x in range(1,len(positions)+1)]
 
         # lots = WebDriverWait(drv, 10).until(
         #                 expected_conditions.presence_of_all_elements_located(
@@ -117,30 +118,25 @@ def run_remote(_id = ""):
                 break
             except:
                 pass
-
-            shuffle(click_order_positions)
+            if not logic2:   shuffle(positions)
             #shuffle(click_order_lots)
             #
-            for i in click_order_positions:
+            for pos in positions:
                 try:
                     #sleep(random.randint(1, ))
                     offerEditInput = None
                     try:
-                        offerEditInput = WebDriverWait(drv, 5).until(
-                            expected_conditions.visibility_of_element_located((By.ID, "offerEditInput" + str(i))))
+                        offerEditInput = pos.find_element_by_xpath("//input[contains(@id,'offerEditInput')]")
                     except:
                         pass
 
                     if offerEditInput is not None:
-                        offerMinimalStep = WebDriverWait(drv, 5).until(
-                                    expected_conditions.visibility_of_element_located((By.ID,"offerMinimalStep"+str(i))))
-                        changeRate = WebDriverWait(drv, 5).until(
-                                    expected_conditions.visibility_of_element_located((By.ID,"changeRate"+str(i))))
+                        offerMinimalStep = pos.find_element_by_xpath("//span[contains(@id, 'offerMinimalStep')]")
+                        changeRate = pos.find_element_by_xpath("//i[contains(@id,'changeRate')]")
 
                         offerMaximalStep = None
                         try:
-                            offerMaximalStep = WebDriverWait(drv, 0.5).until(
-                                    expected_conditions.visibility_of_element_located((By.ID,"offerMaximalStep"+str(i))))
+                            offerMaximalStep = pos.find_element_by_xpath("//span[contains(@id,'offerMaximalStep')]")
                         except:
                             pass
 
@@ -176,10 +172,11 @@ def run_remote(_id = ""):
                         except:
                             pass
 
-                        print(nodeId+": changeRate  "+str(i))
+                        print(nodeId+": changeRate  "+str(sm))
                 except Exception as e:
                         print(nodeId+": "+e.__str__())
 
+        if logic2: ready = True
         # for m in range(1, secondsDiff + 10):
         #     #getstatusfrompage
         #     #is ready - go

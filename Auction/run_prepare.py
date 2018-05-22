@@ -18,7 +18,7 @@ def prepare_data(part_count=3):
                             params={
                                     "participantCount":part_count,
                                     "startSeconds":20,
-                                    "auctionTime":5,
+                                    "auctionTime":1,
                                     "additionalStepLimit":1,
                                     "additionalStepTime":1
                                      #,"prodJson":"true"
