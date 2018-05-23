@@ -29,6 +29,7 @@ def init_driver(test_mode=True):
     chrm = webdriver.Chrome()
 
     #chrm.maximize_window()
+    chrm.set_window_size(1200,5000)
     chrm.implicitly_wait(5)
     chrm.get(tp["main"]["url"])
     return chrm, tp, MainPage(chrm)

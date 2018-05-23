@@ -203,7 +203,7 @@ class TenderNew:
         WebDriverWait(self.drv, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@id='procurementSubjectCountryWrap{0}']//select[contains(@id,'regions')]".format(item_id))))
 
         sleep(1.5)
-        Select(select_regions).select_by_index(6)
+        Select(select_regions).select_by_visible_text(get_dic_val(dic, "below.region"))
         zip_code_ = self.drv.find_element_by_id("zip_code_" + item_id)
         zip_code_.send_keys(get_dic_val(dic, "below.zip_code_"))
         locality_ = self.drv.find_element_by_id("locality_" + item_id)
