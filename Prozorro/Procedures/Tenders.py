@@ -17,9 +17,11 @@ from Prozorro import Utils
 def init_driver(test_mode=True):
     file_name=""
     if test_mode :
-        file_name = os.path.dirname(os.path.abspath(__file__))+'\\..\\test_params.json'
+        file_name = Utils.get_root()+'\\Prozorro\\test_params.json'
     else:
-        file_name = os.path.dirname(os.path.abspath(__file__)) + '\\..\\prod_params.json'
+        file_name = Utils.get_root()+ '\\Prozorro\\prod_params.json'
+
+    print(file_name)
 
     with open(file_name, 'r', encoding="UTF-8") as test_params_file:
        tp = json.load(test_params_file)
