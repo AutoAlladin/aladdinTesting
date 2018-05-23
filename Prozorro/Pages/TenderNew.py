@@ -409,6 +409,8 @@ class TenderNew:
                 self.add_feature_enum(dic, enum_index+1)
 
             updateFeature=WebDriverWait(self.drv, 20).until(EC.element_to_be_clickable((By.ID, "updateFeature_0_0")))
+            scroll_to_element(self.drv, updateFeature)
+
             updateFeature.click()
         pass
 
