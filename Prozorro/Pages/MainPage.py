@@ -48,11 +48,11 @@ class MainPage:
 
     def open_login_form(self):
         waitFadeIn(self.drv)
-        self.liLoginNoAuthenticated = self.drv.find_element_by_id("liLoginNoAuthenticated")
+        #self.liLoginNoAuthenticated = self.drv.find_element_by_id("liLoginNoAuthenticated")
         self.butLoginPartial = self.drv.find_element_by_id("butLoginPartial")
 
         waitFadeIn(self.drv)
-        self.liLoginNoAuthenticated.click()
+        #self.liLoginNoAuthenticated.click()
         self.butLoginPartial.click()
         return LoginPage(self.drv)
 
@@ -119,7 +119,7 @@ class MainPage:
                 add_lot(lots, dic).\
                 add_item(dic, lots, items). \
                 click_next_button(). \
-                add_features(dic,lots,features).\
+                add_features(dic,lots,items,features).\
                 add_doc(docs).\
                 click_finish_edit_button().\
                 click_publish_button()

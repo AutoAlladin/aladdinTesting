@@ -908,7 +908,6 @@ def s_login_after_full_registration(g, cmd_bro):
 
     return suite
 
-
 def s_login_after_full_registration_neresident(g, cmd_bro):
     @create_result_DB
     def s_login_after_full_registration_neresident_init(bro):

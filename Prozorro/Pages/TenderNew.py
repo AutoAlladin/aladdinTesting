@@ -183,6 +183,7 @@ class TenderNew:
         description = self.drv.find_element_by_id("description")
         title.send_keys(nom+" - "+get_dic_val(dic, "below.title"))
         description.send_keys(get_dic_val(dic, "below.description"))
+
         return self
 
     def set_delivery_adress(self, dic, item_id):
@@ -191,9 +192,9 @@ class TenderNew:
 
         select_regions =  self.drv.find_element_by_xpath("//div[@id='procurementSubjectCountryWrap{0}']//select[contains(@id,'regions')]".format(item_id))
         WebDriverWait(self.drv, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@id='procurementSubjectCountryWrap{0}']//select[contains(@id,'regions')]".format(item_id))))
-        sleep(1)
-        Select(select_regions).select_by_value("7")
 
+        sleep(1.5)
+        Select(select_regions).select_by_index(6)
         zip_code_ = self.drv.find_element_by_id("zip_code_" + item_id)
         zip_code_.send_keys(get_dic_val(dic, "below.zip_code_"))
         locality_ = self.drv.find_element_by_id("locality_" + item_id)
@@ -291,8 +292,8 @@ class TenderNew:
             self.set_item_base_info(dic, item_id, i)
             self.set_dk2015(dic)
             WebDriverWait(self.drv, 20).until(EC.invisibility_of_element_located((By.XPATH, "//div[@id = 'modDialog']")))
-            if dic["name"] != "realto_below_and_bids":
-                self.set_otherDK(dic)
+
+            self.set_otherDK(dic)
 
             self.set_delivery_period(item_id)
             self.set_delivery_adress(dic, item_id)
