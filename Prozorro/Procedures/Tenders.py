@@ -140,8 +140,8 @@ def open_tender(id,role, test_mode=True):
 
 
 
-def create_concurentUA(countLots, countFeatures, countDocs=0, countTenders=1, countItems=1, tender_dict=None):
-    chrm, tp,mpg = init_driver()
+def create_concurentUA(countLots, countFeatures, countDocs=0, countTenders=1, countItems=1, tender_dict=None, test_mode = True):
+    chrm, tp,mpg = init_driver( test_mode)
     mpg.open_login_form().login(tp["below"]["login"], tp["below"]["password"]);
     uaid = []
 
