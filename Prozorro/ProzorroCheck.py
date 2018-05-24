@@ -81,7 +81,7 @@ def check(args):
                                            countItems=_countItems,
                                            countFeatures=_countFeatures,
                                            countDocs=_countDocs,
-                                           tender_dict=1
+                                           test_mode=_test_mode
                                            )
                 with(open(Utils.get_root() + '\\uaids.json', 'w', encoding="UTF-8")) as uaid_file:
                     json.dump(uaids, uaid_file)

@@ -144,12 +144,12 @@ class MainPage:
         elif procurementMethodType=="concurentUA":
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/CompetitiveDialogueUA']").click()
             return TenderNew(self.drv). \
-                set_description(dic). \
+                set_description(dic,  nom). \
                 set_curr(). \
-                set_multilot("false"). \
+                set_multilot(dic,False). \
                 set_open_tender_dates(dic). \
                 click_next_button(). \
-                add_item(). \
+                add_item(dic,lots,items). \
                 click_finish_edit_button(). \
                 click_publish_button()
         return None

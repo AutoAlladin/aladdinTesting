@@ -76,7 +76,7 @@ class TenderNew:
             # )
 
             #next_step.click()
-            print("click NEXT")
+            print("click NEXT", self.drv.current_url)
         except WebDriverException as w:
             raise Exception("Не нажимается кнопка next_step  - \n" + w.msg)
         return self
@@ -114,7 +114,7 @@ class TenderNew:
     def set_open_tender_dates(self, dic):
         try:
             dt = datetime.now()
-            set_datepicker(self.drv, "period_tender_end", (dt + timedelta(minutes=get_dic_val(dic, "open.tenderPeriod"))).strftime("%Y-%m-%d %H:%M:%S"))
+            set_datepicker(self.drv, "period_tender_end", (dt + timedelta(minutes=get_dic_val(dic, "open.tenderPeriod"))).strftime("%d-%m-%Y %H:%M:%S"))
         except Exception as e:
             raise Exception("Чтото не так с датами шапки тендера - \n" + e)
         return self
