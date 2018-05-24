@@ -2,130 +2,170 @@ import random
 import sys
 
 import os
+from datetime import datetime
 from time import sleep
+
+import requests
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
-from Auction.run_prepare import prepare_data
 
-fo ="C:\\Users\\dev2\\PycharmProjects\\AladdinTesting"
+fo = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(fo)
 subdirs = [x[0] for x in os.walk(fo)
            if not x[0].startswith("_")
            and not x[0].startswith(".")
            and x[0].find(".git") == -1
            ]
+
 sys.path.extend(subdirs)
 
 from selenium import webdriver
-from Aladdin.Accounting.AladdinUtils import MdbUtils
 
-mdb = MdbUtils()
-url = ""
+def wait_until(specified_dt: datetime):
+    refresh = 0.01
+    current_dt = datetime.now()
 
-# count = 2
-# id = prepare_data(count)
+    while current_dt < specified_dt:
+        current_dt = datetime.now()
+        if (specified_dt - current_dt).microseconds>10:
+            sleep(refresh) 
 
-id = sys.argv[1]
+def run_remote(part):
+    stepCount = part["stepCount"]
+    time_start = part["time_start"]
+    nodeId  =""
+    drv = None
+
+    try:
+        drv = webdriver.Remote(
+                    command_executor = 'http://192.168.80.139:4444/wd/hub',
+                    desired_capabilities = {
+                        'browserName': 'chrome',
+                         'javascriptEnabled': True
+                        # 'chromeOptions': {
+                        #         "args": ["headless"]
+                        #     }
+                    }
+
+        )
+
+        ss_id = drv.session_id
+        ss_info = requests.get("http://192.168.80.139:4444/grid/api/testsession?session="+ss_id)
+
+        nodeId = ss_info.json()["proxyId"][7:]
 
 
-test_a = mdb.test_auction.find_one({"_id":id})
-parts = test_a["parts"]
-for p in parts:
-    if p["used"] == False:
-        try:
-            p["used"] = True
-            url = p["url"]
-            mdb.test_auction.update({"_id":id, "parts.url": url},
-                                    {"$set": {"parts.$.used": True}})
-            break
-        except Exception as e:
-            url = ""
-            print(e.__str__())
-            continue
+        drv.implicitly_wait(2)
 
-if url == "": exit()
-try:
-    drv = webdriver.Remote(
-                command_executor = 'http://192.168.56.1:4444/wd/hub',
-                desired_capabilities = {
-                    'browserName': 'chrome',
-                    'javascriptEnabled': True
-                    })
-    drv.maximize_window()
-    drv.implicitly_wait(5)
+        drv.get(part["part"]["url"])
+        drv.maximize_window()
+        drv.execute_script("window.scroll(2000,0)")
+        print("open URL", nodeId, datetime.now().isoformat())
+        #todo показвать браузер с указанным в  БД ИД
 
-    drv.get(url)
-    print("open", url)
-
-    WebDriverWait(drv, 200).until(
-        expected_conditions.text_to_be_present_in_element(
+        WebDriverWait(drv, 200).until(
+            expected_conditions.text_to_be_present_in_element(
             (By.TAG_NAME, "body"),"Активний"))
 
+        sleep(10)
+        positions =  WebDriverWait(drv, 10).until(
+                        expected_conditions.presence_of_all_elements_located(
+                            (By.XPATH, "//tr[contains(@id,'positionTr')]")))
 
-    drv.refresh()
-    positions =  WebDriverWait(drv, 10).until(
-                    expected_conditions.presence_of_all_elements_located(
-                        (By.XPATH, "//tr[contains(@id,'positionTr')]")))
 
-    print("positions count - ",len(positions))
 
-    for i in range(1,len(positions)+1):
-        offerMinimalStep = WebDriverWait(drv, 5).until(
-                    expected_conditions.visibility_of_element_located((By.ID,"offerMinimalStep"+str(i))))
-        offerEditInput = WebDriverWait(drv, 5).until(
-                    expected_conditions.visibility_of_element_located((By.ID,"offerEditInput"+str(i))))
-        changeRate = WebDriverWait(drv, 5).until(
-                    expected_conditions.visibility_of_element_located((By.ID,"changeRate"+str(i))))
+        for step in range(stepCount):
+            # try:
+            #     ready = WebDriverWait(drv, 0.2).until(
+            #         expected_conditions.text_to_be_present_in_element(
+            #             (By.TAG_NAME, "body"), "Завершено"))
+            #
+            #     break
+            # except:
+            #     pass
 
-        offerMaximalStep = None
+            positionsRes=[]
+            for p in part["part"]["position_id"]:
+                positionsRes.append(positions[p])
+
+            if time_start is not None:
+               wait_until(time_start)
+
+            for pos in positionsRes:
+                clicker(drv, nodeId, pos)
+
+    except Exception as e:
+        return nodeId + ": " + e.__str__()
+    finally:
+        sleep(20)
+        if drv is not None:
+            drv.quit()
+
+    return nodeId+": finish FUTURE"
+
+def clicker(drv, nodeId, pos):
+    try:
+        # sleep(random.randint(1, ))
+        offerEditInput = None
         try:
-            offerMaximalStep = WebDriverWait(drv, 0.5).until(
-                    expected_conditions.visibility_of_element_located((By.ID,"offerMaximalStep"+str(i))))
+            offerEditInput = pos.find_element_by_xpath("//input[contains(@id,'offerEditInput')]")
         except:
             pass
 
-        sm=0
-        smmin = float(offerMinimalStep.text.replace(",", "").replace(" ", ""))
+        if offerEditInput is not None:
+            offerMinimalStep = pos.find_element_by_xpath("//span[contains(@id, 'offerMinimalStep')]")
+            changeRate = pos.find_element_by_xpath("//i[contains(@id,'changeRate')]")
 
-        if offerMaximalStep is not None:
-            smmax=round(float(offerMaximalStep.text.replace(",","").replace(" ","")))
-            sm = smmin # round(smmin+(smmax-smmin) / 2  + random.randint(1, 10))
-            offerEditInput.send_keys(str(sm).replace(",", "").replace(" ", ""))
-        else:
-            sm= smmin
-            offerMinimalStep.click()
+            offerMaximalStep = None
+            try:
+                offerMaximalStep = pos.find_element_by_xpath("//span[contains(@id,'offerMaximalStep')]")
+            except:
+                pass
 
-        changeRate.click()
+            sm = 0
+            smmin = float(offerMinimalStep.text.replace(",", "").replace(" ", ""))
 
-        try:
-            WebDriverWait(drv, 0.1).until(
-                expected_conditions.visibility_of_element_located((By.ID, "toast-container")))
+            if offerMaximalStep is not None:
+                smmax = round(float(offerMaximalStep.text.replace(",", "").replace(" ", "")))
+                if smmin == smmax:
+                    sm = smmin
+                else:
+                    sm = smmin + round(smmax - smmin) - 1
+                    if sm < smmin: sm = smmin
 
-            toast_close_button = WebDriverWait(drv, 0.1).until(
-                expected_conditions.visibility_of_element_located((By.CLASS_NAME, "toast-close-button")))
+                offerEditInput.send_keys(str(sm).replace(",", "").replace(" ", ""))
+            else:
+                sm = smmin
+                offerMinimalStep.click()
 
-            toast_close_button.click()
+            changeRate.click()
 
-            WebDriverWait(drv, 0.1).until(
-                expected_conditions.invisibility_of_element_located((By.ID, "toast-container")))
-        except:
-            pass
+            try:
+                WebDriverWait(drv, 0.1).until(
+                    expected_conditions.invisibility_of_element_located((By.ID, "toast-container")))
+            except:
+                try:
+                    WebDriverWait(drv, 0.1).until(
+                         expected_conditions.visibility_of_element_located((By.ID, "toast-container")))
 
-        print("changeRate  "+str(i))
+                    toast_close_button = WebDriverWait(drv, 0.1).until(
+                        expected_conditions.visibility_of_element_located((By.CLASS_NAME, "toast-close-button")))
 
-    # for m in range(1, secondsDiff + 10):
-    #     #getstatusfrompage
-    #     #is ready - go
-    #     time.sleep(1)
-    #     pass
-    print("finish")
-    sleep(20)
-finally:
-    drv.quit()
+                    toast_close_button.click()
+
+                    WebDriverWait(drv, 0.1).until(
+                        expected_conditions.invisibility_of_element_located((By.ID, "toast-container")))
+                except:
+                    pass
+
+            print(nodeId + ": changeRate  " + str(sm), datetime.now().isoformat())
+    except Exception as e:
+        print(nodeId + ": " + e.__str__())
 
 
-
+if __name__ == "__main__":
+    run_remote()
 

@@ -1,3 +1,5 @@
+#!/usr/bin/python3 -u
+
 import json
 
 import os
@@ -17,16 +19,19 @@ from Prozorro import Utils
 def init_driver(test_mode=True):
     file_name=""
     if test_mode :
-        file_name = os.path.dirname(os.path.abspath(__file__))+'\\..\\test_params.json'
+        file_name = Utils.get_root()+os.sep+"Prozorro"+os.sep+"test_params.json"
     else:
-        file_name = os.path.dirname(os.path.abspath(__file__)) + '\\..\\prod_params.json'
+        file_name = Utils.get_root()+os.sep+"Prozorro"+os.sep+"prod_params.json"
+
+    print(file_name)
 
     with open(file_name, 'r', encoding="UTF-8") as test_params_file:
        tp = json.load(test_params_file)
 
     chrm = webdriver.Chrome()
 
-    chrm.maximize_window()
+    #chrm.maximize_window()
+    chrm.set_window_size(1200,5000)
     chrm.implicitly_wait(5)
     chrm.get(tp["main"]["url"])
     return chrm, tp, MainPage(chrm)
@@ -37,7 +42,7 @@ def create_below(countLots=0,
                  countDocs=0,
                  countTenders=1,
                  countItems=1,
-                 tender_dict=None,
+                 tender_dict=True,
                  ttest_mode=True,
                  test_log=None):
     chrm, tp, mpg = init_driver(ttest_mode)
@@ -70,8 +75,8 @@ def create_below(countLots=0,
 
 
 
-def create_openUA(countLots, countFeatures, countDocs=0, countTenders=1, countItems=1, tender_dict=None):
-    chrm, tp, mpg = init_driver()
+def create_openUA(countLots, countFeatures, countDocs=0, countTenders=1, countItems=1, test_mode=True):
+    chrm, tp, mpg = init_driver(test_mode)
     mpg.open_login_form().login(tp["below"]["login"], tp["below"]["password"])
     uaid = []
 
@@ -135,8 +140,8 @@ def open_tender(id,role, test_mode=True):
 
 
 
-def create_concurentUA(countLots, countFeatures, countDocs=0, countTenders=1, countItems=1, tender_dict=None):
-    chrm, tp,mpg = init_driver()
+def create_concurentUA(countLots, countFeatures, countDocs=0, countTenders=1, countItems=1, tender_dict=None, test_mode = True):
+    chrm, tp,mpg = init_driver( test_mode)
     mpg.open_login_form().login(tp["below"]["login"], tp["below"]["password"]);
     uaid = []
 
@@ -149,7 +154,7 @@ def create_concurentUA(countLots, countFeatures, countDocs=0, countTenders=1, co
                 )
 
     for i in range(countTenders):
-        uaid.append(mpg.create_tender(*args, dic=tp))
+        uaid.append(mpg.create_tender(**args))
 
     return uaid
 

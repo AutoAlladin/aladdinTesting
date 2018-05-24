@@ -1,3 +1,5 @@
+#!/usr/bin/python3 -u
+
 import getopt
 import sys
 import time
@@ -27,7 +29,7 @@ def check(args):
         if opt == '-n':
 
             #       0   1   2  3  4  5
-            # arg below:N1:L0:I1:F0:D0
+            # arg below:N1:L0:I1:F0:D0:T1
             arg = str(arg).split(":")
             proc = arg[0]
             _countTenders = 1
@@ -49,7 +51,7 @@ def check(args):
                 elif k[0] == "D":
                     _countDocs = int(k[1:])
                 elif k[0] == "T":
-                    _countDocs = int(k[1:])
+                    _test_mode = int(k[1:])==1
 
             print("""new tender {0}  countTenders = {1}
                   countLots = {2}
@@ -81,7 +83,7 @@ def check(args):
                                            countItems=_countItems,
                                            countFeatures=_countFeatures,
                                            countDocs=_countDocs,
-                                           tender_dict=1
+                                           test_mode=_test_mode
                                            )
                 with(open(Utils.get_root() + '\\uaids.json', 'w', encoding="UTF-8")) as uaid_file:
                     json.dump(uaids, uaid_file)
@@ -94,7 +96,8 @@ def check(args):
                                            countItems=_countItems,
                                            countFeatures=_countFeatures,
                                            countDocs=_countDocs,
-                                           tender_dict=1
+                                           tender_dict=1,
+                                           test_mode=_test_mode
                                            )
 
                 with(

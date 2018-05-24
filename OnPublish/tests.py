@@ -158,7 +158,7 @@ def s_prozorro(pure_json, t, cmbro):
                 },
               'test_name': t,
               'wts': WebTestSession(useBrowser=False),
-              "par": qqq["wts"].__mongo__.get_params(27)["par"]
+              "auction_par.json": qqq["wts"].__mongo__.get_params(27)["auction_par.json"]
               }
         return qa
 
@@ -673,7 +673,7 @@ def s_publish_test(g, t, cmbro):
                 "login_url": t["login_url"],
                 "authorization": t["authorization"],
                 "lang": t["lang"],
-                "auction_par.json":par
+                "par":par
     })
     
     #billing metods
@@ -725,7 +725,7 @@ def s_publish_test(g, t, cmbro):
     #       "registartion_data":qqq["wts"].__mongo__.get_params(23)["company"][1]
     #       }
     #
-    # suite.addTest(Registartion("try_login", _params=q_provider))
+    # suite.addTest(Registartion("try_login961891", _params=q_provider))
     # suite.addTest(Registartion("open_register_form", _params=q_provider))
     # suite.addTest(Registartion("reg_company", _params=q_provider))
     # suite.addTest(Registartion("profile_settings", _params=qqq))
@@ -775,14 +775,59 @@ def s_publish_test(g, t, cmbro):
     #
     # suite.addTest(Qualification("q_tabs", _params=q_provider1))
     # suite.addTest(Qualification("q_tab_result_award_1", _params=q_provider1))
-
     suite.addTest(ViewerFilters("test_01_check_open", _params=qqq))
     suite.addTest(ViewerFilters("test_02_check_open_with_open_energo", _params=qqq))
-    suite.addTest(ViewerFilters("test_03_choose_all_procedures",  _params=qqq))
+    suite.addTest(ViewerFilters("test_03_choose_all_procedures", _params=qqq))
     suite.addTest(ViewerFilters("test_04_viewer_stage", _params=qqq))
     suite.addTest(ViewerFilters("test_06_check_refinement_period_with_finished", _params=qqq))
     suite.addTest(ViewerFilters("test_07_list_of_caterogia", _params=qqq))
     suite.addTest(ViewerFilters("test_08_check_few_caterogias", _params=qqq))
+
+    suite.addTest(Test_Below("create_menu", _params=qqq))
+    suite.addTest(Test_Below("select_below_menu", _params=qqq))
+    suite.addTest(Test_Below("set_description", _params=qqq))
+    suite.addTest(Test_Below("set_curr", _params=qqq))
+    suite.addTest(Test_Below("set_multilot", _params=qqq))
+    suite.addTest(Test_Below("set_dates", _params=qqq))
+    suite.addTest(Test_Below("add_lot", _params=qqq))
+    suite.addTest(Test_Below("add_item", _params=qqq))
+    suite.addTest(Test_Below("add_features", _params=qqq))
+    suite.addTest(Test_Below("add_doc", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url_edit", _params=qqq))
+    suite.addTest(Test_Below("open_draft_by_url_delete", _params=qqq))
+
+    suite.addTest(Test_Below("create_below_publish", _params=qqq))
+
+
+    q_provider1={"query": qqq["query"],'test_name': t,'wts': qqq["wts"],
+          "bid_json": qqq["wts"].__mongo__.get_params(22)["bids"][0]
+          }
+    suite.addTest(Below_Bid("login_provider", _params=q_provider1))
+    suite.addTest(Below_Bid("select_below_type", _params=q_provider1))
+    suite.addTest(Below_Bid("select_tender_period", _params=q_provider1))
+    suite.addTest(Below_Bid("find_tender", _params=q_provider1))
+    suite.addTest(Below_Bid("wait_for_tender_period", _params=q_provider1))
+    suite.addTest(Below_Bid("add_bid", _params=q_provider1))
+
+
+    q_provider2 = {"query": qqq["query"], 'test_name': t,  'wts': qqq["wts"],
+                   "bid_json": qqq["wts"].__mongo__.get_params(22)["bids"][1]
+                   }
+    suite.addTest(Below_Bid("login_provider", _params=q_provider2))
+    suite.addTest(Below_Bid("find_tender", _params=q_provider2))
+    suite.addTest(Below_Bid("add_bid", _params=q_provider2))
+
+    #suite.suite_params.update({"ProzorroId":"UA-2018-03-26-000076-a"})
+
+    suite.addTest(Qualification("login_owner", _params=qqq))
+    suite.addTest(Below_Bid("find_tender", _params=qqq))
+    suite.addTest(Qualification("wait_for_status",
+                                _params={"query": qqq["query"], 'test_name': t,  'wts': qqq["wts"],
+                                "wait_status": 5}))
+
+    suite.addTest(Qualification("q_tabs", _params=q_provider1))
+    suite.addTest(Qualification("q_tab_result_award_1", _params=q_provider1))
 
     return suite
 

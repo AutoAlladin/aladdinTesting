@@ -65,7 +65,7 @@ def add_res_to_DB(test_name=None,
                     self.tlog.clear()
                     self.wts.__mongo__.test_result.update({"_id": self.wts.result_id},
                                                           {"$push": {"results": test_method_result}})
-                # else:
+                # else: 0639552988
                 #     self.wts.__mongo__.test_result.update({"_id": self.wts.result_id, "results.name": parent },
                 #                                           {"$push": {"results.$.sub": test_method_result}})
 

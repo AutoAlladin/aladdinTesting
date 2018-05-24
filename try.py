@@ -1,23 +1,60 @@
+import logging
 
-import time
+# create logger
+from operator import itemgetter
 
-from selenium import webdriver
+logger = logging.getLogger('try')
+logger.setLevel(logging.DEBUG)
 
-from Prozorro.Pages.LoginPage import LoginPage
+# create console handler and set level to debug
 
-drv = webdriver.Remote(
-            command_executor = 'http://192.168.56.1:4444/wd/hub',
-            desired_capabilities = {
-                'browserName': 'chrome',
-                'javascriptEnabled': True
-                })
-drv.maximize_window()
-drv.implicitly_wait(5)
-drv.get("https://test-gov.ald.in.ua")
-time.sleep(10)
-LoginPage(drv).login("mm@mm.mm", "123123")
-time.sleep(2000)
-drv.close()
+ch = logging.FileHandler("try.log")
+ch.setLevel(logging.DEBUG)
+
+# create formatter
+formatter = logging.Formatter('[%(asctime)s-%(name)s-%(levelname)s]: %(message)s')
+
+# add formatter to ch
+ch.setFormatter(formatter)
+
+# add ch to logger
+logger.addHandler(ch)
 
 
+
+#import time
+#
+# from selenium import webdriver
+#
+# from Prozorro.Pages.LoginPage import LoginPage
+#
+# drv = webdriver.Remote(
+#             command_executor = 'http://192.168.56.1:4444/wd/hub',
+#             desired_capabilities = {
+#                 'browserName': 'chrome',
+#                 'javascriptEnabled': True
+#                 })
+# drv.maximize_window()
+# drv.implicitly_wait(5)
+# drv.get("https://test-gov.ald.in.ua")
+# time.sleep(10)
+# LoginPage(drv).login("mm@mm.mm", "123123")
+# time.sleep(2000)
+# drv.close()
+
+import random
+
+
+def r(x):
+    w = ""
+    for i in range(random.randint(3, 9)):
+        w = w + x
+    return {"id":x, "tree":w}
+
+#tree = [ r(li) for li in "abcde" ]
+
+
+tree = sorted(map(r,"sdf4iou9gsdfs"), key=itemgetter('id'))
+for r in tree:
+    print(r)
 

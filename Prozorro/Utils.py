@@ -43,13 +43,10 @@ def get_dic_val(dic, _key, default = None):
 
     key = _key.split(".")
 
-    if _key=="below.description" or _key == "below.title":
-        return dic[key[0]][key[1]]+" - "+run_guid
+    if key[0] not in dic :
+        return default
+    elif key[1] not in dic[key[0]] :
+        return default
     else:
-        if key[0] not in dic :
-            return default
-        elif key[1] not in dic[key[0]] :
-            return default
-        else:
-            return dic[key[0]][key[1]]
+        return dic[key[0]][key[1]]
 
