@@ -54,7 +54,7 @@ def test_click(cls, id_field, input_val=None, q=None):
 class MdbUtils():
 
     def __init__(self):
-        self.client = MongoClient('192.168.80.121', 27017)
+        self.client = MongoClient('192.168.80.139', 27017)
         self.db = self.client['aladdin_tests']
         self.test_params = self.db["test_params"]
         self.test_result = self.db["test_results"]

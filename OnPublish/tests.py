@@ -780,6 +780,9 @@ def s_publish_test(g, t, cmbro):
     suite.addTest(ViewerFilters("test_02_check_open_with_open_energo", _params=qqq))
     suite.addTest(ViewerFilters("test_03_choose_all_procedures",  _params=qqq))
     suite.addTest(ViewerFilters("test_04_viewer_stage", _params=qqq))
+    suite.addTest(ViewerFilters("test_06_check_refinement_period_with_finished", _params=qqq))
+    suite.addTest(ViewerFilters("test_07_list_of_caterogia", _params=qqq))
+    suite.addTest(ViewerFilters("test_08_check_few_caterogias", _params=qqq))
 
     return suite
 
