@@ -15,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.support.select import Select
 from Prozorro.Utils import set_datepicker,waitFadeIn,get_dic_val, paint,scroll_to_element
-
+from random_words import RandomWords
 
 class TenderNew:
     def __init__(self, _drv):
@@ -388,6 +388,7 @@ class TenderNew:
         print("end set_feature_decription")
 
     def add_feature_enum(self,dic,enum_index, lot_index=0):
+        rm = RandomWords()
         print("start add_feature_enum")
         featureEnumAdd = self.drv.find_element_by_id("addFeatureEnum_"+str(lot_index)+"_0")
         featureEnumAdd.click()
@@ -401,12 +402,12 @@ class TenderNew:
         featureEnumTitle = self.drv.find_element_by_id(
             "featureEnumTitle_"+str(lot_index)+"_0_"+str(enum_index))
         featureEnumTitle.clear()
-        featureEnumTitle.send_keys(get_dic_val(dic, "feature.option_name"))
+        featureEnumTitle.send_keys(get_dic_val(dic, "feature.option_name")+" - "+rm.random_word())
 
         featureEnumDescription = self.drv.find_element_by_id(
             "featureEnumDescription_"+str(lot_index)+"_0_"+str(enum_index))
         featureEnumDescription.clear()
-        featureEnumDescription.send_keys(get_dic_val(dic, "feature.option_description"))
+        featureEnumDescription.send_keys(get_dic_val(dic, "feature.option_description")+" - "+rm.random_word())
         print("end add_feature_enum")
 
     def set_feature_zero_enum(self, dic, end="0"):
