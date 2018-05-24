@@ -3,6 +3,7 @@
 import os
 import random
 
+
 from datetime import datetime, timedelta
 from time import sleep
 
@@ -134,10 +135,12 @@ class TenderNew:
         if (is_multi == "true"):
             is_multilot.click()
         else:
-            bu = random.randrange(1000, 990000)
+            # bu = random.randrange(1000, 990000)
             budget = self.drv.find_element_by_id("budget")
-            budget.send_keys(bu)
-            #budget.send_keys(get_dic_val(dic, "below.budget"))
+            # budget.send_keys(bu)
+            b = get_dic_val(dic,"below.budget")
+            print("XYZZZZZZZZ", b)
+            budget.send_keys(b)
 
             min_step_p = random.randrange(1, 3)
             min_step_percentage = self.drv.find_element_by_id("min_step_percentage")
