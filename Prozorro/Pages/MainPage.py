@@ -1,4 +1,4 @@
-#!/usr/bin/python -u#!/usr/bin/python -u
+#!/usr/bin/python3 -u
 
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.support import expected_conditions
