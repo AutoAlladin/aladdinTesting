@@ -7,20 +7,19 @@
         "type":"Технічний опис предмету закупівлі",
         "doc_to": "Тендер"
       },
-
-	"below":{
+  "below":{
         "login":"neotomasandersont@gmail.com",
         "password":"123456",
 		"enqueriPeriod":15,
 		"tenderPeriod":20,
-        "title":"Кефір",
-        "description":"Молочні продукти різні",
+        "title":"Оброблені фрукти",
+        "description":"Сухофрукти",
         "budget":"12345",
         "min_step":"50",
         "min_step_percentage":"2.54",
-        "item_descr":"кефір",
+        "item_descr":"курога",
         "quantity":"35.42",
-        "search_classifier_cpv":"15550000-8",
+        "search_classifier_cpv":"15330000-0",
         "search_classifier_other":"000",
         "zip_code_":"21021",
         "region":"Вінницька",
@@ -47,12 +46,12 @@
         "tender_item":true,
         "lot_item":true,
         "enum_count":3,
-        "title":"загадкови параметр",
-        "titleEnum_zero":"нульової загадковості параметр",
-        "description":"дерево",
-        "descriptionEnum_zero":"низько зрізане дерево, а не пеньок",
-        "option_description":"blue cups",
-        "option_name":"forgotten items"
+        "title":"Споживча тара",
+        "titleEnum_zero":"Тряпчані мішки",
+        "description":"пакування",
+        "descriptionEnum_zero":"",
+        "option_description":"пакування",
+        "option_name":"Пакети полімерні"
     },
 
     "billing_ui":{
@@ -89,3 +88,4 @@
           }
     }
 }
+
