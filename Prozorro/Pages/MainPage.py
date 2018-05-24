@@ -120,7 +120,7 @@ class MainPage:
                 add_item(dic, lots, items). \
                 click_next_button(). \
                 add_features(dic,lots,items,features).\
-                add_doc(docs).\
+                add_doc(docs, dic).\
                 click_finish_edit_button().\
                 click_publish_button()
 
@@ -137,7 +137,7 @@ class MainPage:
                 click_next_button(). \
                 add_features(dic, lots, items, features). \
                 click_next_button().\
-                add_doc(docs). \
+                add_doc(docs, dic). \
                 click_finish_edit_button().\
                 click_publish_button()
 

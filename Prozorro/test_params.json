@@ -2,6 +2,12 @@
 	"main":{
       "url":"https://test-gov.ald.in.ua/purchases"
 	},
+    "docs":{
+        "size":10000,
+        "type":"Технічний опис предмету закупівлі",
+        "doc_to": "Тендер"
+      },
+
 	"below":{
         "login":"neotomasandersont@gmail.com",
         "password":"123456",

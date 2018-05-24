@@ -327,9 +327,9 @@ class TenderNew:
                 EC.element_to_be_clickable((By.ID, "update_" + item_id)))
             scroll_to_element(self.drv, add_item_button)
             self.click_add_item(item_id)
-            print("start set_item", i)
+            print("end set_item", i)
 
-    def add_doc(self, docs):
+    def add_doc(self, docs, dic):
         try:
             if docs > 0:
                 documents_tab = WebDriverWait(self.drv, 20).until(
@@ -355,12 +355,14 @@ class TenderNew:
                 WebDriverWait(self.drv, 20).until(
                     EC.visibility_of_element_located((By.ID,"categorySelect")))
 
-                Select(self.drv.find_element_by_id("categorySelect")).select_by_value("biddingDocuments")
-                Select(self.drv.find_element_by_id("documentOfSelect")).select_by_value("Tender")
+                Select(self.drv.find_element_by_id("categorySelect")).select_by_visible_text(get_dic_val(dic, "docs.type"))
+                Select(self.drv.find_element_by_id("documentOfSelect")).select_by_visible_text(get_dic_val(dic, "docs.doc_to"))
 
-                if not os.path.isfile(os.path.abspath(__file__)+ '\\fortender{0}.txt'.format(i)):
-                    with(open(os.path.dirname(os.path.abspath(__file__)) + '\\fortender{0}.txt'.format(i), 'w')) as f:
-                        f.write("wwwwwww")
+
+                with(open(os.path.dirname(os.path.abspath(__file__)) + '\\fortender{0}.txt'.format(i), 'w', encoding="ascii")) as f:
+                    for ttt in range(get_dic_val(dic, "docs.size",1000)):
+                        f.write("x")
+
                 fileInput=self.drv.find_element_by_id("fileInput")
                 fileInput.send_keys(os.path.dirname(os.path.abspath(__file__)) + "\\fortender{0}.txt".format(i))
 
