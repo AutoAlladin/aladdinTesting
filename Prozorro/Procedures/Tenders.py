@@ -21,7 +21,7 @@ def init_driver(test_mode=True):
     if test_mode :
         file_name = Utils.get_root()+os.sep+"Prozorro"+os.sep+"test_params.json"
     else:
-        file_name = Utils.get_root()+os.sep+"Prozorro"+os.sep+"test_params.json"
+        file_name = Utils.get_root()+os.sep+"Prozorro"+os.sep+"prod_params.json"
 
     print(file_name)
 
