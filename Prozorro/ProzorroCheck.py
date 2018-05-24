@@ -1,3 +1,5 @@
+#!/usr/bin/python -u
+
 import getopt
 import sys
 import time
