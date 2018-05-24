@@ -1,3 +1,5 @@
+#!/usr/bin/python -u
+
 import os
 import random
 

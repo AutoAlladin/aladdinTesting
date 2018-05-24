@@ -1,3 +1,5 @@
+#!/usr/bin/python -u
+
 import json
 
 import os
