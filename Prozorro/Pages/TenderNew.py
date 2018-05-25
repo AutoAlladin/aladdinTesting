@@ -44,9 +44,9 @@ class TenderNew:
             waitFadeIn(self.drv)
             WebDriverWait(self.drv, 120).until(EC.visibility_of_element_located((By.ID, "purchaseProzorroId")))
             purchaseProzorroId = self.drv.find_element_by_id("purchaseProzorroId")
-            print("click publish", self.drv.current_url        )
 
             return purchaseProzorroId.text, self.drv.current_url
+
         except WebDriverException as w:
             toast_title = ""
             toast_message = ""

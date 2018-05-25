@@ -72,9 +72,8 @@ def check(args):
                                    ttest_mode= _test_mode
                                  )
 
-                with(open(os.path.dirname(os.path.abspath(__file__))+'\\uaids.json', 'w', encoding="UTF-8")) as uaid_file:
-                    json.dump(uaids, uaid_file)
-                print(datetime.datetime.now())
+                print("published ProzorroId", uaids[0][0])
+                print("published Url", uaids[0][1])
                 sys.exit()
             elif proc == 'openUA':
                 print(datetime.datetime.now())
@@ -122,13 +121,9 @@ def check(args):
             sys.exit()
         elif opt == '-b':
             print("add bid " + arg)
-            if arg == "add_one":
-                create_bids(arg)
-                sys.exit()
-            elif arg == "add_many":
-                print(create_bids(fin=os.path.dirname(os.path.abspath(__file__))+'\\uaids.json',prepare=1))
-            elif arg == "on_time":
-                print(send_bids(fin=os.path.dirname(os.path.abspath(__file__))+'\\uaids.json',prepare=0))
+            tids = arg.split(",")
+            create_bids(tids)
+
         elif opt == '-r':
             print("registartion " + arg)
             start = datetime.datetime.now()

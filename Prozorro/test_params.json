@@ -10,8 +10,8 @@
   "below":{
         "login":"neotomasandersont@gmail.com",
         "password":"123456",
-		"enqueriPeriod":15,
-		"tenderPeriod":20,
+		"enqueriPeriod":5,
+		"tenderPeriod":2000,
         "title":"Оброблені фрукти",
         "description":"Сухофрукти",
         "budget":"12345",
@@ -36,12 +36,23 @@
     "open":{
 		"tenderPeriod":100
 	},
-	"bids":{
-		"login":"cat@gmail.com",
-		"password":"123456",
-        "startTime":"2017-09-30 18:43"
-
-	},
+	"bids":[
+            {
+              "login":"cat@gmail.com",
+              "password":"123456",
+              "amount":1234,
+              "tender_feature":0,
+              "lot_feature":0,
+              "item_feature":0
+            },
+            {
+              "login":"cat@gmail.com",
+              "password":"123456",
+              "amount":1234,
+              "tender_feature":0,
+              "lot_feature":0
+            }
+    ],
     "feature":{
         "tender_item":true,
         "lot_item":true,

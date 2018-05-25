@@ -92,27 +92,16 @@ def create_openUA(countLots, countFeatures, countDocs=0, countTenders=1, countIt
 
     return uaid
 
-def create_bids(uaids=[],fin=None, prepare=0, test_mode=True):
+def create_bids(uaids=[],  test_mode=True):
     print("start bids", datetime.datetime.now())
     chrm, tp,mpg = init_driver(test_mode)
     mpg.open_login_form().login(tp["billing_ui"]["bids"]["login"], tp["billing_ui"]["bids"]["password"])
     bid_uaids=[]
 
-    if(os.path.isfile(fin)):
-        with open(fin, 'r', encoding="UTF-8") as bids_uid_file:
-            uaids = json.load(bids_uid_file)
+    for i in uaids:
+         bid_uaids.append(mpg.create_bid(i, tp))
 
 
-        for i in uaids:
-            print(i)
-            if prepare == 0:
-                bid_uaids.append(mpg.create_bid(i[0],prepare))
-            else:
-                bid_uaids.append(mpg.create_bid(i[1],prepare))
-
-    body =  mpg.drv.find_element_by_tag_name("html")
-    body.send_keys(Keys.CONTROL+'2')
-    time.sleep(6000)
     print("finish bids", datetime.datetime.now())
     return bid_uaids
 

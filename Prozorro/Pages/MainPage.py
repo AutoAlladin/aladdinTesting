@@ -58,12 +58,9 @@ class MainPage:
 
     def open_tender(self, uaid, waitstatus=None ):
 
-        if self.drv.current_url!="https://test-gov.ald.in.ua/purchases":
-            self.drv.get("https://test-gov.ald.in.ua")
-
         waitNotifyToast(self.drv)
 
-        Select(self.drv.find_element_by_id("searchType")).select_by_value("1")
+        #Select(self.drv.find_element_by_id("searchType")).select_by_value("1")
 
         self.searchInput = self.drv.find_element_by_id("findbykeywords")
         self.searchInput.clear()
@@ -76,6 +73,8 @@ class MainPage:
         #print((By.XPATH,"//span[text()='"+uaid+"']/../a"))
         tenderLink =WebDriverWait(self.drv, 20).until(
             EC.visibility_of_element_located((By.XPATH,"//span[text()='"+uaid+"']/../a")))
+
+        scroll_to_element(self.drv, tenderLink)
         tenderLink.click()
 
         WebDriverWait(self.drv, 20).until(
@@ -152,22 +151,14 @@ class MainPage:
                 add_item(dic,lots,items). \
                 click_finish_edit_button(). \
                 click_publish_button()
+
         return None
 
 
-    def create_bid(self, uaid, prepare):
-        if prepare==0:
-            return self.open_tender(uaid).\
-                open_bids().\
-                new(uaid);
-        elif prepare==2:
-            return self.open_tender_url(uaid).\
-                open_bids().\
-                new(1,uaid);
-        else:
-            return self.open_tender_url(uaid).\
-                open_bids().\
-                new(prepare, uaid)
+    def create_bid(self, uaid, dic):
+        return self.open_tender(uaid).\
+               open_bids().\
+               new(uaid,dic);
 
 
 
