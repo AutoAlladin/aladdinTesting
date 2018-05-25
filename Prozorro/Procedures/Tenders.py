@@ -99,6 +99,7 @@ def create_bids(uaid,  test_mode=True):
     chrm, tp, mpg = init_driver(test_mode)
 
     for bdic in tp["bids"]:
+        print("login", bdic["login"])
         mpg.open_login_form().login(bdic["login"], bdic["password"])
         bid_uaid.append(mpg.create_bid(uaid,bdic))
 
