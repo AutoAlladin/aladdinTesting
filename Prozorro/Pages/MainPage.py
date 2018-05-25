@@ -49,6 +49,12 @@ class MainPage:
     def open_login_form(self):
         waitFadeIn(self.drv)
         #self.liLoginNoAuthenticated = self.drv.find_element_by_id("liLoginNoAuthenticated")
+
+        try:
+            self.drv.find_element_by_id("butLogoutPartial").click()
+        except:
+            pass
+
         self.butLoginPartial = self.drv.find_element_by_id("butLoginPartial")
 
         waitFadeIn(self.drv)
@@ -67,6 +73,7 @@ class MainPage:
         self.searchInput.send_keys(uaid)
 
         self.butSimpleSearch = self.drv.find_element_by_id("butSimpleSearch")
+        waitFadeIn(self.drv)
         self.butSimpleSearch.click()
 
         waitFadeIn(self.drv)
@@ -75,6 +82,7 @@ class MainPage:
             EC.visibility_of_element_located((By.XPATH,"//span[text()='"+uaid+"']/../a")))
 
         scroll_to_element(self.drv, tenderLink)
+        waitFadeIn(self.drv)
         tenderLink.click()
 
         WebDriverWait(self.drv, 20).until(

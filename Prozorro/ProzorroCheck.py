@@ -122,7 +122,7 @@ def check(args):
         elif opt == '-b':
             print("add bid " + arg)
             tids = arg.split(",")
-            create_bids(tids)
+            create_bids(tids[0])
 
         elif opt == '-r':
             print("registartion " + arg)

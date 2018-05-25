@@ -330,6 +330,7 @@ class TenderNew:
             print("end set_item", i)
 
     def add_doc(self, docs, dic):
+        docs = len(dic["docs"])
         try:
             if docs > 0:
                 documents_tab = WebDriverWait(self.drv, 20).until(
@@ -355,12 +356,12 @@ class TenderNew:
                 WebDriverWait(self.drv, 20).until(
                     EC.visibility_of_element_located((By.ID,"categorySelect")))
 
-                Select(self.drv.find_element_by_id("categorySelect")).select_by_visible_text(get_dic_val(dic, "docs.type"))
-                Select(self.drv.find_element_by_id("documentOfSelect")).select_by_visible_text(get_dic_val(dic, "docs.doc_to"))
+                Select(self.drv.find_element_by_id("categorySelect")).select_by_visible_text(dic["docs"][i]["type"])
+                Select(self.drv.find_element_by_id("documentOfSelect")).select_by_visible_text(dic["docs"][i]["doc_to"])
 
 
                 with(open(os.path.dirname(os.path.abspath(__file__)) + '\\fortender{0}.txt'.format(i), 'w', encoding="ascii")) as f:
-                    for ttt in range(get_dic_val(dic, "docs.size",1000)):
+                    for ttt in range(dic["docs"][i]["size"]):
                         f.write("x")
 
                 fileInput=self.drv.find_element_by_id("fileInput")
@@ -369,7 +370,7 @@ class TenderNew:
                 save_file=self.drv.find_element_by_id("save_file")
                 save_file.click()
 
-                sleep(15)
+                sleep(5)
                 print("end add_doc")
 
         except Exception as e:
