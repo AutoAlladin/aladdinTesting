@@ -69,7 +69,7 @@ def create_below(countLots=0,
         for i in range(countTenders):
                 uaid.append(mpg.create_tender(**args,nom=str(i)))
     finally:
-        d.quit()
+        chrm.quit()
 
     return uaid
 

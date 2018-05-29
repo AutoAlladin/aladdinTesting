@@ -385,7 +385,7 @@ class TenderNew:
 
     def add_feature_enum(self,dic,enum_index, lot_index=0):
         rm = RandomWords()
-        print(" start add_feature_enum")
+        print("  start add_feature_enum")
         featureEnumAdd = self.drv.find_element_by_id("addFeatureEnum_"+str(lot_index)+"_0")
         featureEnumAdd.click()
 
@@ -404,10 +404,10 @@ class TenderNew:
             "featureEnumDescription_"+str(lot_index)+"_0_"+str(enum_index))
         featureEnumDescription.clear()
         featureEnumDescription.send_keys(get_dic_val(dic, "feature.option_description")+" - "+rm.random_word())
-        print(" end add_feature_enum")
+        print("  end add_feature_enum")
 
     def set_feature_zero_enum(self, dic, end="0"):
-        print(" start set_feature_zero_enum")
+        print("  start set_feature_zero_enum")
         WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "featureEnumTitle_"+end+"_0_0")))
         featureEnumTitle = self.drv.find_element_by_id("featureEnumTitle_"+end+"_0_0")
         featureEnumTitle.clear()
@@ -416,12 +416,12 @@ class TenderNew:
         featureEnumDescription = self.drv.find_element_by_id("featureEnumDescription_"+end+"_0_0")
         featureEnumDescription.clear()
         featureEnumDescription.send_keys(get_dic_val(dic, "feature.descriptionEnum_zero"))
-        print(" end set_feature_zero_enum")
+        print("  end set_feature_zero_enum")
 
     def add_feature_to_tender(self, features, items, dic,to_item=True):
         WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add_features0")))
         for findex in range(features):
-            print("  start add_feature_to_tender")
+            print("start add_feature_to_tender")
             waitFadeIn(self.drv)
             add_features = self.drv.find_element_by_id("add_features0")
             add_features.click()
@@ -445,7 +445,7 @@ class TenderNew:
             scroll_to_element(self.drv, updateFeature)
 
             updateFeature.click()
-            print("  end add_feature_to_tender")
+            print("end add_feature_to_tender")
         pass
 
     def add_feature_to_lot(self, features, lots, items,dic, to_item=True):
@@ -462,10 +462,7 @@ class TenderNew:
                 add_features.click()
                 self.set_feature_decription(dic, str(lotix)+"_0")
 
-                isPara = (findex % 2 != 0)
-                _to_item = True
-                #if isPara: _to_item = get_dic_val(dic, "feature.lot_item", False)
-                if _to_item:
+                if to_item:
                     to_i = self.drv.find_element_by_xpath("//label[@for='featureOf_"+str(lotix)+"_0']")
                     scroll_to_element(self.drv,to_i)
                     to_i.click()
@@ -501,11 +498,11 @@ class TenderNew:
                 waitFadeIn(self.drv)
                 features_tab.click()
 
-                _to_item = get_dic_val(dic, "feature.tender_item", False)
                 self.add_feature_to_tender(features, items, dic, to_item=False)
 
                 if lots > 0:
-                    self.add_feature_to_lot(features, lots, items, dic, to_item=_to_item)
+                    self.add_feature_to_lot(features, lots, items, dic, to_item=False)
+                    self.add_feature_to_lot(features, lots, items, dic, to_item=True)
 
 
         except WebDriverException as e:
