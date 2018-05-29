@@ -298,7 +298,7 @@ class TenderNew:
 
     def set_item(self, dic, item, j):
         for i in range(item):
-            print(" start set_item", i)
+            print("start set_item", i)
             waitFadeIn(self.drv)
             add_procurement_subject = \
                 WebDriverWait(self.drv, 5).until(
@@ -322,7 +322,7 @@ class TenderNew:
                 EC.element_to_be_clickable((By.ID, "update_" + item_id)))
             scroll_to_element(self.drv, add_item_button)
             self.click_add_item(item_id)
-            print(" end set_item", i)
+            print("end set_item", i)
 
     def add_doc(self, docs, dic):
         docs = len(dic["docs"])
@@ -374,14 +374,14 @@ class TenderNew:
         return self
 
     def set_feature_decription(self, dic, end):
-        print(" start set_feature_decription")
+        print("  start set_feature_decription")
         WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "featureTitle_"+end)))
         featureTitle=self.drv.find_element_by_id("featureTitle_"+end)
         featureTitle.send_keys(get_dic_val(dic,"feature.title"))
 
         featureDescription=self.drv.find_element_by_id("featureDescription_"+end)
         featureDescription.send_keys(get_dic_val(dic, "feature.description"))
-        print(" end set_feature_decription")
+        print("  end set_feature_decription")
 
     def add_feature_enum(self,dic,enum_index, lot_index=0):
         rm = RandomWords()
@@ -451,7 +451,11 @@ class TenderNew:
     def add_feature_to_lot(self, features, lots, items,dic, to_item=True):
         for lotix in range(1,lots+1):
             for findex in range(features):
-                print("start add_feature_to_lot")
+                if to_item:
+                    print("start add_feature_to_lot")
+                else:
+                    print("start add_feature_to_lot_item")
+
                 waitFadeIn(self.drv)
                 add_features = WebDriverWait(self.drv, 20).until(
                     EC.visibility_of_element_located(
@@ -486,7 +490,11 @@ class TenderNew:
                 )
                 scroll_to_element(self.drv,updateFeature)
                 updateFeature.click()
-                print("end add_feature_to_lot")
+
+                if to_item:
+                    print("end add_feature_to_lot")
+                else:
+                    print("end add_feature_to_lot_item")
 
 
     def add_features(self, dic, lots, items, features=0):
