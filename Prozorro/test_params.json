@@ -48,7 +48,6 @@
               "login":"cat@gmail.com",
               "password":"123456",
               "amount":1234,
-              "tender_feature":0,
               "lot_feature":0,
               "item_feature":0
             },
@@ -56,9 +55,19 @@
               "login":"lee.jaeyong@gmail.co",
               "password":"123456",
               "amount":1234,
-              "tender_feature":0,
-              "lot_feature":0
+              "tender_feature":1,
+              "item_feature":1
+            },
+            {
+              "login":"lermontovl@gmail.com",
+              "password":"123456",
+              "amount":1234,
+              "tender_feature":2,
+              "lot_feature":2
             }
+
+
+
     ],
     "feature":{
         "tender_item":true,
