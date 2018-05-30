@@ -365,6 +365,8 @@ class TenderNew:
                 fileInput.send_keys(os.path.dirname(os.path.abspath(__file__)) + "\\fortender{0}.txt".format(i))
 
                 save_file=self.drv.find_element_by_id("save_file")
+                scroll_to_element(self.drv, save_file)
+                waitFadeIn(self.drv)
                 save_file.click()
 
                 sleep(5)
