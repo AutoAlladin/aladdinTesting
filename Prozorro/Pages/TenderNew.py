@@ -45,7 +45,7 @@ class TenderNew:
             WebDriverWait(self.drv, 120).until(EC.visibility_of_element_located((By.ID, "purchaseProzorroId")))
             purchaseProzorroId = self.drv.find_element_by_id("purchaseProzorroId")
 
-            print("published ProzorroId", purchaseProzorroId.text)
+            print("published ProzorroId", "\033[31m"+purchaseProzorroId.text+"\033[00m")
             print("published Url", self.drv.current_url)
 
             return purchaseProzorroId.text, self.drv.current_url

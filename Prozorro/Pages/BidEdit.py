@@ -27,6 +27,17 @@ class bid:
                     (By.XPATH, "//label[contains(text(),'Подача пропозицій')]")))
         except:
             raise Exception("Неправильный этап тендера")
+
+        try:
+            WebDriverWait(self.drv, 20).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, "//span[contains(text(),'Пропозиція по тендеру опублікована')]")))
+        except:
+            raise Exception("\\033[31mПропозиція по тендеру опублікована !!! \\033[00m")
+
+
+
+
         try:
             lots = WebDriverWait(self.drv, 20).until(
                         EC.presence_of_all_elements_located(
