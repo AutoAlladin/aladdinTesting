@@ -22,7 +22,7 @@ class bid:
     def new(self,uaid, dic):
         Utils.waitFadeIn(self.drv)
         try:
-            lots = WebDriverWait(self.drv, 5).until(
+            lots = WebDriverWait(self.drv, 20).until(
                         EC.presence_of_all_elements_located(
                             (By.XPATH,"//a[contains(@id,'openLotForm')]")))
 
