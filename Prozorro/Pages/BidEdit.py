@@ -31,9 +31,9 @@ class bid:
         try:
             WebDriverWait(self.drv, 20).until(
                 EC.presence_of_element_located(
-                    (By.XPATH, "//span[contains(text(),'Пропозиція по тендеру опублікована')]")))
+                    (By.XPATH, "//span[contains(text(),'Пропозиція по тендеру не подана')]")))
         except:
-            raise Exception("\\033[31mПропозиція по тендеру опублікована !!! \\033[00m")
+            raise Exception("\033[31mПропозиція по тендеру опублікована !!! \033[00m")
 
 
 
