@@ -89,7 +89,7 @@ def create_openUA(countLots, countFeatures, countDocs=0, countTenders=1, countIt
                   docs=countDocs,
                   features=countFeatures,
                   dic=tp
-                  )
+        )
         for i in range(countTenders):
             uaid.append(mpg.create_tender(**args, nom=str(i)))
     finally:
@@ -115,19 +115,6 @@ def create_bids(uaid,  test_mode=True):
     return bid_uaid
 
 
-def create_bid(link, test_mode=True):
-    print("start bids", datetime.datetime.now())
-    chrm, tp,mpg = init_driver(test_mode)
-    mpg.open_login_form().login(tp["billing_ui"]["bids"]["login"], tp["billing_ui"]["bids"]["password"])
-    bid_uaids=[]
-
-
-    bid_uaids.append(mpg.create_bid(link, 1))
-
-
-    print("finish bids", datetime.datetime.now())
-    return bid_uaids
-
 def open_tender(id,role, test_mode=True):
     chrm,tp, mpg=init_driver(test_mode)
     print("mpg.open_tender in open" + id)
@@ -149,7 +136,7 @@ def create_concurentUA(countLots, countFeatures, countDocs=0, countTenders=1, co
                 docs=countDocs,
                 features=countFeatures,
                 dic=tp
-                )
+            )
 
     for i in range(countTenders):
         uaid.append(mpg.create_tender(**args))

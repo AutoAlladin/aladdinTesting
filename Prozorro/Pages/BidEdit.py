@@ -32,7 +32,7 @@ class bid:
                 Utils.scroll_to_element(self.drv, lotForm)
                 lotForm.click()
 
-                bidLotAmount = WebDriverWait(self.drv, 10).until(
+                bidLotAmount = WebDriverWait(self.drv, 20).until(
                     EC.element_to_be_clickable((By.ID, "lotAmount_{0}".format(suffix))))
 
                 bidLotAmount.send_keys(str(dic["amount"]));

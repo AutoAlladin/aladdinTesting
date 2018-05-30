@@ -118,45 +118,46 @@ class MainPage:
         if(procurementMethodType=="belowThreshold"):
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/BelowThreshold']").click()
             return TenderNew(self.drv).\
-                set_description(dic, nom).\
+                set_description(dic["below"], nom).\
                 set_curr().\
-                set_multilot(dic, is_multilot).\
-                set_dates(dic).\
+                set_multilot(dic["below"], is_multilot).\
+                set_dates(dic["below"]).\
                 click_next_button().\
-                add_lot(lots, dic).\
-                add_item(dic, lots, items). \
+                add_lot(lots, dic["below"]).\
+                add_item(dic["below"], lots, items). \
                 click_next_button(). \
-                add_features(dic,lots,items,features).\
-                add_doc(docs, dic).\
+                add_features(dic["features"],lots,items,features).\
+                add_doc(docs, dic["docs"]).\
                 click_finish_edit_button().\
                 click_publish_button()
 
         elif procurementMethodType=="aboveThresholdUA":
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/AboveThresholdUA']").click()
             return TenderNew(self.drv). \
-                set_description(dic, nom). \
+                set_description(dic["openUA"], nom). \
                 set_curr(). \
-                set_multilot(dic, is_multilot). \
+                set_multilot(dic["openUA"], is_multilot). \
                 set_open_tender_dates(dic) . \
                 click_next_button(). \
-                add_lot(lots, dic). \
-                add_item(dic, lots, items). \
+                add_lot(lots, dic["openUA"]). \
+                add_item(dic["openUA"], lots, items). \
                 click_next_button(). \
-                add_features(dic, lots, items, features). \
+                add_features(dic["features"], lots, items, features). \
                 click_next_button().\
-                add_doc(docs, dic). \
+                add_doc(docs["openUA"], dic). \
                 click_finish_edit_button().\
                 click_publish_button()
 
         elif procurementMethodType=="concurentUA":
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/CompetitiveDialogueUA']").click()
             return TenderNew(self.drv). \
-                set_description(dic,  nom). \
+                set_description(dic["concurentUA"],  nom). \
                 set_curr(). \
-                set_multilot(dic,False). \
-                set_open_tender_dates(dic). \
+                set_multilot(dic["concurentUA"],is_multilot). \
+                set_open_tender_dates(dic["concurentUA"]). \
                 click_next_button(). \
-                add_item(dic,lots,items). \
+                add_lot(lots, dic["concurentUA"]). \
+                add_item(dic["concurentUA"],lots,items). \
                 click_finish_edit_button(). \
                 click_publish_button()
 

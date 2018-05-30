@@ -45,6 +45,9 @@ class TenderNew:
             WebDriverWait(self.drv, 120).until(EC.visibility_of_element_located((By.ID, "purchaseProzorroId")))
             purchaseProzorroId = self.drv.find_element_by_id("purchaseProzorroId")
 
+            print("published ProzorroId", purchaseProzorroId.text)
+            print("published Url", self.drv.current_url)
+
             return purchaseProzorroId.text, self.drv.current_url
 
         except WebDriverException as w:
@@ -96,18 +99,18 @@ class TenderNew:
                 self.drv,
                 "period_enquiry_end",
                 (dt + timedelta(
-                    minutes=get_dic_val(dic,"below.enqueriPeriod")
+                    minutes=dic["enqueriPeriod"]
                 )
                  ).strftime("%d-%m-%Y %H:%M:%S"))
 
             set_datepicker(self.drv, "period_tender_start",
                            (dt + timedelta(
-                               minutes=get_dic_val(dic,"below.enqueriPeriod"))
+                               minutes=dic["enqueriPeriod"])
                             ).strftime("%d-%m-%Y %H:%M:%S"))
 
             set_datepicker(self.drv, "period_tender_end",
                            (dt + timedelta(
-                               minutes=get_dic_val(dic,"below.enqueriPeriod")+get_dic_val(dic,"below.tenderPeriod"))
+                               minutes=dic["enqueriPeriod"]+dic["tenderPeriod"])
                             ).strftime("%d-%m-%Y %H:%M:%S"))
             print("end set_dates")
         except Exception as e:
@@ -117,7 +120,7 @@ class TenderNew:
     def set_open_tender_dates(self, dic):
         try:
             dt = datetime.now()
-            set_datepicker(self.drv, "period_tender_end", (dt + timedelta(minutes=get_dic_val(dic, "open.tenderPeriod"))).strftime("%d-%m-%Y %H:%M:%S"))
+            set_datepicker(self.drv, "period_tender_end", (dt + timedelta(minutes=dic["tenderPeriod"])).strftime("%d-%m-%Y %H:%M:%S"))
         except Exception as e:
             raise Exception("Чтото не так с датами шапки тендера - \n" + e)
         return self
@@ -136,7 +139,7 @@ class TenderNew:
             is_multilot.click()
         else:
             budget = self.drv.find_element_by_id("budget")
-            b = get_dic_val(dic,"below.budget")
+            b = dic["budget"]
             budget.send_keys(b)
 
             min_step_p = random.randrange(1, 3)
@@ -149,7 +152,7 @@ class TenderNew:
             return self
         if count >= 1:
             for currentLot in range(count):
-                print("start Add lot ",get_dic_val(dic, "below.description_of_lot"))
+                print("start Add lot ",dic[ "description_of_lot"])
                 lotid = str(1)
                 WebDriverWait(self.drv, 20).until(
                     EC.element_to_be_clickable((By.ID, "buttonAddNewLot")))
@@ -158,15 +161,15 @@ class TenderNew:
                 is_add_lot.click()
 
                 title_of_lot = self.drv.find_element_by_id("lotTitle_" + lotid)
-                title_of_lot.send_keys(str(currentLot)+" - "+get_dic_val(dic, "below.title_ofLot"))
+                title_of_lot.send_keys(str(currentLot)+" - "+dic["title_ofLot"])
                 description_of_lot = self.drv.find_element_by_id("lotDescription_" + lotid)
-                description_of_lot.send_keys(get_dic_val(dic, "below.description_of_lot"))
+                description_of_lot.send_keys(dic[ "description_of_lot"])
                 budget_of_lot = self.drv.find_element_by_id("lotBudget_" + lotid)
-                budget_of_lot.send_keys(get_dic_val(dic, "below.budget_of_lot"))
+                budget_of_lot.send_keys(dic[ "budget_of_lot"])
                 min_step_of_lot = self.drv.find_element_by_id("lotMinStep_" + lotid)
-                min_step_of_lot.send_keys(get_dic_val(dic, "below.min_step_of_lot"))
+                min_step_of_lot.send_keys(dic[ "min_step_of_lot"])
                 min_step_of_lot_perc = self.drv.find_element_by_id("lotMinStepPercentage_" + lotid)
-                min_step_of_lot_perc.send_keys(get_dic_val(dic, "below.min_step_of_lot_perc"))
+                min_step_of_lot_perc.send_keys(dic[ "min_step_of_lot_perc"])
                 self.drv.find_element_by_xpath("//div[contains(@id,'updateOrCreateLot')]//button[@class='btn btn-success']").click()
                 print("end Add lot")
 
@@ -187,8 +190,8 @@ class TenderNew:
             )
 
         description = self.drv.find_element_by_id("description")
-        title.send_keys(get_dic_val(dic, "below.title"))
-        description.send_keys(get_dic_val(dic, "below.description"))
+        title.send_keys(dic[ "title"])
+        description.send_keys(dic[ "description"])
 
         print("end Set  description")
 
@@ -203,17 +206,17 @@ class TenderNew:
         WebDriverWait(self.drv, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@id='procurementSubjectCountryWrap{0}']//select[contains(@id,'regions')]".format(item_id))))
 
         sleep(1.5)
-        Select(select_regions).select_by_visible_text(get_dic_val(dic, "below.region"))
+        Select(select_regions).select_by_visible_text(dic[ "region"])
         zip_code_ = self.drv.find_element_by_id("zip_code_" + item_id)
-        zip_code_.send_keys(get_dic_val(dic, "below.zip_code_"))
+        zip_code_.send_keys(dic[ "zip_code_"])
         locality_ = self.drv.find_element_by_id("locality_" + item_id)
-        locality_.send_keys(get_dic_val(dic, "below.locality_"))
+        locality_.send_keys(dic[ "locality_"])
         street_ = self.drv.find_element_by_id("street_" + item_id)
-        street_.send_keys(get_dic_val(dic, "below.street_"))
+        street_.send_keys(dic[ "street_"])
         latutide_ = self.drv.find_element_by_id("latutide_" + item_id)
-        latutide_.send_keys(get_dic_val(dic, "below.latutide_"))
+        latutide_.send_keys(dic[ "latutide_"])
         longitude_ = self.drv.find_element_by_id("longitude_" + item_id)
-        longitude_.send_keys(get_dic_val(dic, "below.longitude_"))
+        longitude_.send_keys(dic[ "longitude_"])
         print("  end Set_delivery_adress")
 
 
@@ -239,7 +242,7 @@ class TenderNew:
         cls_click_.click()
         add_classifier = WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add-classifier")))
         search_classifier_text = self.drv.find_element_by_id("search-classifier-text")
-        search_classifier_text.send_keys(get_dic_val(dic, "below.search_classifier_cpv"))
+        search_classifier_text.send_keys(dic[ "search_classifier_cpv"])
         WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.XPATH, "//li[@aria-selected = 'true']")))
         add_classifier.click()
         print("  end set_dk2015")
@@ -247,28 +250,27 @@ class TenderNew:
     def set_classifier(self, dic):
         add_classifier = WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add-classifier")))
         search_classifier_text = self.drv.find_element_by_id("search-classifier-text")
-        search_classifier_text.send_keys(get_dic_val(dic, "below.search_classifier_other"))
+        search_classifier_text.send_keys(dic[ "search_classifier_other"])
         WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.XPATH, "//li[@aria-selected = 'true']")))
         add_classifier.click()
 
     def set_item_base_info(self, dic, item_id,item_vomber):
-        print("  start set_item_base_info")
+        print("  start set_item_base_info", dic["item_descr"])
         procurementSubject_description =WebDriverWait(self.drv, 20).\
         until(EC.visibility_of_element_located((By.ID, "procurementSubject_description" + item_id)))
 
-        procurementSubject_description.send_keys(str(item_vomber)+str(item_id)+" - "+get_dic_val(dic, "below.item_descr"))
+        procurementSubject_description.send_keys(str(item_vomber)+str(item_id)+" - "+dic["item_descr"])
 
         q=random.randrange(1,700)
 
         procurementSubject_quantity = self.drv.find_element_by_id("procurementSubject_quantity" + item_id)
         procurementSubject_quantity.send_keys(q)
-        #procurementSubject_quantity.send_keys(get_dic_val(dic, "below.quantity"))
 
         unit= random.choice(["KVR", "BX", "D44", "RM", "SET", "GRM", "HUR","LTR"])
 
         select_unit = Select(self.drv.find_element_by_xpath("//div[@id='procurementSubjectUnitWrap{0}']//select".format(item_id)))
         select_unit.select_by_value(unit)
-        #select_unit.select_by_value("LTR")
+
         print("  end set_item_base_info")
 
     def click_add_item(self, item_id):
@@ -325,7 +327,7 @@ class TenderNew:
             print("end set_item", i)
 
     def add_doc(self, docs, dic):
-        docs = len(dic["docs"])
+        docs = len(dic)
         try:
             if docs > 0:
                 documents_tab = WebDriverWait(self.drv, 20).until(
@@ -351,12 +353,12 @@ class TenderNew:
                 WebDriverWait(self.drv, 20).until(
                     EC.visibility_of_element_located((By.ID,"categorySelect")))
 
-                Select(self.drv.find_element_by_id("categorySelect")).select_by_visible_text(dic["docs"][i]["type"])
-                Select(self.drv.find_element_by_id("documentOfSelect")).select_by_visible_text(dic["docs"][i]["doc_to"])
+                Select(self.drv.find_element_by_id("categorySelect")).select_by_visible_text(dic[i]["type"])
+                Select(self.drv.find_element_by_id("documentOfSelect")).select_by_visible_text(dic[i]["doc_to"])
 
 
                 with(open(os.path.dirname(os.path.abspath(__file__)) + '\\fortender{0}.txt'.format(i), 'w', encoding="ascii")) as f:
-                    for ttt in range(dic["docs"][i]["size"]):
+                    for ttt in range(dic[i]["size"]):
                         f.write("x")
 
                 fileInput=self.drv.find_element_by_id("fileInput")
@@ -377,10 +379,10 @@ class TenderNew:
         print("  start set_feature_decription")
         WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "featureTitle_"+end)))
         featureTitle=self.drv.find_element_by_id("featureTitle_"+end)
-        featureTitle.send_keys(get_dic_val(dic,"feature.title"))
+        featureTitle.send_keys(dic["title"])
 
         featureDescription=self.drv.find_element_by_id("featureDescription_"+end)
-        featureDescription.send_keys(get_dic_val(dic, "feature.description"))
+        featureDescription.send_keys(dic[ "description"])
         print("  end set_feature_decription")
 
     def add_feature_enum(self,dic,enum_index, lot_index=0):
@@ -398,12 +400,12 @@ class TenderNew:
         featureEnumTitle = self.drv.find_element_by_id(
             "featureEnumTitle_"+str(lot_index)+"_0_"+str(enum_index))
         featureEnumTitle.clear()
-        featureEnumTitle.send_keys(get_dic_val(dic, "feature.option_name")+" - "+rm.random_word())
+        featureEnumTitle.send_keys(dic[ "option_name"]+" - "+rm.random_word())
 
         featureEnumDescription = self.drv.find_element_by_id(
             "featureEnumDescription_"+str(lot_index)+"_0_"+str(enum_index))
         featureEnumDescription.clear()
-        featureEnumDescription.send_keys(get_dic_val(dic, "feature.option_description")+" - "+rm.random_word())
+        featureEnumDescription.send_keys(dic["option_description"]+" - "+rm.random_word())
         print("  end add_feature_enum")
 
     def set_feature_zero_enum(self, dic, end="0"):
@@ -411,11 +413,11 @@ class TenderNew:
         WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "featureEnumTitle_"+end+"_0_0")))
         featureEnumTitle = self.drv.find_element_by_id("featureEnumTitle_"+end+"_0_0")
         featureEnumTitle.clear()
-        featureEnumTitle.send_keys(get_dic_val(dic, "feature.titleEnum_zero"))
+        featureEnumTitle.send_keys(dic["titleEnum_zero"])
 
         featureEnumDescription = self.drv.find_element_by_id("featureEnumDescription_"+end+"_0_0")
         featureEnumDescription.clear()
-        featureEnumDescription.send_keys(get_dic_val(dic, "feature.descriptionEnum_zero"))
+        featureEnumDescription.send_keys(dic["descriptionEnum_zero"])
         print("  end set_feature_zero_enum")
 
     def add_feature_to_tender(self, features, items, dic,to_item=True):
@@ -438,7 +440,7 @@ class TenderNew:
 
             self.set_feature_zero_enum(dic)
 
-            for enum_index in range(get_dic_val(dic,"feature.enum_count", 2)-1):
+            for enum_index in range(dic["enum_count"]-1):
                 self.add_feature_enum(dic, enum_index+1)
 
             updateFeature=WebDriverWait(self.drv, 20).until(EC.element_to_be_clickable((By.ID, "updateFeature_0_0")))
@@ -480,7 +482,7 @@ class TenderNew:
 
                 self.set_feature_zero_enum(dic,end=str(lotix))
 
-                for enum_index in range(get_dic_val(dic, "feature.enum_count", 2)-1):
+                for enum_index in range(dic[ "enum_count"]-1):
                      self.add_feature_enum(dic,enum_index+1, lotix)
 
                 updateFeature = WebDriverWait(self.drv, 20).until(

@@ -73,8 +73,6 @@ def check(args):
                                    ttest_mode= _test_mode
                                  )
 
-                print("published ProzorroId", uaids[0][0])
-                print("published Url", uaids[0][1])
                 sys.exit()
             elif proc == 'openUA':
                 print(datetime.datetime.now())
@@ -85,8 +83,6 @@ def check(args):
                                            countDocs=_countDocs,
                                            test_mode=_test_mode
                                            )
-                with(open(Utils.get_root() + '\\uaids.json', 'w', encoding="UTF-8")) as uaid_file:
-                    json.dump(uaids, uaid_file)
                 print(datetime.datetime.now())
                 sys.exit()
             elif proc == 'concurentUA':
