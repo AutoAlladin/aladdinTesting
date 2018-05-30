@@ -22,6 +22,12 @@ class bid:
     def new(self,uaid, dic):
         Utils.waitFadeIn(self.drv)
         try:
+            WebDriverWait(self.drv, 20).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, "//label[contains(text(),'Подача пропозицій')]")))
+        except:
+            raise Exception("Неправильный этап тендера")
+        try:
             lots = WebDriverWait(self.drv, 20).until(
                         EC.presence_of_all_elements_located(
                             (By.XPATH,"//a[contains(@id,'openLotForm')]")))
@@ -33,7 +39,7 @@ class bid:
                 lotForm.click()
 
                 bidLotAmount = WebDriverWait(self.drv, 20).until(
-                    EC.element_to_be_clickable((By.ID, "lotAmount_{0}".format(suffix))))
+                    EC.presence_of_element_located((By.ID, "lotAmount_{0}".format(suffix))))
 
                 bidLotAmount.send_keys(str(dic["amount"]));
                 print("  amount", str(dic["amount"]))
