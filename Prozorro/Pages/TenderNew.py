@@ -224,14 +224,15 @@ class TenderNew:
         return self
 
 
-    def set_description(self, dic,nom):
+    def set_description(self, dic, nom, en=False):
         print("start Set  description")
         title = WebDriverWait(self.drv, 20).until(
                 EC.visibility_of_element_located(
                     (By.ID, "titleOfTenderForEdit")
                 )
             )
-
+        if en:
+            self.set_description_eu(dic, nom)
         description = self.drv.find_element_by_id("description")
         title.send_keys(dic[ "title"])
         description.send_keys(dic[ "description"])
@@ -249,8 +250,8 @@ class TenderNew:
         )
 
         description = self.drv.find_element_by_id("description_en")
-        title.send_keys(get_dic_val(dic, "below.title_en"))
-        description.send_keys(get_dic_val(dic, "below.description_en"))
+        title.send_keys(get_dic_val(dic, "openEU.title"))
+        description.send_keys(get_dic_val(dic, "openEU.description"))
 
         print("end Set descriptionEU")
 

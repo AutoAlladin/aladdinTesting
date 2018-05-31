@@ -144,23 +144,22 @@ class MainPage:
                 click_next_button(). \
                 add_features(dic["features"], lots, items, features). \
                 click_next_button().\
-                add_doc(docs["openUA"], dic). \
+                add_doc(dic["docs"]). \
                 click_finish_edit_button().\
                 click_publish_button()
 
         elif procurementMethodType=="aboveThresholdEU":
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/AboveThresholdEU']").click()
             return TenderNew(self.drv). \
-                set_description(dic, nom). \
-                set_description_eu(dic, nom). \
+                set_description(dic["openEU"], nom, en=True). \
                 set_curr(). \
-                set_multilot(dic, is_multilot). \
-                set_open_tender_dates(dic) . \
+                set_multilot(dic["openEU"], is_multilot). \
+                set_open_tender_dates(dic["openEU"]) . \
                 click_next_button(). \
-                add_lot_en(lots, dic). \
+                add_lot_en(lots, dic["openEU"]). \
                 add_item(dic, lots, items, en=True). \
                 click_next_button(). \
-                add_features(dic, lots, items, features, enf=True). \
+                add_features(dic["openEU"], lots, items, features, enf=True). \
                 click_next_button().\
                 add_doc(docs). \
                 click_finish_edit_button().\
