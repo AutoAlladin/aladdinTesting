@@ -97,7 +97,7 @@ def create_openUA(countLots, countFeatures, countDocs=0, countTenders=1, countIt
 
     return uaid
 
-def create_bids(uaid,  test_mode=True):
+def create_bid(proc, uaid,  test_mode=True):
     print("start bids", datetime.datetime.now())
 
     bid_uaid = []
@@ -106,7 +106,7 @@ def create_bids(uaid,  test_mode=True):
         for bdic in tp["bids"]:
             print("login", bdic["login"])
             mpg.open_login_form().login(bdic["login"], bdic["password"])
-            bid_uaid.append(mpg.create_bid(uaid,bdic))
+            bid_uaid.append(mpg.create_bid(proc,uaid,bdic))
 
 
         print("finish bids", datetime.datetime.now())

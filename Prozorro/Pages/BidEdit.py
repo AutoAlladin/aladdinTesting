@@ -11,7 +11,7 @@ from Prozorro import Utils
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from Prozorro.Utils import paint
+from Prozorro.Utils import paint, scroll_to_element, waitFadeIn
 
 
 class bid:
@@ -88,15 +88,20 @@ class bid:
                     paint(self.drv, "setItemLotFeatureERROR.png")
                     print("  lotItemFeatures_0_0 not found")
 
-                bidDocInput_biddingDocuments = self.drv.find_element_by_id("openLotDocuments_biddingDocuments_0") # {0}".format(suffix))
+                with(open(os.path.dirname(os.path.abspath(__file__)) + os.sep + 'forbid.txt', 'w')) as f:
+                    f.write("qqqqqqq")
+
+                bidDocInput_biddingDocuments = self.drv.find_element_by_id("openLotDocuments_biddingDocuments_0")
                 Utils.scroll_to_element(self.drv, bidDocInput_biddingDocuments)
                 Utils.waitFadeIn(self.drv)
                 bidDocInput_biddingDocuments.click()
-                with(open(os.path.dirname(os.path.abspath(__file__))+os.sep+'forbid.txt', 'w')) as f:
-                    f.write("qqqqqqq")
                 Utils.waitFadeIn(self.drv)
                 self.drv.find_element_by_id("bidDocInput_biddingDocuments_0").send_keys(os.path.dirname(os.path.abspath(__file__)) + "\\forbid.txt")
                 print("  biddingDocuments ", os.path.abspath(__file__) +os.sep+ "forbid.txt")
+
+                #isSelfQualified_0
+                #isSelfEligible_0
+                #openLotConfidentialDocuments_technicalSpecifications_0
 
             suffix = 0
 
@@ -183,6 +188,83 @@ class bid:
             pass
 
 
+    def new_concurent(self,uaid, dic):
+        Utils.waitFadeIn(self.drv)
+        try:
+            WebDriverWait(self.drv, 20).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, "//label[contains(text(),'Подача пропозицій')]")))
+        except:
+            raise Exception("Неправильный этап тендера")
+
+        try:
+            WebDriverWait(self.drv, 20).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, "//span[contains(text(),'Пропозиція по тендеру не подана')]")))
+        except:
+            raise Exception("\033[31mПропозиція по тендеру опублікована !!! \033[00m")
+
+
+
+
+        try:
+            lots = WebDriverWait(self.drv, 20).until(
+                        EC.presence_of_all_elements_located(
+                            (By.XPATH,"//a[contains(@id,'openLotForm')]")))
+
+            for lotForm in lots:
+                suffix = lotForm.get_attribute("id").split("_")[1]
+                waitFadeIn(self.drv)
+                scroll_to_element(self.drv, lotForm)
+                lotForm.click()
+
+                isSelfQualified = WebDriverWait(self.drv, 20).until(
+                    EC.presence_of_element_located((By.XPATH, "//label[@for='isSelfQualified_{0}']".format(suffix))))
+                isSelfQualified.click()
+
+                isSelfEligible = WebDriverWait(self.drv, 20).until(
+                    EC.presence_of_element_located((By.XPATH, "//label[@for='isSelfEligible_{0}']".format(suffix))))
+                scroll_to_element(self.drv, isSelfEligible)
+                isSelfEligible.click()
+
+                lotSubInfo = WebDriverWait(self.drv, 20).until(
+                    EC.presence_of_element_located((By.XPATH, "//textarea[@id='lotSubInfo_{0}']".format(suffix))))
+                lotSubInfo.send_keys(dic["sub_info"])
+
+                for bdi in dic["docs_bids"]:
+                    with(open(os.path.dirname(os.path.abspath(__file__)) + '\\'+bdi["type"]+'.txt', 'w', encoding="ascii")) as f:
+                        for size in range(bdi["size"]):
+                            f.write("x")
+                    if suffix == '0':
+                        # Публічні документи до тендеру
+                        self.add_doc_to_bid(bdi["docs_bids"][0], "openTenderDocuments_technicalSpecifications_0", "bidConDocInput_technicalSpecifications_0")
+                        self.add_doc_to_bid(bdi["docs_bids"][1], "openTenderDocuments_qualificationDocuments_0", "bidDocInput_qualificationDocuments_1")
+
+                        # Опис рішення про закупівлю до тендеру
+                        self.add_doc_to_bid(bdi["docs_bids"][0], "bidConDocInput_technicalSpecifications_0","bidConDocInput_technicalSpecifications_0",)
+                        self.add_doc_to_bid(bdi["docs_bids"][1], "openTenderConfidentialDocuments_qualificationDocuments_0","bidConDocInput_qualificationDocuments_1")
+
+
+                    # Публічні документи до лоту
+                    # Опис рішення про закупівлю до лоту
+
+
+                #submitBid = self.drv.find_element_by_id("lotSubmit_{0}".format(suffix))
+
+        except Exception as e:
+            paint(self.drv, "addBidPurchaseERROR.png")
+            raise e
+        pass
+
+    def add_doc_to_bid(self, dic, id1, id2):
+        doc = self.drv.find_element_by_id(id1)
+        scroll_to_element(self.drv, doc)
+        waitFadeIn(self.drv)
+        doc.click()
+        waitFadeIn(self.drv)
+        inp = self.drv.find_element_by_id(id2). \
+            send_keys(os.path.dirname(os.path.abspath(__file__)) + '\\' + dic["type"] + '.txt')
+        print("  openTenderDocuments_technicalSpecifications_0", dic["type"] + '.txt')
 
 
 

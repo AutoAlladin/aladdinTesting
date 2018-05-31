@@ -96,26 +96,57 @@
               "password":"123456",
               "amount":1234,
               "lot_feature":0,
-              "item_feature":0
+              "item_feature":0,
+              "sub_info": "cucumber",
+              "docs_bids":[
+                {
+                  "size":10000,
+                  "type":"Технічний опис предмету закупівлі"
+                },
+                {
+                  "size":10000,
+                  "type":"Документи, що підтверджують кваліфікацію"
+                }
+              ]
             },
             {
               "login":"lee.jaeyong@gmail.co",
               "password":"123456",
               "amount":1234,
               "tender_feature":1,
-              "item_feature":1
+              "item_feature":1,
+              "sub_info": "oktopus",
+              "docs_bids":[
+                {
+                  "size":10000,
+                  "type":"Технічний опис предмету закупівлі"
+                },
+                {
+                  "size":10000,
+                  "type":"Документи, що підтверджують кваліфікацію"
+                }
+              ]
             },
             {
               "login":"lermontovl@gmail.com",
               "password":"123456",
               "amount":1234,
               "tender_feature":2,
-              "lot_feature":2
+              "lot_feature":2,
+              "sub_info": "umbrella",
+              "docs_bids":[
+                {
+                  "size":10000,
+                  "type":"Технічний опис предмету закупівлі"
+                },
+                {
+                  "size":10000,
+                  "type":"Документи, що підтверджують кваліфікацію"
+                }
+              ]
             }
-
-
-
     ],
+
     "features":{
         "tender_item":true,
         "lot_item":true,

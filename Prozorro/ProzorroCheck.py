@@ -118,8 +118,10 @@ def check(args):
             sys.exit()
         elif opt == '-b':
             print("add bid " + arg)
-            tids = arg.split(",")
-            create_bids(tids[0])
+            args = arg.split(":")
+            proc = args[0]
+            id = args[1]
+            create_bid(proc, id)
 
         elif opt == '-r':
             print("registartion " + arg)

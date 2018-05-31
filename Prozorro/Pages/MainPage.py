@@ -164,10 +164,15 @@ class MainPage:
         return None
 
 
-    def create_bid(self, uaid, dic):
-        return self.open_tender(uaid).\
-               open_bids().\
-               new(uaid,dic);
+    def create_bid(self, proc, uaid, dic):
+        if proc == "below":
+            return self.open_tender(uaid).\
+                   open_bids().\
+                   new(uaid,dic)
+        elif proc == "concurentUA":
+            return self.open_tender(uaid).\
+                   open_bids().\
+                   new_concurent(uaid,dic)
 
 
 

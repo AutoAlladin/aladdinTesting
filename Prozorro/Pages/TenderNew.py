@@ -45,7 +45,7 @@ class TenderNew:
             WebDriverWait(self.drv, 120).until(EC.visibility_of_element_located((By.ID, "purchaseProzorroId")))
             purchaseProzorroId = self.drv.find_element_by_id("purchaseProzorroId")
 
-            print("published ProzorroId", "\033[31m"+purchaseProzorroId.text+"\033[00m")
+            print("published ProzorroId", purchaseProzorroId.text)
             print("published Url", self.drv.current_url)
 
             return purchaseProzorroId.text, self.drv.current_url
@@ -198,7 +198,7 @@ class TenderNew:
         return self
 
     def set_delivery_adress(self, dic, item_id):
-        print("  start Set_delivery_adress")
+        print("  start Set_delivery_adress"),
         select_countries = self.drv.find_element_by_xpath("//div[@id='procurementSubjectCountryWrap{0}']//select[contains(@id,'countries')]".format(item_id))
         Select(select_countries).select_by_value("1")
 
