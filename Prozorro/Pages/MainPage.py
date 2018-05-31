@@ -49,6 +49,12 @@ class MainPage:
     def open_login_form(self):
         waitFadeIn(self.drv)
         #self.liLoginNoAuthenticated = self.drv.find_element_by_id("liLoginNoAuthenticated")
+
+        try:
+            self.drv.find_element_by_id("butLogoutPartial").click()
+        except:
+            pass
+
         self.butLoginPartial = self.drv.find_element_by_id("butLoginPartial")
 
         waitFadeIn(self.drv)
@@ -58,24 +64,25 @@ class MainPage:
 
     def open_tender(self, uaid, waitstatus=None ):
 
-        if self.drv.current_url!="https://test-gov.ald.in.ua/purchases":
-            self.drv.get("https://test-gov.ald.in.ua")
-
         waitNotifyToast(self.drv)
 
-        Select(self.drv.find_element_by_id("searchType")).select_by_value("1")
+        #Select(self.drv.find_element_by_id("searchType")).select_by_value("1")
 
         self.searchInput = self.drv.find_element_by_id("findbykeywords")
         self.searchInput.clear()
         self.searchInput.send_keys(uaid)
 
         self.butSimpleSearch = self.drv.find_element_by_id("butSimpleSearch")
+        waitFadeIn(self.drv)
         self.butSimpleSearch.click()
 
         waitFadeIn(self.drv)
         #print((By.XPATH,"//span[text()='"+uaid+"']/../a"))
         tenderLink =WebDriverWait(self.drv, 20).until(
             EC.visibility_of_element_located((By.XPATH,"//span[text()='"+uaid+"']/../a")))
+
+        scroll_to_element(self.drv, tenderLink)
+        waitFadeIn(self.drv)
         tenderLink.click()
 
         WebDriverWait(self.drv, 20).until(
@@ -111,33 +118,33 @@ class MainPage:
         if(procurementMethodType=="belowThreshold"):
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/BelowThreshold']").click()
             return TenderNew(self.drv).\
-                set_description(dic, nom).\
+                set_description(dic["below"], nom).\
                 set_curr().\
-                set_multilot(dic, is_multilot).\
-                set_dates(dic).\
+                set_multilot(dic["below"], is_multilot).\
+                set_dates(dic["below"]).\
                 click_next_button().\
-                add_lot(lots, dic).\
-                add_item(dic, lots, items). \
+                add_lot(lots, dic["below"]).\
+                add_item(dic["below"], lots, items). \
                 click_next_button(). \
-                add_features(dic,lots,items,features).\
-                add_doc(docs).\
+                add_features(dic["features"],lots,items,features).\
+                add_doc(docs, dic["docs"]).\
                 click_finish_edit_button().\
                 click_publish_button()
 
         elif procurementMethodType=="aboveThresholdUA":
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/AboveThresholdUA']").click()
             return TenderNew(self.drv). \
-                set_description(dic, nom). \
+                set_description(dic["openUA"], nom). \
                 set_curr(). \
-                set_multilot(dic, is_multilot). \
+                set_multilot(dic["openUA"], is_multilot). \
                 set_open_tender_dates(dic) . \
                 click_next_button(). \
-                add_lot(lots, dic). \
-                add_item(dic, lots, items). \
+                add_lot(lots, dic["openUA"]). \
+                add_item(dic["openUA"], lots, items). \
                 click_next_button(). \
-                add_features(dic, lots, items, features). \
+                add_features(dic["features"], lots, items, features). \
                 click_next_button().\
-                add_doc(docs). \
+                add_doc(docs["openUA"], dic). \
                 click_finish_edit_button().\
                 click_publish_button()
 
@@ -162,30 +169,28 @@ class MainPage:
         elif procurementMethodType=="concurentUA":
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/CompetitiveDialogueUA']").click()
             return TenderNew(self.drv). \
-                set_description(dic,  nom). \
+                set_description(dic["concurentUA"],  nom). \
                 set_curr(). \
-                set_multilot(dic,False). \
-                set_open_tender_dates(dic). \
+                set_multilot(dic["concurentUA"],is_multilot). \
+                set_open_tender_dates(dic["concurentUA"]). \
                 click_next_button(). \
-                add_item(dic,lots,items). \
+                add_lot(lots, dic["concurentUA"]). \
+                add_item(dic["concurentUA"],lots,items). \
                 click_finish_edit_button(). \
                 click_publish_button()
+
         return None
 
 
-    def create_bid(self, uaid, prepare):
-        if prepare==0:
+    def create_bid(self, proc, uaid, dic):
+        if proc == "below":
             return self.open_tender(uaid).\
-                open_bids().\
-                new(uaid);
-        elif prepare==2:
-            return self.open_tender_url(uaid).\
-                open_bids().\
-                new(1,uaid);
-        else:
-            return self.open_tender_url(uaid).\
-                open_bids().\
-                new(prepare, uaid)
+                   open_bids().\
+                   new(uaid,dic)
+        elif proc == "concurentUA":
+            return self.open_tender(uaid).\
+                   open_bids().\
+                   new_concurent(uaid,dic)
 
 
 

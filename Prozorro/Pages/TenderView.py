@@ -27,7 +27,7 @@ class TenderView:
 
         waitNotifyToast(self.drv)
 
-        WebDriverWait(self.drv, 2).until(
+        WebDriverWait(self.drv, 10).until(
             EC.visibility_of_element_located((By.ID, "do-proposition-tab")))
 
         waitNotifyToast(self.drv)

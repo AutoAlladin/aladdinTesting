@@ -370,7 +370,7 @@ if __name__  =="__main__":
     # 09000094
     crs.execute(" UPDATE [BillingTest].[dbo].[Accounts]"+
                 " SET Balance = 5000000 "+
-                " WHERE CompanyEdrpo = '{0}' ".format("09000074"))
+                " WHERE CompanyEdrpo = '{0}' ".format("00000035"))
 
 
     # for row in res:

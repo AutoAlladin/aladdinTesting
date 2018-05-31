@@ -25,6 +25,7 @@ def check(args):
         list_params()
         sys.exit(2)
 
+
     for opt, arg in opts:
         if opt == '-n':
 
@@ -72,9 +73,6 @@ def check(args):
                                    ttest_mode= _test_mode
                                  )
 
-                with(open(os.path.dirname(os.path.abspath(__file__))+'\\uaids.json', 'w', encoding="UTF-8")) as uaid_file:
-                    json.dump(uaids, uaid_file)
-                print(datetime.datetime.now())
                 sys.exit()
             elif proc == 'openUA':
                 print(datetime.datetime.now())
@@ -85,8 +83,6 @@ def check(args):
                                            countDocs=_countDocs,
                                            test_mode=_test_mode
                                            )
-                with(open(Utils.get_root() + '\\uaids.json', 'w', encoding="UTF-8")) as uaid_file:
-                    json.dump(uaids, uaid_file)
                 print(datetime.datetime.now())
                 sys.exit()
 
@@ -136,13 +132,11 @@ def check(args):
             sys.exit()
         elif opt == '-b':
             print("add bid " + arg)
-            if arg == "add_one":
-                create_bids(arg)
-                sys.exit()
-            elif arg == "add_many":
-                print(create_bids(fin=os.path.dirname(os.path.abspath(__file__))+'\\uaids.json',prepare=1))
-            elif arg == "on_time":
-                print(send_bids(fin=os.path.dirname(os.path.abspath(__file__))+'\\uaids.json',prepare=0))
+            args = arg.split(":")
+            proc = args[0]
+            id = args[1]
+            create_bid(proc, id)
+
         elif opt == '-r':
             print("registartion " + arg)
             start = datetime.datetime.now()

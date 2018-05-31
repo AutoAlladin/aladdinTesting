@@ -2,22 +2,31 @@
 	"main":{
       "url":"https://test-gov.ald.in.ua/purchases"
 	},
-	"below":{
+    "docs":[
+      {
+        "size":10000,
+        "type":"Технічний опис предмету закупівлі",
+        "doc_to": "Тендер"
+      },
+      {
+        "size":10000,
+        "type":"Технічний опис предмету закупівлі",
+        "doc_to": "Тендер"
+      }
+    ],
+  "below":{
         "login":"neotomasandersont@gmail.com",
         "password":"123456",
-		"enqueriPeriod":15,
-		"tenderPeriod":20,
-        "title":"Кефір",
-        "title_en": "Kefir",
-        "description":"Молочні продукти різні",
-        "description_en": "Milk products different",
+		"enqueriPeriod":5,
+		"tenderPeriod":2000,
+        "title":"Оброблені фрукти",
+        "description":"Сухофрукти",
         "budget":"12345",
         "min_step":"50",
         "min_step_percentage":"2.54",
-        "item_descr":"кефір",
-        "item_descr_en":"Kefir_kefir",
+        "item_descr":"курога",
         "quantity":"35.42",
-        "search_classifier_cpv":"15550000-8",
+        "search_classifier_cpv":"15330000-0",
         "search_classifier_other":"000",
         "zip_code_":"21021",
         "region":"Вінницька",
@@ -26,67 +35,128 @@
         "latutide_":"65",
         "longitude_":"47",
         "title_ofLot":"молочні продукти різні",
-        "title_ofLot_en":"milk products",
         "description_of_lot":"кисломолочний продукт",
-        "description_of_lot_en":"products",
         "budget_of_lot":"11111",
         "min_step_of_lot":"150",
         "min_step_of_lot_perc":"1.54"
 	},
-    "open":{
-		"tenderPeriod":100
+  "openUA":{
+        "login":"neotomasandersont@gmail.com",
+        "password":"123456",
+		"tenderPeriod":100,
+        "title":"Оброблені фрукти",
+        "description":"Сухофрукти",
+        "budget":"12345",
+        "min_step":"50",
+        "min_step_percentage":"2.54",
+        "item_descr":"курога",
+        "quantity":"35.42",
+        "search_classifier_cpv":"15330000-0",
+        "search_classifier_other":"000",
+        "zip_code_":"21021",
+        "region":"Вінницька",
+        "locality_":"Вінниця",
+        "street_":"Келецька, 12",
+        "latutide_":"65",
+        "longitude_":"47",
+        "title_ofLot":"молочні продукти різні",
+        "description_of_lot":"кисломолочний продукт",
+        "budget_of_lot":"11111",
+        "min_step_of_lot":"150",
+        "min_step_of_lot_perc":"1.54"
 	},
-	"bids":{
-		"login":"cat@gmail.com",
-		"password":"123456",
-        "startTime":"2017-09-30 18:43"
+  "concurentUA":{
+        "login":"neotomasandersont@gmail.com",
+        "password":"123456",
+		"tenderPeriod":100,
+        "title":"Овочеві фрукти",
+        "description":"Сухоовочі",
+        "budget":"30000",
+        "min_step":"90",
+        "min_step_percentage":"1.2",
+        "item_descr":"часничок такий солодкий",
+        "quantity":"400",
+        "search_classifier_cpv":"15330000-0",
+        "search_classifier_other":"000",
+        "zip_code_":"21021",
+        "region":"Вінницька",
+        "locality_":"Вінниця",
+        "street_":"Келецька, 12",
+        "latutide_":"11",
+        "longitude_":"48",
+        "title_ofLot":"Ріпка",
+        "description_of_lot":"сирожарена",
+        "budget_of_lot":"12000",
+        "min_step_of_lot":"500",
+        "min_step_of_lot_perc":"2.4"
+	},
+	"bids":[
+            {
+              "login":"cat@gmail.com",
+              "password":"123456",
+              "amount":1234,
+              "lot_feature":0,
+              "item_feature":0,
+              "sub_info": "cucumber",
+              "docs_bids":[
+                {
+                  "size":10000,
+                  "type":"Технічний опис предмету закупівлі"
+                },
+                {
+                  "size":10000,
+                  "type":"Документи, що підтверджують кваліфікацію"
+                }
+              ]
+            },
+            {
+              "login":"lee.jaeyong@gmail.co",
+              "password":"123456",
+              "amount":1234,
+              "tender_feature":1,
+              "item_feature":1,
+              "sub_info": "oktopus",
+              "docs_bids":[
+                {
+                  "size":10000,
+                  "type":"Технічний опис предмету закупівлі"
+                },
+                {
+                  "size":10000,
+                  "type":"Документи, що підтверджують кваліфікацію"
+                }
+              ]
+            },
+            {
+              "login":"lermontovl@gmail.com",
+              "password":"123456",
+              "amount":1234,
+              "tender_feature":2,
+              "lot_feature":2,
+              "sub_info": "umbrella",
+              "docs_bids":[
+                {
+                  "size":10000,
+                  "type":"Технічний опис предмету закупівлі"
+                },
+                {
+                  "size":10000,
+                  "type":"Документи, що підтверджують кваліфікацію"
+                }
+              ]
+            }
+    ],
 
-	},
-    "feature":{
+    "features":{
         "tender_item":true,
         "lot_item":true,
         "enum_count":3,
-        "title":"загадкови параметр",
-        "title_en": "Tererdsf",
-        "titleEnum_zero":"нульової загадковості параметр",
-        "description":"дерево",
-        "description_en": "Edsdsddfggg",
-        "descriptionEnum_zero":"низько зрізане дерево, а не пеньок",
-        "option_description":"blue cups",
-        "option_name":"forgotten items"
-    },
-
-    "billing_ui":{
-        "bids":{
-          "login":"aladdin.for.test+pr_for_bil@gmail.com",
-          "password":"123123",
-          "startTime":"2017-09-30 18:43"
-
-        },
-        "below":{
-            "login":"aladdin.for.test+owner@gmail.com",
-            "password":"zxcvbn00",
-            "enqueriPeriod":3,
-            "tenderPeriod":10,
-            "title":"Для тестування быллынгу.",
-            "description":"3 хвилин на редагування, 10 на подачу пропозицій",
-            "budget":"10000.15",
-            "min_step":"10",
-            "min_step_percentage":"0.54",
-            "item_descr":"item description",
-            "quantity":"100",
-            "search_classifier_cpv":"15110000-2",
-            "search_classifier_other":"000",
-            "zip_code_":"3354345345",
-            "locality_":"Чернівці",
-            "street_":"Європейська",
-            "latutide_":"65",
-            "longitude_":"47",
-            "title_ofLot":"i-01355d1b: Періодичні видання оригінальні на 2016 рік (газети України, журнали України, журнали Росії)",
-            "description_of_lot":"Кремпілець драгун п'яно бердник кишкатий попівський тіснитися порозгризати.",
-            "budget_of_lot":"4500",
-            "min_step_of_lot":"150",
-            "min_step_of_lot_perc":"1.54"
-          }
+        "title":"Споживча тара",
+        "titleEnum_zero":"Тряпчані мішки",
+        "description":"пакування",
+        "descriptionEnum_zero":"",
+        "option_description":"пакування",
+        "option_name":"Пакети полімерні"
     }
 }
+
