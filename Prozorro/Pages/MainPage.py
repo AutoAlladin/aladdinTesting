@@ -144,7 +144,7 @@ class MainPage:
                 click_next_button(). \
                 add_features(dic["features"], lots, items, features). \
                 click_next_button().\
-                add_doc(docs["openUA"], dic). \
+                add_doc(docs,dic["docs"]). \
                 click_finish_edit_button().\
                 click_publish_button()
 
@@ -158,6 +158,10 @@ class MainPage:
                 click_next_button(). \
                 add_lot(lots, dic["concurentUA"]). \
                 add_item(dic["concurentUA"],lots,items). \
+                click_next_button(). \
+                add_features(dic["features"], lots, items, features). \
+                click_next_button(). \
+                add_doc(docs,dic["docs"]). \
                 click_finish_edit_button(). \
                 click_publish_button()
 
