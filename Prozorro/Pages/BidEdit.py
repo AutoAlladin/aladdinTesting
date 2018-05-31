@@ -218,43 +218,53 @@ class bid:
                 scroll_to_element(self.drv, lotForm)
                 lotForm.click()
 
-                isSelfQualified = WebDriverWait(self.drv, 20).until(
-                    EC.presence_of_element_located((By.XPATH, "//label[@for='isSelfQualified_{0}']".format(suffix))))
-                isSelfQualified.click()
-
-                isSelfEligible = WebDriverWait(self.drv, 20).until(
-                    EC.presence_of_element_located((By.XPATH, "//label[@for='isSelfEligible_{0}']".format(suffix))))
-                scroll_to_element(self.drv, isSelfEligible)
-                isSelfEligible.click()
-
                 lotSubInfo = WebDriverWait(self.drv, 20).until(
                     EC.presence_of_element_located((By.XPATH, "//textarea[@id='lotSubInfo_{0}']".format(suffix))))
                 lotSubInfo.send_keys(dic["sub_info"])
 
-                for bdi in dic["docs_bids"]:
-                    with(open(os.path.dirname(os.path.abspath(__file__)) + '\\'+bdi["type"]+'.txt', 'w', encoding="ascii")) as f:
-                        for size in range(bdi["size"]):
-                            f.write("x")
-                    if suffix == '0':
-                        # Публічні документи до тендеру
-                        self.add_doc_to_bid(bdi["docs_bids"][0], "openTenderDocuments_technicalSpecifications_0", "bidConDocInput_technicalSpecifications_0")
-                        self.add_doc_to_bid(bdi["docs_bids"][1], "openTenderDocuments_qualificationDocuments_0", "bidDocInput_qualificationDocuments_1")
+                self.create_file(dic["docs_bids"][0])
+                self.create_file(dic["docs_bids"][1])
+                if suffix == '0':
+                    isSelfQualified = WebDriverWait(self.drv, 20).until(
+                        EC.presence_of_element_located(
+                            (By.XPATH, "//label[@for='isSelfQualified_{0}']".format(suffix))))
+                    scroll_to_element(self.drv, isSelfQualified)
+                    isSelfQualified.click()
 
-                        # Опис рішення про закупівлю до тендеру
-                        self.add_doc_to_bid(bdi["docs_bids"][0], "bidConDocInput_technicalSpecifications_0","bidConDocInput_technicalSpecifications_0",)
-                        self.add_doc_to_bid(bdi["docs_bids"][1], "openTenderConfidentialDocuments_qualificationDocuments_0","bidConDocInput_qualificationDocuments_1")
+                    isSelfEligible = WebDriverWait(self.drv, 20).until(
+                        EC.presence_of_element_located((By.XPATH, "//label[@for='isSelfEligible_{0}']".format(suffix))))
+                    scroll_to_element(self.drv, isSelfEligible)
+                    isSelfEligible.click()
+
+                    # Публічні документи до тендеру
+                    self.add_doc_to_bid(dic["docs_bids"][0], "openTenderDocuments_technicalSpecifications_0", "bidDocInput_technicalSpecifications_0")
+                    self.add_doc_to_bid(dic["docs_bids"][1], "openTenderDocuments_qualificationDocuments_0", "bidDocInput_qualificationDocuments_1")
+
+                    # Опис рішення про закупівлю до тендеру
+                    self.add_doc_to_bid(dic["docs_bids"][0], "openTenderConfidentialDocuments_technicalSpecifications_0","bidConDocInput_technicalSpecifications_0",)
+                    self.add_doc_to_bid(dic["docs_bids"][1], "openTenderConfidentialDocuments_qualificationDocuments_0","bidConDocInput_qualificationDocuments_1")
+
+                # Публічні документи до лоту
+                #"openLotDocuments_technicalSpecifications_{0}","bidLotDocInput_technicalSpecifications_{0}"
+                #"openLotDocuments_qualificationDocuments_{0}", "bidLotDocInput_qualificationDocuments_{0}"
+                # Опис рішення про закупівлю до лоту
+                #"openLotConfidentialDocuments_technicalSpecifications_1", "bidLotConDocInput_technicalSpecifications_0"
+                #BUG "openLotConfidentialDocuments_qualificationDocuments_1", "bidLotConDocInput_qualificationDocuments_1"
 
 
-                    # Публічні документи до лоту
-                    # Опис рішення про закупівлю до лоту
 
-
-                #submitBid = self.drv.find_element_by_id("lotSubmit_{0}".format(suffix))
+                #submitBid = self.drv.find_element_by_id("lotSubmit_0")
 
         except Exception as e:
             paint(self.drv, "addBidPurchaseERROR.png")
             raise e
         pass
+
+    def create_file(self, bdi):
+        with(
+        open(os.path.dirname(os.path.abspath(__file__)) + '\\' + bdi["type"] + '.txt', 'w', encoding="ascii")) as f:
+            for size in range(bdi["size"]):
+                f.write("x")
 
     def add_doc_to_bid(self, dic, id1, id2):
         doc = self.drv.find_element_by_id(id1)

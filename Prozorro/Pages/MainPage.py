@@ -144,9 +144,10 @@ class MainPage:
                 click_next_button(). \
                 add_features(dic["features"], lots, items, features). \
                 click_next_button().\
-                add_doc(dic["docs"]). \
+                add_doc(docs,dic["docs"]). \
                 click_finish_edit_button().\
                 click_publish_button()
+
 
         elif procurementMethodType=="aboveThresholdEU":
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/AboveThresholdEU']").click()
@@ -175,6 +176,10 @@ class MainPage:
                 click_next_button(). \
                 add_lot(lots, dic["concurentUA"]). \
                 add_item(dic["concurentUA"],lots,items). \
+                click_next_button(). \
+                add_features(dic["features"], lots, items, features). \
+                click_next_button(). \
+                add_doc(docs,dic["docs"]). \
                 click_finish_edit_button(). \
                 click_publish_button()
 

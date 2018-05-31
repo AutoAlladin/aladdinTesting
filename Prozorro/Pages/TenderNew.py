@@ -412,6 +412,8 @@ class TenderNew:
             print("end set_item", i)
 
     def add_doc(self, docs, dic):
+        if docs == 0: return self
+
         docs = len(dic)
         try:
             if docs > 0:
