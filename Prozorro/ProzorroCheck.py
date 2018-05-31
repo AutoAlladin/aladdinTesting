@@ -89,6 +89,20 @@ def check(args):
                     json.dump(uaids, uaid_file)
                 print(datetime.datetime.now())
                 sys.exit()
+
+            elif proc == 'openEU':
+                print(datetime.datetime.now())
+                uaids = create_openEU(countTenders=_countTenders,
+                                           countLots=_countLots,
+                                           countItems=_countItems,
+                                           countFeatures=_countFeatures,
+                                           countDocs=_countDocs,
+                                           test_mode=_test_mode
+                                           )
+                print(datetime.datetime.now())
+                sys.exit()
+
+
             elif proc == 'concurentUA':
                 print(datetime.datetime.now())
                 uaids = create_concurentUA(countTenders=_countTenders,

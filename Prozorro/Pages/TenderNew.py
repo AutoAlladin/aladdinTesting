@@ -139,7 +139,6 @@ class TenderNew:
             budget = self.drv.find_element_by_id("budget")
             # budget.send_keys(bu)
             b = get_dic_val(dic,"below.budget")
-            print("XYZZZZZZZZ", b)
             budget.send_keys(b)
 
             min_step_p = random.randrange(1, 3)
@@ -163,8 +162,50 @@ class TenderNew:
 
                 title_of_lot = self.drv.find_element_by_id("lotTitle_" + lotid)
                 title_of_lot.send_keys(str(currentLot)+" - "+get_dic_val(dic, "below.title_ofLot"))
+
                 description_of_lot = self.drv.find_element_by_id("lotDescription_" + lotid)
                 description_of_lot.send_keys(get_dic_val(dic, "below.description_of_lot"))
+
+                budget_of_lot = self.drv.find_element_by_id("lotBudget_" + lotid)
+                budget_of_lot.send_keys(get_dic_val(dic, "below.budget_of_lot"))
+                min_step_of_lot = self.drv.find_element_by_id("lotMinStep_" + lotid)
+                min_step_of_lot.send_keys(get_dic_val(dic, "below.min_step_of_lot"))
+                min_step_of_lot_perc = self.drv.find_element_by_id("lotMinStepPercentage_" + lotid)
+                min_step_of_lot_perc.send_keys(get_dic_val(dic, "below.min_step_of_lot_perc"))
+                self.drv.find_element_by_xpath("//div[contains(@id,'updateOrCreateLot')]//button[@class='btn btn-success']").click()
+                print("end Add lot")
+
+            next_step = self.drv.find_element_by_xpath("//button[@id='next_step'][1]")
+            self.drv.execute_script("window.scroll(0, " + str(next_step.location["y"]+10) + ")")
+            waitFadeIn(self.drv)
+            #next_step.click()
+            self.drv.execute_script("$('#next_step').click()")
+
+        return self
+
+
+    def add_lot_en(self, count, dic):
+        if count == 0:
+            return self
+        if count >= 1:
+            for currentLot in range(count):
+                print("start Add lot ",get_dic_val(dic, "below.description_of_lot"))
+                lotid = str(1)
+                #lotid = str(currentLot+1)
+                WebDriverWait(self.drv, 20).until(
+                    EC.element_to_be_clickable((By.ID, "buttonAddNewLot")))
+                is_add_lot = self.drv.find_element_by_id("buttonAddNewLot")
+                waitFadeIn(self.drv)
+                is_add_lot.click()
+
+                title_of_lot = self.drv.find_element_by_id("lotTitle_" + lotid)
+                title_of_lot.send_keys(str(currentLot)+" - "+get_dic_val(dic, "below.title_ofLot"))
+                title_of_lot_en = self.drv.find_element_by_id("lotTitle_En_" + lotid)
+                title_of_lot_en.send_keys(str(currentLot)+" - "+get_dic_val(dic, "below.title_ofLot_en"))
+                description_of_lot = self.drv.find_element_by_id("lotDescription_" + lotid)
+                description_of_lot.send_keys(get_dic_val(dic, "below.description_of_lot"))
+                description_of_lot_en = self.drv.find_element_by_id("lotDescription_En_" + lotid)
+                description_of_lot_en.send_keys(get_dic_val(dic, "below.description_of_lot_en"))
                 budget_of_lot = self.drv.find_element_by_id("lotBudget_" + lotid)
                 budget_of_lot.send_keys(get_dic_val(dic, "below.budget_of_lot"))
                 min_step_of_lot = self.drv.find_element_by_id("lotMinStep_" + lotid)
@@ -196,6 +237,22 @@ class TenderNew:
         description.send_keys(get_dic_val(dic, "below.description"))
 
         print("end Set  description")
+
+        return self
+
+    def set_description_eu(self, dic, nom):
+        print("start Set descriptionEU")
+        title = WebDriverWait(self.drv, 20).until(
+                EC.visibility_of_element_located(
+                    (By.ID, 'title_en')
+                )
+        )
+
+        description = self.drv.find_element_by_id("description_en")
+        title.send_keys(get_dic_val(dic, "below.title_en"))
+        description.send_keys(get_dic_val(dic, "below.description_en"))
+
+        print("end Set descriptionEU")
 
         return self
 
@@ -276,6 +333,28 @@ class TenderNew:
         #select_unit.select_by_value("LTR")
         print("  end set_item_base_info")
 
+
+    def set_item_base_info_en(self, dic, item_id, lot_id):
+        print("  start set_item_base_info_en")
+        procurementSubject_description =WebDriverWait(self.drv, 20).\
+        until(EC.visibility_of_element_located((By.ID, "procurementSubject_description_En" + item_id)))
+
+        procurementSubject_description.send_keys(str(lot_id) + str(item_id) + " - " + get_dic_val(dic, "below.item_descr_en"))
+
+        q=random.randrange(1,700)
+
+        procurementSubject_quantity = self.drv.find_element_by_id("procurementSubject_quantity" + item_id)
+        procurementSubject_quantity.send_keys(q)
+        #procurementSubject_quantity.send_keys(get_dic_val(dic, "below.quantity"))
+
+        unit= random.choice(["KVR", "BX", "D44", "RM", "SET", "GRM", "HUR","LTR"])
+
+        select_unit = Select(self.drv.find_element_by_xpath("//div[@id='procurementSubjectUnitWrap{0}']//select".format(item_id)))
+        select_unit.select_by_value(unit)
+        #select_unit.select_by_value("LTR")
+        print("  end set_item_base_info")
+
+
     def click_add_item(self, item_id):
         try:
             WebDriverWait(self.drv, 20).until(
@@ -287,13 +366,13 @@ class TenderNew:
             raise  Exception(" Не нажимается кнопка add_item_button: update_" + item_id+e)
             paint(self.drv, "update_" + item_id+"ERROR.png")
 
-    def add_item(self, dic, lot=0, item=0):
+    def add_item(self, dic, lot=0, item=0, en=False):
         try:
             if lot==0:
-                self.set_item(dic, item, "0")
+                self.set_item(dic, item, "0", en)
             else:
                 for j in range(lot):
-                        self.set_item(dic, item, j+1)
+                        self.set_item(dic, item, j+1, en)
             sleep(1)
         except Exception as e:
             raise Exception(" Не нажимается кнопка add_item_button "+ str(e))
@@ -301,20 +380,23 @@ class TenderNew:
 
         return self
 
-    def set_item(self, dic, item, j):
-        for i in range(item):
+    def set_item(self, dic, item_id, lot_id, en=False):
+        for i in range(item_id):
             print("start set_item", i)
             waitFadeIn(self.drv)
             add_procurement_subject = \
                 WebDriverWait(self.drv, 5).until(
-                    EC.element_to_be_clickable((By.ID,"add_procurement_subject" + str(j))))
+                    EC.element_to_be_clickable((By.ID,"add_procurement_subject" + str(lot_id))))
 
             waitFadeIn(self.drv)
             scroll_to_element(self.drv,add_procurement_subject)
             add_procurement_subject.click()
 
-            item_id = str(j) + "0"
+            item_id = str(lot_id) + "0"
+            if en:
+                self.set_item_base_info_en(dic, item_id, lot_id)
             self.set_item_base_info(dic, item_id, i)
+
             self.set_dk2015(dic)
             WebDriverWait(self.drv, 20).until(EC.invisibility_of_element_located((By.XPATH, "//div[@id = 'modDialog']")))
 
@@ -328,6 +410,10 @@ class TenderNew:
             scroll_to_element(self.drv, add_item_button)
             self.click_add_item(item_id)
             print("start set_item", i)
+
+
+
+
 
     def add_doc(self, docs):
         try:
@@ -385,6 +471,16 @@ class TenderNew:
         featureDescription.send_keys(get_dic_val(dic, "feature.description"))
         print("end set_feature_decription")
 
+    def set_feature_decription_en(self, dic, end):
+        print("start set_feature_decription_en")
+        WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "featureTitle_En_"+end)))
+        featureTitle=self.drv.find_element_by_id("featureTitle_En_"+end)
+        featureTitle.send_keys(get_dic_val(dic,"feature.title_en"))
+
+        featureDescription=self.drv.find_element_by_id("featureDescription_En_"+end)
+        featureDescription.send_keys(get_dic_val(dic, "feature.description_en"))
+        print("end set_feature_decription_en")
+
     def add_feature_enum(self,dic,enum_index, lot_index=0):
         print("start add_feature_enum")
         featureEnumAdd = self.drv.find_element_by_id("addFeatureEnum_"+str(lot_index)+"_0")
@@ -419,14 +515,17 @@ class TenderNew:
         featureEnumDescription.send_keys(get_dic_val(dic, "feature.descriptionEnum_zero"))
         print("start set_feature_zero_enum")
 
-    def add_feature_to_tender(self, features, items, dic,to_item=True):
+    def add_feature_to_tender(self, features, items, dic, to_item=True, en = False):
         WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add_features0")))
         for findex in range(features):
             print("start add_feature_to_tender")
             waitFadeIn(self.drv)
             add_features = self.drv.find_element_by_id("add_features0")
             add_features.click()
+
+            if en:  self.set_feature_decription_en(dic,"0_0")
             self.set_feature_decription(dic,"0_0")
+
             if to_item:
                 to_i = self.drv.find_element_by_xpath("//label[@for='featureOf_0_0']")
                 to_i.click()
@@ -449,7 +548,7 @@ class TenderNew:
             print("end add_feature_to_tender")
         pass
 
-    def add_feature_to_lot(self, features, lots, items,dic, to_item=True):
+    def add_feature_to_lot(self, features, lots, items,dic, end, to_item=True, en=False):
         for lotix in range(1,lots+1):
             for findex in range(features):
                 print("start add_feature_to_lot")
@@ -461,6 +560,8 @@ class TenderNew:
                     )
                 scroll_to_element(self.drv,add_features)
                 add_features.click()
+                if en:
+                    self.set_feature_decription_en(dic, end)
                 self.set_feature_decription(dic, str(lotix)+"_0")
 
                 isPara = (findex % 2 != 0)
@@ -493,7 +594,7 @@ class TenderNew:
                 print("start add_feature_to_lot")
 
 
-    def add_features(self, dic, lots, items, features=0):
+    def add_features(self, dic, lots, items, features=0, enf=False):
         try:
             if features > 0:
                 WebDriverWait(self.drv, 20).until(
@@ -503,10 +604,10 @@ class TenderNew:
                 features_tab.click()
 
                 _to_item = get_dic_val(dic, "feature.tender_item", False)
-                self.add_feature_to_tender(features, items, dic, to_item=False)
+                self.add_feature_to_tender(features, items, dic, to_item=False, en=enf)
 
                 if lots > 0:
-                    self.add_feature_to_lot(features, lots, items, dic, to_item=_to_item)
+                    self.add_feature_to_lot(features, lots, items, dic, to_item=_to_item, en=enf)
                 print("IS FEATURE")
 
         except WebDriverException as e:

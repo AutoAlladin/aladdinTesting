@@ -92,6 +92,25 @@ def create_openUA(countLots, countFeatures, countDocs=0, countTenders=1, countIt
 
     return uaid
 
+
+def create_openEU(countLots, countFeatures, countDocs=0, countTenders=1, countItems=1, test_mode=True):
+    chrm, tp, mpg = init_driver(test_mode)
+    mpg.open_login_form().login(tp["below"]["login"], tp["below"]["password"])
+    uaid = []
+
+    args=dict(procurementMethodType='aboveThresholdEU',
+              lots=countLots,
+              items=countItems,
+              docs=countDocs,
+              features=countFeatures,
+              dic=tp
+              )
+    for i in range(countTenders):
+        uaid.append(mpg.create_tender(**args, nom=str(i)))
+
+    return uaid
+
+
 def create_bids(uaids=[],fin=None, prepare=0, test_mode=True):
     print("start bids", datetime.datetime.now())
     chrm, tp,mpg = init_driver(test_mode)
