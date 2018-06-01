@@ -432,6 +432,7 @@ class TenderNew:
                 )
 
                 waitFadeIn(self.drv)
+                scroll_to_element(self.drv, upload_document)
                 upload_document.click()
 
                 WebDriverWait(self.drv, 20).until(
@@ -439,6 +440,10 @@ class TenderNew:
 
                 Select(self.drv.find_element_by_id("categorySelect")).select_by_visible_text(dic[i]["type"])
                 Select(self.drv.find_element_by_id("documentOfSelect")).select_by_visible_text(dic[i]["doc_to"])
+
+                if "lot" in dic[i]:
+                    Select(self.drv.find_element_by_id("documentOfLotSelect")).select_by_index(dic[i]["lot"])
+
 
 
                 with(open(os.path.dirname(os.path.abspath(__file__)) + '\\fortender{0}.txt'.format(i), 'w', encoding="ascii")) as f:
@@ -522,6 +527,7 @@ class TenderNew:
             print("start add_feature_to_tender")
             waitFadeIn(self.drv)
             add_features = self.drv.find_element_by_id("add_features0")
+            scroll_to_element(self.drv,add_features)
             add_features.click()
 
             if en:  self.set_feature_decription_en(dic,"0_0")
