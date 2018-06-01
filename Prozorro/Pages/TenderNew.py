@@ -135,19 +135,16 @@ class TenderNew:
 
     def set_multilot(self, dic, is_multi):
         is_multilot = self.drv.find_element_by_xpath("//*[ @id='is_multilot']/div[1]/div[2]")
-        if (is_multi == "true"):
+        if (is_multi ):
             is_multilot.click()
         else:
-            # bu = random.randrange(1000, 990000)
+
             budget = self.drv.find_element_by_id("budget")
-            # budget.send_keys(bu)
-            b = get_dic_val(dic,"below.budget")
-            print("XYZZZZZZZZ", b)
+            b = dic["budget"]
             budget.send_keys(b)
 
-            min_step_p = random.randrange(1, 3)
             min_step_percentage = self.drv.find_element_by_id("min_step_percentage")
-            min_step_percentage.send_keys(min_step_p)
+            min_step_percentage.send_keys(dic["min_step_percentage"])
         return self
 
     def add_lot(self, count, dic):
@@ -552,7 +549,7 @@ class TenderNew:
             print("end add_feature_to_tender")
         pass
 
-    def add_feature_to_lot(self, features, lots, items,dic, end, to_item=True, en=False):
+    def add_feature_to_lot(self, features, lots, items,dic, to_item=True, en=False):
         for lotix in range(1,lots+1):
             for findex in range(features):
                 if to_item:
@@ -569,7 +566,7 @@ class TenderNew:
                 scroll_to_element(self.drv,add_features)
                 add_features.click()
                 if en:
-                    self.set_feature_decription_en(dic, end)
+                    self.set_feature_decription_en(dic, "_0")
                 self.set_feature_decription(dic, str(lotix)+"_0")
 
                 if to_item:

@@ -111,9 +111,9 @@ class MainPage:
             waitFadeIn(self.drv)
             self.btn_create_purchase.click()
 
-        is_multilot = "true"
+        is_multilot = True
         if lots == 0:
-            is_multilot = "false"
+            is_multilot = False
 
         if(procurementMethodType=="belowThreshold"):
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/BelowThreshold']").click()
