@@ -17,7 +17,7 @@ def paint(drv, name):
     dir = dir+"\\Prozorro\\output\\"+name
     drv.get_screenshot_as_file(dir)
 
-def scroll_to_element(drv, element,delta="105"):
+def scroll_to_element(drv, element,delta="110"):
     drv.execute_script("window.scroll(0, {0}-{1})".format(element.location.get("y"),delta))
 
 def set_datepicker(drv, ID, value):

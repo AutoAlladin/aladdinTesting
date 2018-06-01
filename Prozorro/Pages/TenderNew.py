@@ -432,6 +432,7 @@ class TenderNew:
                 )
 
                 waitFadeIn(self.drv)
+                scroll_to_element(self.drv, save_file)
                 upload_document.click()
 
                 WebDriverWait(self.drv, 20).until(
@@ -522,6 +523,7 @@ class TenderNew:
             print("start add_feature_to_tender")
             waitFadeIn(self.drv)
             add_features = self.drv.find_element_by_id("add_features0")
+            scroll_to_element(self.drv, add_features)
             add_features.click()
 
             if en:  self.set_feature_decription_en(dic,"0_0")
