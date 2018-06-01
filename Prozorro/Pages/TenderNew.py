@@ -288,6 +288,7 @@ class TenderNew:
     def set_otherDK(self, dic):
         print("  start set_otherDK")
         btn_otherClassifier = self.drv.find_element_by_id("btn_otherClassifier")
+        WebDriverWait(self.drv, 20).until(EC.invisibility_of_element_located((By.CLASS_NAME, "modal-backdrop fade")))
         btn_otherClassifier.click()
         self.set_classifier(dic)
         print("  end set_otherDK")
@@ -296,6 +297,7 @@ class TenderNew:
         print("  start set_dk2015")
         cls_click_ = self.drv.find_element_by_id("cls_click_")
         waitFadeIn(self.drv)
+        WebDriverWait(self.drv, 20).until(EC.invisibility_of_element_located((By.CLASS_NAME, "modal-backdrop fade")))
         cls_click_.click()
         add_classifier = WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add-classifier")))
         search_classifier_text = self.drv.find_element_by_id("search-classifier-text")
