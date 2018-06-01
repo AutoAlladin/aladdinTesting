@@ -114,27 +114,7 @@ class bid:
             print("  submitBid")
             time.sleep(0.2)
 
-            b = WebDriverWait(self.drv, 5).until(
-                EC.presence_of_element_located((By.XPATH,
-                                                "//div[contains(@class,'jconfirm-buttons')]/button[1]")))
-            Utils.waitFadeIn(self.drv)
-            b.click()
-            time.sleep(0.2)
-
-            b = WebDriverWait(self.drv, 5).until(
-                EC.presence_of_element_located((By.XPATH,
-                                                "//div[contains(@class,'jconfirm-buttons')]/button[1]")))
-            Utils.waitFadeIn(self.drv)
-            b.click()
-            print("  toaster killed, bid for lot added")
-            time.sleep(0.2)
-
-            Utils.waitFadeIn(self.drv)
-
-            bidGUID = WebDriverWait(self.drv, 60).until(
-                    EC.visibility_of_element_located((By.XPATH, "//span[@ng-show='bid.guid']")))
-            print("bid guid: " + bidGUID.text.strip())
-            return bidGUID.text.strip()
+            return self.confirm_bid()
 
         except TimeoutException as e:
             try:
@@ -187,6 +167,25 @@ class bid:
                 raise e
             pass
 
+    def confirm_bid(self):
+        b = WebDriverWait(self.drv, 5).until(
+            EC.presence_of_element_located((By.XPATH,
+                                            "//div[contains(@class,'jconfirm-buttons')]/button[1]")))
+        Utils.waitFadeIn(self.drv)
+        b.click()
+        time.sleep(0.2)
+        b = WebDriverWait(self.drv, 5).until(
+            EC.presence_of_element_located((By.XPATH,
+                                            "//div[contains(@class,'jconfirm-buttons')]/button[1]")))
+        Utils.waitFadeIn(self.drv)
+        b.click()
+        print("  toaster killed, bid for lot added")
+        time.sleep(0.2)
+        Utils.waitFadeIn(self.drv)
+        bidGUID = WebDriverWait(self.drv, 60).until(
+            EC.visibility_of_element_located((By.XPATH, "//span[@ng-show='bid.guid']")))
+        print("bid guid: " + bidGUID.text.strip())
+        return bidGUID.text.strip()
 
     def new_concurent(self,uaid, dic):
         Utils.waitFadeIn(self.drv)
@@ -245,15 +244,23 @@ class bid:
                     self.add_doc_to_bid(dic["docs_bids"][1], "openTenderConfidentialDocuments_qualificationDocuments_0","bidConDocInput_qualificationDocuments_1")
 
                 # Публічні документи до лоту
-                #"openLotDocuments_technicalSpecifications_{0}","bidLotDocInput_technicalSpecifications_{0}"
-                #"openLotDocuments_qualificationDocuments_{0}", "bidLotDocInput_qualificationDocuments_{0}"
+                self.add_doc_to_bid(dic["docs_bids"][0], "openLotDocuments_technicalSpecifications_{0}".format(suffix),
+                                                         "bidLotDocInput_technicalSpecifications_{0}".format(suffix))
+                self.add_doc_to_bid(dic["docs_bids"][1], "openLotDocuments_qualificationDocuments_{0}".format(suffix),
+                                                         "bidLotDocInput_qualificationDocuments_{0}".format(suffix))
                 # Опис рішення про закупівлю до лоту
-                #"openLotConfidentialDocuments_technicalSpecifications_1", "bidLotConDocInput_technicalSpecifications_0"
-                #BUG "openLotConfidentialDocuments_qualificationDocuments_1", "bidLotConDocInput_qualificationDocuments_1"
+                self.add_doc_to_bid(dic["docs_bids"][0], "openLotConfidentialDocuments_technicalSpecifications_{0}".format(suffix),
+                                                         "bidLotConDocInput_technicalSpecifications_{0}".format(suffix))
+                self.add_doc_to_bid(dic["docs_bids"][1], "openLotConfidentialDocuments_qualificationDocuments_{0}".format(suffix),
+                                                         "bidLotConDocInput_qualificationDocuments_{0}".format(suffix))
 
 
 
-                #submitBid = self.drv.find_element_by_id("lotSubmit_0")
+                submitBid = self.drv.find_element_by_id("lotSubmit_0")
+                submitBid.click()
+                time.sleep(1)
+                return  self.confirm_bid()
+
 
         except Exception as e:
             paint(self.drv, "addBidPurchaseERROR.png")

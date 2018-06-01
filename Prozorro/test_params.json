@@ -65,7 +65,7 @@
         "min_step_of_lot":"150",
         "min_step_of_lot_perc":"1.54"
 	},
-    "openEU":{
+  "openEU":{
         "login":"neotomasandersont@gmail.com",
         "password":"123456",
 		"tenderPeriod":100,
