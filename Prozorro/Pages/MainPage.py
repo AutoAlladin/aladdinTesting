@@ -158,11 +158,11 @@ class MainPage:
                 set_open_tender_dates(dic["openEU"]) . \
                 click_next_button(). \
                 add_lot_en(lots, dic["openEU"]). \
-                add_item(dic, lots, items, en=True). \
+                add_item(dic["openEU"], lots, items, en=True). \
                 click_next_button(). \
-                add_features(dic["openEU"], lots, items, features, enf=True). \
+                add_features(dic["features"], lots, items, features, enf=True). \
                 click_next_button().\
-                add_doc(docs). \
+                add_doc(docs,dic["docs"]). \
                 click_finish_edit_button().\
                 click_publish_button()
 
