@@ -15,8 +15,10 @@
       },
       {
         "size":10000,
-        "type":"Критерії оцінки",
-        "doc_to": "Тендер"
+         "doc_to": "Лот",
+         "lot":1,
+         "type":"Критерії оцінки",
+         "doc_to": "Лот"
       },
       {
         "size":10000,
@@ -38,10 +40,6 @@
         "type":"Інші",
         "doc_to": "Тендер"
       }
-
-
-
-
     ],
   "below":{
         "login":"neotomasandersont@gmail.com",
