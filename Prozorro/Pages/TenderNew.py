@@ -158,6 +158,7 @@ class TenderNew:
                     EC.element_to_be_clickable((By.ID, "buttonAddNewLot")))
                 is_add_lot = self.drv.find_element_by_id("buttonAddNewLot")
                 waitFadeIn(self.drv)
+                scroll_to_element(self.drv, is_add_lot )
                 is_add_lot.click()
 
                 title_of_lot = self.drv.find_element_by_id("lotTitle_" + lotid)
@@ -289,7 +290,8 @@ class TenderNew:
         print("  start set_otherDK")
         btn_otherClassifier = self.drv.find_element_by_id("btn_otherClassifier")
         WebDriverWait(self.drv, 20).until(EC.invisibility_of_element_located((By.CLASS_NAME, "modal-backdrop fade")))
-        btn_otherClassifier.click()
+        self.drv.execute_script("$('#btn_otherClassifier').click()")
+        #btn_otherClassifier.click()
         self.set_classifier(dic)
         print("  end set_otherDK")
 
@@ -297,7 +299,7 @@ class TenderNew:
         print("  start set_dk2015")
         cls_click_ = self.drv.find_element_by_id("cls_click_")
         waitFadeIn(self.drv)
-        WebDriverWait(self.drv, 20).until(EC.invisibility_of_element_located((By.CLASS_NAME, "modal-backdrop fade")))
+        WebDriverWait(self.drv, 20).until(EC.invisibility_of_element_located((By.CLASS_NAME, "modal-  fade")))
         cls_click_.click()
         add_classifier = WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add-classifier")))
         search_classifier_text = self.drv.find_element_by_id("search-classifier-text")
@@ -307,10 +309,10 @@ class TenderNew:
         print("  end set_dk2015")
 
     def set_classifier(self, dic):
-        add_classifier = WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add-classifier")))
+        add_classifier = WebDriverWait(self.drv, 80).until(EC.visibility_of_element_located((By.ID, "add-classifier")))
         search_classifier_text = self.drv.find_element_by_id("search-classifier-text")
         search_classifier_text.send_keys(dic[ "search_classifier_other"])
-        WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.XPATH, "//li[@aria-selected = 'true']")))
+        WebDriverWait(self.drv, 80).until(EC.visibility_of_element_located((By.XPATH, "//li[@aria-selected = 'true']")))
         add_classifier.click()
 
     def set_item_base_info(self, dic, item_id,item_vomber):
@@ -381,7 +383,7 @@ class TenderNew:
 
     def set_item(self, dic, item_id, lot_id, en=False):
         for i in range(item_id):
-            print("start set_item", i)
+            print("start set_item", str(i)+str(lot_id))
             waitFadeIn(self.drv)
             add_procurement_subject = \
                 WebDriverWait(self.drv, 5).until(
@@ -408,7 +410,7 @@ class TenderNew:
                 EC.element_to_be_clickable((By.ID, "update_" + item_id)))
             scroll_to_element(self.drv, add_item_button)
             self.click_add_item(item_id)
-            print("end set_item", i)
+            print("end set_item", str(i)+str(lot_id))
 
     def add_doc(self, docs, dic):
         if docs == 0: return self
