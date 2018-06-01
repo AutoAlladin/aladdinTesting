@@ -2,45 +2,212 @@
 	"main":{
       "url":"https://gov.ald.in.ua/purchases"
 	},
-	"below":{
+     "below":{
         "login":"tender_owner@meta.ua",
         "password":"123456",
-		"enqueriPeriod":5,
+		"enqueriPeriod":10,
 		"tenderPeriod":20,
-        "title":"Для тестування.",
-        "description":"5 хвилин на редагування, 20 на подачу пропозицій",
-        "budget":"100777.15",
-        "min_step":"150",
-        "min_step_percentage":"1.54",
-        "item_descr":"item description",
-        "quantity":"100",
-        "search_classifier_cpv":"15110000-2",
+        "title":"Оброблені фрукти",
+        "description":"Сухофрукти",
+        "budget":"12345",
+        "min_step":"50",
+        "min_step_percentage":"2.54",
+        "item_descr":"курога",
+        "quantity":"35.42",
+        "search_classifier_cpv":"15330000-0",
         "search_classifier_other":"000",
-        "zip_code_":"3354345345",
-        "locality_":"Чернівці",
-        "street_":"Європейська",
+        "zip_code_":"21021",
+        "region":"Вінницька",
+        "locality_":"Вінниця",
+        "street_":"Келецька, 12",
         "latutide_":"65",
         "longitude_":"47",
-        "title_ofLot":"i-01355d1b: Періодичні видання оригінальні на 2016 рік (газети України, журнали України, журнали Росії)",
-        "description_of_lot":"Кремпілець драгун п'яно бердник кишкатий попівський тіснитися порозгризати.",
-        "budget_of_lot":"5000",
+        "title_ofLot":"молочні продукти різні",
+        "description_of_lot":"кисломолочний продукт",
+        "budget_of_lot":"11111",
         "min_step_of_lot":"150",
         "min_step_of_lot_perc":"1.54"
 	},
-    "open":{
-		"tenderPeriod":100
+ "docs":[
+      {
+        "size":10000,
+        "type":"Технічний опис предмету закупівлі",
+        "doc_to": "Тендер"
+      },
+      {
+        "size": 10000,
+        "type": "Тендерна документація",
+        "doc_to": "Тендер"
+      },
+      {
+        "size":10000,
+         "doc_to": "Лот",
+         "lot":1,
+         "type":"Критерії оцінки",
+         "doc_to": "Лот"
+      },
+      {
+        "size":10000,
+        "type":"Кваліфікаційні критерії",
+        "doc_to": "Тендер"
+      },
+      {
+        "size":10000,
+        "type":"Проект договору",
+        "doc_to": "Тендер"
+      },
+      {
+        "size":10000,
+        "type":"Інші",
+        "doc_to": "Тендер"
+      },
+      {
+        "size":10000,
+        "type":"Інші",
+        "doc_to": "Тендер"
+      }
+    ],
+  "openUA":{
+        "login":"neotomasandersont@gmail.com",
+        "password":"123456",
+		"tenderPeriod":100,
+        "title":"Оброблені фрукти",
+        "description":"Сухофрукти",
+        "budget":"12345",
+        "min_step":"50",
+        "min_step_percentage":"2.54",
+        "item_descr":"курога",
+        "quantity":"35.42",
+        "search_classifier_cpv":"15330000-0",
+        "search_classifier_other":"000",
+        "zip_code_":"21021",
+        "region":"Вінницька",
+        "locality_":"Вінниця",
+        "street_":"Келецька, 12",
+        "latutide_":"65",
+        "longitude_":"47",
+        "title_ofLot":"молочні продукти різні",
+        "description_of_lot":"кисломолочний продукт",
+        "budget_of_lot":"11111",
+        "min_step_of_lot":"150",
+        "min_step_of_lot_perc":"1.54"
 	},
-	"bids":{
-		"login":"senya22051989@gmail.com",
-		"password":"123456",
-        "startTime":"2017-09-30 18:43"
+  "openEU":{
+        "login":"neotomasandersont@gmail.com",
+        "password":"123456",
+		"tenderPeriod":100,
+        "title":"Fruts",
+        "description":"Suhofruts",
+        "budget":"12345",
+        "min_step":"50",
+        "min_step_percentage":"2.54",
+        "item_descr":"курога",
+        "quantity":"35.42",
+        "search_classifier_cpv":"15330000-0",
+        "search_classifier_other":"000",
+        "zip_code_":"21021",
+        "region":"Вінницька",
+        "locality_":"Вінниця",
+        "street_":"Келецька, 12",
+        "latutide_":"65",
+        "longitude_":"47",
+        "title_ofLot":"Milk products",
+        "description_of_lot":"milk",
+        "budget_of_lot":"11111",
+        "min_step_of_lot":"150",
+        "min_step_of_lot_perc":"1.54"
+	},
+  "concurentUA":{
+        "login":"neotomasandersont@gmail.com",
+        "password":"123456",
+		"tenderPeriod":100,
+        "title":"Овочеві фрукти",
+        "description":"Сухоовочі",
+        "budget":"30000",
+        "min_step":"90",
+        "min_step_percentage":"1.2",
+        "item_descr":"часничок такий солодкий",
+        "quantity":"400",
+        "search_classifier_cpv":"15330000-0",
+        "search_classifier_other":"000",
+        "zip_code_":"21021",
+        "region":"Вінницька",
+        "locality_":"Вінниця",
+        "street_":"Келецька, 12",
+        "latutide_":"11",
+        "longitude_":"48",
+        "title_ofLot":"Ріпка",
+        "description_of_lot":"сирожарена",
+        "budget_of_lot":"12000",
+        "min_step_of_lot":"500",
+        "min_step_of_lot_perc":"2.4"
+	},
+	"bids":[
+            {
+              "login":"cat@gmail.com",
+              "password":"123456",
+              "amount":1234,
+              "lot_feature":0,
+              "item_feature":0,
+              "sub_info": "cucumber",
+              "docs_bids":[
+                {
+                  "size":10000,
+                  "type":"Технічний опис предмету закупівлі"
+                },
+                {
+                  "size":10000,
+                  "type":"Документи, що підтверджують кваліфікацію"
+                }
+              ]
+            },
+            {
+              "login":"lee.jaeyong@gmail.co",
+              "password":"123456",
+              "amount":1234,
+              "tender_feature":1,
+              "item_feature":1,
+              "sub_info": "oktopus",
+              "docs_bids":[
+                {
+                  "size":10000,
+                  "type":"Технічний опис предмету закупівлі"
+                },
+                {
+                  "size":10000,
+                  "type":"Документи, що підтверджують кваліфікацію"
+                }
+              ]
+            },
+            {
+              "login":"lermontovl@gmail.com",
+              "password":"123456",
+              "amount":1234,
+              "tender_feature":2,
+              "lot_feature":2,
+              "sub_info": "umbrella",
+              "docs_bids":[
+                {
+                  "size":10000,
+                  "type":"Технічний опис предмету закупівлі"
+                },
+                {
+                  "size":10000,
+                  "type":"Документи, що підтверджують кваліфікацію"
+                }
+              ]
+            }
+    ],
 
-	},
-    "feature":{
+    "features":{
+        "tender_item":true,
+        "lot_item":true,
         "enum_count":3,
-        "title":"загадкови параметр",
-        "titleEnum_zero":"нульової загадковості параметр",
-        "description":"дерево",
-        "descriptionEnum_zero":"низько зрізане дерево, а не пеньок"
+        "title":"Споживча тара",
+        "titleEnum_zero":"Тряпчані мішки",
+        "description":"пакування",
+        "descriptionEnum_zero":"",
+        "option_description":"пакування",
+        "option_name":"Пакети полімерні"
     }
 }

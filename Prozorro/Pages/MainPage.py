@@ -137,7 +137,7 @@ class MainPage:
                 set_description(dic["openUA"], nom). \
                 set_curr(). \
                 set_multilot(dic["openUA"], is_multilot). \
-                set_open_tender_dates(dic) . \
+                set_open_tender_dates(dic["openUA"]) . \
                 click_next_button(). \
                 add_lot(lots, dic["openUA"]). \
                 add_item(dic["openUA"], lots, items). \

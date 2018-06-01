@@ -288,6 +288,7 @@ class TenderNew:
     def set_otherDK(self, dic):
         print("  start set_otherDK")
         btn_otherClassifier = self.drv.find_element_by_id("btn_otherClassifier")
+        WebDriverWait(self.drv, 20).until(EC.invisibility_of_element_located((By.CLASS_NAME, "modal-backdrop fade")))
         btn_otherClassifier.click()
         self.set_classifier(dic)
         print("  end set_otherDK")
@@ -296,6 +297,7 @@ class TenderNew:
         print("  start set_dk2015")
         cls_click_ = self.drv.find_element_by_id("cls_click_")
         waitFadeIn(self.drv)
+        WebDriverWait(self.drv, 20).until(EC.invisibility_of_element_located((By.CLASS_NAME, "modal-backdrop fade")))
         cls_click_.click()
         add_classifier = WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add-classifier")))
         search_classifier_text = self.drv.find_element_by_id("search-classifier-text")
@@ -432,6 +434,7 @@ class TenderNew:
                 )
 
                 waitFadeIn(self.drv)
+                scroll_to_element(self.drv, upload_document)
                 upload_document.click()
 
                 WebDriverWait(self.drv, 20).until(
@@ -439,6 +442,10 @@ class TenderNew:
 
                 Select(self.drv.find_element_by_id("categorySelect")).select_by_visible_text(dic[i]["type"])
                 Select(self.drv.find_element_by_id("documentOfSelect")).select_by_visible_text(dic[i]["doc_to"])
+
+                if "lot" in dic[i]:
+                    Select(self.drv.find_element_by_id("documentOfLotSelect")).select_by_index(dic[i]["lot"])
+
 
 
                 with(open(os.path.dirname(os.path.abspath(__file__)) + '\\fortender{0}.txt'.format(i), 'w', encoding="ascii")) as f:
@@ -522,6 +529,7 @@ class TenderNew:
             print("start add_feature_to_tender")
             waitFadeIn(self.drv)
             add_features = self.drv.find_element_by_id("add_features0")
+            scroll_to_element(self.drv,add_features)
             add_features.click()
 
             if en:  self.set_feature_decription_en(dic,"0_0")
