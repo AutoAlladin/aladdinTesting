@@ -3,6 +3,11 @@ import logging
 # create logger
 from operator import itemgetter
 
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 logger = logging.getLogger('try')
 logger.setLevel(logging.DEBUG)
 
@@ -22,39 +27,23 @@ logger.addHandler(ch)
 
 
 
-#import time
-#
-# from selenium import webdriver
-#
-# from Prozorro.Pages.LoginPage import LoginPage
-#
-# drv = webdriver.Remote(
-#             command_executor = 'http://192.168.56.1:4444/wd/hub',
-#             desired_capabilities = {
-#                 'browserName': 'chrome',
-#                 'javascriptEnabled': True
-#                 })
-# drv.maximize_window()
-# drv.implicitly_wait(5)
-# drv.get("https://test-gov.ald.in.ua")
-# time.sleep(10)
-# LoginPage(drv).login("mm@mm.mm", "123123")
-# time.sleep(2000)
-# drv.close()
+import time
 
-import random
+from selenium import webdriver
 
+from Prozorro.Pages.LoginPage import LoginPage
 
-def r(x):
-    w = ""
-    for i in range(random.randint(3, 9)):
-        w = w + x
-    return {"id":x, "tree":w}
+drv = webdriver.Chrome()
+drv.maximize_window()
+drv.implicitly_wait(5)
+drv.get("https://novaposhta.ua/ru")
 
-#tree = [ r(li) for li in "abcde" ]
+input_for_nom_nakladnoi = drv.find_element_by_id("cargo_number")
+input_for_nom_nakladnoi.send_keys("10029844700")
+input_for_nom_nakladnoi.send_keys(Keys.ENTER)
 
+time.sleep(100)
 
-tree = sorted(map(r,"sdf4iou9gsdfs"), key=itemgetter('id'))
-for r in tree:
-    print(r)
+drv.quit()
+
 
