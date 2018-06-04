@@ -183,6 +183,25 @@ class MainPage:
                 click_finish_edit_button(). \
                 click_publish_button()
 
+
+        elif procurementMethodType=="concurentEU":
+            self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/CompetitiveDialogueEU']").click()
+            return TenderNew(self.drv). \
+                set_description(dic["concurentEU"],  nom, en=True). \
+                set_curr(). \
+                set_multilot(dic["concurentEU"],is_multilot). \
+                set_open_tender_dates(dic["concurentEU"]). \
+                click_next_button(). \
+                add_lot(lots, dic["concurentEU"]). \
+                add_item(dic["concurentEU"],lots,items). \
+                click_next_button(). \
+                add_features(dic["features"], lots, items, features). \
+                click_next_button(). \
+                add_doc(docs,dic["docs"]). \
+                click_finish_edit_button(). \
+                click_publish_button()
+
+
         return None
 
 
