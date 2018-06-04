@@ -204,11 +204,17 @@
         "lot_item":true,
         "enum_count":3,
         "title":"Споживча тара",
+        "title_en": "Ttrterer rere",
         "titleEnum_zero":"Тряпчані мішки",
+        "titleEnum_zero_en": "Dfffdffd fdfdfdf",
         "description":"пакування",
-        "descriptionEnum_zero":"",
+        "description_en": "Fdfdf fdfdfd fdfdfdfd",
+        "descriptionEnum_zero":"gfgfgfgfg",
+        "descriptionEnum_zero_en": "Dsdsdssdsd s dsdsdsdsd",
         "option_description":"пакування",
-        "option_name":"Пакети полімерні"
+        "option_description_en": "Fddfdf fdfdf",
+        "option_name":"Пакети полімерні",
+        "option_name_en": "Ffgfgdg dfgdgdgdf"
     }
 }
 
