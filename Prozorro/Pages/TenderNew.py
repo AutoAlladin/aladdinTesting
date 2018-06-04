@@ -538,8 +538,7 @@ class TenderNew:
             featureEnumDescription = self.drv.find_element_by_id("featureEnumDescriptionEn_" + end + "_0_0")
             featureEnumDescription.send_keys(dic["descriptionEnum_zero_en"])
 
-
-        featureEnumDescription = self.drv.find_element_by_id("featureEnumDescriptionEn_"+end+"_0_0")
+        featureEnumDescription = self.drv.find_element_by_id("featureEnumDescription_" + end + "_0_0")
         featureEnumDescription.clear()
         featureEnumDescription.send_keys(dic["descriptionEnum_zero"])
         print("  end set_feature_zero_enum")
@@ -553,7 +552,8 @@ class TenderNew:
             scroll_to_element(self.drv,add_features)
             add_features.click()
 
-            if en:  self.set_feature_decription_en(dic,"0_0")
+            if en:
+                self.set_feature_decription_en(dic,"0_0")
             self.set_feature_decription(dic,"0_0")
 
             if to_item:

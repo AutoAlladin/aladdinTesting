@@ -8,7 +8,7 @@ from Prozorro.Procedures.Tenders import create_below
 from Aladdin.Accounting.decorators.ParamsTestCase import ParamsTestCase
 from Prozorro.ProzorroCheck import init_driver
 from Prozorro.ProzorroCheck import create_below
-from Prozorro.ProzorroCheck import create_bids
+#from Prozorro.ProzorroCheck import create_bids
 from Prozorro.ProzorroCheck import open_tender
 from Prozorro.ProzorroCheck import create_bid
 import time
