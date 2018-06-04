@@ -538,8 +538,7 @@ class TenderNew:
             featureEnumDescription = self.drv.find_element_by_id("featureEnumDescriptionEn_" + end + "_0_0")
             featureEnumDescription.send_keys(dic["descriptionEnum_zero_en"])
 
-
-        featureEnumDescription = self.drv.find_element_by_id("featureEnumDescriptionEn_"+end+"_0_0")
+        featureEnumDescription = self.drv.find_element_by_id("featureEnumDescription_" + end + "_0_0")
         featureEnumDescription.clear()
         featureEnumDescription.send_keys(dic["descriptionEnum_zero"])
         print("  end set_feature_zero_enum")
