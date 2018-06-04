@@ -553,7 +553,8 @@ class TenderNew:
             scroll_to_element(self.drv,add_features)
             add_features.click()
 
-            if en:  self.set_feature_decription_en(dic,"0_0")
+            if en:
+                self.set_feature_decription_en(dic,"0_0")
             self.set_feature_decription(dic,"0_0")
 
             if to_item:
