@@ -116,6 +116,26 @@ def check(args):
                 print(datetime.datetime.now())
                 sys.exit()
                 pass
+
+
+            elif proc == 'concurentEU':
+                print(datetime.datetime.now())
+                uaids = create_concurentEU(countTenders=_countTenders,
+                                           countLots=_countLots,
+                                           countItems=_countItems,
+                                           countFeatures=_countFeatures,
+                                           countDocs=_countDocs,
+                                           tender_dict=1,
+                                           test_mode=_test_mode
+                                           )
+
+                with(
+                        open(Utils.get_root()+ '\\ConcurentUA_ids.json', 'w', encoding="UTF-8")) as uaid_file:
+                    json.dump(uaids, uaid_file)
+                print(datetime.datetime.now())
+                sys.exit()
+
+
             elif proc == 'openeu':
                 pass
             sys.exit()
