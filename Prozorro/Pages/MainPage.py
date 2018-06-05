@@ -152,7 +152,7 @@ class MainPage:
         elif procurementMethodType=="aboveThresholdEU":
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/AboveThresholdEU']").click()
             return TenderNew(self.drv). \
-                set_description(dic["openEU"], nom). \
+                set_description(dic["openEU"], nom, en=True). \
                 set_curr(). \
                 set_multilot(dic["openEU"], is_multilot). \
                 set_open_tender_dates(dic["openEU"]) . \
