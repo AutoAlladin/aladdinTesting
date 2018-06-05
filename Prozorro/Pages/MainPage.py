@@ -162,7 +162,7 @@ class MainPage:
                 click_next_button(). \
                 add_features(dic["features"], lots, items, features, enf=True). \
                 click_next_button().\
-                add_doc(docs, dic["docs"]). \
+                add_doc(docs, dic["docs"], lots). \
                 click_finish_edit_button().\
                 click_publish_button()
 

@@ -197,19 +197,19 @@ class TenderNew:
                 is_add_lot.click()
 
                 title_of_lot = self.drv.find_element_by_id("lotTitle_" + lotid)
-                title_of_lot.send_keys(str(currentLot)+" - "+get_dic_val(dic, "below.title_ofLot"))
+                title_of_lot.send_keys(str(currentLot)+" - "+dic["title_ofLot"])
                 title_of_lot_en = self.drv.find_element_by_id("lotTitle_En_" + lotid)
-                title_of_lot_en.send_keys(str(currentLot)+" - "+get_dic_val(dic, "below.title_ofLot_en"))
+                title_of_lot_en.send_keys(str(currentLot)+" - "+dic["title_ofLot"])
                 description_of_lot = self.drv.find_element_by_id("lotDescription_" + lotid)
-                description_of_lot.send_keys(get_dic_val(dic, "below.description_of_lot"))
+                description_of_lot.send_keys(dic["description_of_lot"])
                 description_of_lot_en = self.drv.find_element_by_id("lotDescription_En_" + lotid)
-                description_of_lot_en.send_keys(get_dic_val(dic, "below.description_of_lot_en"))
+                description_of_lot_en.send_keys((dic["description_of_lot"]))
                 budget_of_lot = self.drv.find_element_by_id("lotBudget_" + lotid)
-                budget_of_lot.send_keys(get_dic_val(dic, "below.budget_of_lot"))
+                budget_of_lot.send_keys((dic["budget_of_lot"]))
                 min_step_of_lot = self.drv.find_element_by_id("lotMinStep_" + lotid)
-                min_step_of_lot.send_keys(get_dic_val(dic, "below.min_step_of_lot"))
+                min_step_of_lot.send_keys((dic["min_step_of_lot"]))
                 min_step_of_lot_perc = self.drv.find_element_by_id("lotMinStepPercentage_" + lotid)
-                min_step_of_lot_perc.send_keys(get_dic_val(dic, "below.min_step_of_lot_perc"))
+                min_step_of_lot_perc.send_keys((dic["min_step_of_lot_perc"]))
                 self.drv.find_element_by_xpath("//div[contains(@id,'updateOrCreateLot')]//button[@class='btn btn-success']").click()
                 print("end Add lot")
 
@@ -299,7 +299,7 @@ class TenderNew:
         print("  start set_dk2015")
         cls_click_ = self.drv.find_element_by_id("cls_click_")
         waitFadeIn(self.drv)
-        WebDriverWait(self.drv, 20).until(EC.invisibility_of_element_located((By.CLASS_NAME, "modal-  fade")))
+        WebDriverWait(self.drv, 20).until(EC.invisibility_of_element_located((By.CLASS_NAME, "modal- fade")))
         cls_click_.click()
         add_classifier = WebDriverWait(self.drv, 20).until(EC.visibility_of_element_located((By.ID, "add-classifier")))
         search_classifier_text = self.drv.find_element_by_id("search-classifier-text")
@@ -309,10 +309,10 @@ class TenderNew:
         print("  end set_dk2015")
 
     def set_classifier(self, dic):
-        add_classifier = WebDriverWait(self.drv, 80).until(EC.visibility_of_element_located((By.ID, "add-classifier")))
+        add_classifier = WebDriverWait(self.drv, 120).until(EC.visibility_of_element_located((By.ID, "add-classifier")))
         search_classifier_text = self.drv.find_element_by_id("search-classifier-text")
         search_classifier_text.send_keys(dic[ "search_classifier_other"])
-        WebDriverWait(self.drv, 80).until(EC.visibility_of_element_located((By.XPATH, "//li[@aria-selected = 'true']")))
+        WebDriverWait(self.drv, 120).until(EC.visibility_of_element_located((By.XPATH, "//li[@aria-selected = 'true']")))
         add_classifier.click()
 
     def set_item_base_info(self, dic, item_id,item_vomber):
@@ -412,7 +412,7 @@ class TenderNew:
             self.click_add_item(item_id)
             print("end set_item", str(i)+str(lot_id))
 
-    def add_doc(self, docs, dic):
+    def add_doc(self, docs, dic, lots=0):
         if docs == 0: return self
 
         docs = len(dic)
@@ -427,43 +427,47 @@ class TenderNew:
                 documents_tab.click()
 
             for i in range(docs):
-                print("start add_doc")
-                waitFadeIn(self.drv)
-                upload_document=WebDriverWait(self.drv, 20).until(
-                    EC.visibility_of_element_located(
-                        (By.ID, "upload_document")
+                #if lots > 0:
+                if (lots == 0 and not "lot" in dic[i]) or lots > 0:
+                #if lots > 0:
+                    print("start add_doc")
+                    waitFadeIn(self.drv)
+                    upload_document=WebDriverWait(self.drv, 20).until(
+                        EC.visibility_of_element_located(
+                            (By.ID, "upload_document")
+                        )
                     )
-                )
 
-                waitFadeIn(self.drv)
-                scroll_to_element(self.drv, upload_document)
-                upload_document.click()
+                    waitFadeIn(self.drv)
+                    scroll_to_element(self.drv, upload_document)
+                    upload_document.click()
 
-                WebDriverWait(self.drv, 20).until(
-                    EC.visibility_of_element_located((By.ID,"categorySelect")))
+                    WebDriverWait(self.drv, 20).until(
+                        EC.visibility_of_element_located((By.ID,"categorySelect")))
 
-                Select(self.drv.find_element_by_id("categorySelect")).select_by_visible_text(dic[i]["type"])
-                Select(self.drv.find_element_by_id("documentOfSelect")).select_by_visible_text(dic[i]["doc_to"])
+                    Select(self.drv.find_element_by_id("categorySelect")).select_by_visible_text(dic[i]["type"])
+                    Select(self.drv.find_element_by_id("documentOfSelect")).select_by_visible_text(dic[i]["doc_to"])
 
-                if "lot" in dic[i]:
-                    Select(self.drv.find_element_by_id("documentOfLotSelect")).select_by_index(dic[i]["lot"])
+                    if lots > 0:
+                        if "lot" in dic[i]:
+                            Select(self.drv.find_element_by_id("documentOfLotSelect")).select_by_index(dic[i]["lot"])
 
 
 
-                with(open(os.path.dirname(os.path.abspath(__file__)) + '\\fortender{0}.txt'.format(i), 'w', encoding="ascii")) as f:
-                    for ttt in range(dic[i]["size"]):
-                        f.write("x")
+                    with(open(os.path.dirname(os.path.abspath(__file__)) + '\\fortender{0}.txt'.format(i), 'w', encoding="ascii")) as f:
+                        for ttt in range(dic[i]["size"]):
+                            f.write("x")
 
-                fileInput=self.drv.find_element_by_id("fileInput")
-                fileInput.send_keys(os.path.dirname(os.path.abspath(__file__)) + "\\fortender{0}.txt".format(i))
+                    fileInput=self.drv.find_element_by_id("fileInput")
+                    fileInput.send_keys(os.path.dirname(os.path.abspath(__file__)) + "\\fortender{0}.txt".format(i))
 
-                save_file=self.drv.find_element_by_id("save_file")
-                scroll_to_element(self.drv, save_file)
-                waitFadeIn(self.drv)
-                save_file.click()
+                    save_file=self.drv.find_element_by_id("save_file")
+                    scroll_to_element(self.drv, save_file)
+                    waitFadeIn(self.drv)
+                    save_file.click()
 
-                sleep(5)
-                print("end add_doc")
+                    sleep(5)
+                    print("end add_doc")
 
         except Exception as e:
             paint(self.drv, "addDocERROR.png")
@@ -651,3 +655,4 @@ class TenderNew:
 
         return self
 
+    #def add_doc_process
