@@ -152,7 +152,7 @@ class MainPage:
         elif procurementMethodType=="aboveThresholdEU":
             self.drv.find_element_by_xpath("//a[@href='/Purchase/Create/AboveThresholdEU']").click()
             return TenderNew(self.drv). \
-                set_description(dic["openEU"], nom, en=True). \
+                set_description(dic["openEU"], nom). \
                 set_curr(). \
                 set_multilot(dic["openEU"], is_multilot). \
                 set_open_tender_dates(dic["openEU"]) . \
@@ -162,7 +162,7 @@ class MainPage:
                 click_next_button(). \
                 add_features(dic["features"], lots, items, features, enf=True). \
                 click_next_button().\
-                add_doc(docs,dic["docs"]). \
+                add_doc(docs, dic["docs"]). \
                 click_finish_edit_button().\
                 click_publish_button()
 
@@ -175,11 +175,11 @@ class MainPage:
                 set_open_tender_dates(dic["concurentUA"]). \
                 click_next_button(). \
                 add_lot(lots, dic["concurentUA"]). \
-                add_item(dic["concurentUA"],lots,items). \
+                add_item(dic["concurentUA"], lots, items). \
                 click_next_button(). \
                 add_features(dic["features"], lots, items, features). \
                 click_next_button(). \
-                add_doc(docs,dic["docs"]). \
+                add_doc(docs, dic["docs"]). \
                 click_finish_edit_button(). \
                 click_publish_button()
 
@@ -193,9 +193,9 @@ class MainPage:
                 set_open_tender_dates(dic["concurentEU"]). \
                 click_next_button(). \
                 add_lot(lots, dic["concurentEU"]). \
-                add_item(dic["concurentEU"],lots,items). \
+                add_item(dic["concurentEU"],lots,items, en=True). \
                 click_next_button(). \
-                add_features(dic["features"], lots, items, features). \
+                add_features(dic["features"], lots, items, features, enf=True). \
                 click_next_button(). \
                 add_doc(docs,dic["docs"]). \
                 click_finish_edit_button(). \

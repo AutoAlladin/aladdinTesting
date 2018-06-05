@@ -162,6 +162,24 @@ def create_concurentUA(countLots, countFeatures, countDocs=0, countTenders=1, co
 
     return uaid
 
+def create_concurentEU(countLots, countFeatures, countDocs=0, countTenders=1, countItems=1, tender_dict=None, test_mode = True):
+    chrm, tp,mpg = init_driver( test_mode)
+    mpg.open_login_form().login(tp["below"]["login"], tp["below"]["password"]);
+    uaid = []
+
+    args = dict(procurementMethodType='concurentEU',
+                lots=countLots,
+                items=countItems,
+                docs=countDocs,
+                features=countFeatures,
+                dic=tp
+            )
+
+    for i in range(countTenders):
+        uaid.append(mpg.create_tender(**args))
+
+    return uaid
+
 def send_bids(uaids=[],fin=None, prepare=0):
     print("start bids", datetime.datetime.now())
     chrm, tp,mpg = init_driver()
