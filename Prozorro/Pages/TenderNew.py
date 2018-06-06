@@ -30,6 +30,14 @@ class TenderNew:
             movePurchaseView.click()
         except WebDriverException as w:
             raise Exception("Не нажимается кнопка movePurchaseView  - \n" + w.msg)
+
+        try:
+            alert = self.drv.swich_to_alert()
+            alert.accept()
+        except:
+            print ("no alertt")
+
+
         return self
 
     def click_publish_button(self):
@@ -655,4 +663,3 @@ class TenderNew:
 
         return self
 
-    #def add_doc_process
