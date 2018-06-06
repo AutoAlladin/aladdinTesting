@@ -604,10 +604,12 @@ class TenderNew:
                         (By.ID, "add_features"+str(lotix))
                         )
                     )
+                print(str(lotix))
                 scroll_to_element(self.drv,add_features)
                 add_features.click()
                 if en:
                     self.set_feature_decription_en(dic, str(lotix)+ "_0")
+
                 self.set_feature_decription(dic, str(lotix)+"_0")
 
                 if to_item:
