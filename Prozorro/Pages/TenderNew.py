@@ -3,6 +3,8 @@
 import os
 import random
 
+from selenium.webdriver.common.alert import Alert
+from selenium.webdriver.support.ui import WebDriverWait as wait
 
 from datetime import datetime, timedelta
 from time import sleep
@@ -30,6 +32,12 @@ class TenderNew:
             movePurchaseView.click()
         except WebDriverException as w:
             raise Exception("Не нажимается кнопка movePurchaseView  - \n" + w.msg)
+
+        #Появляется после редактирования основной информации
+        # wait(self.drv, 15).until(EC.alert_is_present())
+        # alert = self.drv.swich_to_alert()
+        # alert.accept()
+
         return self
 
     def click_publish_button(self):
@@ -596,6 +604,7 @@ class TenderNew:
                         (By.ID, "add_features"+str(lotix))
                         )
                     )
+                print(str(lotix))
                 scroll_to_element(self.drv,add_features)
                 add_features.click()
                 if en:
@@ -647,6 +656,7 @@ class TenderNew:
                 if lots > 0:
                     self.add_feature_to_lot(features, lots, items, dic, to_item=False, en=enf)
                     self.add_feature_to_lot(features, lots, items, dic, to_item=True, en=enf)
+
 
         except WebDriverException as e:
             paint(self.drv, "addFeatureERROR.png")
