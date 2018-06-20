@@ -74,7 +74,6 @@ class TenderNew:
 
         return None
 
-
     def click_next_button(self):
         try:
             #next_step = self.drv.find_element_by_xpath("//button[@id='next_step'][2]")
@@ -189,7 +188,6 @@ class TenderNew:
 
         return self
 
-
     def add_lot_en(self, count, dic):
         if count == 0:
             return self
@@ -228,7 +226,6 @@ class TenderNew:
             self.drv.execute_script("$('#next_step').click()")
 
         return self
-
 
     def set_description(self, dic, nom, en=False):
         print("start Set  description")
@@ -284,7 +281,6 @@ class TenderNew:
         longitude_ = self.drv.find_element_by_id("longitude_" + item_id)
         longitude_.send_keys(dic[ "longitude_"])
         print("  end Set_delivery_adress")
-
 
     def set_delivery_period(self, item_id):
         print("  start Set_delivery_period")
@@ -460,8 +456,6 @@ class TenderNew:
                         if "lot" in dic[i]:
                             Select(self.drv.find_element_by_id("documentOfLotSelect")).select_by_index(dic[i]["lot"])
 
-
-
                     with(open(os.path.dirname(os.path.abspath(__file__)) + '\\fortender{0}.txt'.format(i), 'w', encoding="ascii")) as f:
                         for ttt in range(dic[i]["size"]):
                             f.write("x")
@@ -541,7 +535,6 @@ class TenderNew:
         featureEnumTitle = self.drv.find_element_by_id("featureEnumTitle_"+end+"_0_0")
         featureEnumTitle.clear()
         featureEnumTitle.send_keys(dic["titleEnum_zero"])
-
 
         if en:
             featureEnumTitle = self.drv.find_element_by_id("featureEnumTitleEn_" + end + "_0_0")
@@ -641,7 +634,6 @@ class TenderNew:
                 else:
                     print("end add_feature_to_lot_item")
 
-
     def add_features(self, dic, lots, items, features=0, enf=False):
         try:
             if features > 0:
@@ -656,7 +648,6 @@ class TenderNew:
                 if lots > 0:
                     self.add_feature_to_lot(features, lots, items, dic, to_item=False, en=enf)
                     self.add_feature_to_lot(features, lots, items, dic, to_item=True, en=enf)
-
 
         except WebDriverException as e:
             paint(self.drv, "addFeatureERROR.png")
