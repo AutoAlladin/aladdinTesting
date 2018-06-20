@@ -494,13 +494,13 @@ class TenderNew:
         featureDescription.send_keys(dic["description_en"])
         print("end set_feature_decription_en")
 
-    def add_feature_enum(self,dic,enum_index, lot_index=0, en = False):
+    def add_feature_enum(self, dic, enum_index, lot_index=0, en=False):
         rm = RandomWords()
         print("  start add_feature_enum")
         featureEnumAdd = self.drv.find_element_by_id("addFeatureEnum_"+str(lot_index)+"_0")
         featureEnumAdd.click()
 
-        featureEnumValue =   WebDriverWait(self.drv, 20).until(
+        featureEnumValue = WebDriverWait(self.drv, 20).until(
                 EC.visibility_of_element_located(
                     (By.ID, "featureEnumValue_"+str(lot_index)+"_0_"+str(enum_index))))
         featureEnumValue.clear()
@@ -509,7 +509,7 @@ class TenderNew:
         featureEnumTitle = self.drv.find_element_by_id(
             "featureEnumTitle_"+str(lot_index)+"_0_"+str(enum_index))
         featureEnumTitle.clear()
-        featureEnumTitle.send_keys(dic[ "option_name"]+" - "+rm.random_word())
+        featureEnumTitle.send_keys(dic["option_name"]+" - "+rm.random_word())
 
         featureEnumDescription = self.drv.find_element_by_id(
             "featureEnumDescription_"+str(lot_index)+"_0_"+str(enum_index))
@@ -570,7 +570,7 @@ class TenderNew:
                 )
                 Select(select).select_by_index(1)
 
-            self.set_feature_zero_enum(dic, en = en)
+            self.set_feature_zero_enum(dic, en=en)
 
             for enum_index in range(dic["enum_count"]-1):
                 self.add_feature_enum(dic, enum_index+1, en=en)
@@ -582,7 +582,7 @@ class TenderNew:
             print("end add_feature_to_tender")
         pass
 
-    def add_feature_to_lot(self, features, lots, items,dic, to_item=True, en=False):
+    def add_feature_to_lot(self, features, lots, items, dic, to_item=True, en=False):
         for lotix in range(1,lots+1):
             for findex in range(features):
                 if to_item:
@@ -599,8 +599,8 @@ class TenderNew:
                 scroll_to_element(self.drv,add_features)
                 add_features.click()
                 if en:
-                    self.set_feature_decription_en(dic, "_0")
-                self.set_feature_decription(dic, str(lotix)+"_0")
+                    self.set_feature_decription_en(dic, str(lotix) + "_0")
+                self.set_feature_decription(dic, str(lotix) + "_0")
 
                 if to_item:
                     to_i = self.drv.find_element_by_xpath("//label[@for='featureOf_"+str(lotix)+"_0']")
@@ -614,17 +614,17 @@ class TenderNew:
                     scroll_to_element(self.drv, select)
                     Select(select).select_by_index(1)
 
-                self.set_feature_zero_enum(dic,end=str(lotix), en=en)
+                self.set_feature_zero_enum(dic, end=str(lotix), en=en)
 
-                for enum_index in range(dic[ "enum_count"]-1):
-                     self.add_feature_enum(dic,enum_index+1, lotix)
+                for enum_index in range(dic["enum_count"]-1):
+                     self.add_feature_enum(dic, enum_index+1, lotix, en=en)
 
                 updateFeature = WebDriverWait(self.drv, 20).until(
                     EC.visibility_of_element_located(
                         (By.ID, "updateFeature_"+str(lotix)+"_0")
                     )
                 )
-                scroll_to_element(self.drv,updateFeature)
+                scroll_to_element(self.drv, updateFeature)
                 updateFeature.click()
 
                 if to_item:
@@ -647,7 +647,6 @@ class TenderNew:
                 if lots > 0:
                     self.add_feature_to_lot(features, lots, items, dic, to_item=False, en=enf)
                     self.add_feature_to_lot(features, lots, items, dic, to_item=True, en=enf)
-
 
         except WebDriverException as e:
             paint(self.drv, "addFeatureERROR.png")
