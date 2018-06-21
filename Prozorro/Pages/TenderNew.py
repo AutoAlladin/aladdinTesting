@@ -19,6 +19,7 @@ from selenium.webdriver.support.select import Select
 from Prozorro.Utils import set_datepicker,waitFadeIn,get_dic_val, paint,scroll_to_element
 from random_words import RandomWords
 
+
 class TenderNew:
     def __init__(self, _drv):
         self.drv = _drv
@@ -63,7 +64,7 @@ class TenderNew:
             toast_message = ""
             try:
                 WebDriverWait(self.drv, 1).until(EC.visibility_of_element_located((By.XPATH, "//div[@class='toast toast-error']")))
-                toast_title =self.drv.find_element_by_xpath("//div[@class='toast toast-error']//div[@class='toast-title']").text()
+                toast_title = self.drv.find_element_by_xpath("//div[@class='toast toast-error']//div[@class='toast-title']").text()
                 toast_message = self.drv.find_element_by_xpath("//div[@class='toast toast-error']//div[@class='toast-message']").text()
             except:
                 pass
@@ -101,7 +102,7 @@ class TenderNew:
             set_datepicker(
                 self.drv,
                 "period_enquiry_start",
-                (dt + timedelta(seconds = 20)).strftime("%d-%m-%Y %H:%M:%S"))
+                (dt + timedelta(seconds=20)).strftime("%d-%m-%Y %H:%M:%S"))
             set_datepicker(
                 self.drv,
                 "period_enquiry_end",
@@ -142,7 +143,7 @@ class TenderNew:
 
     def set_multilot(self, dic, is_multi):
         is_multilot = self.drv.find_element_by_xpath("//*[ @id='is_multilot']/div[1]/div[2]")
-        if (is_multi ):
+        if is_multi:
             is_multilot.click()
         else:
 
@@ -341,7 +342,7 @@ class TenderNew:
 
     def set_item_base_info_en(self, dic, item_id, lot_id):
         print("  start set_item_base_info_en")
-        procurementSubject_description =WebDriverWait(self.drv, 20).\
+        procurementSubject_description = WebDriverWait(self.drv, 20).\
         until(EC.visibility_of_element_located((By.ID, "procurementSubject_description_En" + item_id)))
 
         procurementSubject_description.send_keys(str(lot_id) + str(item_id) + " - " + dic["item_descr"])
@@ -432,7 +433,7 @@ class TenderNew:
 
             for i in range(docs):
                 #if lots > 0:
-                if (lots == 0 and not "lot" in dic[i]) or lots > 0:
+                if (lots == 0 and "lot" not in dic[i]) or lots > 0:
                 #if lots > 0:
                     print("start add_doc")
                     waitFadeIn(self.drv)
