@@ -217,7 +217,10 @@ class TenderNew:
                 min_step_of_lot.send_keys((dic["min_step_of_lot"]))
                 min_step_of_lot_perc = self.drv.find_element_by_id("lotMinStepPercentage_" + lotid)
                 min_step_of_lot_perc.send_keys((dic["min_step_of_lot_perc"]))
-                self.drv.find_element_by_xpath("//div[contains(@id,'updateOrCreateLot')]//button[@class='btn btn-success']").click() # original
+                save_button = self.drv.find_element_by_xpath("//div[contains(@id,'updateOrCreateLot')]//button[@class='btn btn-success']")
+                scroll_to_element(self.drv, save_button)
+                save_button.click()
+                #self.drv.find_element_by_xpath("//div[contains(@id,'updateOrCreateLot')]//button[@class='btn btn-success']").click() # original
                 #self.drv.find_element_by_xpath(
                 #    "//div[@class='text-center col-lg-12']/button[@class='btn btn-success']").click())
                 print("end Add lot")
