@@ -192,7 +192,7 @@ class MainPage:
                 set_multilot(dic["concurentEU"],is_multilot). \
                 set_open_tender_dates(dic["concurentEU"]). \
                 click_next_button(). \
-                add_lot(lots, dic["concurentEU"]). \
+                add_lot_en(lots, dic["concurentEU"]). \
                 add_item(dic["concurentEU"],lots,items, en=True). \
                 click_next_button(). \
                 add_features(dic["features"], lots, items, features, enf=True). \
